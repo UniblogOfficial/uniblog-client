@@ -1,0 +1,26 @@
+.input {
+    position: relative;
+    height: 100%;
+    padding: 12px 12px 12px 20px;
+    top: 0;
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff0;
+    outline: none; 
+    overflow: hidden;  
+}
+.input[type="password"]:not([value=""]) {
+    //font: large Verdana,sans-serif;
+    //text-indent: 1px;
+    //letter-spacing: 1px;
+    //font-weight: bold;
+    //-webkit-text-stroke: 4px #292825;   
+}
+
+.input:focus::after {
+    height: 3px;
+}
+
+.error {
+    border-bottom: 3px solid red;
+}

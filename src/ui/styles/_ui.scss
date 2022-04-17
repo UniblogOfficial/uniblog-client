@@ -1,0 +1,126 @@
+h1 {
+    @include stretch-it(font-size, 20.8, 52);
+    font-weight: 700;
+    line-height: 1.34;
+}
+
+h2 {
+    @include stretch-it(font-size, 16, 26);
+    font-weight: 600;
+    line-height: 1.58;
+}
+
+h3 {
+    @include stretch-it(font-size, 12.55, 22.67);
+    font-weight: 700;
+    line-height: 1.22;
+}
+
+.logo {
+    text-align: center;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 120%;
+    color: #0d0d54;
+
+    &__auth {
+        margin-bottom: 20px;
+    }
+    &__header {
+        margin-bottom: 44px;
+    }
+}
+
+.iconized {
+    &__LR {
+        position: relative;
+
+        .icon-container {
+            width: 1.8em;
+        }
+
+        &:not(.field) {
+            padding: 5px 2.4em 0 2.4em;
+        }
+
+        &.field {
+            input {
+                padding: 0.2em 2em 0.2em 2em;
+            }
+        }
+    }
+
+    &__L {
+        position: relative;
+
+        .icon-container {
+            position: absolute;
+            top: 0;
+            left: 24px;
+            height: 100%;
+            width: 24px;
+        }
+
+        &:not(.field) {
+            padding-left: 71px;
+        }
+
+        &.field {
+            input {
+                padding: 0.2em 0.8em 0.2em 1.8em;
+            }
+        }
+    }
+
+    &__R {
+        position: relative;
+
+        .icon-container {
+            position: absolute;
+            top: 0;
+            right: 12px;
+            height: 100%;
+            width: 16px;
+        }
+
+        &:not(.field) {
+            padding: 5px 2.4em 0 0;
+        }
+
+        &.field {
+            input {
+                padding-right: 32px;
+            }
+        }
+    }
+}
+
+.icon {
+    position: relative;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    --primary: #000;
+    --secondary: #000;
+    //stroke: #000;
+    &.reduced {
+        height: calc(100% / 1.415); //sqrt(2) =)
+        width: calc(100% / 1.415);
+    }
+
+    &.max {
+        transform: scale(1.05) translateX(-0.1px);
+        height: 100%;
+        width: 100%;
+    }
+
+    &__rotate {
+        position: absolute;
+        display: flex;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+    }
+}

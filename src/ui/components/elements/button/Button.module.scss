@@ -1,0 +1,119 @@
+.container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: calc(2.25em + 0.4em);
+    &.left {
+        justify-content: flex-start;
+    }
+    &.right {
+        justify-content: flex-end;
+    }
+    &.center {
+        justify-content: center;
+    }
+}
+
+.button {
+    //display: inline-block;
+    //text-align: center;
+    //vertical-align: middle;
+    // text-transform: uppercase;
+    // font-weight: 700;
+    // line-height: 1.25em;
+    position: relative;
+    background-color: transparent;
+    color: #000;
+    padding: 12px 0;
+    height: 100%;
+    min-width: 7em;
+    width: 100%;
+    transition-duration: 0.1s;
+    overflow: hidden;
+    background-color: #4040f2;
+    color: #fff;
+}
+
+.iconButton {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    min-width: 1.2em;
+    min-height: 1.2em;
+}
+
+.button:hover {
+    //font-size: 95%;
+    //border: 2px solid transparent;
+    //transform: scale(1.1);
+    //border: 1px solid transparent;
+    /* box-shadow: 0 0 0 3px #000; */
+}
+
+.button:after {
+    content: "";
+    background-color: inherit;
+    display: block;
+    position: absolute;
+    padding-top: 200%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -100%;
+    opacity: 0;
+    transition: all 0.4s;
+}
+
+.button:active:after {
+    padding-left: 0;
+    margin-left: 0;
+    opacity: 0.9;
+    transition: 0s
+}
+
+.active:active:after {
+    display: none;
+}
+
+.button:focus { outline:0; }
+
+
+.ok:hover {
+    background-color: #5050fd;
+}
+
+.ok__alt:hover {
+    background-color: #0099ff4d;
+}
+.cancel:hover {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.active {
+    background-color: rgba(0, 0, 255, 0.2);
+}
+
+.active:hover {
+    background-color: rgba(0, 0, 255, 0.3);
+    cursor: default;
+    border: 2px solid #000;
+    box-shadow: none;
+}
+
+.inactive:hover {
+    background-color: rgba(200, 200, 200, 0.3);
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    background: gray;
+    box-shadow: none;
+    &:hover {
+        font-size: 90%;
+        border: 1px solid transparent;
+    }
+}

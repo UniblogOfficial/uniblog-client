@@ -1,0 +1,91 @@
+.sidebar {
+  flex: 0 1 16.6667%;
+  background-color: #fff;
+  &__container {
+    max-width: 240px;
+    display: flex;
+    margin-left: auto;
+    flex-direction: column;
+    height: 100%;
+    padding: 24px 24px 28px;
+  }
+}
+
+.nav {
+  flex: 1;
+  &__list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  &__item {
+    display: block;
+    margin: 0 -24px 8px;
+    
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    &:last-of-type {
+      margin-top: auto;
+      margin-bottom: 0;
+    }
+  }
+  &__link {
+    position: relative;
+    display: block;
+    padding: 16px 24px;
+    text-decoration: none;
+    color: #4F5B67;
+    &.active {
+      background-color: #f7f7fb;
+      color: #0D0D54;
+
+      &::after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 4px;
+        top: 0;
+        right: 0;
+        background-color: #1543E7;
+
+      }
+      .icon {
+        --secondary: #1543E7
+      }
+
+    }
+  }
+}
+
+.profile-link {
+  margin: 0 -24px;
+  a {
+    position: relative;
+    display: block;
+    padding: 16px 24px 0;
+    text-decoration: none;
+    color: #4F5B67;
+  }
+  &__subtitle {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .icon-container {
+    width: 32px;
+  }
+  .icon {
+    --primary: #1543E7
+  }
+}
+
+.content {
+  flex: 0 1 83.3333%;
+  &__container {
+    max-width: 1200px;
+    padding: 24px 36px;
+  }
+}
+
+
+

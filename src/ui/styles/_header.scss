@@ -1,0 +1,9 @@
+.page-header {
+  height: 50px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  &__logo {
+    flex: 0 1 100%;
+  }
+}
