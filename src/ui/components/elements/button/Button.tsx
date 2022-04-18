@@ -10,7 +10,7 @@ type DefaultButtonPropsType = DetailedHTMLProps<
 type ExtraButtonPropsType = DefaultButtonPropsType & {
   mode?: 'text' | 'icon';
   style?: CSSProperties;
-  variant?: 'ok' | 'ok__alt' | 'cancel' | 'active' | 'inactive' | 'disabled';
+  variant?: 'ok' | 'ok__alt' | 'regular' | 'cancel' | 'active' | 'inactive' | 'disabled';
   backgroundImage?: boolean;
   orientation?: 'left' | 'center' | 'right';
 };
@@ -36,6 +36,9 @@ export const Button: React.FC<ExtraButtonPropsType> = ({
       break;
     case 'ok__alt':
       className = `${css.ok__alt} ${className}`;
+      break;
+    case 'regular':
+      className = `${css.regular} ${className}`;
       break;
     case 'cancel':
       className = `${css.cancel} ${className}`;
