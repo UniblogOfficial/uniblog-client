@@ -82,7 +82,7 @@ export const VerificationForm = () => {
 
   return (
     <form className="login__form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-      <section className="field field__auth">
+      <section className="field field-auth">
         <div className="field__input">
           <Input
             {...register('code', { value: '12345' })}

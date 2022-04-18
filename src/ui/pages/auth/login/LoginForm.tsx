@@ -113,7 +113,7 @@ export const LoginForm = () => {
 
   return (
     <form className="login__form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-      <section className="field field__auth">
+      <section className="field field-auth">
         <div className="field__input">
           <Input
             {...register('email', { value: '' })}
@@ -129,7 +129,7 @@ export const LoginForm = () => {
           {helperState.email && dirtyFields.email && errors.email && errors.email.message}
         </div>
       </section>
-      <section className="field field__auth iconized__R">
+      <section className="field field-auth iconized__R">
         <div className="field__input">
           <Input
             {...register('password', { value: '' })}
