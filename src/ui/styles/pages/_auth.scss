@@ -70,11 +70,19 @@
 }
 
 .field {
-  &__auth {
-    margin: 0 24px 12px;
-    .icon {
-      cursor: pointer;
-    }
+
+  // .field-auth
+  &-auth {
+    margin: 0 24px 12px; 
+  }
+  &-profile {
+    margin-bottom: 12px;
+    &:last-of-type {
+      margin-bottom: 22px;
+    } 
+  }
+  .icon {
+    cursor: pointer;
   }
   &__input {
     position: relative;

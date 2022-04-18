@@ -14,14 +14,14 @@ export const HomeContainer = () => {
   return (
     <div className="home">
       <header className="home__header">
-        <h1 className="home__greeting page-title">Привет, {userData.name}</h1>
+        <h1 className="page-title home__greeting">Привет, {userData.name}</h1>
         <div className="home__add-new-post">
           <Button>
             Добавить новый пост <strong>+</strong>
           </Button>
         </div>
       </header>
-      <main className="home__main grid">
+      <main className="grid home__main">
         <div className="grid__row row-2">
           <section className="panel chart">11</section>
           <section className="panel socials">12</section>

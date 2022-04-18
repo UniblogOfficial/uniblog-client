@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 
 import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ import { AnalyticsContainer } from './analytics/AnalyticsContainer';
 import { ChatContainer } from './chat/ChatContainer';
 import { CrosspostingContainer } from './crossposting/CrosspostingContainer';
 import { HomeContainer } from './home/HomeContainer';
-import { MySiteContainer } from './my-site/MySiteContainer';
+import { MultilinkContainer } from './multilink/MultilinkContainer';
 import { PriceContainer } from './price/PriceContainer';
 import { ProfileContainer } from './profile/ProfileContainer';
 import { ShopContainer } from './shop/ShopContainer';
@@ -93,6 +93,15 @@ export const MainContainer = () => {
     </li>
   ));
 
+  const history = useHistory();
+
+  useLayoutEffect(() => {
+    const panels: any = document.getElementsByClassName('panel');
+    for (let i = 0; i < panels.length; i++) {
+      panels[i].style.background = `#f${Math.random().toString(16).substr(-4)}f`;
+    }
+  }, [history.location.pathname]);
+
   return (
     <main className="main _container">
       <aside className="sidebar">
@@ -114,7 +123,7 @@ export const MainContainer = () => {
         <div className="content__container">
           <Switch>
             <Route path="/crossposting" render={() => <CrosspostingContainer />} />
-            <Route path="/my-site" render={() => <MySiteContainer />} />
+            <Route path="/my-site" render={() => <MultilinkContainer />} />
             <Route path="/shop" render={() => <ShopContainer />} />
             <Route path="/analytics" render={() => <AnalyticsContainer />} />
             <Route path="/addons" render={() => <AddonsContainer />} />
@@ -125,7 +134,7 @@ export const MainContainer = () => {
             <Route path="/404" render={() => <NotFound />} />
             <Redirect from="*" to="/404" />
           </Switch>
-          <footer className="footer panel">
+          <footer className="footer panell">
             <ul className="list">
               <li>Контакты</li>
               <li>Блог</li>
