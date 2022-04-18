@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 import { setUserData, TUserData } from '../../../bll/reducers';
+import { selectUserData } from '../../../bll/selectors';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { Icon } from '../../components/elements/icons/Icon';
 import { NotFound } from '../404';
@@ -70,7 +71,7 @@ const navLinksData = [
 
 export const MainContainer = () => {
   const dispatch = useAppDispatch();
-  const userData = useAppSelector<TUserData | null>(state => state.auth.userData);
+  const userData = useAppSelector<TUserData | null>(selectUserData);
   if (userData === null) {
     dispatch(
       setUserData({
@@ -80,7 +81,7 @@ export const MainContainer = () => {
         accessLevel: 1,
       }),
     );
-    return <Redirect to="/signup" />;
+    // return <Redirect to="/signup" />;
   }
 
   const mappedNavLinks = navLinksData.map((data, i) => (
@@ -93,8 +94,8 @@ export const MainContainer = () => {
   ));
 
   return (
-    <main className="main">
-      <div className="sidebar">
+    <main className="main _container">
+      <aside className="sidebar">
         <div className="sidebar__container">
           <div className="logo logo__header">Uniblog</div>
           <nav className="nav">
@@ -108,7 +109,7 @@ export const MainContainer = () => {
             </NavLink>
           </section>
         </div>
-      </div>
+      </aside>
       <div className="content">
         <div className="content__container">
           <Switch>
@@ -124,6 +125,14 @@ export const MainContainer = () => {
             <Route path="/404" render={() => <NotFound />} />
             <Redirect from="*" to="/404" />
           </Switch>
+          <footer className="footer panel">
+            <ul className="list">
+              <li>Контакты</li>
+              <li>Блог</li>
+              <li>Политика конфиденциальности</li>
+            </ul>
+            <p>© 2022 UNIBLOG. All Rights Reserved</p>
+          </footer>
         </div>
       </div>
     </main>
