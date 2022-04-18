@@ -16,6 +16,55 @@ h3 {
     line-height: 1.22;
 }
 
+.button {
+    &__goback {
+        button {
+            width: 99px;
+            border-radius: 32px;
+            font-size: 14px;
+            line-height: 1;
+            margin-right: 16px;
+            color: #0C1116;
+        }
+    }
+}
+
+.panel {
+    padding: 24px;
+    border: 1px solid #eaecee;
+    box-shadow: 0px 4px 27px #0000001a;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.grid {
+    display: grid;
+    padding-top: 24px;
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 24px;
+    }
+}
+
+.row {
+    &-2 {
+        &>* {
+            width: calc(50% - 12px);
+        }
+    }
+    &-3 {
+        &>* {
+            width: calc(33.3% - 16px);
+        }
+    }
+    &-6 {
+        &>* {
+            width: calc(16.667% - 20px);
+        }
+    }
+}
+
 .logo {
     text-align: center;
     font-weight: 900;
@@ -29,6 +78,10 @@ h3 {
     &__header {
         margin-bottom: 44px;
     }
+}
+
+.breadcrumbs {
+    font-size: 14px;
 }
 
 .iconized {

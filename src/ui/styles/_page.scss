@@ -1,6 +1,16 @@
 .sidebar {
+  position: relative;
   flex: 0 1 16.6667%;
   background-color: #fff;
+  &::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 200%;
+    top: 0;
+    left: -199%;
+    background-color: #fff;
+  }
   &__container {
     max-width: 240px;
     display: flex;
@@ -82,10 +92,19 @@
 .content {
   flex: 0 1 83.3333%;
   &__container {
+    display: flex;
+    flex-direction: column;
     max-width: 1200px;
+    height: 100%;
     padding: 24px 36px;
   }
 }
 
+.page-title {
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 120%;
+  color: #242D35;
+}
 
 
