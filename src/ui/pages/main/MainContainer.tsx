@@ -6,6 +6,7 @@ import { setUserData, TUserData } from '../../../bll/reducers';
 import { selectUserData } from '../../../bll/selectors';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { Icon } from '../../components/elements/icons/Icon';
+import { TIconName } from '../../components/modules/iconSpritesMaps/IconSpritesMap';
 import { NotFound } from '../404';
 
 import { AddonsContainer } from './addons/AddonsContainer';
@@ -18,7 +19,14 @@ import { PriceContainer } from './price/PriceContainer';
 import { ProfileContainer } from './profile/ProfileContainer';
 import { ShopContainer } from './shop/ShopContainer';
 
-const navLinksData = [
+type TNavLinksDataItem = {
+  id: number;
+  title: string;
+  href: string;
+  icon: TIconName;
+};
+
+const navLinksData: Array<TNavLinksDataItem> = [
   {
     id: 1,
     title: 'Главная',
@@ -29,49 +37,67 @@ const navLinksData = [
     id: 2,
     title: 'Кросспостинг',
     href: '/crossposting',
-    icon: '',
+    icon: 'grid-2',
   },
   {
     id: 3,
     title: 'Мой сайт',
     href: '/my-site',
-    icon: '',
+    icon: 'window',
   },
   {
     id: 4,
     title: 'Магазин',
     href: '/shop',
-    icon: '',
+    icon: 'cart',
   },
   {
     id: 5,
     title: 'Аналитика',
     href: '/analytics',
-    icon: '',
+    icon: 'analytics',
   },
   {
     id: 6,
     title: 'Дополнительно',
     href: '/addons',
-    icon: '',
+    icon: 'grid-mosaic',
   },
   {
     id: 7,
     title: 'Тарифы',
     href: '/price',
-    icon: '',
+    icon: 'lightning',
   },
   {
     id: 10,
     title: 'Чат',
     href: '/chat',
-    icon: '',
+    icon: 'chat',
   },
 ];
 
 export const MainContainer = () => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const userData = useAppSelector<TUserData | null>(selectUserData);
+
+  useLayoutEffect(() => {
+    const panels: any = document.getElementsByClassName('panel');
+    for (let i = 0; i < panels.length; i++) {
+      panels[i].style.background = `#f${Math.random().toString(16).substr(-4)}f`;
+    }
+  }, [history.location.pathname]);
+
+  const mappedNavLinks = navLinksData.map((data, i) => (
+    <li key={data.id} className="nav__item">
+      <NavLink to={data.href} className="nav__link iconized__L" exact>
+        <Icon name={data.icon} size="full" />
+        {data.title}
+      </NavLink>
+    </li>
+  ));
+
   if (userData === null) {
     dispatch(
       setUserData({
@@ -81,26 +107,8 @@ export const MainContainer = () => {
         accessLevel: 1,
       }),
     );
-    // return <Redirect to="/signup" />;
+    return <Redirect to="/signup" />;
   }
-
-  const mappedNavLinks = navLinksData.map((data, i) => (
-    <li key={data.id} className="nav__item">
-      <NavLink to={data.href} className="nav__link iconized__L" exact>
-        <Icon name="home" size="full" />
-        {data.title}
-      </NavLink>
-    </li>
-  ));
-
-  const history = useHistory();
-
-  useLayoutEffect(() => {
-    const panels: any = document.getElementsByClassName('panel');
-    for (let i = 0; i < panels.length; i++) {
-      panels[i].style.background = `#f${Math.random().toString(16).substr(-4)}f`;
-    }
-  }, [history.location.pathname]);
 
   return (
     <main className="main _container">
@@ -113,7 +121,7 @@ export const MainContainer = () => {
           <section className="profile-link">
             <NavLink to="/profile" className="iconized__L" exact>
               <Icon name="user" size="full" />
-              <p>David</p>
+              <p>{userData.name}</p>
               <p className="profile-link__subtitle">Личный кабинет</p>
             </NavLink>
           </section>

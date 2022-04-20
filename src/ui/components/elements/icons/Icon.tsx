@@ -22,7 +22,7 @@ type TIconProps = TDefaulSVGProps & {
   size?: 'reduced' | 'full' | 'max'; // reduced is full divided by sqrt(2) for proper rotating anims and/or nesting, max is full*1.05
   width?: 'normal' | 'wide' | 'narrow';
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  rotate?: 1 | 2 | 3 | 4; // 0 90 180 270 deg
+  rotate?: 0 | 90 | 180 | 270; // 0 90 180 270 deg
   active?: boolean; // for icon button variant
   primaryColor?: string;
   secondaryColor?: string;
@@ -39,7 +39,7 @@ export const Icon: FC<TIconProps> = ({
   side = 'left',
   size = 'reduced',
   width = 'normal',
-  rotate = 1,
+  rotate = 0,
   active = true,
   primaryColor,
   secondaryColor,
@@ -86,22 +86,10 @@ export const Icon: FC<TIconProps> = ({
     }
   }, [primaryColor, secondaryColor, primaryOpacity, secondaryOpacity]);
 
-  const rotated = useCallback((): CSSProperties => {
-    switch (rotate) {
-      case 1:
-        return {};
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      case 2:
-        return { transform: `rotate(90deg)` };
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      case 3:
-        return { transform: `rotate(180deg)` };
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      case 4:
-        return { transform: `rotate(270deg)` };
-      // no default
-    }
-  }, [rotate]);
+  const rotated = useCallback(
+    (): CSSProperties => ({ transform: `rotate(${rotate}deg)` }),
+    [rotate],
+  );
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions

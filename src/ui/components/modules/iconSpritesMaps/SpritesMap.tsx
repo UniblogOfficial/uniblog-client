@@ -9,6 +9,7 @@ import { CRUDSpritesMap } from './CRUDSpritesMap';
 import { FeatureSpritesMap } from './FeatureSpritesMap';
 import { FilterSpritesMap } from './FilterSpritesMap';
 import { LayoutSpritesMap } from './LayoutSpritesMap';
+import { MiscSpritesMap } from './MiscSpritesMap';
 
 export const SpritesMap = () => (
   <div>
@@ -21,5 +22,6 @@ export const SpritesMap = () => (
     <LayoutSpritesMap />
     <CRUDSpritesMap />
     <BrandSpritesMap />
+    <MiscSpritesMap />
   </div>
 );
