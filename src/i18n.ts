@@ -48,6 +48,8 @@ const createI18n = (language: string): i18nInstance => {
     .init({
       lng: language,
       fallbackLng: language,
+      defaultNS,
+      ns: ['pages', 'common', 'auth'],
       resources,
       returnObjects: true,
       debug: true,

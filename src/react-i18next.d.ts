@@ -3,9 +3,9 @@ import 'react-i18next';
 
 import { resources, defaultNS } from './i18n';
 // import all namespaces (for the default language, only)
-import auth from 'locales/en/auth.json';
-import common from 'locales/en/common.json';
-import pages from 'locales/en/pages.all.json';
+import auth from './ui/locales/en/auth.json';
+import common from './ui/locales/en/common.json';
+import pages from './ui/locales/en/pages.all.json';
 
 /* declare module 'react-i18next' {
   // and extend them!
@@ -24,6 +24,10 @@ import pages from 'locales/en/pages.all.json';
 declare module 'react-i18next' {
   interface CustomTypeOptions {
     defaultNS: typeof defaultNS;
-    resources: typeof resources['en'];
+    resources: {
+      pages: typeof pages;
+      common: typeof common;
+      auth: typeof auth;
+    };
   };
 };
