@@ -1,6 +1,21 @@
 {
-  "buttons": {
-    "ok": "OK",
-    "cancel": "Cancel"
-  }
+    "buttons": {
+        "ok": "OK",
+        "cancel": "Cancel",
+        "next": "Next",
+        "addNewPost": "Add new post"
+    },
+    "links": {
+        "add": "Add",
+        "change": "Change"
+    },
+    "placeholders": {
+        "enterText": "Enter text here",
+        "enterName": "Enter your name",
+        "createPass": "Create password",
+        "repeatPass": "Repeat password",
+        "enterOldPass": "Enter your old password",
+        "createNewPass": "Create new password",
+        "repeatNewPass": "Repeat new password"
+    }
 }

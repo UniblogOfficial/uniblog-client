@@ -1,5 +1,4 @@
 {
-    "greeting": "Hi",
     "navbar": {
         "home": "Home",
         "crossposting": "Crossposting",
@@ -9,5 +8,29 @@
         "addons": "Addons",
         "price": "Price",
         "chat": "Chat"
+    },
+    "home": {
+        "greeting": "Hi",
+        "subtitles": {
+            "networks": "Networks",
+            "myNetworks": "My Networks",
+            "coverage": "Today coverage"
+        }
+    },
+    "crossposting": {
+        "title": "Crossposting",
+        "subtitles": {
+            "description": "Description"
+        },
+        "buttons": {
+            "newPost": "New post",
+            "published": "Published",
+            "drafts": "Drafts",
+            "addToDrafts": "Add to drafts"
+        },
+        "checks": {
+            "publishNow": "Publish now",
+            "schedulePublication": "Schedule publication"
+        }
     }
 }

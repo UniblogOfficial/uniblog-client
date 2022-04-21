@@ -1,5 +1,4 @@
 {
-    "greeting": "Привет",
     "navbar": {
         "home": "Главная",
         "crossposting": "Кросспостинг",
@@ -9,5 +8,29 @@
         "addons": "Дополнительно",
         "price": "Тарифы",
         "chat": "Чат"
+    },
+    "home": {
+        "greeting": "Привет",
+        "subtitles": {
+            "networks": "Соцсети",
+            "myNetworks": "Мои соцсети",
+            "coverage": "Общий охват за сегодня"
+        }
+    },
+    "crossposting": {
+        "title": "Кросспостинг",
+        "subtitles": {
+            "description": "Описание"
+        },
+        "buttons": {
+            "newPost": "Новый пост",
+            "published": "Публикации",
+            "drafts": "Черновики",
+            "addToDrafts": "Добавить в черновик"
+        },
+        "checks": {
+            "publishNow": "Опубликовать сейчас",
+            "schedulePublication": "Запланировать публикацию"
+        }
     }
 }
