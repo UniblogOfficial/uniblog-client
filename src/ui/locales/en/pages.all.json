@@ -1,0 +1,13 @@
+{
+    "greeting": "Hi",
+    "navbar": {
+        "home": "Home",
+        "crossposting": "Crossposting",
+        "multilink": "Multilink",
+        "shop": "Shop",
+        "analytics": "Analytics",
+        "addons": "Addons",
+        "price": "Price",
+        "chat": "Chat"
+    }
+}
