@@ -26,16 +26,16 @@ export const CrosspostingContainer = () => {
       <main className="crossposting__main grid">
         <h1 className="page-title">Кросспостинг</h1>
         <div className="grid__row row-2">
-          <section className="panel text-editor">11</section>
-          <section className="panel planner">12</section>
+          <section className="paper text-editor">11</section>
+          <section className="paper planner">12</section>
         </div>
         <div className="grid__row row-6">
-          <section className="panel attachment">21</section>
-          <section className="panel attachment">22</section>
-          <section className="panel attachment">23</section>
-          <section className="panel attachment">24</section>
-          <section className="panel attachment">25</section>
-          <section className="panel attachment">26</section>
+          <section className="r-paper attachment">21</section>
+          <section className="r-paper attachment">22</section>
+          <section className="r-paper attachment">23</section>
+          <section className="r-paper attachment">24</section>
+          <section className="r-paper attachment">25</section>
+          <section className="r-paper attachment">26</section>
         </div>
       </main>
     </div>

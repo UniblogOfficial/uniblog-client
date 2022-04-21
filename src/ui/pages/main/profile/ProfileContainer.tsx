@@ -30,8 +30,8 @@ export const ProfileContainer = () => {
       </header>
       <main className="profile__main grid">
         <h1 className="page-title">Личный кабинет</h1>
-        <section className="profile__card panell">
-          <h3 className="profile__title">Профиль</h3>
+        <section className="profile__card paper">
+          <h3 className="paper-title">Профиль</h3>
           <ProfileForm username={userData?.name} email={userData?.email} />
         </section>
       </main>

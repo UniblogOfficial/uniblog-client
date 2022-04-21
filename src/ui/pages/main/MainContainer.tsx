@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, MouseEvent } from 'react';
 
 import { useTranslation } from 'react-i18next';
 import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
@@ -37,13 +37,13 @@ export const MainContainer = () => {
   const userData = useAppSelector<TUserData | null>(selectUserData);
 
   const { t, i18n } = useTranslation('pages');
-  const changeLanguage = (language: string) => {
-    i18n.changeLanguage(language);
+  const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
+    i18n.changeLanguage(e.currentTarget.value);
   };
   useLayoutEffect(() => {
-    const panels: any = document.getElementsByClassName('panel');
-    for (let i = 0; i < panels.length; i++) {
-      panels[i].style.background = `#f${Math.random().toString(16).substr(-4)}f`;
+    const papers: any = document.getElementsByClassName('r-paper');
+    for (let i = 0; i < papers.length; i++) {
+      papers[i].style.background = `#f${Math.random().toString(16).substr(-4)}f`;
     }
   }, [history.location.pathname]);
   const navLinksData: Array<TNavLinksDataItem> = [
@@ -126,8 +126,23 @@ export const MainContainer = () => {
           <nav className="nav">
             <ul className="nav__list">{mappedNavLinks}</ul>
           </nav>
-          <Button onClick={() => changeLanguage('en')}>EN</Button>
-          <Button onClick={() => changeLanguage('ru')}>RU</Button>
+          <div className="lang-switch">
+            <Button
+              value="ru"
+              variant={i18n.language === 'ru' ? undefined : 'regular'}
+              className={i18n.language === 'ru' ? 'left active' : 'left'}
+              onClick={changeLanguage}>
+              Русский
+            </Button>
+            <Button
+              value="en"
+              variant={i18n.language === 'en' ? undefined : 'regular'}
+              className={i18n.language === 'en' ? 'right active' : 'right'}
+              onClick={changeLanguage}>
+              English
+            </Button>
+          </div>
+          <div className="dash sidebar__dash" />
           <section className="profile-link">
             <NavLink to="/profile" className="iconized__L" exact>
               <Icon name="user" size="full" />
@@ -152,7 +167,7 @@ export const MainContainer = () => {
             <Route path="/404" render={() => <NotFound />} />
             <Redirect from="*" to="/404" />
           </Switch>
-          <footer className="footer panell">
+          <footer className="footer paper">
             <ul className="list">
               <li>Контакты</li>
               <li>Блог</li>

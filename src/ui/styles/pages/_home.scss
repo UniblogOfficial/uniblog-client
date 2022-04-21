@@ -39,6 +39,15 @@
   height: 400px;
 }
 .socials {
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    &>li {
+      width: 50%;
+      margin-bottom: 30px;
+    }
+  }
 }
 .coverage {
   height: 159px;

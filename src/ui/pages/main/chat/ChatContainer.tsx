@@ -26,7 +26,7 @@ export const ChatContainer = () => {
       <main className="chat__main grid">
         <h1 className="page-title">Чат</h1>
         <div className="grid__row">
-          <section className="panell chat-grid">
+          <section className="paper chat-grid">
             <Button disabled className="button-fake">
               <strong>Клава</strong> сделала больно
             </Button>

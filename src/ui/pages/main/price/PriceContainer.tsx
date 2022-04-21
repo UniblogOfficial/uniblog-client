@@ -26,10 +26,10 @@ export const PriceContainer = () => {
       <main className="price__main grid">
         <h1 className="page-title">Тарифы</h1>
         <div className="grid__row">
-          <section className="panel promo">11</section>
+          <section className="paper promo">11</section>
         </div>
         <div className="grid__row">
-          <section className="panel price-grid">21</section>
+          <section className="r-paper price-grid">21</section>
         </div>
       </main>
     </div>

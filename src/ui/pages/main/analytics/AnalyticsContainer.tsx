@@ -26,7 +26,7 @@ export const AnalyticsContainer = () => {
       <main className="analytics__main grid">
         <h1 className="page-title">Аналитика</h1>
         <div className="grid__row">
-          <section className="panel analytics-grid">11</section>
+          <section className="r-paper analytics-grid">11</section>
         </div>
       </main>
     </div>

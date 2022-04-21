@@ -79,7 +79,7 @@ main {
 ._container {
   max-width: $maxWidthContainer + px;
   @media (max-width: ($bp1 + px)) {
-    max-width: 1200px;
+    max-width: none;
   }
   @media (max-width: ($bp2 + px)) {
     max-width: none;

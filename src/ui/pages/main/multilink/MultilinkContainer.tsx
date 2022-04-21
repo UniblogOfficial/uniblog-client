@@ -26,7 +26,7 @@ export const MultilinkContainer = () => {
       <main className="multilink__main grid">
         <h1 className="page-title">Мультиссылка</h1>
         <div className="grid__row">
-          <section className="panel multilink-grid">11</section>
+          <section className="r-paper multilink-grid">11</section>
         </div>
       </main>
     </div>

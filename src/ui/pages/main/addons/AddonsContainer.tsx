@@ -26,7 +26,7 @@ export const AddonsContainer = () => {
       <main className="addons__main grid">
         <h1 className="page-title">Дополнительно</h1>
         <div className="grid__row">
-          <section className="panel addons-grid">11</section>
+          <section className="paper addons-grid">11</section>
         </div>
       </main>
     </div>

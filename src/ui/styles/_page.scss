@@ -19,6 +19,11 @@
     height: 100%;
     padding: 24px 24px 28px;
   }
+  &__dash {
+    margin: 0 -24px;
+    height: 1px;
+    background-color: #f1f1f1;;
+  }
 }
 
 .nav {
@@ -74,12 +79,34 @@
   }
 }
 
+.lang-switch {
+  padding: 8px 0 8px;
+  display: flex;
+  button {
+    padding: 12px 15px;
+    min-width: 4em;
+    border: 1px solid #EAECEE;
+    color: #4F5B67;
+    &.left {
+      border-radius: 7px 0px 0px 7px;
+    }
+    &.right {
+      border-radius: 0px 7px 7px 0px;
+    }
+    &.active {
+      border: 1px solid #4040f2;
+      background-color: #4040f2;
+      color: #fff;
+    }
+  }
+}
+
 .profile-link {
   margin: 0 -24px;
   a {
     position: relative;
     display: block;
-    padding: 16px 24px 0;
+    padding: 28px 24px 0;
     text-decoration: none;
     color: #4F5B67;
   }
