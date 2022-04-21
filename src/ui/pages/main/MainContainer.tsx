@@ -115,7 +115,7 @@ export const MainContainer = () => {
         accessLevel: 1,
       }),
     );
-    return <Redirect to="/signup" />;
+    return <Redirect to="/login" />;
   }
 
   return (
