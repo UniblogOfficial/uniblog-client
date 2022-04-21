@@ -40,13 +40,10 @@
 }
 .socials {
   &__grid {
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 24px;
-    &>li {
-      width: 50%;
-      margin-bottom: 30px;
-    }
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 12px;
+    padding-top: 16px;
   }
 }
 .coverage {

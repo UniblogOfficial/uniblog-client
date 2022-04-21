@@ -16,6 +16,10 @@ h3 {
     line-height: 1.22;
 }
 
+h4 {
+    font-weight: 400;
+}
+
 .button {
     &__goback {
         button {
@@ -46,6 +50,7 @@ h3 {
     border: 1px solid #eaecee;
     box-shadow: 0px 4px 27px #0000001a;
     border-radius: 12px;
+    overflow-x: hidden;
     background: #fff;
 }
 
