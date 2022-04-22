@@ -15,7 +15,6 @@ export const HomeContainer = () => {
   const userData = useAppSelector<TUserData | null>(selectUserData);
   const { t } = useTranslation(['pages', 'common']);
   if (!userData) return null;
-  console.log(socials);
 
   const images = socials.map((social: any) => (
     <li key={social.title}>
@@ -36,7 +35,9 @@ export const HomeContainer = () => {
       </header>
       <main className="grid home__main">
         <div className="grid__row row-2">
-          <section className="r-paper chart">11</section>
+          <section className="paper chart">
+            <h3 className="paper-title">{t('pages:home.subtitles.networks')}</h3>
+          </section>
           <section className="paper socials">
             <h3 className="paper-title">{t('pages:home.subtitles.myNetworks')}</h3>
             <ul className="socials__grid">{images}</ul>

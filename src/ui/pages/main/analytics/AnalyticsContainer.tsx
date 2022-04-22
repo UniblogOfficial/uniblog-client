@@ -1,30 +1,21 @@
 import React from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
 import { Breadcrumbs } from '../../../components/elements/breadcrumbs/Breadcrumbs';
 import { Button } from '../../../components/elements/button/Button';
+import { PageHeader } from '../../../components/modules/headers/PageHeader';
 
 type TAnalyticsContainerProps = {};
 
 export const AnalyticsContainer = () => {
-  let a;
+  const { t } = useTranslation(['pages', 'common']);
   return (
     <div className="analytics">
-      <header className="analytics__header page-header">
-        <div className="button__goback">
-          <NavLink to="/" className="link-nulled">
-            <Button variant="regular">Назад</Button>
-          </NavLink>
-        </div>
-        <Breadcrumbs
-          path={[{ title: 'Главная', url: '/' }, { title: 'Аналитика' }]}
-          className="breadcrumbs"
-          activeClassName="_active"
-        />
-      </header>
+      <PageHeader pageTitle={t('pages:analytics.title')} />
       <main className="analytics__main grid">
-        <h1 className="page-title">Аналитика</h1>
+        <h1 className="page-title">{t('pages:analytics.title')}</h1>
         <div className="grid__row">
           <section className="r-paper analytics-grid">11</section>
         </div>

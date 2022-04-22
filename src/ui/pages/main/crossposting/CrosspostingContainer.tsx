@@ -1,33 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
 import { Breadcrumbs } from '../../../components/elements/breadcrumbs/Breadcrumbs';
 import { Button } from '../../../components/elements/button/Button';
+import { Radio } from '../../../components/elements/radio/Radio';
+import { PageHeader } from '../../../components/modules/headers/PageHeader';
 
 type TCrosspostingContainerProps = {};
 
 export const CrosspostingContainer = () => {
-  let a;
+  const { t } = useTranslation(['pages', 'common']);
+  const [temp, setTemp] = useState('now');
+  console.log(temp);
   return (
     <div className="crossposting">
-      <header className="crossposting__header page-header">
-        <div className="button__goback">
-          <NavLink to="/" className="link-nulled">
-            <Button variant="regular">Назад</Button>
-          </NavLink>
-        </div>
-        <Breadcrumbs
-          path={[{ title: 'Главная', url: '/' }, { title: 'Кросспостинг' }]}
-          className="breadcrumbs"
-          activeClassName="_active"
-        />
-      </header>
+      <PageHeader pageTitle={t('pages:crossposting.title')} />
       <main className="crossposting__main grid">
-        <h1 className="page-title">Кросспостинг</h1>
+        <h1 className="page-title">{t('pages:crossposting.title')}</h1>
         <div className="grid__row row-2">
-          <section className="paper text-editor">11</section>
-          <section className="paper planner">12</section>
+          <section className="paper text-editor">
+            <h3 className="paper-title">{t('pages:crossposting.subtitles.description')}</h3>
+          </section>
+          <section className="paper planner">
+            <Radio
+              options={['now', 'later']}
+              value={temp}
+              titles={[
+                t('pages:crossposting.checks.publishNow'),
+                t('pages:crossposting.checks.schedulePublication'),
+              ]}
+              onChangeOption={setTemp}
+              className="planner__radio"
+            />
+          </section>
         </div>
         <div className="grid__row row-6">
           <section className="r-paper attachment">21</section>

@@ -1,37 +1,28 @@
 import React from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
 import { Breadcrumbs } from '../../../components/elements/breadcrumbs/Breadcrumbs';
 import { Button } from '../../../components/elements/button/Button';
+import { PageHeader } from '../../../components/modules/headers/PageHeader';
 
 type TChatContainerProps = {};
 
 export const ChatContainer = () => {
-  let a;
+  const { t } = useTranslation(['pages', 'common']);
   return (
     <div className="chat">
-      <header className="chat__header page-header">
-        <div className="button__goback">
-          <NavLink to="/" className="link-nulled">
-            <Button variant="regular">Назад</Button>
-          </NavLink>
-        </div>
-        <Breadcrumbs
-          path={[{ title: 'Главная', url: '/' }, { title: 'Чат' }]}
-          className="breadcrumbs"
-          activeClassName="_active"
-        />
-      </header>
+      <PageHeader pageTitle={t('pages:chat.title')} />
       <main className="chat__main grid">
-        <h1 className="page-title">Чат</h1>
+        <h1 className="page-title">{t('pages:chat.title')}</h1>
         <div className="grid__row">
           <section className="paper chat-grid">
             <Button disabled className="button-fake">
-              <strong>Клава</strong> сделала больно
+              <strong>Клава</strong> {t('pages:chat.infoMessages.info2')}
             </Button>
             <Button disabled className="button-fake">
-              <strong>Клава</strong> покинула чат
+              <strong>Клава</strong> {t('pages:chat.infoMessages.info1')}
             </Button>
           </section>
         </div>

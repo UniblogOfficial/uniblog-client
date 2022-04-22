@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 
@@ -39,6 +40,7 @@ const signupSchema = yup.object().shape({
 
 export const ProfileForm: FC<TProfileFormProps> = ({ username, email }) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation('common');
   const {
     register,
     handleSubmit,
@@ -134,7 +136,7 @@ export const ProfileForm: FC<TProfileFormProps> = ({ username, email }) => {
             onChangeFocus={state => {
               changeFocusHandler('name', state);
             }}
-            placeholder="Имя"
+            placeholder={t('placeholders.enterName')}
             name="name"
           />
         </div>
@@ -163,7 +165,7 @@ export const ProfileForm: FC<TProfileFormProps> = ({ username, email }) => {
             {...register('password', { value: '' })}
             type={passwordShown ? 'text' : 'password'}
             name="password"
-            placeholder="Старый пароль"
+            placeholder={t('placeholders.enterOldPass')}
             onChangeText={value => setPassword(value)}
             onChangeFocus={state => {
               changeFocusHandler('password', state);
@@ -208,7 +210,7 @@ export const ProfileForm: FC<TProfileFormProps> = ({ username, email }) => {
             {...register('password', { value: '' })}
             type={passwordShown ? 'text' : 'password'}
             name="password"
-            placeholder="Новый пароль"
+            placeholder={t('placeholders.createNewPass')}
             onChangeText={value => setPassword(value)}
             onChangeFocus={state => {
               changeFocusHandler('password', state);
@@ -252,7 +254,7 @@ export const ProfileForm: FC<TProfileFormProps> = ({ username, email }) => {
             {...register('passConfirmed', { required: false })}
             type="password"
             name="passConfirmed"
-            placeholder="Повторите новый пароль"
+            placeholder={t('placeholders.repeatNewPass')}
             onChangeText={value => setPassConfirmed(value)}
             onChangeFocus={state => {
               changeFocusHandler('passConfirmed', state);
@@ -268,7 +270,7 @@ export const ProfileForm: FC<TProfileFormProps> = ({ username, email }) => {
       </section>
       <div className="button button-profile _shadowed">
         <Button type="submit" variant="ok" orientation="right">
-          Сохранить
+          {t('buttons.save')}
         </Button>
       </div>
     </form>

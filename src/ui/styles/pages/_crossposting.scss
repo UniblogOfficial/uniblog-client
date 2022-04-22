@@ -4,6 +4,13 @@
 		&__header {
 		}
 
+		// .crossposting__aside
+		&__aside {
+			margin: 0 -24px;
+			overflow-y: auto;
+  		overflow-x: hidden;
+		}
+
 		// .crossposting__main
 		&__main {
 		}
@@ -13,6 +20,9 @@
   height: 400px;
 }
 .planner {
+	&__radio li label{
+		margin-bottom: 24px;
+	}
 }
 .attachment {
   height: 168px;
