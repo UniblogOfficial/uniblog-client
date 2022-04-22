@@ -1,18 +1,21 @@
 .sidebar {
   position: relative;
-  flex: 0 1 16.6667%;
+  //flex: 0 1 16.6667%;
+  min-width: 240px;
   background-color: #fff;
   &::before {
     content: '';
     position: absolute;
     height: 100%;
-    width: 200%;
+    width: 500%;
     top: 0;
-    left: -199%;
+    left: -401%;
     background-color: #fff;
   }
   &__container {
-    max-width: 240px;
+    position: fixed;
+    width: 240px;
+    max-height: 100vh;
     display: flex;
     margin-left: auto;
     flex-direction: column;
@@ -20,7 +23,7 @@
     padding: 24px 24px 28px;
   }
   &__dash {
-    margin: 0 -24px;
+    margin: auto -24px 0;
     height: 1px;
     background-color: #f1f1f1;;
   }
@@ -28,6 +31,9 @@
 
 .nav {
   flex: 1;
+  margin: 0 -24px;
+  overflow-y: auto;
+  overflow-x: hidden;
   &__list {
     display: flex;
     flex-direction: column;
@@ -35,8 +41,7 @@
   }
   &__item {
     display: block;
-    margin: 0 -24px 8px;
-    
+    margin: 0 0 8px;
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
