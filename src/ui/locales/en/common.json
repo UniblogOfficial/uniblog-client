@@ -1,21 +1,25 @@
 {
-    "buttons": {
-        "ok": "OK",
-        "cancel": "Cancel",
-        "next": "Next",
-        "addNewPost": "Add new post"
-    },
-    "links": {
-        "add": "Add",
-        "change": "Change"
-    },
-    "placeholders": {
-        "enterText": "Enter text here",
-        "enterName": "Enter your name",
-        "createPass": "Create password",
-        "repeatPass": "Repeat password",
-        "enterOldPass": "Enter your old password",
-        "createNewPass": "Create new password",
-        "repeatNewPass": "Repeat new password"
-    }
+  "buttons": {
+    "addNewPost": "Add new post",
+    "back": "Back",
+    "cancel": "Cancel",
+    "next": "Next",
+    "no": "No",
+    "ok": "OK",
+    "save": "Save",
+    "yes": "Yes"
+  },
+  "links": {
+    "add": "Add",
+    "change": "Change"
+  },
+  "placeholders": {
+    "createNewPass": "Create new password",
+    "createPass": "Create password",
+    "enterName": "Enter your name",
+    "enterOldPass": "Enter your old password",
+    "enterText": "Enter text here",
+    "repeatNewPass": "Repeat new password",
+    "repeatPass": "Repeat password"
+  }
 }

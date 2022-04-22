@@ -1,36 +1,70 @@
 {
-    "navbar": {
-        "home": "Главная",
-        "crossposting": "Кросспостинг",
-        "multilink": "Мой сайт",
-        "shop": "Магазин",
-        "analytics": "Аналитика",
-        "addons": "Дополнительно",
-        "price": "Тарифы",
-        "chat": "Чат"
+  "addons": {
+    "title": "Дополнительно"
+  },
+  "analytics": {
+    "title": "Аналитика"
+  },
+  "chat": {
+    "infoMessages": {
+      "info1": "покинула чат",
+      "info2": "сделала больно"
     },
-    "home": {
-        "greeting": "Привет",
-        "subtitles": {
-            "networks": "Соцсети",
-            "myNetworks": "Мои соцсети",
-            "coverage": "Общий охват за сегодня"
-        }
+    "title": "Чат"
+  },
+  "crossposting": {
+    "buttons": {
+      "addToDrafts": "Добавить в черновик",
+      "drafts": "Черновики",
+      "newPost": "Новый пост",
+      "published": "Публикации"
     },
-    "crossposting": {
-        "title": "Кросспостинг",
-        "subtitles": {
-            "description": "Описание"
-        },
-        "buttons": {
-            "newPost": "Новый пост",
-            "published": "Публикации",
-            "drafts": "Черновики",
-            "addToDrafts": "Добавить в черновик"
-        },
-        "checks": {
-            "publishNow": "Опубликовать сейчас",
-            "schedulePublication": "Запланировать публикацию"
-        }
+    "checks": {
+      "publishNow": "Опубликовать сейчас",
+      "schedulePublication": "Запланировать публикацию"
+    },
+    "subtitles": {
+      "description": "Описание"
+    },
+    "title": "Кросспостинг"
+  },
+  "footer": {
+    "blog": "Блог",
+    "contacts": "Контакты",
+    "privacy": "Политика конфиденциальности"
+  },
+  "home": {
+    "greeting": "Привет",
+    "subtitles": {
+      "coverage": "Общий охват за сегодня",
+      "myNetworks": "Мои соцсети",
+      "networks": "Соцсети"
     }
+  },
+  "multilink": {
+    "title": "Мультиссылка"
+  },
+  "navbar": {
+    "addons": "Дополнительно",
+    "analytics": "Аналитика",
+    "chat": "Чат",
+    "crossposting": "Кросспостинг",
+    "home": "Главная",
+    "multilink": "Мой сайт",
+    "personalAccount": "Личный кабинет",
+    "price": "Тарифы",
+    "shop": "Магазин"
+  },
+  "price": {
+    "title": "Тарифы"
+  },
+  "profile": {
+    "subtitles": {
+      "profile": "Профиль"
+    },
+    "title": "Личный кабинет"
+  },
+  "shop": {
+    "title": "Магазин"
+  }
 }

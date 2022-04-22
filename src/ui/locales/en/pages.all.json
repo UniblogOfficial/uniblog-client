@@ -1,36 +1,70 @@
 {
-    "navbar": {
-        "home": "Home",
-        "crossposting": "Crossposting",
-        "multilink": "Multilink",
-        "shop": "Shop",
-        "analytics": "Analytics",
-        "addons": "Addons",
-        "price": "Price",
-        "chat": "Chat"
+  "addons": {
+    "title": "Addons"
+  },
+  "analytics": {
+    "title": "Analytics"
+  },
+  "chat": {
+    "infoMessages": {
+      "info1": "left the chat",
+      "info2": "wiped the floor with you"
     },
-    "home": {
-        "greeting": "Hi",
-        "subtitles": {
-            "networks": "Networks",
-            "myNetworks": "My Networks",
-            "coverage": "Today coverage"
-        }
+    "title": "Chat"
+  },
+  "crossposting": {
+    "buttons": {
+      "addToDrafts": "Add to drafts",
+      "drafts": "Drafts",
+      "newPost": "New post",
+      "published": "Published"
     },
-    "crossposting": {
-        "title": "Crossposting",
-        "subtitles": {
-            "description": "Description"
-        },
-        "buttons": {
-            "newPost": "New post",
-            "published": "Published",
-            "drafts": "Drafts",
-            "addToDrafts": "Add to drafts"
-        },
-        "checks": {
-            "publishNow": "Publish now",
-            "schedulePublication": "Schedule publication"
-        }
+    "checks": {
+      "publishNow": "Publish now",
+      "schedulePublication": "Schedule publication"
+    },
+    "subtitles": {
+      "description": "Description"
+    },
+    "title": "Crossposting"
+  },
+  "footer": {
+    "blog": "Blog",
+    "contacts": "Contacts",
+    "privacy": "Privacy policy"
+  },
+  "home": {
+    "greeting": "Hi",
+    "subtitles": {
+      "coverage": "Today coverage",
+      "myNetworks": "My Networks",
+      "networks": "Networks"
     }
+  },
+  "multilink": {
+    "title": "Multilink"
+  },
+  "navbar": {
+    "addons": "Addons",
+    "analytics": "Analytics",
+    "chat": "Chat",
+    "crossposting": "Crossposting",
+    "home": "Home",
+    "multilink": "Multilink",
+    "personalAccount": "Personal account",
+    "price": "Price",
+    "shop": "Shop"
+  },
+  "price": {
+    "title": "Price"
+  },
+  "profile": {
+    "subtitles": {
+      "profile": "Profile"
+    },
+    "title": "Personal account"
+  },
+  "shop": {
+    "title": "Shop"
+  }
 }
