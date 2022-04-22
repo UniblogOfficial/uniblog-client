@@ -15,7 +15,9 @@ export const AddonsContainer = () => {
     <div className="addons">
       <PageHeader pageTitle={t('pages:addons.title')} />
       <main className="addons__main grid">
-        <h1 className="page-title">{t('pages:addons.title')}</h1>
+        <div className="grid__row">
+          <h1 className="page-title">{t('pages:addons.title')}</h1>
+        </div>
         <div className="grid__row">
           <section className="paper addons-grid">11</section>
         </div>

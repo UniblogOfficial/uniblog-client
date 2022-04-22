@@ -15,7 +15,9 @@ export const ShopContainer = () => {
     <div className="shop">
       <PageHeader pageTitle={t('pages:shop.title')} />
       <main className="shop__main grid">
-        <h1 className="page-title">{t('pages:shop.title')}</h1>
+        <div className="grid__row">
+          <h1 className="page-title">{t('pages:shop.title')}</h1>
+        </div>
         <div className="grid__row row-3">
           <section className="r-paper shop-item">11</section>
           <section className="r-paper">12</section>

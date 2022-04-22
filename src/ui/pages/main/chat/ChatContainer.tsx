@@ -15,7 +15,9 @@ export const ChatContainer = () => {
     <div className="chat">
       <PageHeader pageTitle={t('pages:chat.title')} />
       <main className="chat__main grid">
-        <h1 className="page-title">{t('pages:chat.title')}</h1>
+        <div className="grid__row">
+          <h1 className="page-title">{t('pages:chat.title')}</h1>
+        </div>
         <div className="grid__row">
           <section className="paper chat-grid">
             <Button disabled className="button-fake">

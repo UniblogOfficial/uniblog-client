@@ -18,7 +18,21 @@ export const CrosspostingContainer = () => {
     <div className="crossposting">
       <PageHeader pageTitle={t('pages:crossposting.title')} />
       <main className="crossposting__main grid">
-        <h1 className="page-title">{t('pages:crossposting.title')}</h1>
+        <div className="grid__row">
+          <h1 className="page-title">{t('pages:crossposting.title')}</h1>
+          <nav className="crossposting__nav">
+            <NavLink to="/crossposting/new-post" className="link-nulled">
+              <Button>{t('pages:crossposting.buttons.newPost')}</Button>
+            </NavLink>
+            <NavLink to="/crossposting/published" className="link-nulled">
+              <Button>{t('pages:crossposting.buttons.published')}</Button>
+            </NavLink>
+            <NavLink to="/crossposting/drafts" className="link-nulled">
+              <Button>{t('pages:crossposting.buttons.drafts')}</Button>
+            </NavLink>
+          </nav>
+        </div>
+
         <div className="grid__row row-2">
           <section className="paper text-editor">
             <h3 className="paper-title">{t('pages:crossposting.subtitles.description')}</h3>

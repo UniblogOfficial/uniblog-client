@@ -21,7 +21,9 @@ export const ProfileContainer = () => {
     <div className="profile">
       <PageHeader pageTitle={t('pages:profile.title')} />
       <main className="profile__main grid">
-        <h1 className="page-title">{t('pages:profile.title')}</h1>
+        <div className="grid__row">
+          <h1 className="page-title">{t('pages:profile.title')}</h1>
+        </div>
         <section className="profile__card paper">
           <h3 className="paper-title">{t('pages:profile.subtitles.profile')}</h3>
           <ProfileForm username={userData?.name} email={userData?.email} />

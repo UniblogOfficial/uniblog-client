@@ -15,7 +15,9 @@ export const MultilinkContainer = () => {
     <div className="multilink">
       <PageHeader pageTitle={t('pages:multilink.title')} />
       <main className="multilink__main grid">
-        <h1 className="page-title">{t('pages:multilink.title')}</h1>
+        <div className="grid__row">
+          <h1 className="page-title">{t('pages:multilink.title')}</h1>
+        </div>
         <div className="grid__row">
           <section className="r-paper multilink-grid">11</section>
         </div>

@@ -15,7 +15,9 @@ export const AnalyticsContainer = () => {
     <div className="analytics">
       <PageHeader pageTitle={t('pages:analytics.title')} />
       <main className="analytics__main grid">
-        <h1 className="page-title">{t('pages:analytics.title')}</h1>
+        <div className="grid__row">
+          <h1 className="page-title">{t('pages:analytics.title')}</h1>
+        </div>
         <div className="grid__row">
           <section className="r-paper analytics-grid">11</section>
         </div>

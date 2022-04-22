@@ -15,7 +15,9 @@ export const PriceContainer = () => {
     <div className="price">
       <PageHeader pageTitle={t('pages:price.title')} />
       <main className="price__main grid">
-        <h1 className="page-title">{t('pages:price.title')}</h1>
+        <div className="grid__row">
+          <h1 className="page-title">{t('pages:price.title')}</h1>
+        </div>
         <div className="grid__row">
           <section className="paper promo">11</section>
         </div>
