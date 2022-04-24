@@ -1,6 +1,6 @@
 .socialCard {
   display: flex;
-  padding: 12px 19px 12px 24px;
+  // padding: 12px 19px 12px 24px;
 }
 
 .imgContainer {
@@ -10,7 +10,7 @@
 }
 
 .title {
-  flex: 1;
+  flex: 1 0 100%;
   padding: 0 16px;
   font-weight: 400;
   font-size: 14px;

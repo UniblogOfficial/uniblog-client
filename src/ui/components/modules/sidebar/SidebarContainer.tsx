@@ -15,59 +15,62 @@ type TNavLinksDataItem = {
   icon: TIconName;
 };
 
-type TSidebarContainerProps = {};
+type TSidebarContainerProps = {
+  userData: TUserData;
+};
 
-export const SidebarContainer: FC<TSidebarContainerProps> = () => {
-  const { t, i18n } = useTranslation('pages');
+export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
+  const { t, i18n } = useTranslation(['pages', 'common']);
+
   const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
     i18n.changeLanguage(e.currentTarget.value);
   };
   const navLinksData: Array<TNavLinksDataItem> = [
     {
       id: 1,
-      title: t('navbar.home'),
+      title: t('pages:navbar.home'),
       href: '/',
       icon: 'home',
     },
     {
       id: 2,
-      title: t('navbar.crossposting'),
+      title: t('pages:navbar.crossposting'),
       href: '/crossposting',
       icon: 'grid-2',
     },
     {
       id: 3,
-      title: t('navbar.multilink'),
+      title: t('pages:navbar.multilink'),
       href: '/my-site',
       icon: 'window',
     },
     {
       id: 4,
-      title: t('navbar.shop'),
+      title: t('pages:navbar.shop'),
       href: '/shop',
       icon: 'cart',
     },
     {
       id: 5,
-      title: t('navbar.analytics'),
+      title: t('pages:navbar.analytics'),
       href: '/analytics',
       icon: 'analytics',
     },
     {
       id: 6,
-      title: t('navbar.addons'),
+      title: t('pages:navbar.addons'),
       href: '/addons',
       icon: 'grid-mosaic',
     },
     {
       id: 7,
-      title: t('navbar.price'),
+      title: t('pages:navbar.price'),
       href: '/price',
       icon: 'lightning',
     },
     {
       id: 10,
-      title: t('navbar.chat'),
+      title: t('pages:navbar.chat'),
       href: '/chat',
       icon: 'chat',
     },
@@ -80,29 +83,41 @@ export const SidebarContainer: FC<TSidebarContainerProps> = () => {
       </NavLink>
     </li>
   ));
+
   return (
-    <>
-      <nav className="nav">
-        <ul className="nav__list">{mappedNavLinks}</ul>
-      </nav>
-      <div className="lang-switch">
-        <Button
-          value="ru"
-          variant={i18n.language === 'ru' ? undefined : 'regular'}
-          className={i18n.language === 'ru' ? 'left active' : 'left'}
-          orientation="right"
-          onClick={changeLanguage}>
-          Русский
-        </Button>
-        <Button
-          value="en"
-          variant={i18n.language === 'en' ? undefined : 'regular'}
-          className={i18n.language === 'en' ? 'right active' : 'right'}
-          orientation="left"
-          onClick={changeLanguage}>
-          English
-        </Button>
+    <aside className="sidebar">
+      <div className="sidebar__container">
+        <div className="logo logo__header">Uniblog</div>
+        <nav className="nav">
+          <ul className="nav__list">{mappedNavLinks}</ul>
+        </nav>
+        <div className="lang-switch">
+          <Button
+            value="ru"
+            variant={i18n.language === 'ru' ? undefined : 'regular'}
+            className={i18n.language === 'ru' ? 'left active' : 'left'}
+            orientation="right"
+            onClick={changeLanguage}>
+            Русский
+          </Button>
+          <Button
+            value="en"
+            variant={i18n.language === 'en' ? undefined : 'regular'}
+            className={i18n.language === 'en' ? 'right active' : 'right'}
+            orientation="left"
+            onClick={changeLanguage}>
+            English
+          </Button>
+        </div>
+        <div className="dash sidebar__dash" />
+        <section className="profile-link">
+          <NavLink to="/profile" className="iconized__L" exact>
+            <Icon name="user" size="full" />
+            <p>{userData.name}</p>
+            <p className="profile-link__subtitle">{t('pages:navbar.personalAccount')}</p>
+          </NavLink>
+        </section>
       </div>
-    </>
+    </aside>
   );
 };

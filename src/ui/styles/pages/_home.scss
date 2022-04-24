@@ -39,11 +39,17 @@
   height: 400px;
 }
 .socials {
+  padding: 12px 19px 12px 24px;
+  li {
+      margin-bottom: 12px;
+      margin-right: 19px;
+    }
   &__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: 12px;
     padding-top: 16px;
+    
   }
 }
 .coverage {

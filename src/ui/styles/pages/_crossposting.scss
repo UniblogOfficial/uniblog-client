@@ -14,21 +14,76 @@
 		// .crossposting__nav
 		&__nav {
 			display: flex;
+			&>* {
+				margin-right: 16px;
+			}
+			.button {
+				padding: 8px;
+				font-size: 14px;
+				line-height: 1;
+				background-color: #fff;
+				color: #4f5b67;
+			}
+			.icon-container {
+				width: 16px;
+				height: 16px;
+				margin-bottom: 8px;
+			}
+			.icon {
+				--primary: #4f5b67;
+			}
+			.link-nulled.active {
+				.button {
+					background-color: #4040f2;
+					color: #fff;
+				}
+				.icon {
+					--primary: #fff;
+				}
+			}
 		}
 
 		// .crossposting__main
 		&__main {
+			.post-editor {
+				.socials {
+					flex: 0 0 200px;
+					padding-top: 0;
+					padding-left: 0;
+				}
+			}
+			.creation-area {
+				margin-right: 24px;
+			}
 		}
+}
+
+.creation-area {
+	flex: 0 0 450px;
+	.text-editor {
+		margin-bottom: 16px;
+	}
+	.button {
+		width: auto;
+	}
 }
 
 .text-editor {
   height: 400px;
+	display: flex;
+	min-height: 220px;
+	textarea {
+		flex: 1 1;
+	}
 }
 .planner {
+	flex: 1 0 350px;
+	height: 360px;
 	&__radio li label{
 		margin-bottom: 24px;
 	}
 }
 .attachment {
-  height: 168px;
+	position: relative;
+  height: 120px;
 }

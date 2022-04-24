@@ -1,16 +1,12 @@
 import React, { useLayoutEffect } from 'react';
 
-import { useTranslation } from 'react-i18next';
-import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 import { setUserData, TUserData } from '../../../bll/reducers';
 import { selectUserData } from '../../../bll/selectors';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import socials from '../../../img';
-import { Icon } from '../../components/elements/icons/Icon';
 import { Footer } from '../../components/modules/footer/Footer';
 import { SidebarContainer } from '../../components/modules/sidebar/SidebarContainer';
-import { SocialCard } from '../../components/modules/socialCard/SocialCard';
 import { NotFound } from '../404';
 
 import { AddonsContainer } from './addons/AddonsContainer';
@@ -27,7 +23,7 @@ export const MainContainer = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const userData = useAppSelector<TUserData | null>(selectUserData);
-  const { t } = useTranslation(['pages', 'common']);
+
   useLayoutEffect(() => {
     const papers: any = document.getElementsByClassName('r-paper');
     for (let i = 0; i < papers.length; i++) {
@@ -47,34 +43,9 @@ export const MainContainer = () => {
     return <Redirect to="/login" />;
   }
 
-  const images = socials.map((social: any) => (
-    <li key={social.title}>
-      <SocialCard data={social} titleChange={t('common:links.change', { ns: 'common' })} />
-    </li>
-  ));
-
   return (
     <main className="main _container">
-      <aside className="sidebar">
-        <div className="sidebar__container">
-          <div className="logo logo__header">Uniblog</div>
-          <Switch>
-            <Route
-              path="/crossposting"
-              render={() => <ul className="crossposting__aside">{images}</ul>}
-            />
-            <Route path="/" render={() => <SidebarContainer />} />
-          </Switch>
-          <div className="dash sidebar__dash" />
-          <section className="profile-link">
-            <NavLink to="/profile" className="iconized__L" exact>
-              <Icon name="user" size="full" />
-              <p>{userData.name}</p>
-              <p className="profile-link__subtitle">{t('pages:navbar.personalAccount')}</p>
-            </NavLink>
-          </section>
-        </div>
-      </aside>
+      <SidebarContainer userData={userData} />
       <div className="content">
         <div className="content__container">
           <Switch>

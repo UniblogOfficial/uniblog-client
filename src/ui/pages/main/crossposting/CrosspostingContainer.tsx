@@ -3,60 +3,84 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { Breadcrumbs } from '../../../components/elements/breadcrumbs/Breadcrumbs';
+import socials from '../../../../img';
 import { Button } from '../../../components/elements/button/Button';
+import { Icon } from '../../../components/elements/icons/Icon';
 import { Radio } from '../../../components/elements/radio/Radio';
 import { PageHeader } from '../../../components/modules/headers/PageHeader';
+import { SocialCard } from '../../../components/modules/socialCard/SocialCard';
 
 type TCrosspostingContainerProps = {};
 
 export const CrosspostingContainer = () => {
   const { t } = useTranslation(['pages', 'common']);
   const [temp, setTemp] = useState('now');
-  console.log(temp);
+  const images = socials.map((social: any) => (
+    <li key={social.title}>
+      <SocialCard data={social} titleChange={t('common:links.change', { ns: 'common' })} />
+    </li>
+  ));
   return (
     <div className="crossposting">
       <PageHeader pageTitle={t('pages:crossposting.title')} />
       <main className="crossposting__main grid">
         <div className="grid__row">
           <h1 className="page-title">{t('pages:crossposting.title')}</h1>
+        </div>
+        <div className="grid__row">
           <nav className="crossposting__nav">
             <NavLink to="/crossposting/new-post" className="link-nulled">
-              <Button>{t('pages:crossposting.buttons.newPost')}</Button>
+              <Button className="button button-column _rounded" variant="regular">
+                <Icon name="circle-add" className="nav-icon" size="full" />
+                {t('pages:crossposting.buttons.newPost')}
+              </Button>
             </NavLink>
             <NavLink to="/crossposting/published" className="link-nulled">
-              <Button>{t('pages:crossposting.buttons.published')}</Button>
+              <Button className="button button-column _rounded" variant="regular">
+                <Icon name="calendar-add" className="nav-icon" size="full" />
+                {t('pages:crossposting.buttons.published')}
+              </Button>
             </NavLink>
             <NavLink to="/crossposting/drafts" className="link-nulled">
-              <Button>{t('pages:crossposting.buttons.drafts')}</Button>
+              <Button className="button button-column _rounded" variant="regular">
+                <Icon name="draft" className="nav-icon" size="full" />
+                {t('pages:crossposting.buttons.drafts')}
+              </Button>
             </NavLink>
           </nav>
         </div>
-
-        <div className="grid__row row-2">
-          <section className="paper text-editor">
-            <h3 className="paper-title">{t('pages:crossposting.subtitles.description')}</h3>
+        <div className="grid__row post-editor">
+          <section className="socials">
+            <ul>{images}</ul>
           </section>
-          <section className="paper planner">
-            <Radio
-              options={['now', 'later']}
-              value={temp}
-              titles={[
-                t('pages:crossposting.checks.publishNow'),
-                t('pages:crossposting.checks.schedulePublication'),
-              ]}
-              onChangeOption={setTemp}
-              className="planner__radio"
-            />
+          <section className="creation-area">
+            <div className="paper text-editor">
+              <textarea placeholder={t('common:placeholders.enterText')} />
+            </div>
+            <div className="grid__row row-3">
+              <section className="r-paper attachment">21</section>
+              <section className="r-paper attachment">22</section>
+              <section className="r-paper attachment">23</section>
+            </div>
+            <Button className="button _rounded" variant="regular">
+              Clean
+            </Button>
           </section>
-        </div>
-        <div className="grid__row row-6">
-          <section className="r-paper attachment">21</section>
-          <section className="r-paper attachment">22</section>
-          <section className="r-paper attachment">23</section>
-          <section className="r-paper attachment">24</section>
-          <section className="r-paper attachment">25</section>
-          <section className="r-paper attachment">26</section>
+          <section className="planner">
+            <div className="paper">
+              <Radio
+                options={['now', 'later']}
+                value={temp}
+                titles={[
+                  t('pages:crossposting.checks.publishNow'),
+                  t('pages:crossposting.checks.schedulePublication'),
+                ]}
+                onChangeOption={setTemp}
+                className="planner__radio"
+              />
+            </div>
+            <Button className="button _rounded">{t('common:buttons.next')}</Button>
+          </section>
         </div>
       </main>
     </div>
