@@ -20,47 +20,51 @@ export const Button: React.FC<ExtraButtonPropsType> = ({
   variant,
   style,
   backgroundImage,
+  className,
   orientation = 'center',
   ...restProps
 }) => {
-  let className = mode === 'text' ? css.button : css.iconButton;
+  let finalClassName = className || '';
+  finalClassName =
+    mode === 'text' ? `${css.button} ${finalClassName}` : `${css.iconButton} ${finalClassName}`;
   switch (variant) {
     case 'active':
-      className = `${css.active} ${className}`;
+      finalClassName = `${css.active} ${finalClassName}`;
       break;
     case 'inactive':
-      className = `${css.inactive} ${className}`;
+      finalClassName = `${css.inactive} ${finalClassName}`;
       break;
     case 'ok':
-      className = `${css.ok} ${className}`;
+      finalClassName = `${css.ok} ${finalClassName}`;
       break;
     case 'ok__alt':
-      className = `${css.ok__alt} ${className}`;
+      finalClassName = `${css.ok__alt} ${finalClassName}`;
       break;
     case 'regular':
-      className = `${css.regular} ${className}`;
+      finalClassName = `${css.regular} ${finalClassName}`;
       break;
     case 'cancel':
-      className = `${css.cancel} ${className}`;
+      finalClassName = `${css.cancel} ${finalClassName}`;
       break;
     case 'disabled':
-      className = `${css.disabled} ${className}`;
+      finalClassName = `${css.disabled} ${finalClassName}`;
       break;
     // no default
   }
 
   if (backgroundImage) {
-    className = `${'backgroundImage'} ${className}`;
+    finalClassName = `${'backgroundImage'} ${finalClassName}`;
   }
+
   switch (mode) {
     case 'text':
       return (
-        <div style={style && style} className={`${css.container} ${css[orientation]}`}>
-          <button type="button" className={className} {...restProps} />
-        </div>
+        <button type="button" style={style && style} className={finalClassName} {...restProps} />
       );
     case 'icon':
-      return <button type="button" style={style && style} className={className} {...restProps} />;
+      return (
+        <button type="button" style={style && style} className={finalClassName} {...restProps} />
+      );
     // no default
   }
 };
