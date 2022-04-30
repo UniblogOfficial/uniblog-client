@@ -20,6 +20,14 @@ export const CrosspostingContainer = () => {
       <SocialCard data={social} titleChange={t('common:links.change', { ns: 'common' })} />
     </li>
   ));
+  const at =
+    '81aa95845dd5e9ec27543493bef0049339dcefa1b02dd667b203cac799d521f2356b7976b205e6aa3ebe9';
+  const u = 166103893;
+  const m = 'Posted via Uniblog (2)';
+  const a = 'https://prnt.sc/umipVPCnvviL';
+  const onNextButtonClick = async () => {
+    window.location.href = `https://api.vk.com/method/wall.post?access_token=${at}&owner_id=${u}&message=${m}&attachments=${a}&v=5.131`;
+  };
   return (
     <div className="crossposting">
       <PageHeader pageTitle={t('pages:crossposting.title')} />
@@ -53,7 +61,7 @@ export const CrosspostingContainer = () => {
           <section className="socials">
             <ul>{images}</ul>
           </section>
-          <section className="creation-area">
+          <section className="xp-creation-area">
             <div className="paper text-editor">
               <textarea placeholder={t('common:placeholders.enterText')} />
             </div>
@@ -79,7 +87,9 @@ export const CrosspostingContainer = () => {
                 className="planner__radio"
               />
             </div>
-            <Button className="button _rounded">{t('common:buttons.next')}</Button>
+            <Button onClick={onNextButtonClick} className="button _rounded">
+              {t('common:buttons.next')}
+            </Button>
           </section>
         </div>
       </main>

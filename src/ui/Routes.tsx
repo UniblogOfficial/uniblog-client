@@ -13,6 +13,7 @@ export const Routes = () => (
     <Route path="/login" render={() => <LoginContainer />} />
     <Route path="/signup" render={() => <SignupContainer />} />
     <Route path="/verification" render={() => <VerificationContainer />} />
+    <Route path="/callback" render={() => <div>OAuth in progress...</div>} />
     {/* <Route path="/recovery" render={() => <PassRecoveryContainer />} />
     <Route path="/new-password" render={() => <NewPassContainer />} /> */}
     <Route path="/" render={() => <MainContainer />} />
