@@ -34,127 +34,20 @@ export const Carousel: FC<TCarouselProps> = ({
   const [stage, setStage] = useState(fullWidth > 1 ? 0 : firstStageValue);
   const [isRolling, setIsRolling] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsRolling(false);
-    }, transitionTime);
-    if (stage === firstStageValue && controlDots) {
-      setTimeout(() => {
-        // after transition is complete, translate view from start duplicates tail section to main set
-        isNoPartialSlide
-          ? setStage(+controlDots[lastDotIndex].props.value)
-          : setStage(+controlDots[secondToLastDotIndex].props.value);
-      }, transitionTime);
-    }
-    if (stage === lastStageValue && controlDots) {
-      setTimeout(() => {
-        // after transition is complete, translate view from end duplicates tail section to main set
-        setStage(+controlDots[0].props.value);
-      }, transitionTime);
-    }
-  }, [stage]);
-
-  const onStageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (
-      stage === secondStageValue &&
-      controlDots &&
-      +e.currentTarget.value === +controlDots[secondToLastDotIndex].props.value
-    ) {
-      setStage(firstStageValue);
-    } else {
-      setStage(+e.currentTarget.value);
-    }
-    setIsRolling(true);
-  };
-
-  const onArrowClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (controlDots && e.currentTarget.dataset.value) {
-      setIsRolling(true);
-      if (controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)]) {
-        setStage(+controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)].props.value);
-      }
-      if (+e.currentTarget.dataset.value === -1 && stage === 0) {
-        isNoPartialSlide ? setStage(firstStageValue) : setStage(secondStageValue);
-      }
-      if (+e.currentTarget.dataset.value === -1 && stage < 0) {
-        setStage(firstStageValue);
-      }
-      if (+e.currentTarget.dataset.value === 1 && stage === fullWidth - 1) {
-        setStage(lastStageValue);
-      }
-      if (+e.currentTarget.dataset.value === 1 && stage < 0) {
-        setStage(0);
-      }
-    }
-  };
-
-  const [firstSlideItems, midSlideItems, secondToLastSlideItems, lastSlideItems] = useMemo(() => {
-    const first = [];
-    const mid = [];
-    const secondtolast = [];
-    const last = [];
-    for (let i = 0; i < items.length; i++) {
-      if (i < itemsPerView) {
-        // FIRST VIEW SET
-        first.push(
-          <li
-            key={i + Math.random()}
-            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-            className={styles.item__container}>
-            <div className={styles.item}>{items[i]}</div>
-          </li>,
-        );
-        if (i >= itemsPerView * (fullSlidesAmount - 1) && fullWidth <= 2) {
-          // SECOND-TO-LAST VIEW stystyles
-          secondtolast.push(
-            <li
-              key={i}
-              style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-              className={styles.item__container}>
-              <div className={styles.item}>{items[i]}</div>
-            </li>,
-          );
-        }
-      } else if (
-        i >=
-        (isNoPartialSlide ? itemsPerView * (fullSlidesAmount - 1) : itemsPerView * fullSlidesAmount)
-      ) {
-        // LAST VIEW SET
-        last.push(
-          <li
-            key={i}
-            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-            className={styles.item__container}>
-            <div className={styles.item}>{items[i]}</div>
-          </li>,
-        );
-      } else if (i >= itemsPerView * (fullSlidesAmount - 1) && !isNoPartialSlide) {
-        // SECOND-TO-LAST VIEW SET
-        secondtolast.push(
-          <li
-            key={i}
-            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-            className={styles.item__container}>
-            <div className={styles.item}>{items[i]}</div>
-          </li>,
-        );
-      } else {
-        // REST VIEW SETS
-        mid.push(
-          <li
-            key={i}
-            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-            className={styles.item__container}>
-            <div className={styles.item}>{items[i]}</div>
-          </li>,
-        );
-      }
-    }
-    return [first, mid, secondtolast, last];
-  }, [items, itemsPerView]);
-
   const controlDots = useMemo(() => {
     const dots = [];
+    const onStageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+      if (
+        stage === secondStageValue &&
+        controlDots &&
+        +e.currentTarget.value === +controlDots[secondToLastDotIndex].props.value
+      ) {
+        setStage(firstStageValue);
+      } else {
+        setStage(+e.currentTarget.value);
+      }
+      setIsRolling(true);
+    };
     for (let i = 0; i < (isNoPartialSlide ? fullWidth : Math.ceil(fullWidth)); i++) {
       if (i === 0) {
         // FIRST VIEW CONTROL DOT
@@ -241,7 +134,141 @@ export const Carousel: FC<TCarouselProps> = ({
     }
 
     return dots.length > 1 ? dots : null;
-  }, [stage, items, itemsPerView]);
+  }, [
+    stage,
+    secondStageValue,
+    secondToLastDotIndex,
+    firstStageValue,
+    isNoPartialSlide,
+    fullWidth,
+    lastStageValue,
+  ]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsRolling(false);
+    }, transitionTime);
+    if (stage === firstStageValue && controlDots) {
+      setTimeout(() => {
+        // after transition is complete, translate view from start duplicates tail section to main set
+        isNoPartialSlide
+          ? setStage(+controlDots[lastDotIndex].props.value)
+          : setStage(+controlDots[secondToLastDotIndex].props.value);
+      }, transitionTime);
+    }
+    if (stage === lastStageValue && controlDots) {
+      setTimeout(() => {
+        // after transition is complete, translate view from end duplicates tail section to main set
+        setStage(+controlDots[0].props.value);
+      }, transitionTime);
+    }
+  }, [
+    stage,
+    controlDots,
+    firstStageValue,
+    isNoPartialSlide,
+    lastDotIndex,
+    lastStageValue,
+    secondToLastDotIndex,
+    transitionTime,
+  ]);
+
+  const onArrowClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (controlDots && e.currentTarget.dataset.value) {
+        setIsRolling(true);
+        if (controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)]) {
+          setStage(+controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)].props.value);
+        }
+        if (+e.currentTarget.dataset.value === -1 && stage === 0) {
+          isNoPartialSlide ? setStage(firstStageValue) : setStage(secondStageValue);
+        }
+        if (+e.currentTarget.dataset.value === -1 && stage < 0) {
+          setStage(firstStageValue);
+        }
+        if (+e.currentTarget.dataset.value === 1 && stage === fullWidth - 1) {
+          setStage(lastStageValue);
+        }
+        if (+e.currentTarget.dataset.value === 1 && stage < 0) {
+          setStage(0);
+        }
+      }
+    },
+    [
+      controlDots,
+      stage,
+      fullWidth,
+      isNoPartialSlide,
+      firstStageValue,
+      secondStageValue,
+      lastStageValue,
+    ],
+  );
+
+  const [firstSlideItems, midSlideItems, secondToLastSlideItems, lastSlideItems] = useMemo(() => {
+    const first = [];
+    const mid = [];
+    const secondtolast = [];
+    const last = [];
+    for (let i = 0; i < items.length; i++) {
+      if (i < itemsPerView) {
+        // FIRST VIEW SET
+        first.push(
+          <li
+            key={i + Math.random()}
+            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
+            className={styles.item__container}>
+            <div className={styles.item}>{items[i]}</div>
+          </li>,
+        );
+        if (i >= itemsPerView * (fullSlidesAmount - 1) && fullWidth <= 2) {
+          // SECOND-TO-LAST VIEW
+          secondtolast.push(
+            <li
+              key={i}
+              style={{ flex: `1 0 ${100 / itemsPerView}%` }}
+              className={styles.item__container}>
+              <div className={styles.item}>{items[i]}</div>
+            </li>,
+          );
+        }
+      } else if (
+        i >=
+        (isNoPartialSlide ? itemsPerView * (fullSlidesAmount - 1) : itemsPerView * fullSlidesAmount)
+      ) {
+        // LAST VIEW SET
+        last.push(
+          <li
+            key={i}
+            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
+            className={styles.item__container}>
+            <div className={styles.item}>{items[i]}</div>
+          </li>,
+        );
+      } else if (i >= itemsPerView * (fullSlidesAmount - 1) && !isNoPartialSlide) {
+        // SECOND-TO-LAST VIEW SET
+        secondtolast.push(
+          <li
+            key={i}
+            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
+            className={styles.item__container}>
+            <div className={styles.item}>{items[i]}</div>
+          </li>,
+        );
+      } else {
+        // REST VIEW SETS
+        mid.push(
+          <li
+            key={i}
+            style={{ flex: `1 0 ${100 / itemsPerView}%` }}
+            className={styles.item__container}>
+            <div className={styles.item}>{items[i]}</div>
+          </li>,
+        );
+      }
+    }
+    return [first, mid, secondtolast, last];
+  }, [items, itemsPerView, fullSlidesAmount, fullWidth, isNoPartialSlide]);
 
   return (
     <div className={className}>
