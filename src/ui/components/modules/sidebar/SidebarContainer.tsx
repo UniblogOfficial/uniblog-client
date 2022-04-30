@@ -41,7 +41,7 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
     {
       id: 3,
       title: t('pages:navbar.multilink'),
-      href: '/my-site',
+      href: '/multilink',
       icon: 'window',
     },
     {
@@ -77,7 +77,7 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
   ];
   const mappedNavLinks = navLinksData.map((data, i) => (
     <li key={data.id} className="nav__item">
-      <NavLink to={data.href} className="nav__link iconized__L" exact>
+      <NavLink exact={i === 0 || false} to={data.href} className="nav__link iconized__L">
         <Icon name={data.icon} size="full" />
         {data.title}
       </NavLink>

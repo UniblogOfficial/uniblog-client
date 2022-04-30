@@ -129,7 +129,7 @@ export const LoginForm = () => {
           {helperState.email && dirtyFields.email && errors.email && errors.email.message}
         </div>
       </section>
-      <section className="field field-auth iconized__R">
+      <section className="field field-auth">
         <div className="field__input">
           <Input
             {...register('password', { value: 'qwerty123' })}
@@ -151,6 +151,7 @@ export const LoginForm = () => {
               secondaryColor="#242D35"
               primaryOpacity="1"
               secondaryOpacity="1"
+              containerClassName="auth-eye"
             />
           ) : (
             <Icon
@@ -162,6 +163,7 @@ export const LoginForm = () => {
               secondaryColor="#4F5B67"
               primaryOpacity="1"
               secondaryOpacity="1"
+              containerClassName="auth-eye"
             />
           )}
         </div>

@@ -21,6 +21,7 @@ h4 {
 }
 
 .button {
+    width: auto;
     &__goback {
         button {
             width: 99px;
@@ -49,6 +50,12 @@ h4 {
     &._rounded {
         border-radius: 8px;
     }
+    &._paper {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 }
 
 .paper {
@@ -59,6 +66,13 @@ h4 {
     border-radius: 12px;
     overflow-x: hidden;
     background: #fff;
+    &._with-button-bottom {
+        padding-bottom: 0;
+        overflow: hidden;
+    }
+    &__button-container {
+        height: 43px;
+    }
 }
 
 .r-paper {
@@ -136,96 +150,8 @@ h4 {
     text-decoration: none;
 }
 
-.iconized {
-    &__LR {
-        position: relative;
 
-        .icon-container {
-            width: 1.8em;
-        }
 
-        &:not(.field) {
-            padding: 5px 2.4em 0 2.4em;
-        }
-
-        &.field {
-            input {
-                padding: 0.2em 2em 0.2em 2em;
-            }
-        }
-    }
-
-    &__L {
-        position: relative;
-
-        .icon-container {
-            position: absolute;
-            top: 0;
-            left: 24px;
-            height: 100%;
-            width: 24px;
-        }
-
-        &:not(.field) {
-            padding-left: 71px;
-        }
-
-        &.field {
-            input {
-                padding: 0.2em 0.8em 0.2em 1.8em;
-            }
-        }
-    }
-
-    &__R {
-        position: relative;
-
-        .icon-container {
-            position: absolute;
-            top: 0;
-            right: 12px;
-            height: 100%;
-            width: 16px;
-        }
-
-        &:not(.field) {
-            padding: 5px 2.4em 0 0;
-        }
-
-        &.field {
-            input {
-                padding-right: 32px;
-            }
-        }
-    }
-}
-
-.icon {
-    position: relative;
-    margin: auto;
-    height: 100%;
-    width: 100%;
-    z-index: 2;
-    --primary: #000;
-    --secondary: #000;
-    //stroke: #000;
-    &.reduced {
-        height: calc(100% / 1.415); //sqrt(2) =)
-        width: calc(100% / 1.415);
-    }
-
-    &.max {
-        transform: scale(1.05) translateX(-0.1px);
-        height: 100%;
-        width: 100%;
-    }
-
-    &__rotate {
-        position: absolute;
-        display: flex;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-    }
+.square {
+    padding: 0 0 100%;
 }
