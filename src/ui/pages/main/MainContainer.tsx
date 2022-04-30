@@ -50,7 +50,7 @@ export const MainContainer = () => {
         <div className="content__container">
           <Switch>
             <Route path="/crossposting" render={() => <CrosspostingContainer />} />
-            <Route path="/my-site" render={() => <MultilinkContainer />} />
+            <Route path="/multilink" render={() => <MultilinkContainer />} />
             <Route path="/shop" render={() => <ShopContainer />} />
             <Route path="/analytics" render={() => <AnalyticsContainer />} />
             <Route path="/addons" render={() => <AddonsContainer />} />

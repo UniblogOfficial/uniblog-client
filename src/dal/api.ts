@@ -4,10 +4,10 @@ import { TUserData } from '../bll/reducers';
 import { StatusCode } from '../common/constants';
 
 export const authAPI = axios.create({
-  baseURL: process.env.APP_AUTH_URL,
+  baseURL: process.env.REACT_APP_API_URL,
   withCredentials: true,
   headers: {
-    'API-KEY': process.env.APP_AUTH_API_KEY,
+    'API-KEY': process.env.REACT_APP_API_KEY,
     Authorization: 'Bearer ',
   },
 });
@@ -36,11 +36,11 @@ authAPI.interceptors.response.use(
         localStorage.removeItem('UniblogAccessToken');
         localStorage.removeItem('UniblogRefreshToken');
         const response = await axios.get<TAuthResponse<TUserData>>(
-          `${process.env.APP_AUTH_URL}auth/refresh`,
+          `${process.env.REACT_APP_API_URL}auth/refresh`,
           {
             withCredentials: true,
             headers: {
-              'API-KEY': process.env.APP_AUTH_API_KEY,
+              'API-KEY': process.env.REACT_APP_API_KEY,
               Authorization: token ? `Bearer ${token}` : '',
             },
           },

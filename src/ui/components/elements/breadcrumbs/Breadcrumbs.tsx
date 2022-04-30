@@ -17,7 +17,7 @@ export const Breadcrumbs: FC<TBreadcrumbsProps> = ({ path, className, activeClas
   const getBreadcrumbs = () => {
     const last = path.length - 1;
     return path.map((step, i) => (
-      <>
+      <React.Fragment key={step.title}>
         {i !== last && step.url ? (
           <NavLink to={step.url} className={className}>
             {step.title}
@@ -26,7 +26,7 @@ export const Breadcrumbs: FC<TBreadcrumbsProps> = ({ path, className, activeClas
           <span className={`${className} ${activeClassName}`}>{step.title}</span>
         )}
         {i !== last && <>&ensp;/&ensp;</>}
-      </>
+      </React.Fragment>
     ));
   };
   return <div className={`${classes.container} ${className}`}>{getBreadcrumbs()}</div>;
