@@ -15,7 +15,6 @@ export const MLPreview = () => {
             https://uniblog-online.com/VasyaRaper
           </a>
         </span>
-        <Button>Share</Button>
       </div>
     </>
   );

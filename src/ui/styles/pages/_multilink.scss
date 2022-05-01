@@ -110,6 +110,7 @@
 		align-items: center;
 		margin: 5px;
 		padding: 32px 15px 20px;
+		padding: 9% 7% 9%;
 		border-radius: 25px;
 		background-color: #fff;
 		z-index: 0;
@@ -118,15 +119,16 @@
 	// .phone__logo
 	&__logo {
 		position: relative;
-		width: 80px;
-		height: 80px;
+		flex: 0 0 17%;
+		width: 100%;
+		//height: 80px;
 		.icon-container {
 			height: 100%;
 		}
 	}
 	// .phone__user-title
 	&__user-title {
-		margin-bottom: 12px;
+		margin-bottom: 7%;
 	}
 	// .phone__template
 	&__template {
@@ -137,7 +139,7 @@
 		& > * {
 			display: flex;
 			flex-direction: column;
-			margin-bottom: 12px;
+			margin-bottom: 7%;
 			&:last-child {
 				margin-bottom: 0;
 			}
