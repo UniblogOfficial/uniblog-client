@@ -11,6 +11,7 @@ type TCarouselProps = {
   arrowStep?: number;
   transitionTime?: number;
   className?: string;
+  callback?: (stage: number) => void;
 };
 
 export const Carousel: FC<TCarouselProps> = ({
@@ -20,6 +21,7 @@ export const Carousel: FC<TCarouselProps> = ({
   arrowStep = itemsPerView,
   transitionTime = itemsPerView * 100,
   className,
+  callback,
 }) => {
   const fullWidth = items.length / itemsPerView; // in parts exm 2.5
   const fullSlidesAmount = Math.floor(fullWidth); // exm. 2
@@ -270,6 +272,9 @@ export const Carousel: FC<TCarouselProps> = ({
     return [first, mid, secondtolast, last];
   }, [items, itemsPerView, fullSlidesAmount, fullWidth, isNoPartialSlide]);
 
+  useEffect(() => {
+    callback && !isRolling && callback(stage);
+  }, [callback, stage, isRolling]);
   return (
     <div className={className}>
       <div
