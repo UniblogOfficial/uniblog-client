@@ -1,54 +1,72 @@
 /* eslint-disable dot-notation */
-import React from 'react';
+import React, { CSSProperties, FC, useCallback, useMemo, MouseEvent } from 'react';
 
 import { Button } from '../../../../components/elements';
 
 import styles from './MLBackground.module.scss';
 
-type TMLBackgroundProps = {};
+type TMLBackgroundProps = {
+  setBackground: (background: string) => void;
+};
 
-export const MLBackground = () => (
-  <>
-    <h3 className="paper-title">Choose a background</h3>
-    <div className="multilink-editor__constructor">
-      <div className="grid">
-        <ul className="grid__row row-3">
-          <li className={`${styles['bg']} ${styles['bg-1']}`}>
-            <div />
-          </li>
-          <li className={`${styles['bg']} ${styles['bg-2']}`}>
-            <div />
-          </li>
-          <li className={`${styles['bg']} ${styles['bg-3']}`}>
-            <div />
-          </li>
-        </ul>
-        <ul className="grid__row row-3">
-          <li className={`${styles['bg']} ${styles['bg-4']}`}>
-            <div />
-          </li>
-          <li className={`${styles['bg']} ${styles['bg-5']}`}>
-            <div />
-          </li>
-          <li className={`${styles['bg']} ${styles['bg-6']}`}>
-            <div />
-          </li>
-        </ul>
-        <ul className="grid__row row-3">
-          <li className={`${styles['bg']} ${styles['bg-7']}`}>
-            <div />
-          </li>
-          <li className={`${styles['bg']} ${styles['bg-8']}`}>
-            <div />
-          </li>
-          <li className={`${styles['bg']} ${styles['bg-9']}`}>
-            <div />
-          </li>
-        </ul>
+export const MLBackground: FC<TMLBackgroundProps> = ({ setBackground }) => {
+  const onSnippetClick = useCallback(
+    (e: MouseEvent<HTMLInputElement>) => {
+      setBackground(e.currentTarget.style.background);
+    },
+    [setBackground],
+  );
+  const snippets = useMemo(() => {
+    const columns = 3;
+    const rows = 3;
+    return bgs.map((props, i) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <li key={i} className={`${styles['bg']}`}>
+        <input onClick={onSnippetClick} style={props} type="button" />
+        <div />
+      </li>
+    ));
+  }, [onSnippetClick]);
+
+  return (
+    <>
+      <h3 className="paper-title">Choose a background</h3>
+      <div className="multilink-editor__constructor">
+        <ul className="grid bg-menu-grid">{snippets}</ul>
       </div>
-    </div>
-    <Button variant="regular" className="button button-download _rounded">
-      Download
-    </Button>
-  </>
-);
+      <Button variant="regular" className="button button-download _rounded">
+        Download
+      </Button>
+    </>
+  );
+};
+
+const bgs: CSSProperties[] = [
+  {
+    background: '#fff',
+  },
+  {
+    background: 'linear-gradient(90deg, #E1EEC3 0%, #F05053 100%)',
+  },
+  {
+    background: 'linear-gradient(180deg, #76B852 0%, #8DC26F 100%)',
+  },
+  {
+    background: 'linear-gradient(135deg, #1C92D2 0%, #F2FCFE 100%)',
+  },
+  {
+    background: 'linear-gradient(180deg, #4E54C8 0%, #8F94FB 100%)',
+  },
+  {
+    background: 'linear-gradient(180deg, #FBD3E9 0%, #BB377D 100%)',
+  },
+  {
+    background: 'linear-gradient(180deg, #e8f71f 0%, #8F94FB 100%)',
+  },
+  {
+    background: 'linear-gradient(180deg, #f71f1f 0%, #8F94FB 100%)',
+  },
+  {
+    background: 'linear-gradient(180deg, #f71fec 0%, #8F94FB 100%)',
+  },
+];

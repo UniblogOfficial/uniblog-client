@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { FC, useCallback } from 'react';
 
 import { Carousel, Icon } from '../../../../components/elements';
 
-type TMLTemplateProps = {};
+type TMLTemplateProps = {
+  setTemplate: (template: number[]) => void;
+};
 
-export const MLTemplate = () => {
+const multilinkTemplate = new Map([
+  [0, [29, 71]],
+  [1, [25, 25, 25, 25]],
+  [2, [50, 25, 25]],
+]);
+
+export const MLTemplate: FC<TMLTemplateProps> = ({ setTemplate }) => {
+  const setCurrentTemplate = useCallback(
+    (stage: number) => {
+      const template = multilinkTemplate.get(stage);
+      if (template) {
+        setTemplate(template);
+      }
+    },
+    [setTemplate],
+  );
   const carouselArrows = [
     <div key="arrow1">
       <Icon
@@ -30,6 +47,7 @@ export const MLTemplate = () => {
           arrowStep={1}
           className="carousel"
           transitionTime={200}
+          callback={setCurrentTemplate}
         />
       </div>
     </>
