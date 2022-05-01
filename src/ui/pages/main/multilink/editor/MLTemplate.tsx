@@ -7,9 +7,10 @@ type TMLTemplateProps = {
 };
 
 const multilinkTemplate = new Map([
-  [0, [29, 71]],
-  [1, [25, 25, 25, 25]],
-  [2, [50, 25, 25]],
+  [0, [12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
+  [1, [25, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
+  [2, [50, 25, 12.5, 12.5]],
+  [3, [25, 25, 12.5, 12.5, 12.5, 12.5]],
 ]);
 
 export const MLTemplate: FC<TMLTemplateProps> = ({ setTemplate }) => {
@@ -54,38 +55,12 @@ export const MLTemplate: FC<TMLTemplateProps> = ({ setTemplate }) => {
   );
 };
 
-const templates = [
-  <ul key="1" className="template _1">
-    <li>
-      <div className="template__block" />
-    </li>
-    <li>
-      <div className="template__block" />
-    </li>
-  </ul>,
-  <ul key="2" className="template _2">
-    <li>
-      <div className="template__block" />
-    </li>
-    <li>
-      <div className="template__block" />
-    </li>
-    <li>
-      <div className="template__block" />
-    </li>
-    <li>
-      <div className="template__block" />
-    </li>
-  </ul>,
-  <ul key="3" className="template _3">
-    <li>
-      <div className="template__block" />
-    </li>
-    <li>
-      <div className="template__block" />
-    </li>
-    <li>
-      <div className="template__block" />
-    </li>
-  </ul>,
-];
+const id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const templates = Array.from(multilinkTemplate.values()).map((template, i) => (
+  <ul key={id[i]} className="template">
+    {template.map((block, j) => (
+      <li key={id[j]} style={{ flex: `0 1 ${block}%` }} className="template__block" />
+    ))}
+  </ul>
+));

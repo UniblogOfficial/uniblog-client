@@ -9,7 +9,7 @@ import { Button } from '../../../../components/elements/button/Button';
 
 import { MLBackground } from './MLBackground';
 import { MLContent } from './MLContent';
-import { MLSocials } from './MLSocials';
+import { MLPreview } from './MLPreview';
 import { MLTemplate } from './MLTemplate';
 
 type TMultilinkEditorContainerProps = {};
@@ -17,8 +17,8 @@ type TMultilinkEditorContainerProps = {};
 enum EditorStage {
   TEMPLATE = 1,
   BACKGROUND = 2,
-  SOCIALS = 3,
-  CONTENT = 4,
+  CONTENT = 3,
+  PREVIEW = 4,
 }
 
 export const MultilinkEditorContainer = () => {
@@ -42,8 +42,6 @@ export const MultilinkEditorContainer = () => {
   const setBackground = useCallback(
     (background: string) => {
       if (multilinkAttrs.background !== background) {
-        console.log(background);
-
         setMultilinkAttrs({ ...multilinkAttrs, background });
       }
     },
@@ -79,8 +77,10 @@ export const MultilinkEditorContainer = () => {
         <div className="paper _with-button-bottom">
           {stage === EditorStage.TEMPLATE && <MLTemplate setTemplate={setTemplate} />}
           {stage === EditorStage.BACKGROUND && <MLBackground setBackground={setBackground} />}
-          {stage === EditorStage.SOCIALS && <MLSocials setLink={setLink} />}
-          {stage === EditorStage.CONTENT && <MLContent />}
+          {stage === EditorStage.CONTENT && multilinkAttrs.template && (
+            <MLContent template={multilinkAttrs.template} setLink={setLink} />
+          )}
+          {stage === EditorStage.PREVIEW && <MLPreview />}
           <div className="paper__button-container">
             <Button value="background" onClick={onNextButtonClick} className="button _full _paper">
               {t('common:buttons.next')}
@@ -91,18 +91,6 @@ export const MultilinkEditorContainer = () => {
       <section className="preview-area">
         <div className="paper">
           <h3 className="paper-title">Preview</h3>
-          <div>
-            <span>
-              Link:{' '}
-              <a
-                href="https://uniblog-online.netlify.app/VasyaRaper"
-                target="_blank"
-                rel="noreferrer">
-                https://uniblog-online.com/VasyaRaper
-              </a>
-            </span>
-            <Button>Share</Button>
-          </div>
           <div className="preview-device">
             <div className="phone">
               <div className="phone__container" style={{ background: multilinkAttrs.background }}>
