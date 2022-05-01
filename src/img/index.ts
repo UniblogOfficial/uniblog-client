@@ -8,7 +8,6 @@ const importAll = (r: any) => {
   r.keys().map((item: string, i: number) => {
     images.push({ title: item.replace('./', '').split('.')[0], src: r(item).default });
   });
-  console.log(images);
   return images;
 };
 // important! this titles must be the same to filenames

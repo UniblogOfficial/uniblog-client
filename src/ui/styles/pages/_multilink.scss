@@ -64,11 +64,15 @@
 		height: 100%;
 		border: 2px dashed #4040f2;
 		&._interactive:hover {
-			border: 2px solid #4040f2;
-			box-shadow: 0 0 0 1px #4040f2;
+			border: 2px solid #0ed400;
+			box-shadow: 0 0 0 1px #0ed400;
 			.icon {
 				--primary: #0ed400;
 			}
+		}
+		&._filled {
+			border: 2px solid #4040f2;
+			box-shadow: 0 0 0 1px #4040f2;
 		}
 		.icon-container {
 			height: 100%;
@@ -134,10 +138,13 @@
 			display: flex;
 			flex-direction: column;
 			margin-bottom: 12px;
-			background-color: #0002;
 			&:last-child {
 				margin-bottom: 0;
 			}
+		}
+		.link {
+			display: flex;
+			margin: auto;
 		}
 	}
 	// .phone__layout
