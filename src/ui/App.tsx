@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useHistory } from 'react-router-dom';
 
-import { me } from '../bll/reducers';
+import { getMultilink, me } from '../bll/reducers';
 import { useAppDispatch, useAppSelector } from '../common/hooks';
 
 import { SpritesMap } from './components/modules/iconSpritesMaps/SpritesMap';
@@ -13,8 +13,14 @@ export const App = () => {
 
   const { isInitialized } = useAppSelector(state => state.app);
 
+  const history = useHistory();
+  console.log(history);
   useEffect(() => {
     dispatch(me());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getMultilink('f'));
   }, [dispatch]);
 
   /* if (!isInitialized) {

@@ -2,6 +2,7 @@ import React, { useMemo, useState, MouseEvent, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { SocialNetwork } from '../../../../../common/constants';
 import { Nullable } from '../../../../../common/types/instance';
 import phone from '../../../../../img/phone.png';
 import { Button, Icon } from '../../../../components/elements';
@@ -31,6 +32,7 @@ export type TContent = {
   order: number;
   type: ContentType;
   link: Nullable<string>;
+  linkType: Nullable<SocialNetwork | 'third-party'>;
   title: Nullable<string>;
   text: Nullable<string>;
   img: string | undefined;
@@ -64,10 +66,10 @@ export const MultilinkEditorContainer = () => {
   );
 
   const setContent = useCallback(
-    ({ order, type, link, title, text, img }: TContent) => {
+    ({ order, type, link, linkType, title, text, img }: TContent) => {
       if (!multilinkAttrs.contentSet[order]) {
         const newContentSet = multilinkAttrs.contentSet;
-        newContentSet[order] = { order, type, link, title, text, img };
+        newContentSet[order] = { order, type, link, linkType, title, text, img };
         setMultilinkAttrs({ ...multilinkAttrs, contentSet: newContentSet });
       }
     },

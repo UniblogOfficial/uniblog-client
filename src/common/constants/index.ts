@@ -7,6 +7,17 @@ export enum IconColor {
   FAVORITE = '#e50010',
 }
 
+export enum SocialNetwork {
+  VK = 'vk',
+  YOUTUBE = 'youtube',
+  INSTAGRAM = 'instagram',
+  TELEGRAM = 'telegram',
+  TIKTOK = 'tiktok',
+  TWITTER = 'twitter',
+  FACEBOOK = 'facebook',
+  PINTEREST = 'pinterest',
+}
+
 export enum StatusCode {
   UNAUTHORIZED = 401,
 }
