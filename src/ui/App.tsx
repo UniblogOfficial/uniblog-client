@@ -24,7 +24,6 @@ export const App = () => {
       </div>
     );
   } */
-
   return (
     <>
       <SpritesMap />
