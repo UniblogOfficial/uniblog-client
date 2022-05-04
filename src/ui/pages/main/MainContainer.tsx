@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect } from 'react';
 
-import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 import { setUserData, TUserData } from '../../../bll/reducers';
 import { selectUserData } from '../../../bll/selectors';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { Icon } from '../../components/elements/icons/Icon';
+import { Footer } from '../../components/modules/footer/Footer';
+import { SidebarContainer } from '../../components/modules/sidebar/SidebarContainer';
 import { NotFound } from '../404';
 
 import { AddonsContainer } from './addons/AddonsContainer';
@@ -13,65 +14,23 @@ import { AnalyticsContainer } from './analytics/AnalyticsContainer';
 import { ChatContainer } from './chat/ChatContainer';
 import { CrosspostingContainer } from './crossposting/CrosspostingContainer';
 import { HomeContainer } from './home/HomeContainer';
-import { MySiteContainer } from './my-site/MySiteContainer';
+import { MultilinkContainer } from './multilink/MultilinkContainer';
 import { PriceContainer } from './price/PriceContainer';
 import { ProfileContainer } from './profile/ProfileContainer';
 import { ShopContainer } from './shop/ShopContainer';
 
-const navLinksData = [
-  {
-    id: 1,
-    title: 'Главная',
-    href: '/',
-    icon: 'home',
-  },
-  {
-    id: 2,
-    title: 'Кросспостинг',
-    href: '/crossposting',
-    icon: '',
-  },
-  {
-    id: 3,
-    title: 'Мой сайт',
-    href: '/my-site',
-    icon: '',
-  },
-  {
-    id: 4,
-    title: 'Магазин',
-    href: '/shop',
-    icon: '',
-  },
-  {
-    id: 5,
-    title: 'Аналитика',
-    href: '/analytics',
-    icon: '',
-  },
-  {
-    id: 6,
-    title: 'Дополнительно',
-    href: '/addons',
-    icon: '',
-  },
-  {
-    id: 7,
-    title: 'Тарифы',
-    href: '/price',
-    icon: '',
-  },
-  {
-    id: 10,
-    title: 'Чат',
-    href: '/chat',
-    icon: '',
-  },
-];
-
 export const MainContainer = () => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const userData = useAppSelector<TUserData | null>(selectUserData);
+
+  useLayoutEffect(() => {
+    const papers: any = document.getElementsByClassName('r-paper');
+    for (let i = 0; i < papers.length; i++) {
+      papers[i].style.background = `#f${Math.random().toString(16).substr(-4)}f`;
+    }
+  }, [history.location.pathname]);
+
   if (userData === null) {
     dispatch(
       setUserData({
@@ -81,40 +40,17 @@ export const MainContainer = () => {
         accessLevel: 1,
       }),
     );
-    // return <Redirect to="/signup" />;
+    return <Redirect to="/login" />;
   }
-
-  const mappedNavLinks = navLinksData.map((data, i) => (
-    <li key={data.id} className="nav__item">
-      <NavLink to={data.href} className="nav__link iconized__L" exact>
-        <Icon name="home" size="full" />
-        {data.title}
-      </NavLink>
-    </li>
-  ));
 
   return (
     <main className="main _container">
-      <aside className="sidebar">
-        <div className="sidebar__container">
-          <div className="logo logo__header">Uniblog</div>
-          <nav className="nav">
-            <ul className="nav__list">{mappedNavLinks}</ul>
-          </nav>
-          <section className="profile-link">
-            <NavLink to="/profile" className="iconized__L" exact>
-              <Icon name="user" size="full" />
-              <p>David</p>
-              <p className="profile-link__subtitle">Личный кабинет</p>
-            </NavLink>
-          </section>
-        </div>
-      </aside>
+      <SidebarContainer userData={userData} />
       <div className="content">
         <div className="content__container">
           <Switch>
             <Route path="/crossposting" render={() => <CrosspostingContainer />} />
-            <Route path="/my-site" render={() => <MySiteContainer />} />
+            <Route path="/multilink" render={() => <MultilinkContainer />} />
             <Route path="/shop" render={() => <ShopContainer />} />
             <Route path="/analytics" render={() => <AnalyticsContainer />} />
             <Route path="/addons" render={() => <AddonsContainer />} />
@@ -125,14 +61,7 @@ export const MainContainer = () => {
             <Route path="/404" render={() => <NotFound />} />
             <Redirect from="*" to="/404" />
           </Switch>
-          <footer className="footer panel">
-            <ul className="list">
-              <li>Контакты</li>
-              <li>Блог</li>
-              <li>Политика конфиденциальности</li>
-            </ul>
-            <p>© 2022 UNIBLOG. All Rights Reserved</p>
-          </footer>
+          <Footer />
         </div>
       </div>
     </main>

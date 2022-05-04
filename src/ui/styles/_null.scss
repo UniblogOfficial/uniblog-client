@@ -4,8 +4,8 @@
   box-sizing: border-box;
 }
 
-ul[class],
-ol[class],
+ul,
+ol,
 button {
   padding: 0;
 }
@@ -18,7 +18,7 @@ h4,
 h5,
 h6,
 p,
-ul[class],
+ul,
 ol[class],
 li,
 figure,
@@ -74,7 +74,7 @@ select {
   border: none;
 }
 
-button, a, select {
+button, a, select, input {
   cursor: pointer;
 }
 
@@ -82,7 +82,9 @@ div, span {
   cursor: default;
 }
 
-
+textarea {
+   resize: none;
+}
 
 /* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
 @media (prefers-reduced-motion: reduce) {

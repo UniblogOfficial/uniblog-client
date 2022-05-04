@@ -1,0 +1,118 @@
+.icon-container {
+  position: relative;
+  &._left {
+    left: 0;
+  }
+  &._right {
+    right: 0;
+  }
+}
+
+.auth-eye {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  height: 100%;
+  width: 16px;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 40px;
+}
+
+.iconized {
+  &__LR {
+    position: relative;
+
+    .icon-container {
+      width: 1.8em;
+    }
+
+    &:not(.field) {
+      padding: 5px 2.4em 0 2.4em;
+    }
+
+    &.field {
+      input {
+        padding: 0.2em 2em 0.2em 2em;
+      }
+    }
+  }
+
+  &__L {
+    position: relative;
+
+    .icon-container {
+      position: absolute;
+      top: 0;
+      left: 24px;
+      height: 100%;
+      width: 24px;
+    }
+
+    &:not(.field) {
+      padding-left: 71px;
+    }
+
+    &.field {
+      input {
+        padding: 0.2em 0.8em 0.2em 1.8em;
+      }
+    }
+  }
+
+  &__R {
+    position: relative;
+
+    .icon-container {
+      position: absolute;
+      top: 0;
+      right: 12px;
+      height: 100%;
+      width: 16px;
+    }
+
+    &:not(.field) {
+      padding: 5px 2.4em 0 0;
+    }
+
+    &.field {
+      input {
+        padding-right: 32px;
+      }
+    }
+  }
+}
+
+.icon {
+  position: relative;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  --primary: #000;
+  --secondary: #000;
+  //stroke: #000;
+  &.reduced {
+    height: calc(100% / 1.415); //sqrt(2) =)
+    width: calc(100% / 1.415);
+  }
+
+  &.max {
+    transform: scale(1.05) translateX(-0.1px);
+    height: 100%;
+    width: 100%;
+  }
+
+  &__rotate {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+}

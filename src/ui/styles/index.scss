@@ -79,7 +79,7 @@ main {
 ._container {
   max-width: $maxWidthContainer + px;
   @media (max-width: ($bp1 + px)) {
-    max-width: 1200px;
+    max-width: none;
   }
   @media (max-width: ($bp2 + px)) {
     max-width: none;
@@ -99,6 +99,7 @@ main {
 
 // <UI> ==============================================================================================================
 @import 'ui';
+@import 'icons';
 // </UI> =============================================================================================================
 
 // <FORMS> ===========================================================================================================
@@ -107,9 +108,16 @@ main {
 
 // <PAGE-SPECIFIC STYLES> ============================================================================================
 @import 'page';
-@import './pages/home';
+@import './pages/addons';
+@import './pages/analytics';
 @import './pages/auth';
+@import './pages/chat';
 @import './pages/crossposting';
+@import './pages/home';
+@import './pages/multilink';
+@import './pages/profile';
+@import './pages/price';
+@import './pages/shop';
 // </PAGE-SPECIFIC STYLES> ===========================================================================================
 
 // <THEMES> ==========================================================================================================

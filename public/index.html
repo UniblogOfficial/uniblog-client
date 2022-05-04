@@ -4,14 +4,37 @@
 <head>
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/logo.ico" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Это именно то, что ты искал" />
+  <meta name="description" content="Свяжи свою сеть" />
   <title>Uniblog</title>
 </head>
 
 <body>
   <div id="root"></div>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('service-worker.js').then(function (registration) {
+          // Registration was successful
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+          // registration failed :(
+          console.log('ServiceWorker registration failed: ', err);
+        }).catch(function (err) {
+          console.log(err)
+        });
+        /* navigator.registerProtocolHandler(
+          'uniblog',
+          'http://localhost:3000/?burger=%s',
+          'Burger handler',
+        ); */
+      });
+    } else {
+      console.log('service worker is not supported');
+    }
+  </script>
 </body>
 
 </html>

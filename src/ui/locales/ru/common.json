@@ -1,0 +1,25 @@
+{
+  "buttons": {
+    "addNewPost": "Добавить новый пост",
+    "back": "Назад",
+    "cancel": "Отмена",
+    "next": "Далее",
+    "no": "Нет",
+    "ok": "OK",
+    "save": "Сохранить",
+    "yes": "Да"
+  },
+  "links": {
+    "add": "Добавить",
+    "change": "Изменить"
+  },
+  "placeholders": {
+    "createNewPass": "Новый пароль",
+    "createPass": "Придумайте пароль",
+    "enterName": "Имя",
+    "enterOldPass": "Старый пароль",
+    "enterText": "Введите текст",
+    "repeatNewPass": "Повторите пароль",
+    "repeatPass": "Повторите пароль"
+  }
+}

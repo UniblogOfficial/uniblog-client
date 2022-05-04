@@ -7,6 +7,10 @@
       "esnext"
     ],
     "allowJs": true,
+    "types": [
+      "node",
+      "webpack-env"
+    ],
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -18,7 +22,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   },
   "include": [
     "next-env.d.ts",

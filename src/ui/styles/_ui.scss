@@ -16,7 +16,12 @@ h3 {
     line-height: 1.22;
 }
 
+h4 {
+    font-weight: 400;
+}
+
 .button {
+    width: auto;
     &__goback {
         button {
             width: 99px;
@@ -27,23 +32,73 @@ h3 {
             color: #0C1116;
         }
     }
+    &-link {
+        text-decoration: none;
+        color: inherit;
+    }
+    &-column {
+        flex-direction: column;
+    }
+    &-fake {
+        cursor: default;
+        padding: 16px;
+        border-radius: 36px;
+        margin-bottom: 12px;
+        background-color: #a0a0a0;
+        color: #fff;
+    }
+    &._rounded {
+        border-radius: 8px;
+    }
+    &._paper {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 }
 
-.panel {
+.paper {
+    position: relative;
     padding: 24px;
     border: 1px solid #eaecee;
     box-shadow: 0px 4px 27px #0000001a;
     border-radius: 12px;
+    overflow-x: hidden;
     background: #fff;
+    &._with-button-bottom {
+        padding-bottom: 0;
+        overflow: hidden;
+    }
+    &__button-container {
+        height: 43px;
+    }
+}
+
+.r-paper {
+    padding: 24px;
+    border: 1px solid #eaecee;
+    box-shadow: 0px 4px 27px #0000001a;
+    border-radius: 12px;
+}
+
+.paper-title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 150%;
+    color: #373F47;
 }
 
 .grid {
     display: grid;
-    padding-top: 24px;
+    padding-top: 30px;
     &__row {
         display: flex;
         justify-content: space-between;
         margin-bottom: 24px;
+        &>* {
+            width: 100%;
+        }
     }
 }
 
@@ -81,99 +136,22 @@ h3 {
 }
 
 .breadcrumbs {
-    font-size: 14px;
-}
-
-.iconized {
-    &__LR {
-        position: relative;
-
-        .icon-container {
-            width: 1.8em;
-        }
-
-        &:not(.field) {
-            padding: 5px 2.4em 0 2.4em;
-        }
-
-        &.field {
-            input {
-                padding: 0.2em 2em 0.2em 2em;
-            }
-        }
-    }
-
-    &__L {
-        position: relative;
-
-        .icon-container {
-            position: absolute;
-            top: 0;
-            left: 24px;
-            height: 100%;
-            width: 24px;
-        }
-
-        &:not(.field) {
-            padding-left: 71px;
-        }
-
-        &.field {
-            input {
-                padding: 0.2em 0.8em 0.2em 1.8em;
-            }
-        }
-    }
-
-    &__R {
-        position: relative;
-
-        .icon-container {
-            position: absolute;
-            top: 0;
-            right: 12px;
-            height: 100%;
-            width: 16px;
-        }
-
-        &:not(.field) {
-            padding: 5px 2.4em 0 0;
-        }
-
-        &.field {
-            input {
-                padding-right: 32px;
-            }
-        }
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    text-decoration: none;
+    color: #A8B0B9;
+    ._active {
+        color: #242d35;
     }
 }
 
-.icon {
-    position: relative;
-    margin: auto;
-    height: 100%;
-    width: 100%;
-    z-index: 2;
-    --primary: #000;
-    --secondary: #000;
-    //stroke: #000;
-    &.reduced {
-        height: calc(100% / 1.415); //sqrt(2) =)
-        width: calc(100% / 1.415);
-    }
+.link-nulled {
+    text-decoration: none;
+}
 
-    &.max {
-        transform: scale(1.05) translateX(-0.1px);
-        height: 100%;
-        width: 100%;
-    }
 
-    &__rotate {
-        position: absolute;
-        display: flex;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-    }
+
+.square {
+    padding: 0 0 100%;
 }

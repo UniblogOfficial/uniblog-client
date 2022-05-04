@@ -8,7 +8,7 @@
 		// .home__greeting
 		&__greeting {
       flex: 1 1 auto;
-      margin-right: 24px;
+      margin: 0 24px 0 0;
 		}
 
 		// .home__add-new-post
@@ -32,12 +32,25 @@
 
 		// .home__main
 		&__main {
+      padding-top: 24px;
 		}
 }
 .chart {
   height: 400px;
 }
 .socials {
+  padding: 12px 19px 12px 24px;
+  li {
+      margin-bottom: 12px;
+      margin-right: 19px;
+    }
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 12px;
+    padding-top: 16px;
+    
+  }
 }
 .coverage {
   height: 159px;

@@ -1,28 +1,39 @@
 .sidebar {
   position: relative;
-  flex: 0 1 16.6667%;
+  //flex: 0 1 16.6667%;
+  min-width: 240px;
   background-color: #fff;
   &::before {
     content: '';
     position: absolute;
     height: 100%;
-    width: 200%;
+    width: 500%;
     top: 0;
-    left: -199%;
+    left: -401%;
     background-color: #fff;
   }
   &__container {
-    max-width: 240px;
+    position: fixed;
+    width: 240px;
+    max-height: 100vh;
     display: flex;
     margin-left: auto;
     flex-direction: column;
     height: 100%;
     padding: 24px 24px 28px;
   }
+  &__dash {
+    margin: auto -24px 0;
+    height: 1px;
+    background-color: #f1f1f1;;
+  }
 }
 
 .nav {
   flex: 1;
+  margin: 0 -24px;
+  overflow-y: auto;
+  overflow-x: hidden;
   &__list {
     display: flex;
     flex-direction: column;
@@ -30,8 +41,7 @@
   }
   &__item {
     display: block;
-    margin: 0 -24px 8px;
-    
+    margin: 0 0 8px;
     font-weight: 500;
     font-size: 16px;
     line-height: 100%;
@@ -46,6 +56,11 @@
     padding: 16px 24px;
     text-decoration: none;
     color: #4F5B67;
+    .icon {
+      opacity: 0.9;
+      --primary: #A8B0B9;
+      --secondary: #A8B0B9;
+    }
     &.active {
       background-color: #f7f7fb;
       color: #0D0D54;
@@ -61,9 +76,32 @@
 
       }
       .icon {
-        --secondary: #1543E7
+        --primary: #1543E7;
+        --secondary: #1543E7;
       }
 
+    }
+  }
+}
+
+.lang-switch {
+  padding: 8px 0 8px;
+  display: flex;
+  button {
+    padding: 12px 15px;
+    min-width: 4em;
+    border: 1px solid #EAECEE;
+    color: #4F5B67;
+    &.left {
+      border-radius: 7px 0px 0px 7px;
+    }
+    &.right {
+      border-radius: 0px 7px 7px 0px;
+    }
+    &.active {
+      border: 1px solid #4040f2;
+      background-color: #4040f2;
+      color: #fff;
     }
   }
 }
@@ -73,7 +111,7 @@
   a {
     position: relative;
     display: block;
-    padding: 16px 24px 0;
+    padding: 28px 24px 0;
     text-decoration: none;
     color: #4F5B67;
   }
@@ -104,7 +142,7 @@
   font-weight: 600;
   font-size: 36px;
   line-height: 120%;
-  color: #242D35;
+  color: #242d35;
 }
 
 

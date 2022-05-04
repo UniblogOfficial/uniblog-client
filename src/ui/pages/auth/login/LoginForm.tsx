@@ -113,10 +113,10 @@ export const LoginForm = () => {
 
   return (
     <form className="login__form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-      <section className="field field__auth">
+      <section className="field field-auth">
         <div className="field__input">
           <Input
-            {...register('email', { value: '' })}
+            {...register('email', { value: 'awesome@email.yo' })}
             onChangeFocus={state => {
               changeFocusHandler('email', state);
             }}
@@ -129,10 +129,10 @@ export const LoginForm = () => {
           {helperState.email && dirtyFields.email && errors.email && errors.email.message}
         </div>
       </section>
-      <section className="field field__auth iconized__R">
+      <section className="field field-auth">
         <div className="field__input">
           <Input
-            {...register('password', { value: '' })}
+            {...register('password', { value: 'qwerty123' })}
             type={passwordShown ? 'text' : 'password'}
             name="password"
             placeholder="Пароль"
@@ -151,6 +151,7 @@ export const LoginForm = () => {
               secondaryColor="#242D35"
               primaryOpacity="1"
               secondaryOpacity="1"
+              containerClassName="auth-eye"
             />
           ) : (
             <Icon
@@ -162,6 +163,7 @@ export const LoginForm = () => {
               secondaryColor="#4F5B67"
               primaryOpacity="1"
               secondaryOpacity="1"
+              containerClassName="auth-eye"
             />
           )}
         </div>

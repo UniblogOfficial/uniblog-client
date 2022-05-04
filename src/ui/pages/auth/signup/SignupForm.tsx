@@ -132,7 +132,7 @@ export const SignupForm = () => {
 
   return (
     <form className="signup__form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-      <section className="field field__auth">
+      <section className="field field-auth">
         <div className="field__input">
           <Input
             {...register('name', { value: '' })}
@@ -148,7 +148,7 @@ export const SignupForm = () => {
           {helperState.name && dirtyFields.name && errors.name && errors.name.message}
         </div>
       </section>
-      <section className="field field__auth">
+      <section className="field field-auth">
         <div className="field__input">
           <Input
             {...register('email', { value: '' })}
@@ -164,7 +164,7 @@ export const SignupForm = () => {
           {helperState.email && dirtyFields.email && errors.email && errors.email.message}
         </div>
       </section>
-      <section className="field field__auth iconized__R">
+      <section className="field field-auth">
         <div className="field__input">
           <Input
             {...register('password', { value: '' })}
@@ -186,6 +186,7 @@ export const SignupForm = () => {
               secondaryColor="#242D35"
               primaryOpacity="1"
               secondaryOpacity="1"
+              containerClassName="auth-eye"
             />
           ) : (
             <Icon
@@ -197,6 +198,7 @@ export const SignupForm = () => {
               secondaryColor="#4F5B67"
               primaryOpacity="1"
               secondaryOpacity="1"
+              containerClassName="auth-eye"
             />
           )}
         </div>
@@ -209,7 +211,7 @@ export const SignupForm = () => {
             (errors.password?.types?.required || errors.password?.types?.min)}
         </div>
       </section>
-      <section className="field field__auth iconized__R">
+      <section className="field field-auth">
         <div className="field__input">
           <Input
             {...register('passConfirmed', { required: false })}

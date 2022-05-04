@@ -1,0 +1,22 @@
+.socialCard {
+  display: flex;
+  // padding: 12px 19px 12px 24px;
+}
+
+.imgContainer {
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  flex: 1 0 100%;
+  padding: 0 16px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  color: #242D35;
+  a {
+    font-size: 12px;
+  }
+}

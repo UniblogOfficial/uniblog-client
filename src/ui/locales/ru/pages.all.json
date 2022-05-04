@@ -1,0 +1,70 @@
+{
+  "addons": {
+    "title": "Дополнительно"
+  },
+  "analytics": {
+    "title": "Аналитика"
+  },
+  "chat": {
+    "infoMessages": {
+      "info1": "покинула чат",
+      "info2": "сделала больно"
+    },
+    "title": "Чат"
+  },
+  "crossposting": {
+    "buttons": {
+      "addToDrafts": "Добавить в черновик",
+      "drafts": "Черновики",
+      "newPost": "Новый пост",
+      "published": "Публикации"
+    },
+    "checks": {
+      "publishNow": "Опубликовать сейчас",
+      "schedulePublication": "Запланировать публикацию"
+    },
+    "subtitles": {
+      "description": "Описание"
+    },
+    "title": "Кросспостинг"
+  },
+  "footer": {
+    "blog": "Блог",
+    "contacts": "Контакты",
+    "privacy": "Политика конфиденциальности"
+  },
+  "home": {
+    "greeting": "Привет",
+    "subtitles": {
+      "coverage": "Общий охват за сегодня",
+      "myNetworks": "Мои соцсети",
+      "networks": "Соцсети"
+    }
+  },
+  "multilink": {
+    "title": "Мультиссылка"
+  },
+  "navbar": {
+    "addons": "Дополнительно",
+    "analytics": "Аналитика",
+    "chat": "Чат",
+    "crossposting": "Кросспостинг",
+    "home": "Главная",
+    "multilink": "Мультиссылка",
+    "personalAccount": "Личный кабинет",
+    "price": "Тарифы",
+    "shop": "Магазин"
+  },
+  "price": {
+    "title": "Тарифы"
+  },
+  "profile": {
+    "subtitles": {
+      "profile": "Профиль"
+    },
+    "title": "Личный кабинет"
+  },
+  "shop": {
+    "title": "Магазин"
+  }
+}
