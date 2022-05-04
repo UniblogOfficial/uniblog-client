@@ -10,7 +10,9 @@ import { App } from './ui/App';
 
 import './ui/styles/index.scss';
 
+
 /* hello! */
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -20,3 +22,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'),
 );
+// Test
