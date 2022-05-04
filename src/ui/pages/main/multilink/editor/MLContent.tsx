@@ -1,5 +1,6 @@
 import React, { FC, useCallback, MouseEvent, useState, ReactElement } from 'react';
 
+import { SocialNetwork } from '../../../../../common/constants';
 import { Nullable } from '../../../../../common/types/instance';
 import temp1 from '../../../../../img/temp1.png';
 import { Icon } from '../../../../components/elements';
@@ -47,7 +48,8 @@ export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
             order,
             type: ContentType.LINK,
             link: 'https://vk.com',
-            title: 'vk',
+            linkType: SocialNetwork.VK,
+            title: 'VK',
             text: 'Вконтактике',
             img: undefined,
           });
@@ -59,6 +61,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
             order,
             type: ContentType.TEXT,
             link: null,
+            linkType: null,
             title: null,
             text,
             img: undefined,
@@ -69,7 +72,8 @@ export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
           setContent({
             order,
             type: ContentType.PHOTO,
-            link: temp1,
+            link: null,
+            linkType: null,
             title: null,
             text: null,
             img: temp1,

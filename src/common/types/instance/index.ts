@@ -1,2 +1,2 @@
 export type Nullable<T> = T | null;
-export type Modify<T, R> = Omit<T, keyof R> & R; // {a: number, b: string} => {a: string, b: string}
+export type Modify<T, R> = Omit<T, keyof R> & R; // exm: {a: number, b: string} as T => {b: string} as OmittedT & {a: Object } as R
