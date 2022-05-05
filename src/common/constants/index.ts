@@ -18,6 +18,13 @@ export enum SocialNetwork {
   PINTEREST = 'pinterest',
 }
 
+export enum MLContentType {
+  LINK = 'link',
+  IMAGE = 'image',
+  TEXT = 'text',
+  UNKNOWN = 'unknown',
+}
+
 export enum StatusCode {
   UNAUTHORIZED = 401,
 }
