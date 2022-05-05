@@ -5,7 +5,9 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { NavLink, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 
+import { requestLogin } from '../../../../bll/reducers';
 import { useAppDispatch } from '../../../../common/hooks';
+import { TLoginDTO } from '../../../../common/types/request';
 import { Input } from '../../../components/elements';
 import { Button } from '../../../components/elements/button/Button';
 import { Icon } from '../../../components/elements/icons/Icon';
@@ -51,39 +53,20 @@ export const LoginForm = () => {
   const [helperState, setHelperState] = useState(initialHelperState); // errors blocked in
   const [dashed, setDashed] = useState<keyof LoginFormData | null>(null);
   const [password, setPassword] = useState('');
-  const [passConfirmed, setPassConfirmed] = useState('');
-  const [passOptionals, setPassOptionals] = useState<Array<string> | null>(null);
-  const [passConfirmationMessage, setPassConfirmationMessage] = useState('');
 
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisibility = () => {
     setPasswordShown(!passwordShown);
   };
 
-  const history = useHistory();
-
-  const routeChange = () => {
-    const path = `/`;
-    history.push(path);
-  };
-  const onSubmit = () => {
-    routeChange();
-  };
-
-  /* const onSubmit: SubmitHandler<SignupFormData> = data => {
-    const signupData: TSignupData = {
+  const onSubmit: SubmitHandler<LoginFormData> = data => {
+    const loginData: TLoginDTO = {
       email: data.email,
       password: data.password,
     };
-    const isPassConfirmed = data.password === data.passConfirmed; // Order is important!
-    // dispatch(setIsSignupPassConfirmed(data.password === data.passConfirmed)); // 1
-    dispatch(setSignupUserData(signupData)); // 2
-    if (isPassConfirmed) {
-      dispatch(signup());
-    } else {
-      revealModal('signupPassUnconfirmed');
-    }
-  }; */
+    dispatch(requestLogin(loginData)); // 2
+  };
+
   const changeFocusHandler = (name: keyof LoginFormData, focus: boolean) => {
     // for first field changing errors won't show
     !dirtyFields[name] && setHelperState(prev => ({ ...prev, [name]: !focus }));
@@ -92,24 +75,6 @@ export const LoginForm = () => {
     // thick/thin ...might be color customized
     setDashed(focus ? name : null);
   };
-  const checkPassComplexity = (condition: string) => {
-    if (!errors.password && dirtyFields.password && passOptionals) {
-      return passOptionals.some(c => c === condition);
-    }
-    if (!passOptionals) {
-      return false;
-    }
-    return true;
-  };
-
-  useEffect(() => {
-    const optionals: Array<string> = [];
-    !/[a-z]/.test(password) && optionals.push('lowercase');
-    !/[A-Z]/.test(password) && optionals.push('uppercase');
-    !/[0-9]/.test(password) && optionals.push('number');
-    !/[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/.test(password) && optionals.push('special');
-    setPassOptionals(optionals.length > 0 ? optionals : null);
-  }, [password]);
 
   return (
     <form className="login__form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
@@ -124,7 +89,6 @@ export const LoginForm = () => {
             name="email"
           />
         </div>
-        <div className={`field__dash ${dashed === 'email' && 'thick'}`} />
         <div className="field__error">
           {helperState.email && dirtyFields.email && errors.email && errors.email.message}
         </div>
@@ -167,7 +131,6 @@ export const LoginForm = () => {
             />
           )}
         </div>
-        <div className={`field__dash ${dashed === 'password' && 'thick'}`} />
         <div className="field__error">
           {helperState.password &&
             dirtyFields.password &&

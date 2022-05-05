@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react';
 
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
-import { setUserData, TUserData } from '../../../bll/reducers';
+import { Role, setUserData, TUserData } from '../../../bll/reducers';
 import { selectUserData } from '../../../bll/selectors';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 import { Footer } from '../../components/modules/footer/Footer';
@@ -32,14 +32,6 @@ export const MainContainer = () => {
   }, [history.location.pathname]);
 
   if (userData === null) {
-    dispatch(
-      setUserData({
-        name: 'David',
-        email: 'someemail@gmail.com',
-        id: '1',
-        accessLevel: 1,
-      }),
-    );
     return <Redirect to="/login" />;
   }
 

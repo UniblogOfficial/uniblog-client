@@ -1,56 +1,46 @@
 import { batch } from 'react-redux';
 
+import { AppStatus } from '../../common/constants';
 import { Nullable } from '../../common/types/instance';
+import { TRegisterDTO, TLoginDTO } from '../../common/types/request/auth.dto';
 import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
+import { authAPI } from '../../dal';
 import { AppThunk } from '../store';
 
 import { setAppStatus, setInitialized } from '.';
 
-export enum AccessLevel {
-  UNREGISTERED = 0,
-  REGISTERED = 1,
-  ADMIN = 2,
-  MASTER = 3,
+enum AuthActionType {
+  SET_USER_DATA = 'SET_USER_DATA',
+  SET_REGISTER_USER_DATA = 'SET_REGISTER_USER_DATA',
+  SET_LOGIN_USER_DATA = 'SET_LOGIN_USER_DATA',
+}
+
+export enum Role {
+  UNREGISTERED = 'UNREGISTERED',
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+  MASTER = 'MASTER',
 }
 
 export type TUserData = {
   id: string;
   name: string;
   email: string;
-  accessLevel: AccessLevel;
+  role: Role;
   isActivated?: boolean;
 };
 
-export type TLoginData = {
-  email: string;
-  password: string;
-};
-
-export type TSignupData = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-const initialState = {
-  signupUserData: null as Nullable<TSignupData>,
-  isSignupPassConfirmed: null as Nullable<boolean>,
-  // isRegistered: false,
-  isLoggedIn: false,
-
-  loginUserData: null as Nullable<TLoginData>,
-
+const initialState: TAuthState = {
+  registerUserData: null,
+  loginUserData: null,
   userData: null as Nullable<TUserData>,
 };
 
 export const authReducer = (state: TAuthState = initialState, action: TAuthActions): TAuthState => {
   switch (action.type) {
-    case 'AUTH/SET_USER_DATA':
-    case 'AUTH/SET_IS_SIGNUP_PASS_CONFIRMED':
-    case 'AUTH/SET_SIGNUP_USER_DATA':
-    case 'AUTH/SET_LOGIN_USER_DATA':
-    // case 'AUTH/SET_IS_REGISTERED':
-    case 'AUTH/SET_IS_LOGGED_IN':
+    case AuthActionType.SET_USER_DATA:
+    case AuthActionType.SET_REGISTER_USER_DATA:
+    case AuthActionType.SET_LOGIN_USER_DATA:
       return { ...state, ...action.payload };
     default:
       return state;
@@ -60,38 +50,26 @@ export const authReducer = (state: TAuthState = initialState, action: TAuthActio
 // actions
 
 export const setUserData = (userData: TUserData | null) =>
-  ({ type: 'AUTH/SET_USER_DATA', payload: { userData } } as const);
-export const setSignupUserData = (data: Nullable<TSignupData>) =>
-  ({ type: 'AUTH/SET_SIGNUP_USER_DATA', payload: { signupUserData: data } } as const);
-export const setLoginUserData = (data: Nullable<TLoginData>) =>
-  ({ type: 'AUTH/SET_LOGIN_USER_DATA', payload: { loginUserData: data } } as const);
-export const setIsSignupPassConfirmed = (value: Nullable<boolean>) =>
-  ({
-    type: 'AUTH/SET_IS_SIGNUP_PASS_CONFIRMED',
-    payload: { isSignupPassConfirmed: value },
-  } as const);
-// export const setIsRegistered = (status: boolean) =>
-// ({ type: 'AUTH/SET_IS_REGISTERED', payload: { isRegistered: status }} as const)
-export const setIsLoggedIn = (status: boolean) =>
-  ({ type: 'AUTH/SET_IS_LOGGED_IN', payload: { isLoggedIn: status } } as const);
+  ({ type: AuthActionType.SET_USER_DATA, payload: { userData } } as const);
+export const setRegisterUserData = (data: Nullable<TRegisterDTO>) =>
+  ({ type: AuthActionType.SET_REGISTER_USER_DATA, payload: { signupUserData: data } } as const);
+export const setLoginUserData = (data: Nullable<TLoginDTO>) =>
+  ({ type: AuthActionType.SET_LOGIN_USER_DATA, payload: { loginUserData: data } } as const);
 
 // thunks
 
-export const login = (): AppThunk => async (dispatch, getState) => {
-  /* try {
-    dispatch(setAppStatus('auth loading'));
-    const loginData = getState().auth.loginUserData as TLoginData;
-    const response = await authAPI.login(loginData);
-    const { accessLevel } = response.data;
-    dispatch(setUserData(response.data));
-    if (accessLevel >= AccessLevel.REGISTERED) {
-      dispatch(setIsLoggedIn(true));
+export const requestLogin =
+  (dto: TLoginDTO): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      dispatch(setAppStatus(AppStatus.AUTH_LOADING));
+      const response = await authAPI.login(dto);
+      dispatch(setUserData(response.data));
+      dispatch(setAppStatus(AppStatus.SUCCEEDED));
+    } catch (e) {
+      handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
     }
-    dispatch(setAppStatus('succeeded'));
-  } catch (e) {
-    handleServerNetworkError(e, 'auth', dispatch);
-  } */
-};
+  };
 
 export const logout = (): AppThunk => async dispatch => {
   /* try {
@@ -110,50 +88,45 @@ export const logout = (): AppThunk => async dispatch => {
   } */
 };
 
-export const me = (): AppThunk => async dispatch => {
-  /* try {
-    dispatch(setAppStatus('auth loading'));
+export const requestMe = (): AppThunk => async dispatch => {
+  try {
+    dispatch(setAppStatus(AppStatus.AUTH_LOADING));
     const response = await authAPI.me();
-    dispatch(setUserData(response.data));
-    if (response.data.accessLevel >= AccessLevel.REGISTERED) {
-      dispatch(setIsLoggedIn(true));
-    }
-    dispatch(getCartItems());
-    dispatch(setInitialized());
-    dispatch(setAppStatus('succeeded'));
+    batch(() => {
+      dispatch(setUserData(response.data));
+      dispatch(setInitialized());
+      dispatch(setAppStatus(AppStatus.SUCCEEDED));
+    });
   } catch (e) {
-    handleServerNetworkError(e, 'auth', dispatch);
+    handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
     dispatch(setInitialized());
-  } */
+  }
 };
 
-export const signup = (): AppThunk => async (dispatch, getState) => {
-  /* try {
-    dispatch(setAppStatus('auth loading'));
-    const signupData = getState().auth.signupUserData as TSignupData;
-    const response = await authAPI.register(signupData);
-    const { accessLevel } = response.data;
-    dispatch(setUserData(response.data));
-    if (accessLevel >= AccessLevel.REGISTERED) {
+export const requestRegister =
+  (dto: TRegisterDTO): AppThunk =>
+  async (dispatch, getState) => {
+    try {
+      dispatch(setAppStatus(AppStatus.AUTH_LOADING));
+      const response = await authAPI.register(dto);
+      const { accessLevel } = response.data;
       batch(() => {
-        dispatch(setIsSignupPassConfirmed(null));
-        dispatch(setSignupUserData(null));
-        dispatch(setIsLoggedIn(true));
+        dispatch(setUserData(response.data));
+        dispatch(setAppStatus(AppStatus.SUCCEEDED));
       });
+    } catch (e) {
+      handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
     }
-    dispatch(setAppStatus('succeeded'));
-  } catch (e) {
-    handleServerNetworkError(e, 'auth', dispatch);
-  } */
-};
+  };
 
 // types
 
-export type TAuthState = typeof initialState;
+export type TAuthState = {
+  registerUserData: Nullable<TRegisterDTO>;
+  loginUserData: Nullable<TLoginDTO>;
+  userData: Nullable<TUserData>;
+};
 export type TAuthActions =
   | ReturnType<typeof setUserData>
-  | ReturnType<typeof setIsLoggedIn>
-  | ReturnType<typeof setSignupUserData>
-  | ReturnType<typeof setLoginUserData>
-  | ReturnType<typeof setIsSignupPassConfirmed>;
-// | ReturnType<typeof setIsRegistered>
+  | ReturnType<typeof setRegisterUserData>
+  | ReturnType<typeof setLoginUserData>;
