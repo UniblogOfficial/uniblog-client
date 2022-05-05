@@ -77,7 +77,8 @@ export const MultilinkEditorContainer = () => {
   );
 
   const onNextButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    stage < 4 && setStage(prev => prev + 1);
+    console.log(e.currentTarget);
+    stage < 5 && stage >= 1 && setStage(stage + Number(e.currentTarget.value));
   };
   console.log(multilinkAttrs.contentSet);
 
@@ -123,11 +124,18 @@ export const MultilinkEditorContainer = () => {
             {stage === EditorStage.CONTENT && multilinkAttrs.template && (
               <MLContent template={multilinkAttrs.template} setContent={setContent} />
             )}
-            <div className="paper__button-container">
+
+            {stage > 1 && (
               <Button
-                value="background"
                 onClick={onNextButtonClick}
-                className="button _full _paper">
+                value="-1"
+                className="button _back-ml-editor _rounded">
+                {t('common:buttons.back')}
+              </Button>
+            )}
+
+            <div className="paper__button-container">
+              <Button onClick={onNextButtonClick} value="1" className="button _full _paper">
                 {t('common:buttons.next')}
               </Button>
             </div>
@@ -156,6 +164,14 @@ export const MultilinkEditorContainer = () => {
               </div>
             </div>
           </div>
+          {stage === EditorStage.PREVIEW && (
+            <Button
+              onClick={onNextButtonClick}
+              value="-1"
+              className="button _back-ml-editor _rounded">
+              {t('common:buttons.back')}
+            </Button>
+          )}
         </div>
       </section>
     </div>

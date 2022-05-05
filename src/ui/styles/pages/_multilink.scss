@@ -22,6 +22,12 @@
 		.button-download {
 			margin: 0 auto;
 		}
+		._back-ml-editor {
+			position: absolute;
+			bottom: 0;
+			z-index: 10;
+			left: 0px;
+		}
 	}
 	.paper-title {
 		text-align: center;
