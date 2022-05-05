@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { AppStatus } from '../../common/constants';
 import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
 import { AppThunk } from '../store';
 
@@ -38,13 +39,13 @@ export const getMultilink =
   (name: string): AppThunk =>
   async dispatch => {
     try {
-      dispatch(setAppStatus('content loading'));
+      dispatch(setAppStatus(AppStatus.CONTENT_LOADING));
       const response = await axios.get(
         `https://uniblog-server.herokuapp.com/api/multilink/${name}`,
       );
-      dispatch(setAppStatus('succeeded'));
+      dispatch(setAppStatus(AppStatus.SUCCEEDED));
     } catch (e) {
-      handleServerNetworkError(e, 'content', dispatch);
+      handleServerNetworkError(e, AppStatus.CONTENT_FAILED, dispatch);
     }
   };
 
