@@ -2,7 +2,8 @@ import React, { useMemo, useState, MouseEvent, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { Nullable, TMLContent } from '../../../../../common/types/instance';
+import { SocialNetwork } from '../../../../../common/constants';
+import { Nullable } from '../../../../../common/types/instance';
 import phone from '../../../../../img/phone.png';
 import { Button, Icon } from '../../../../components/elements';
 
@@ -20,13 +21,30 @@ enum EditorStage {
   PREVIEW = 4,
 }
 
+export enum ContentType {
+  LINK = 'link',
+  TEXT = 'text',
+  PHOTO = 'photo',
+  UNKNOWN = 'unknown',
+}
+
+export type TContent = {
+  order: number;
+  type: ContentType;
+  link: Nullable<string>;
+  linkType: Nullable<SocialNetwork | 'third-party'>;
+  title: Nullable<string>;
+  text: Nullable<string>;
+  img: string | undefined;
+};
+
 export const MultilinkEditorContainer = () => {
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(1);
   const [multilinkAttrs, setMultilinkAttrs] = useState({
     template: null as Nullable<number[]>,
     background: undefined as undefined | string,
-    contentSet: [] as Nullable<TMLContent>[],
+    contentSet: [] as Nullable<TContent>[],
   });
 
   const setTemplate = useCallback(
@@ -48,7 +66,7 @@ export const MultilinkEditorContainer = () => {
   );
 
   const setContent = useCallback(
-    ({ order, type, link, linkType, title, text, img }: TMLContent) => {
+    ({ order, type, link, linkType, title, text, img }: TContent) => {
       if (!multilinkAttrs.contentSet[order]) {
         const newContentSet = multilinkAttrs.contentSet;
         newContentSet[order] = { order, type, link, linkType, title, text, img };
@@ -63,7 +81,7 @@ export const MultilinkEditorContainer = () => {
   };
   console.log(multilinkAttrs.contentSet);
 
-  const getPreviewBlockLayout = useCallback((content: TMLContent) => {
+  const getPreviewBlockLayout = useCallback((content: TContent) => {
     switch (content.type) {
       case 'link':
         return <div className="link">{content.text}</div>;
