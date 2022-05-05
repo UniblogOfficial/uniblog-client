@@ -1,37 +1,38 @@
 import React, { FC, useCallback, MouseEvent, useState, ReactElement } from 'react';
 
-import { MLContentType, SocialNetwork } from '../../../../../common/constants';
-import { Nullable, TMLContent } from '../../../../../common/types/instance';
+import { SocialNetwork } from '../../../../../common/constants';
+import { Nullable } from '../../../../../common/types/instance';
 import temp1 from '../../../../../img/temp1.png';
 import { Icon } from '../../../../components/elements';
 
+import { ContentType, TContent } from './MultilinkEditorContainer';
+
 type TMLContentProps = {
   template: number[];
-  setContent: (data: TMLContent) => void;
+  setContent: (data: TContent) => void;
 };
 
 type TContentBlock = {
   order: number;
-  type: MLContentType;
+  type: ContentType;
   content: Nullable<ReactElement>;
 };
 
 export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
   const [contentBlocks, setContentBlocks] = useState<TContentBlock[]>(
-    // [50, 25, 12.5, 12.5]
     template.map((block, i) => {
       const isLink = block <= 15;
       const isText = block > 15 && block < 50;
       const isPhoto = block >= 50;
       switch (true) {
         case isLink:
-          return { order: i, type: MLContentType.LINK, content: null };
+          return { order: i, type: ContentType.LINK, content: null };
         case isText:
-          return { order: i, type: MLContentType.TEXT, content: null };
+          return { order: i, type: ContentType.TEXT, content: null };
         case isPhoto:
-          return { order: i, type: MLContentType.PHOTO, content: null };
+          return { order: i, type: ContentType.PHOTO, content: null };
         default:
-          return { order: i, type: MLContentType.UNKNOWN, content: null };
+          return { order: i, type: ContentType.UNKNOWN, content: null };
       }
     }),
   );
@@ -45,7 +46,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
           copy[order].content = <>Вконтактике</>;
           setContent({
             order,
-            type: MLContentType.LINK,
+            type: ContentType.LINK,
             link: 'https://vk.com',
             linkType: SocialNetwork.VK,
             title: 'VK',
@@ -58,7 +59,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
           copy[order].content = <>{text}</>;
           setContent({
             order,
-            type: MLContentType.TEXT,
+            type: ContentType.TEXT,
             link: null,
             linkType: null,
             title: null,
@@ -70,7 +71,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
           copy[order].content = <img src={temp1} alt="temp1" />;
           setContent({
             order,
-            type: MLContentType.PHOTO,
+            type: ContentType.PHOTO,
             link: null,
             linkType: null,
             title: null,

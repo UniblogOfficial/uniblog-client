@@ -20,7 +20,7 @@ export const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getMultilink('VasyaRaper'));
+    dispatch(getMultilink('f'));
   }, [dispatch]);
 
   /* if (!isInitialized) {
@@ -30,7 +30,6 @@ export const App = () => {
       </div>
     );
   } */
-
   return (
     <>
       <SpritesMap />

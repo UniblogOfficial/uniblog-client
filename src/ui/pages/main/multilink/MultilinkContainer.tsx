@@ -3,7 +3,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 
-import { Button, Icon } from '../../../components/elements';
+import { Breadcrumbs } from '../../../components/elements/breadcrumbs/Breadcrumbs';
+import { Button } from '../../../components/elements/button/Button';
+import { Icon } from '../../../components/elements/icons/Icon';
 import { PageHeader } from '../../../components/modules/headers/PageHeader';
 
 import { MultilinkEditorContainer } from './editor/MultilinkEditorContainer';
