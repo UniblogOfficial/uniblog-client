@@ -20,7 +20,7 @@ export const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getMultilink('f'));
+    dispatch(getMultilink('VasyaRaper'));
   }, [dispatch]);
 
   /* if (!isInitialized) {
