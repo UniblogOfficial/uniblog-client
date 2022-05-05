@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { BrowserRouter, useHistory } from 'react-router-dom';
 
-import { getMultilink, me } from '../bll/reducers';
+import { getMultilink, requestMe } from '../bll/reducers';
 import { useAppDispatch, useAppSelector } from '../common/hooks';
 
 import { SpritesMap } from './components/modules/iconSpritesMaps/SpritesMap';
@@ -16,11 +16,11 @@ export const App = () => {
   const history = useHistory();
   console.log(history);
   useEffect(() => {
-    dispatch(me());
+    dispatch(requestMe());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getMultilink('f'));
+    dispatch(getMultilink('VasyaRaper'));
   }, [dispatch]);
 
   /* if (!isInitialized) {
