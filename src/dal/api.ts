@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TUserData } from '../bll/reducers';
 import { StatusCode } from '../common/constants';
 
-export const authAPI = axios.create({
+export const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   withCredentials: true,
   headers: {
@@ -12,13 +12,13 @@ export const authAPI = axios.create({
   },
 });
 
-authAPI.interceptors.request.use(config => {
+api.interceptors.request.use(config => {
   const token = localStorage.getItem('UniblogAccessToken');
   config.headers.Authorization = token ? `Bearer ${token}` : '';
   return config;
 });
 
-authAPI.interceptors.response.use(
+api.interceptors.response.use(
   config => config,
   async error => {
     const originalRequest = error.config;
@@ -50,7 +50,7 @@ authAPI.interceptors.response.use(
           localStorage.setItem('UniblogAccessToken', accessToken);
           localStorage.setItem('UniblogRefreshToken', refreshToken);
         }
-        return authAPI.request(originalRequest);
+        return api.request(originalRequest);
       } catch (e) {
         console.log('Error while refreshing');
       }

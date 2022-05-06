@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 
+import { requestRegister } from '../../../../bll/reducers';
 import { useAppDispatch } from '../../../../common/hooks';
-import { Input } from '../../../components/elements';
-import { Button } from '../../../components/elements/button/Button';
-import { Icon } from '../../../components/elements/icons/Icon';
+import { TRegisterDTO } from '../../../../common/types/request';
+import { Button, Icon, Input } from '../../../components/elements';
 
 export type SignupFormData = {
   name: string;
@@ -19,10 +18,18 @@ export type SignupFormData = {
 
 type TSignupFormProps = {};
 
-const MIN_SYMBOLS = 8;
+const MIN_SYMBOLS_NAME = 3;
+const MAX_SYMBOLS_NAME = 64;
+const MIN_SYMBOLS_PASS = 8;
+const MAX_SYMBOLS_PASS = 64;
 
 const signupSchema = yup.object().shape({
-  name: yup.string().required('Name is required'),
+  name: yup
+    .string()
+    .required('Name is required')
+    .matches(/^[A-Z0-9_-]/i, 'Invalid symbol (A-z, 0-9, -, _)')
+    .min(MIN_SYMBOLS_NAME, `Name must be at least ${MIN_SYMBOLS_NAME} symbols`)
+    .max(MAX_SYMBOLS_NAME, `Name cannot be more than ${MAX_SYMBOLS_NAME} symbols`),
   email: yup
     .string()
     .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Invalid email address')
@@ -30,7 +37,8 @@ const signupSchema = yup.object().shape({
   password: yup
     .string()
     .required('Password is required')
-    .min(MIN_SYMBOLS, `Password must be at least ${MIN_SYMBOLS} symbols`),
+    .min(MIN_SYMBOLS_PASS, `Password must be at least ${MIN_SYMBOLS_PASS} symbols`)
+    .max(MAX_SYMBOLS_PASS, `Password cannot be more than ${MAX_SYMBOLS_PASS} symbols`),
   passConfirmed: yup.string().notRequired(),
 });
 
@@ -55,66 +63,29 @@ export const SignupForm = () => {
     passConfirmed: true,
   };
   const [helperState, setHelperState] = useState(initialHelperState); // errors blocked in
-  const [dashed, setDashed] = useState<keyof SignupFormData | null>(null);
   const [password, setPassword] = useState('');
   const [passConfirmed, setPassConfirmed] = useState('');
-  const [passOptionals, setPassOptionals] = useState<Array<string> | null>(null);
   const [passConfirmationMessage, setPassConfirmationMessage] = useState('');
-
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisibility = () => {
     setPasswordShown(!passwordShown);
   };
-  const history = useHistory();
 
-  const routeChange = () => {
-    const path = `/verification`;
-    history.push(path);
-  };
-  const onSubmit = () => {
-    routeChange();
-  };
-
-  /* const onSubmit: SubmitHandler<SignupFormData> = data => {
-    const signupData: TSignupData = {
+  const onSubmit: SubmitHandler<SignupFormData> = data => {
+    const signupData: TRegisterDTO = {
+      name: data.name,
       email: data.email,
       password: data.password,
     };
-    const isPassConfirmed = data.password === data.passConfirmed; // Order is important!
-    // dispatch(setIsSignupPassConfirmed(data.password === data.passConfirmed)); // 1
-    dispatch(setSignupUserData(signupData)); // 2
-    if (isPassConfirmed) {
-      dispatch(signup());
-    } else {
-      revealModal('signupPassUnconfirmed');
-    }
-  }; */
+    dispatch(requestRegister(signupData));
+  };
   const changeFocusHandler = (name: keyof SignupFormData, focus: boolean) => {
     // for first field changing errors won't show
     !dirtyFields[name] && setHelperState(prev => ({ ...prev, [name]: !focus }));
     // since field touched after first blur, all errors will calculated onChange and always show
     dirtyFields[name] && setHelperState(initialHelperState);
-    // thick/thin ...might be color customized
-    setDashed(focus ? name : null);
-  };
-  const checkPassComplexity = (condition: string) => {
-    if (!errors.password && dirtyFields.password && passOptionals) {
-      return passOptionals.some(c => c === condition);
-    }
-    if (!passOptionals) {
-      return false;
-    }
-    return true;
   };
 
-  useEffect(() => {
-    const optionals: Array<string> = [];
-    !/[a-z]/.test(password) && optionals.push('lowercase');
-    !/[A-Z]/.test(password) && optionals.push('uppercase');
-    !/[0-9]/.test(password) && optionals.push('number');
-    !/[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/.test(password) && optionals.push('special');
-    setPassOptionals(optionals.length > 0 ? optionals : null);
-  }, [password]);
   useEffect(() => {
     const passwordValue = getValues('password');
     if (passwordValue) {
@@ -143,7 +114,6 @@ export const SignupForm = () => {
             name="name"
           />
         </div>
-        <div className={`field__dash ${dashed === 'name' && 'thick'}`} />
         <div className="field__error">
           {helperState.name && dirtyFields.name && errors.name && errors.name.message}
         </div>
@@ -159,7 +129,6 @@ export const SignupForm = () => {
             name="email"
           />
         </div>
-        <div className={`field__dash ${dashed === 'email' && 'thick'}`} />
         <div className="field__error">
           {helperState.email && dirtyFields.email && errors.email && errors.email.message}
         </div>
@@ -202,7 +171,6 @@ export const SignupForm = () => {
             />
           )}
         </div>
-        <div className={`field__dash ${dashed === 'password' && 'thick'}`} />
         <div className="field__error">
           {helperState.password &&
             dirtyFields.password &&
@@ -224,7 +192,6 @@ export const SignupForm = () => {
             }}
           />
         </div>
-        <div className={`field__dash ${dashed === 'passConfirmed' && 'thick'}`} />
         <div className="field__error">
           {helperState.passConfirmed &&
             dirtyFields.passConfirmed &&
