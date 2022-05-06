@@ -69,6 +69,10 @@ export const MultilinkEditorContainer = () => {
     ({ order, type, link, linkType, title, text, img }: TContent) => {
       if (!multilinkAttrs.contentSet[order]) {
         const newContentSet = multilinkAttrs.contentSet;
+        newContentSet[order] = { order, type, link, linkType, title, text: '', img };
+        setMultilinkAttrs({ ...multilinkAttrs, contentSet: newContentSet });
+      } else {
+        const newContentSet = multilinkAttrs.contentSet;
         newContentSet[order] = { order, type, link, linkType, title, text, img };
         setMultilinkAttrs({ ...multilinkAttrs, contentSet: newContentSet });
       }
@@ -79,14 +83,13 @@ export const MultilinkEditorContainer = () => {
   const onNextButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     stage < 4 && setStage(prev => prev + 1);
   };
-  console.log(multilinkAttrs.contentSet);
 
   const getPreviewBlockLayout = useCallback((content: TContent) => {
     switch (content.type) {
       case 'link':
         return <div className="link">{content.text}</div>;
       case 'text':
-        return <div className="text">{content.text}</div>;
+        return <p className="text">{content.text}</p>;
       case 'photo':
         return <img src={content.img} alt="img" />;
       default:
@@ -121,7 +124,11 @@ export const MultilinkEditorContainer = () => {
             {stage === EditorStage.TEMPLATE && <MLTemplate setTemplate={setTemplate} />}
             {stage === EditorStage.BACKGROUND && <MLBackground setBackground={setBackground} />}
             {stage === EditorStage.CONTENT && multilinkAttrs.template && (
-              <MLContent template={multilinkAttrs.template} setContent={setContent} />
+              <MLContent
+                template={multilinkAttrs.template}
+                contentSet={multilinkAttrs.contentSet}
+                setContent={setContent}
+              />
             )}
             <div className="paper__button-container">
               <Button

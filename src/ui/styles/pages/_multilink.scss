@@ -70,10 +70,17 @@
 				--primary: #0ed400;
 			}
 		}
+		&__textarea {
+			height: 100%;
+			padding: 10px;
+			outline: none;
+			overflow:hidden;
+		}
 		&._filled {
 			border: 2px solid #4040f2;
 			box-shadow: 0 0 0 1px #4040f2;
 		}
+		&
 		.icon-container {
 			height: 100%;
 			.icon {
