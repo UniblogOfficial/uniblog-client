@@ -2,8 +2,8 @@ import React, { useMemo, useState, MouseEvent, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { SocialNetwork } from '../../../../../common/constants';
-import { Nullable } from '../../../../../common/types/instance';
+import { MLContentType } from '../../../../../common/constants';
+import { Nullable, TMLContent, TMultilinkDraft } from '../../../../../common/types/instance';
 import phone from '../../../../../img/phone.png';
 import { Button, Icon } from '../../../../components/elements';
 
@@ -21,30 +21,14 @@ enum EditorStage {
   PREVIEW = 4,
 }
 
-export enum ContentType {
-  LINK = 'link',
-  TEXT = 'text',
-  PHOTO = 'photo',
-  UNKNOWN = 'unknown',
-}
-
-export type TContent = {
-  order: number;
-  type: ContentType;
-  link: Nullable<string>;
-  linkType: Nullable<SocialNetwork | 'third-party'>;
-  title: Nullable<string>;
-  text: Nullable<string>;
-  img: string | undefined;
-};
-
 export const MultilinkEditorContainer = () => {
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(1);
-  const [multilinkAttrs, setMultilinkAttrs] = useState({
+  const [multilinkAttrs, setMultilinkAttrs] = useState<TMultilinkDraft>({
+    name: 'VasyaRaperForever',
     template: null as Nullable<number[]>,
     background: undefined as undefined | string,
-    contentSet: [] as Nullable<TContent>[],
+    contentSet: [] as Nullable<TMLContent>[],
   });
 
   const setTemplate = useCallback(
@@ -66,7 +50,7 @@ export const MultilinkEditorContainer = () => {
   );
 
   const setContent = useCallback(
-    ({ order, type, link, linkType, title, text, img }: TContent) => {
+    ({ order, type, link, linkType, title, text, img }: TMLContent) => {
       if (!multilinkAttrs.contentSet[order]) {
         const newContentSet = multilinkAttrs.contentSet;
         newContentSet[order] = { order, type, link, linkType, title, text: '', img };
@@ -85,13 +69,13 @@ export const MultilinkEditorContainer = () => {
     stage < 5 && stage >= 1 && setStage(stage + Number(e.currentTarget.value));
   };
 
-  const getPreviewBlockLayout = useCallback((content: TContent) => {
+  const getPreviewBlockLayout = useCallback((content: TMLContent) => {
     switch (content.type) {
-      case 'link':
-        return <div className="link">{content.text}</div>;
-      case 'text':
+      case MLContentType.LINK:
+        return <div className="link">{content.title}</div>;
+      case MLContentType.TEXT:
         return <p className="text">{content.text}</p>;
-      case 'photo':
+      case MLContentType.IMAGE:
         return <img src={content.img} alt="img" />;
       default:
         break;
