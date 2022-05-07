@@ -8,28 +8,26 @@ import React, {
   useRef,
 } from 'react';
 
-import { SocialNetwork } from '../../../../../common/constants';
-import { Nullable } from '../../../../../common/types/instance';
+import { MLContentType, SocialNetwork } from '../../../../../common/constants';
+import { Nullable, TMLContent } from '../../../../../common/types/instance';
 import temp1 from '../../../../../img/temp1.png';
 import { Icon } from '../../../../components/elements';
 
-import { ContentType, TContent } from './MultilinkEditorContainer';
-
 type TMLContentProps = {
   template: number[];
-  contentSet: Nullable<TContent>[];
-  setContent: (data: TContent) => void;
+  contentSet: Nullable<TMLContent>[];
+  setContent: (data: TMLContent) => void;
 };
 
 type TContentBlock = {
   order: number;
-  type: ContentType;
+  type: MLContentType;
   content: Nullable<ReactElement>;
 };
 
 export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setContent }) => {
   const order = useRef<number>(0);
-  const [arrayOfTextareaValues, setArrayOfTextareaValues] = useState<string[]>([]);
+  const [textareaValues, setTextareaValues] = useState<string[]>([]);
   const [contentBlocks, setContentBlocks] = useState<TContentBlock[]>(
     template.map((block, i) => {
       const isLink = block <= 15;
@@ -37,18 +35,37 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
       const isPhoto = block >= 50;
       switch (true) {
         case isLink:
-          return { order: i, type: ContentType.LINK, content: null };
+          return { order: i, type: MLContentType.LINK, content: null };
         case isText:
-          return { order: i, type: ContentType.TEXT, content: null };
+          return { order: i, type: MLContentType.TEXT, content: null };
         case isPhoto:
-          return { order: i, type: ContentType.PHOTO, content: null };
+          return { order: i, type: MLContentType.IMAGE, content: null };
         default:
-          return { order: i, type: ContentType.UNKNOWN, content: null };
+          return { order: i, type: MLContentType.UNKNOWN, content: null };
       }
     }),
   );
 
-  const onClickChangeOrder = (e: MouseEvent<HTMLElement>) => {
+  const onTextareaChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      const text = e.target.value;
+      // eslint-disable-next-line no-return-assign
+      const orderIndex = order.current;
+      setTextareaValues(Object.assign([], textareaValues, { orderIndex: text }));
+      setContent({
+        order: order.current,
+        type: MLContentType.TEXT,
+        link: null,
+        linkType: null,
+        title: null,
+        text,
+        img: undefined,
+      });
+    },
+    [setContent, textareaValues],
+  );
+
+  const onFilledBlockClick = (e: MouseEvent<HTMLElement>) => {
     order.current = +e.currentTarget.dataset.value! as number;
   };
 
@@ -61,7 +78,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
           copy[order.current].content = <>Вконтактике</>;
           setContent({
             order: order.current,
-            type: ContentType.LINK,
+            type: MLContentType.LINK,
             link: 'https://vk.com',
             linkType: SocialNetwork.VK,
             title: 'VK',
@@ -72,7 +89,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
         case 'text':
           copy[order.current].content = (
             <textarea
-              value={arrayOfTextareaValues[order.current]}
+              value={textareaValues[order.current]}
               onChange={onTextareaChange}
               maxLength={70}
               className="template__block__textarea"
@@ -80,7 +97,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
           );
           setContent({
             order: order.current,
-            type: ContentType.TEXT,
+            type: MLContentType.TEXT,
             link: null,
             linkType: null,
             title: null,
@@ -92,7 +109,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
           copy[order.current].content = <img src={temp1} alt="temp1" />;
           setContent({
             order: order.current,
-            type: ContentType.PHOTO,
+            type: MLContentType.IMAGE,
             link: null,
             linkType: null,
             title: null,
@@ -105,24 +122,8 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
       }
       setContentBlocks(copy);
     },
-    [contentBlocks, setContent],
+    [contentBlocks, setContent, onTextareaChange, textareaValues],
   );
-
-  const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const text = e.target.value;
-    // eslint-disable-next-line no-return-assign
-    const orderIndex = order.current;
-    setArrayOfTextareaValues(Object.assign([], arrayOfTextareaValues, { orderIndex: text }));
-    setContent({
-      order: order.current,
-      type: ContentType.TEXT,
-      link: null,
-      linkType: null,
-      title: null,
-      text,
-      img: undefined,
-    });
-  };
 
   const templateLayout = (
     <ul className="template">
@@ -130,7 +131,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <li
           key={id[i]}
-          onClick={onClickChangeOrder}
+          onClick={onFilledBlockClick}
           data-value={contentBlocks[i].order}
           style={{ flex: `0 1 ${block}%` }}
           className={`template__block ${contentBlocks[i].content ? '_filled' : '_interactive'}`}>
