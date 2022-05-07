@@ -1,4 +1,12 @@
-import React, { FC, useCallback, MouseEvent, useState, ReactElement } from 'react';
+import React, {
+  FC,
+  useCallback,
+  MouseEvent,
+  useState,
+  ReactElement,
+  ChangeEvent,
+  useRef,
+} from 'react';
 
 import { SocialNetwork } from '../../../../../common/constants';
 import { Nullable } from '../../../../../common/types/instance';
@@ -9,6 +17,7 @@ import { ContentType, TContent } from './MultilinkEditorContainer';
 
 type TMLContentProps = {
   template: number[];
+  contentSet: Nullable<TContent>[];
   setContent: (data: TContent) => void;
 };
 
@@ -18,7 +27,9 @@ type TContentBlock = {
   content: Nullable<ReactElement>;
 };
 
-export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
+export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setContent }) => {
+  const order = useRef<number>(0);
+  const [arrayOfTextareaValues, setArrayOfTextareaValues] = useState<string[]>([]);
   const [contentBlocks, setContentBlocks] = useState<TContentBlock[]>(
     template.map((block, i) => {
       const isLink = block <= 15;
@@ -37,15 +48,19 @@ export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
     }),
   );
 
+  const onClickChangeOrder = (e: MouseEvent<HTMLElement>) => {
+    order.current = +e.currentTarget.dataset.value! as number;
+  };
+
   const onBlockClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
-      const order = +e.currentTarget.dataset.value! as number;
+      order.current = +e.currentTarget.dataset.value! as number;
       const copy = [...contentBlocks];
       switch (e.currentTarget.value) {
         case 'link':
-          copy[order].content = <>Вконтактике</>;
+          copy[order.current].content = <>Вконтактике</>;
           setContent({
-            order,
+            order: order.current,
             type: ContentType.LINK,
             link: 'https://vk.com',
             linkType: SocialNetwork.VK,
@@ -55,22 +70,28 @@ export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
           });
           break;
         case 'text':
-          const text = 'Падпишыс бро плиз плиз умоляю ну пажалуста';
-          copy[order].content = <>{text}</>;
+          copy[order.current].content = (
+            <textarea
+              value={arrayOfTextareaValues[order.current]}
+              onChange={onTextareaChange}
+              maxLength={70}
+              className="template__block__textarea"
+            />
+          );
           setContent({
-            order,
+            order: order.current,
             type: ContentType.TEXT,
             link: null,
             linkType: null,
             title: null,
-            text,
+            text: '',
             img: undefined,
           });
           break;
         case 'photo':
-          copy[order].content = <img src={temp1} alt="temp1" />;
+          copy[order.current].content = <img src={temp1} alt="temp1" />;
           setContent({
-            order,
+            order: order.current,
             type: ContentType.PHOTO,
             link: null,
             linkType: null,
@@ -80,17 +101,37 @@ export const MLContent: FC<TMLContentProps> = ({ template, setContent }) => {
           });
           break;
         default:
-          copy[order].content = <>unknown</>;
+          copy[order.current].content = <>unknown</>;
       }
       setContentBlocks(copy);
     },
     [contentBlocks, setContent],
   );
+
+  const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const text = e.target.value;
+    // eslint-disable-next-line no-return-assign
+    const orderIndex = order.current;
+    setArrayOfTextareaValues(Object.assign([], arrayOfTextareaValues, { orderIndex: text }));
+    setContent({
+      order: order.current,
+      type: ContentType.TEXT,
+      link: null,
+      linkType: null,
+      title: null,
+      text,
+      img: undefined,
+    });
+  };
+
   const templateLayout = (
     <ul className="template">
       {template.map((block, i) => (
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <li
           key={id[i]}
+          onClick={onClickChangeOrder}
+          data-value={contentBlocks[i].order}
           style={{ flex: `0 1 ${block}%` }}
           className={`template__block ${contentBlocks[i].content ? '_filled' : '_interactive'}`}>
           {contentBlocks[i].content ? (
