@@ -1,4 +1,4 @@
-import React, { useMemo, useState, MouseEvent, useCallback } from 'react';
+import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,9 @@ import { MLContent } from './MLContent';
 import { MLPreview } from './MLPreview';
 import { MLTemplate } from './MLTemplate';
 
-type TMultilinkEditorContainerProps = {};
+type TMultilinkEditorContainerProps = {
+  userData: TUserData;
+};
 
 enum EditorStage {
   TEMPLATE = 1,
@@ -23,12 +25,11 @@ enum EditorStage {
   PREVIEW = 4,
 }
 
-export const MultilinkEditorContainer = () => {
+export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ userData }) => {
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(1);
-  // const { name } = useAppSelector<TUserData>(state => state.auth.userData);
   const [multilinkAttrs, setMultilinkAttrs] = useState<TMultilinkDraft>({
-    name: 'VasyaRaperForever',
+    name: userData.name,
     template: null as Nullable<number[]>,
     background: undefined as undefined | string,
     contentSet: [] as Nullable<TMLContent>[],
