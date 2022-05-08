@@ -2,7 +2,9 @@ import React, { useMemo, useState, MouseEvent, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { TUserData } from '../../../../../bll/reducers';
 import { MLContentType } from '../../../../../common/constants';
+import { useAppSelector } from '../../../../../common/hooks';
 import { Nullable, TMLContent, TMultilinkDraft } from '../../../../../common/types/instance';
 import phone from '../../../../../img/phone.png';
 import { Button, Icon } from '../../../../components/elements';
@@ -24,6 +26,7 @@ enum EditorStage {
 export const MultilinkEditorContainer = () => {
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(1);
+  // const { name } = useAppSelector<TUserData>(state => state.auth.userData);
   const [multilinkAttrs, setMultilinkAttrs] = useState<TMultilinkDraft>({
     name: 'VasyaRaperForever',
     template: null as Nullable<number[]>,
@@ -138,7 +141,7 @@ export const MultilinkEditorContainer = () => {
         style={stage === EditorStage.PREVIEW ? { flex: '0 0 550px' } : undefined}>
         <div className="paper">
           <h3 className="paper-title">Preview</h3>
-          {stage === EditorStage.PREVIEW && <MLPreview />}
+          {stage === EditorStage.PREVIEW && <MLPreview username={multilinkAttrs.name} />}
           <div className="preview-device">
             <div className="phone">
               <div className="phone__container" style={{ background: multilinkAttrs.background }}>

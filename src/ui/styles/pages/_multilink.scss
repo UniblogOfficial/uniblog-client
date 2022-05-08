@@ -32,6 +32,39 @@
 	.paper-title {
 		text-align: center;
 	}
+	.paper-link {
+		display: flex;
+		flex-wrap: wrap;
+		background: rgb(247, 247, 247);
+		margin-top: 5px;
+		padding: 10px;
+		border: 3px solid black;
+		border-radius: 8px;
+		width: 100%;
+
+		// .paper-link__host 
+		&__host {
+			cursor: pointer;
+			font-weight: bold;
+		}
+		// .paper-link__input
+		&__input {
+			outline: none;
+
+			&::-webkit-input-placeholder {
+				color: black;
+			}
+
+			&:focus::-webkit-input-placeholder {
+				opacity: 0;
+			}
+		}
+		// .paper-link__valid
+		&__valid {
+			width: 20px;
+			justify-self: flex-end;
+		}
+	}
 	.preview-area {
 		flex: 0 0 450px;
 	}
