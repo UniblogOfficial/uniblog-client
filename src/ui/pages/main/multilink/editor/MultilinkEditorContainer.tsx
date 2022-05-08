@@ -1,8 +1,10 @@
-import React, { useMemo, useState, MouseEvent, useCallback } from 'react';
+import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { TUserData } from '../../../../../bll/reducers';
 import { MLContentType } from '../../../../../common/constants';
+import { useAppSelector } from '../../../../../common/hooks';
 import { Nullable, TMLContent, TMultilinkDraft } from '../../../../../common/types/instance';
 import phone from '../../../../../img/phone.png';
 import { Button, Icon } from '../../../../components/elements';
@@ -12,7 +14,9 @@ import { MLContent } from './MLContent';
 import { MLPreview } from './MLPreview';
 import { MLTemplate } from './MLTemplate';
 
-type TMultilinkEditorContainerProps = {};
+type TMultilinkEditorContainerProps = {
+  userData: TUserData;
+};
 
 enum EditorStage {
   TEMPLATE = 1,
@@ -21,11 +25,11 @@ enum EditorStage {
   PREVIEW = 4,
 }
 
-export const MultilinkEditorContainer = () => {
+export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ userData }) => {
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(1);
   const [multilinkAttrs, setMultilinkAttrs] = useState<TMultilinkDraft>({
-    name: 'VasyaRaperForever',
+    name: userData.name,
     template: null as Nullable<number[]>,
     background: undefined as undefined | string,
     contentSet: [] as Nullable<TMLContent>[],
@@ -138,7 +142,7 @@ export const MultilinkEditorContainer = () => {
         style={stage === EditorStage.PREVIEW ? { flex: '0 0 550px' } : undefined}>
         <div className="paper">
           <h3 className="paper-title">Preview</h3>
-          {stage === EditorStage.PREVIEW && <MLPreview />}
+          {stage === EditorStage.PREVIEW && <MLPreview username={multilinkAttrs.name} />}
           <div className="preview-device">
             <div className="phone">
               <div className="phone__container" style={{ background: multilinkAttrs.background }}>
