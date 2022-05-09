@@ -2,9 +2,9 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { TUserData } from '../../../../../bll/reducers';
+import { publishMultilink, TUserData } from '../../../../../bll/reducers';
 import { MLContentType } from '../../../../../common/constants';
-import { useAppSelector } from '../../../../../common/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../common/hooks';
 import { Nullable, TMLContent, TMultilinkDraft } from '../../../../../common/types/instance';
 import { TMLDraftContent } from '../../../../../common/types/instance/multilink';
 import phone from '../../../../../img/phone.png';
@@ -27,6 +27,7 @@ enum EditorStage {
 }
 
 export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ userData }) => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(1);
   const [multilinkAttrs, setMultilinkAttrs] = useState<TMultilinkDraft>({
@@ -68,6 +69,31 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
     },
     [multilinkAttrs],
   );
+
+  const onPublishButtonClick = () => {
+    const { name, background, template, contentSet } = multilinkAttrs;
+    if (background && template && contentSet) {
+      dispatch(
+        publishMultilink({
+          name,
+          template,
+          background,
+          contentSet: contentSet.map(
+            (content, i) =>
+              content || {
+                order: i,
+                type: MLContentType.UNKNOWN,
+                link: null,
+                linkType: null,
+                text: null,
+                title: null,
+                img: undefined,
+              },
+          ),
+        }),
+      );
+    }
+  };
 
   const onNextButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     console.log(e.currentTarget);
@@ -161,12 +187,17 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
             </div>
           </div>
           {stage === EditorStage.PREVIEW && (
-            <Button
-              onClick={onNextButtonClick}
-              value="-1"
-              className="button _back-ml-editor _rounded">
-              {t('common:buttons.back')}
-            </Button>
+            <>
+              <Button
+                onClick={onNextButtonClick}
+                value="-1"
+                className="button _back-ml-editor _rounded">
+                {t('common:buttons.back')}
+              </Button>
+              <Button onClick={onPublishButtonClick} className="button _rounded">
+                {t('common:buttons.ok')}
+              </Button>
+            </>
           )}
         </div>
       </section>

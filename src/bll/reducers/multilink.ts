@@ -89,7 +89,7 @@ export const publishMultilink =
     };
     const images = multilink.contentSet
       .filter(content => content.img)
-      .map(content => ({ order: content.order, file: content.img?.file! }));
+      .map(content => ({ order: content.order + 1, file: content.img?.file! }));
     const response = await multilinkAPI.create(multilinkDto, images);
   };
 
