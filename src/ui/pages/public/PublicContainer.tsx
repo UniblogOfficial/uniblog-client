@@ -17,7 +17,10 @@ export const PublicContainer = () => {
       case MLContentType.TEXT:
         return <p className="text">{content.text}</p>;
       case MLContentType.IMAGE:
-        return <img src={content.img} alt="img" />;
+        const buffer = Buffer.from(content.imageData!);
+        return (
+          <img src={`data:${content.imageType};base64, ${buffer.toString('base64')}`} alt="img" />
+        );
       default:
         break;
     }

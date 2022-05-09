@@ -1,3 +1,4 @@
+import { TImageFile } from '../../../ui/pages/main/multilink/editor/content/MLContent';
 import { MLContentType, SocialNetwork } from '../../constants';
 
 import { Nullable } from '.';
@@ -31,12 +32,31 @@ export type TMLContent = {
   linkType: Nullable<SocialNetwork | 'third-party'>;
   title: Nullable<string>;
   text: Nullable<string>;
-  img: string | undefined;
+  imageName: string | undefined;
+  imageType: string | undefined;
+  imageData: string | undefined;
 };
 
 export type TMultilinkDraft = {
   name: string;
   template: Nullable<number[]>;
   background: undefined | string;
-  contentSet: Nullable<TMLContent>[];
+  contentSet: Nullable<TMLDraftContent>[];
+};
+
+export type TMLDraftContent = {
+  order: number;
+  type: MLContentType;
+  link: Nullable<string>;
+  linkType: Nullable<SocialNetwork | 'third-party'>;
+  title: Nullable<string>;
+  text: Nullable<string>;
+  img: TImageFile | undefined;
+};
+
+export type TMultilinkComplete = {
+  name: string;
+  template: number[];
+  background: string;
+  contentSet: TMLDraftContent[];
 };
