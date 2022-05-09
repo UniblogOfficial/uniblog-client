@@ -7,13 +7,10 @@ type TImagePreviewProps = {
 };
 
 const ImagePreview: FC<TImagePreviewProps> = ({ imageFiles }) => {
-  const mappedPreview = imageFiles.map(({ name, preview, size }) => (
+  const mappedPreview = imageFiles.map(({ name, previewUrl, size }) => (
     <div key={name}>
       <div>
-        <img src={preview} alt={name} />
-      </div>
-      <div>
-        {name} - {(size / 1024000).toFixed(2)}MB
+        <img src={previewUrl} alt={name} />
       </div>
     </div>
   ));

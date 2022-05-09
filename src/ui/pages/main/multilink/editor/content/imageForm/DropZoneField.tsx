@@ -1,4 +1,4 @@
-import React, { FC, DragEvent } from 'react';
+import React, { FC, DragEvent, useState, useCallback } from 'react';
 
 import DropZone, { Accept, DropEvent } from 'react-dropzone';
 
@@ -9,36 +9,43 @@ import { ImagePlaceholder } from './ImagePlaceholder';
 import ImagePreview from './ImagePreview';
 
 type TDropZoneFieldProps = {
-  handleOnDrop: (
-    e: DropEvent,
-    newImageFile: Array<File>,
-    onChange: (e: DropEvent, imageFile: TImageFile) => void,
-  ) => void;
-  onChange: (e: DropEvent, imageFile: TImageFile) => void;
+  onChange: (imageFile: TImageFile, id?: number) => void;
   imageFiles: Array<TImageFile>;
   error?: string;
   touched: boolean;
+  id?: number;
 };
 
 export const DropZoneField: FC<TDropZoneFieldProps> = ({
-  handleOnDrop,
   imageFiles,
   onChange,
   error,
   touched,
-}) => (
-  <div>
-    <div>
-      <DropZone onDrop={(file, rejected, e) => handleOnDrop(e, file, onChange)} multiple={false}>
-        {props =>
-          imageFiles && imageFiles.length > 0 ? (
-            <ImagePreview imageFiles={imageFiles} />
-          ) : (
-            <ImagePlaceholder {...props} error={error} touched={touched} />
-          )
-        }
-      </DropZone>
+  id,
+}) => {
+  const [image, setImage] = useState<TImageFile[]>([]);
+
+  const onDrop = useCallback(
+    (file: File[]) => {
+      const fileData: TImageFile = {
+        file: file[0],
+        name: file[0].name,
+        previewUrl: URL.createObjectURL(file[0]),
+        size: file[0].size,
+      };
+      setImage([fileData]);
+      fileData && onChange(fileData, id);
+    },
+    [onChange, id],
+  );
+
+  return (
+    <div className="App">
+      {image && image.length > 0 ? (
+        <ImagePreview imageFiles={image} />
+      ) : (
+        <ImagePlaceholder onDrop={onDrop} />
+      )}
     </div>
-    <ShowError error={error} touched={touched} />
-  </div>
-);
+  );
+};

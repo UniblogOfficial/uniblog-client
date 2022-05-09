@@ -81,7 +81,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
       case MLContentType.TEXT:
         return <p className="text">{content.text}</p>;
       case MLContentType.IMAGE:
-        return <img src={content.img?.preview} alt="img" />;
+        return <img src={content.img?.previewUrl} alt="img" />;
       default:
         break;
     }
