@@ -1,4 +1,4 @@
-export type TCreateUserDTO = {
+export type TCreateUserDto = {
   // example: 'VasyaRaper', description: 'Unique(!) user name'
   name: string;
 

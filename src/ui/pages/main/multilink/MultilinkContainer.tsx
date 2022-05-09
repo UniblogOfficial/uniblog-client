@@ -3,6 +3,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 
+import { TUserData } from '../../../../bll/reducers';
+import { useAppSelector } from '../../../../common/hooks';
+import { Nullable } from '../../../../common/types/instance';
 import { Breadcrumbs } from '../../../components/elements/breadcrumbs/Breadcrumbs';
 import { Button } from '../../../components/elements/button/Button';
 import { Icon } from '../../../components/elements/icons/Icon';
@@ -15,6 +18,12 @@ type TMultilinkContainerProps = {};
 
 export const MultilinkContainer = () => {
   const { t } = useTranslation(['pages', 'common']);
+  const userData = useAppSelector<Nullable<TUserData>>(state => state.auth.userData);
+
+  if (userData === null) {
+    return <Redirect to="/login" />;
+  }
+
   return (
     <div className="multilink">
       <PageHeader pageTitle={t('pages:multilink.title')} />
@@ -39,7 +48,10 @@ export const MultilinkContainer = () => {
           </nav>
         </div>
         <Switch>
-          <Route path="/multilink/new" render={() => <MultilinkEditorContainer />} />
+          <Route
+            path="/multilink/new"
+            render={() => <MultilinkEditorContainer userData={userData} />}
+          />
           <Route path="/multilink/all" render={() => <MultilinkListContainer />} />
           <Redirect from="/multilink/*" to="/404" />
         </Switch>

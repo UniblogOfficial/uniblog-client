@@ -1,12 +1,12 @@
 import React, { FC, useCallback } from 'react';
 
-import { Carousel, Icon } from '../../../../components/elements';
+import { Carousel, Icon } from '../../../../../components/elements';
 
 type TMLTemplateProps = {
   setTemplate: (template: number[]) => void;
 };
 
-const multilinkTemplate = new Map([
+const multilinkTemplates = new Map([
   [0, [12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
   [1, [25, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
   [2, [50, 25, 12.5, 12.5]],
@@ -16,7 +16,7 @@ const multilinkTemplate = new Map([
 export const MLTemplate: FC<TMLTemplateProps> = ({ setTemplate }) => {
   const setCurrentTemplate = useCallback(
     (stage: number) => {
-      const template = multilinkTemplate.get(stage);
+      const template = multilinkTemplates.get(stage);
       if (template) {
         setTemplate(template);
       }
@@ -57,7 +57,7 @@ export const MLTemplate: FC<TMLTemplateProps> = ({ setTemplate }) => {
 
 const id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const templates = Array.from(multilinkTemplate.values()).map((template, i) => (
+const templates = Array.from(multilinkTemplates.values()).map((template, i) => (
   <ul key={id[i]} className="template">
     {template.map((block, j) => (
       <li key={id[j]} style={{ flex: `0 1 ${block}%` }} className="template__block" />

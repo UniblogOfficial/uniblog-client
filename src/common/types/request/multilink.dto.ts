@@ -8,10 +8,15 @@ export type TCreateMLDto = {
   // exm. "#fff"
   background: string;
 
-  content: TContentDTO[];
+  content: TContentDto[];
 };
 
-type TContentDTO = {
+export type TMLImageDto = {
+  order: number;
+  file: File;
+};
+
+type TContentDto = {
   order: number;
   type: MLContentType;
   link?: string;

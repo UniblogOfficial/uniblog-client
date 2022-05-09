@@ -1,4 +1,4 @@
-export type TRegisterDTO = {
+export type TRegisterDto = {
   // example: 'VasyaRaper', description: 'Unique(!) user name'
   name: string;
 
@@ -9,7 +9,7 @@ export type TRegisterDTO = {
   password: string;
 };
 
-export type TLoginDTO = {
+export type TLoginDto = {
   // example: 'vasyaraper@gmail.com', description: 'User email'
   email: string;
 

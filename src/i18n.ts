@@ -52,7 +52,7 @@ const createI18n = (language: string): i18nInstance => {
       ns: ['pages', 'common', 'auth'],
       resources,
       returnObjects: true,
-      debug: true,
+      debug: false,
       // Распознавание и кэширование языковых кук
       /* detection: {
         order: ['queryString', 'cookie'],

@@ -1,7 +1,7 @@
 /* eslint-disable dot-notation */
 import React, { CSSProperties, FC, useCallback, useMemo, MouseEvent } from 'react';
 
-import { Button } from '../../../../components/elements';
+import { Button } from '../../../../../components/elements';
 
 import styles from './MLBackground.module.scss';
 

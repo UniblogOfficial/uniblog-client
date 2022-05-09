@@ -1,18 +1,23 @@
-import React, { useMemo, useState, MouseEvent, useCallback } from 'react';
+import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { SocialNetwork } from '../../../../../common/constants';
-import { Nullable } from '../../../../../common/types/instance';
+import { publishMultilink, TUserData } from '../../../../../bll/reducers';
+import { MLContentType } from '../../../../../common/constants';
+import { useAppDispatch, useAppSelector } from '../../../../../common/hooks';
+import { Nullable, TMLContent, TMultilinkDraft } from '../../../../../common/types/instance';
+import { TMLDraftContent } from '../../../../../common/types/instance/multilink';
 import phone from '../../../../../img/phone.png';
 import { Button, Icon } from '../../../../components/elements';
 
-import { MLBackground } from './MLBackground';
-import { MLContent } from './MLContent';
-import { MLPreview } from './MLPreview';
-import { MLTemplate } from './MLTemplate';
+import { MLBackground } from './background/MLBackground';
+import { MLContent } from './content/MLContent';
+import { MLPreview } from './preview/MLPreview';
+import { MLTemplate } from './template/MLTemplate';
 
-type TMultilinkEditorContainerProps = {};
+type TMultilinkEditorContainerProps = {
+  userData: TUserData;
+};
 
 enum EditorStage {
   TEMPLATE = 1,
@@ -21,30 +26,15 @@ enum EditorStage {
   PREVIEW = 4,
 }
 
-export enum ContentType {
-  LINK = 'link',
-  TEXT = 'text',
-  PHOTO = 'photo',
-  UNKNOWN = 'unknown',
-}
-
-export type TContent = {
-  order: number;
-  type: ContentType;
-  link: Nullable<string>;
-  linkType: Nullable<SocialNetwork | 'third-party'>;
-  title: Nullable<string>;
-  text: Nullable<string>;
-  img: string | undefined;
-};
-
-export const MultilinkEditorContainer = () => {
+export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ userData }) => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(1);
-  const [multilinkAttrs, setMultilinkAttrs] = useState({
+  const [multilinkAttrs, setMultilinkAttrs] = useState<TMultilinkDraft>({
+    name: userData.name,
     template: null as Nullable<number[]>,
     background: undefined as undefined | string,
-    contentSet: [] as Nullable<TContent>[],
+    contentSet: [] as Nullable<TMLDraftContent>[],
   });
 
   const setTemplate = useCallback(
@@ -66,8 +56,12 @@ export const MultilinkEditorContainer = () => {
   );
 
   const setContent = useCallback(
-    ({ order, type, link, linkType, title, text, img }: TContent) => {
+    ({ order, type, link, linkType, title, text, img }: TMLDraftContent) => {
       if (!multilinkAttrs.contentSet[order]) {
+        const newContentSet = multilinkAttrs.contentSet;
+        newContentSet[order] = { order, type, link, linkType, title, text: '', img };
+        setMultilinkAttrs({ ...multilinkAttrs, contentSet: newContentSet });
+      } else {
         const newContentSet = multilinkAttrs.contentSet;
         newContentSet[order] = { order, type, link, linkType, title, text, img };
         setMultilinkAttrs({ ...multilinkAttrs, contentSet: newContentSet });
@@ -76,19 +70,44 @@ export const MultilinkEditorContainer = () => {
     [multilinkAttrs],
   );
 
-  const onNextButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    stage < 4 && setStage(prev => prev + 1);
+  const onPublishButtonClick = () => {
+    const { name, background, template, contentSet } = multilinkAttrs;
+    if (background && template && contentSet) {
+      dispatch(
+        publishMultilink({
+          name,
+          template,
+          background,
+          contentSet: contentSet.map(
+            (content, i) =>
+              content || {
+                order: i,
+                type: MLContentType.UNKNOWN,
+                link: null,
+                linkType: null,
+                text: null,
+                title: null,
+                img: undefined,
+              },
+          ),
+        }),
+      );
+    }
   };
-  console.log(multilinkAttrs.contentSet);
 
-  const getPreviewBlockLayout = useCallback((content: TContent) => {
+  const onNextButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    console.log(e.currentTarget);
+    stage < 5 && stage >= 1 && setStage(stage + Number(e.currentTarget.value));
+  };
+
+  const getPreviewBlockLayout = useCallback((content: TMLDraftContent) => {
     switch (content.type) {
-      case 'link':
-        return <div className="link">{content.text}</div>;
-      case 'text':
-        return <div className="text">{content.text}</div>;
-      case 'photo':
-        return <img src={content.img} alt="img" />;
+      case MLContentType.LINK:
+        return <div className="link">{content.title}</div>;
+      case MLContentType.TEXT:
+        return <p className="text">{content.text}</p>;
+      case MLContentType.IMAGE:
+        return <img src={content.img?.previewUrl} alt="img" />;
       default:
         break;
     }
@@ -121,13 +140,24 @@ export const MultilinkEditorContainer = () => {
             {stage === EditorStage.TEMPLATE && <MLTemplate setTemplate={setTemplate} />}
             {stage === EditorStage.BACKGROUND && <MLBackground setBackground={setBackground} />}
             {stage === EditorStage.CONTENT && multilinkAttrs.template && (
-              <MLContent template={multilinkAttrs.template} setContent={setContent} />
+              <MLContent
+                template={multilinkAttrs.template}
+                contentSet={multilinkAttrs.contentSet}
+                setContent={setContent}
+              />
             )}
-            <div className="paper__button-container">
+
+            {stage > 1 && (
               <Button
-                value="background"
                 onClick={onNextButtonClick}
-                className="button _full _paper">
+                value="-1"
+                className="button _back-ml-editor _rounded">
+                {t('common:buttons.back')}
+              </Button>
+            )}
+
+            <div className="paper__button-container">
+              <Button onClick={onNextButtonClick} value="1" className="button _full _paper">
                 {t('common:buttons.next')}
               </Button>
             </div>
@@ -139,7 +169,7 @@ export const MultilinkEditorContainer = () => {
         style={stage === EditorStage.PREVIEW ? { flex: '0 0 550px' } : undefined}>
         <div className="paper">
           <h3 className="paper-title">Preview</h3>
-          {stage === EditorStage.PREVIEW && <MLPreview />}
+          {stage === EditorStage.PREVIEW && <MLPreview username={multilinkAttrs.name} />}
           <div className="preview-device">
             <div className="phone">
               <div className="phone__container" style={{ background: multilinkAttrs.background }}>
@@ -156,6 +186,19 @@ export const MultilinkEditorContainer = () => {
               </div>
             </div>
           </div>
+          {stage === EditorStage.PREVIEW && (
+            <>
+              <Button
+                onClick={onNextButtonClick}
+                value="-1"
+                className="button _back-ml-editor _rounded">
+                {t('common:buttons.back')}
+              </Button>
+              <Button onClick={onPublishButtonClick} className="button _rounded">
+                {t('common:buttons.ok')}
+              </Button>
+            </>
+          )}
         </div>
       </section>
     </div>

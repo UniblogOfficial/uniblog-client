@@ -1,3 +1,3 @@
-export type { TRegisterDTO, TLoginDTO } from './auth.dto';
-export type { TCreateUserDTO, TAddRoleDto } from './user.dto';
-export type { TCreateMLDto } from './multilink.dto';
+export type { TRegisterDto, TLoginDto } from './auth.dto';
+export type { TCreateUserDto, TAddRoleDto } from './user.dto';
+export type { TCreateMLDto, TMLImageDto } from './multilink.dto';

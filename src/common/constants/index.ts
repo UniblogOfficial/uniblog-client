@@ -37,6 +37,5 @@ export enum AppStatus {
   UNKNOWN_ERROR = 'UNKNOWN_ERROR',
 }
 
-export enum StatusCode {
-  UNAUTHORIZED = 401,
-}
+export { PrivatePath, PublicPath } from './path';
+export { StatusCode } from './statusCode';
