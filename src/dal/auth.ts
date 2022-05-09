@@ -1,15 +1,19 @@
-import { TLoginDTO, TRegisterDTO } from '../common/types/request';
+import { TLoginDto, TRegisterDto } from '../common/types/request';
 
 import { api } from './api';
 
 export const authAPI = {
-  login({ email, password }: TLoginDTO) {
+  login({ email, password }: TLoginDto) {
     return api.post(`auth/login`, { email, password }).then(response => {
-      const { accessToken, refreshToken } = response.data.auth;
-      if (accessToken && refreshToken) {
-        localStorage.setItem('NonameShopAccessToken', accessToken);
-        localStorage.setItem('NonameShopRefreshToken', refreshToken);
+      // const { accessToken, refreshToken } = response.data.auth;
+      const { token } = response.data.auth;
+      if (token) {
+        localStorage.setItem('UniblogAccessToken', token);
       }
+      /* if (accessToken && refreshToken) {
+        localStorage.setItem('UniblogAccessToken', accessToken);
+        localStorage.setItem('UniblogRefreshToken', refreshToken);
+      } */
       return { data: response.data.data, info: response.data.info };
     });
   },
@@ -19,8 +23,8 @@ export const authAPI = {
       .get(`auth/logout`)
       .then(response => ({ data: response.data.data, info: response.data.info }))
       .finally(() => {
-        localStorage.removeItem('NonameShopAccessToken');
-        localStorage.removeItem('NonameShopRefreshToken');
+        localStorage.removeItem('UniblogAccessToken');
+        localStorage.removeItem('UniblogRefreshToken');
       });
   },
 
@@ -30,13 +34,17 @@ export const authAPI = {
       .then(response => ({ data: response.data.data, info: response.data.info }));
   },
 
-  register({ name, email, password }: TRegisterDTO) {
+  register({ name, email, password }: TRegisterDto) {
     return api.post(`auth/register`, { name, email, password }).then(response => {
-      const { accessToken, refreshToken } = response.data.auth;
-      if (accessToken && refreshToken) {
-        localStorage.setItem('NonameShopAccessToken', accessToken);
-        localStorage.setItem('NonameShopRefreshToken', refreshToken);
+      const { token } = response.data.auth;
+      if (token) {
+        localStorage.setItem('UniblogAccessToken', token);
       }
+      /* const { accessToken, refreshToken } = response.data.auth;
+      if (accessToken && refreshToken) {
+        localStorage.setItem('UniblogAccessToken', accessToken);
+        localStorage.setItem('UniblogRefreshToken', refreshToken);
+      } */
       return { data: response.data.data, info: response.data.info };
     });
   },

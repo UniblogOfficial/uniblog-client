@@ -3,6 +3,8 @@ import { batch } from 'react-redux';
 
 import { AppStatus } from '../../common/constants';
 import { Nullable, TMultilink, TMultilinkDraft } from '../../common/types/instance';
+import { TMLDraftContent, TMultilinkComplete } from '../../common/types/instance/multilink';
+import { TCreateMLDto } from '../../common/types/request/multilink.dto';
 import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
 import { multilinkAPI } from '../../dal';
 import { AppThunk } from '../store';
@@ -61,7 +63,34 @@ export const getMultilink =
       }
     } catch (e) {
       handleServerNetworkError(e, AppStatus.CONTENT_FAILED, dispatch);
+      dispatch(requestMe());
     }
+  };
+
+export const publishMultilink =
+  (multilink: TMultilinkComplete): AppThunk =>
+  async dispatch => {
+    dispatch(setAppStatus(AppStatus.USERDATA_LOADING));
+    const multilinkDto: TCreateMLDto = {
+      name: multilink.name,
+      background: multilink.background,
+      template: multilink.template,
+      content: multilink.contentSet.map(content => {
+        const { img, link, linkType, order, text, title, type } = content;
+        return {
+          order,
+          type,
+          link: link ?? undefined,
+          linkType: linkType ?? undefined,
+          title: title ?? undefined,
+          text: text ?? undefined,
+        };
+      }),
+    };
+    const images = multilink.contentSet
+      .filter(content => content.img)
+      .map(content => ({ order: content.order, file: content.img?.file! }));
+    const response = await multilinkAPI.create(multilinkDto, images);
   };
 
 // types

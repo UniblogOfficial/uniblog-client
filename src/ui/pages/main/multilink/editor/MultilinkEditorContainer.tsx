@@ -6,13 +6,14 @@ import { TUserData } from '../../../../../bll/reducers';
 import { MLContentType } from '../../../../../common/constants';
 import { useAppSelector } from '../../../../../common/hooks';
 import { Nullable, TMLContent, TMultilinkDraft } from '../../../../../common/types/instance';
+import { TMLDraftContent } from '../../../../../common/types/instance/multilink';
 import phone from '../../../../../img/phone.png';
 import { Button, Icon } from '../../../../components/elements';
 
-import { MLBackground } from './MLBackground';
-import { MLContent } from './MLContent';
-import { MLPreview } from './MLPreview';
-import { MLTemplate } from './MLTemplate';
+import { MLBackground } from './background/MLBackground';
+import { MLContent } from './content/MLContent';
+import { MLPreview } from './preview/MLPreview';
+import { MLTemplate } from './template/MLTemplate';
 
 type TMultilinkEditorContainerProps = {
   userData: TUserData;
@@ -32,7 +33,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
     name: userData.name,
     template: null as Nullable<number[]>,
     background: undefined as undefined | string,
-    contentSet: [] as Nullable<TMLContent>[],
+    contentSet: [] as Nullable<TMLDraftContent>[],
   });
 
   const setTemplate = useCallback(
@@ -54,7 +55,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   );
 
   const setContent = useCallback(
-    ({ order, type, link, linkType, title, text, img }: TMLContent) => {
+    ({ order, type, link, linkType, title, text, img }: TMLDraftContent) => {
       if (!multilinkAttrs.contentSet[order]) {
         const newContentSet = multilinkAttrs.contentSet;
         newContentSet[order] = { order, type, link, linkType, title, text: '', img };
@@ -73,14 +74,14 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
     stage < 5 && stage >= 1 && setStage(stage + Number(e.currentTarget.value));
   };
 
-  const getPreviewBlockLayout = useCallback((content: TMLContent) => {
+  const getPreviewBlockLayout = useCallback((content: TMLDraftContent) => {
     switch (content.type) {
       case MLContentType.LINK:
         return <div className="link">{content.title}</div>;
       case MLContentType.TEXT:
         return <p className="text">{content.text}</p>;
       case MLContentType.IMAGE:
-        return <img src={content.img} alt="img" />;
+        return <img src={content.img?.preview} alt="img" />;
       default:
         break;
     }

@@ -7,7 +7,7 @@ import * as yup from 'yup';
 
 import { requestLogin } from '../../../../bll/reducers';
 import { useAppDispatch } from '../../../../common/hooks';
-import { TLoginDTO } from '../../../../common/types/request';
+import { TLoginDto } from '../../../../common/types/request';
 import { Input } from '../../../components/elements';
 import { Button } from '../../../components/elements/button/Button';
 import { Icon } from '../../../components/elements/icons/Icon';
@@ -60,7 +60,7 @@ export const LoginForm = () => {
   };
 
   const onSubmit: SubmitHandler<LoginFormData> = data => {
-    const loginData: TLoginDTO = {
+    const loginData: TLoginDto = {
       email: data.email,
       password: data.password,
     };

@@ -2,7 +2,7 @@ import { batch } from 'react-redux';
 
 import { AppStatus } from '../../common/constants';
 import { Nullable } from '../../common/types/instance';
-import { TRegisterDTO, TLoginDTO } from '../../common/types/request/auth.dto';
+import { TRegisterDto, TLoginDto } from '../../common/types/request/auth.dto';
 import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
 import { authAPI } from '../../dal';
 import { AppThunk } from '../store';
@@ -51,15 +51,15 @@ export const authReducer = (state: TAuthState = initialState, action: TAuthActio
 
 export const setUserData = (userData: TUserData | null) =>
   ({ type: AuthActionType.SET_USER_DATA, payload: { userData } } as const);
-export const setRegisterUserData = (data: Nullable<TRegisterDTO>) =>
+export const setRegisterUserData = (data: Nullable<TRegisterDto>) =>
   ({ type: AuthActionType.SET_REGISTER_USER_DATA, payload: { signupUserData: data } } as const);
-export const setLoginUserData = (data: Nullable<TLoginDTO>) =>
+export const setLoginUserData = (data: Nullable<TLoginDto>) =>
   ({ type: AuthActionType.SET_LOGIN_USER_DATA, payload: { loginUserData: data } } as const);
 
 // thunks
 
 export const requestLogin =
-  (dto: TLoginDTO): AppThunk =>
+  (dto: TLoginDto): AppThunk =>
   async (dispatch, getState) => {
     try {
       dispatch(setAppStatus(AppStatus.AUTH_LOADING));
@@ -104,7 +104,7 @@ export const requestMe = (): AppThunk => async dispatch => {
 };
 
 export const requestRegister =
-  (dto: TRegisterDTO): AppThunk =>
+  (dto: TRegisterDto): AppThunk =>
   async (dispatch, getState) => {
     try {
       dispatch(setAppStatus(AppStatus.AUTH_LOADING));
@@ -122,8 +122,8 @@ export const requestRegister =
 // types
 
 export type TAuthState = {
-  registerUserData: Nullable<TRegisterDTO>;
-  loginUserData: Nullable<TLoginDTO>;
+  registerUserData: Nullable<TRegisterDto>;
+  loginUserData: Nullable<TLoginDto>;
   userData: Nullable<TUserData>;
 };
 export type TAuthActions =

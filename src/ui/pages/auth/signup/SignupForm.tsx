@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 import { requestRegister } from '../../../../bll/reducers';
 import { useAppDispatch } from '../../../../common/hooks';
-import { TRegisterDTO } from '../../../../common/types/request';
+import { TRegisterDto } from '../../../../common/types/request';
 import { Button, Icon, Input } from '../../../components/elements';
 
 export type SignupFormData = {
@@ -72,7 +72,7 @@ export const SignupForm = () => {
   };
 
   const onSubmit: SubmitHandler<SignupFormData> = data => {
-    const signupData: TRegisterDTO = {
+    const signupData: TRegisterDto = {
       name: data.name,
       email: data.email,
       password: data.password,

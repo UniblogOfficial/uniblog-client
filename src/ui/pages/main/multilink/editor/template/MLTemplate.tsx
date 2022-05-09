@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react';
 
-import { Carousel, Icon } from '../../../../components/elements';
+import { Carousel, Icon } from '../../../../../components/elements';
 
 type TMLTemplateProps = {
   setTemplate: (template: number[]) => void;
