@@ -1,25 +1,56 @@
 import React, { FC } from 'react';
 
-import { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone';
+import { Accept, DropzoneInputProps, DropzoneRootProps, useDropzone } from 'react-dropzone';
 
 import upload from '../../../../../../../img/temp1.png';
 
 type TPlaceholderProps = {
-  error: any;
-  touched: boolean;
-  getRootProps: (props?: DropzoneRootProps) => DropzoneRootProps;
-  getInputProps: (props?: DropzoneInputProps) => DropzoneInputProps;
+  onDrop: (acceptedFiles: File[]) => void;
 };
 // className={cn(classes.placeholderPreview, { [classes.hasError]: error && touched })}>
-export const ImagePlaceholder: FC<TPlaceholderProps> = ({
-  getInputProps,
-  getRootProps,
-  error,
-  touched,
-}) => (
-  <div {...getRootProps()}>
-    <input {...getInputProps()} />
-    <img src={upload} style={{ height: 100, paddingTop: 85 }} alt="upload" />
-    <p>Click or drag image file to this area to upload.</p>
-  </div>
-);
+export const ImagePlaceholder: FC<TPlaceholderProps> = ({ onDrop }) => {
+  const {
+    getRootProps,
+    getInputProps,
+    acceptedFiles,
+    open,
+    isDragAccept,
+    isFocused,
+    isDragReject,
+  } = useDropzone({
+    accept: {
+      'image/png': ['.png'],
+      'image/jpg': ['.jpeg', '.jpg'],
+      'image/gif': ['.gif'],
+      'image/bmp': ['.bmp'],
+    },
+    onDrop,
+    noClick: true,
+    noKeyboard: true,
+  });
+
+  const lists = acceptedFiles.map(list => (
+    <li key={list.name}>
+      {list.name} - {list.size} bytes
+    </li>
+  ));
+
+  return (
+    <>
+      {' '}
+      <section className="dropbox">
+        <div className="dropbox" {...getRootProps({ isDragAccept, isFocused, isDragReject })}>
+          <input {...getInputProps()} />
+          <p>Drag n drop some files here</p>
+          <button type="button" className="btn" onClick={open}>
+            Click to select file
+          </button>
+        </div>
+      </section>
+      <aside>
+        <h4>List</h4>
+        <p>{lists}</p>
+      </aside>
+    </>
+  );
+};

@@ -21,8 +21,8 @@ import { DropZoneField } from './imageForm/DropZoneField';
 export type TImageFile = {
   file: File;
   name: string;
-  preview: string;
   size: number;
+  previewUrl: string;
 };
 
 type TMLContentProps = {
@@ -32,7 +32,6 @@ type TMLContentProps = {
 };
 
 type TContentBlock = {
-  order: number;
   type: MLContentType;
   content: Nullable<ReactElement>;
 };
@@ -48,23 +47,21 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
       const isPhoto = block >= 50;
       switch (true) {
         case isLink:
-          return { order: i, type: MLContentType.LINK, content: null };
+          return { type: MLContentType.LINK, content: null };
         case isText:
-          return { order: i, type: MLContentType.TEXT, content: null };
+          return { type: MLContentType.TEXT, content: null };
         case isPhoto:
-          return { order: i, type: MLContentType.IMAGE, content: null };
+          return { type: MLContentType.IMAGE, content: null };
         default:
-          return { order: i, type: MLContentType.UNKNOWN, content: null };
+          return { type: MLContentType.UNKNOWN, content: null };
       }
     }),
   );
   const onImageZoneChange = useCallback(
-    (e, imageFile: TImageFile) => {
-      console.log(e);
-      const order = +e.currentTarget.dataset.value! as number;
+    (imageFile: TImageFile, id?: number) => {
       setImageFiles([imageFile]);
       setContent({
-        order,
+        order: id || 0,
         type: MLContentType.IMAGE,
         link: null,
         linkType: null,
@@ -75,21 +72,6 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
     },
     [setContent],
   );
-
-  const onImageZoneDrop = (
-    e: DropEvent,
-    newImageFile: Array<File>,
-    onChange: (e: DropEvent, imageFile: TImageFile) => void,
-  ) => {
-    const imageFile = {
-      file: newImageFile[0],
-      name: newImageFile[0].name,
-      preview: URL.createObjectURL(newImageFile[0]),
-      size: newImageFile[0].size,
-    };
-    setImageFiles([imageFile]);
-    onChange(e, imageFile);
-  };
 
   const onTextareaChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -134,7 +116,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
         case 'text':
           copy[order].content = (
             <textarea
-              data-value={contentBlocks[order].order}
+              data-value={order}
               value={textareaValues[order]}
               onChange={onTextareaChange}
               maxLength={70}
@@ -154,22 +136,12 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
         case 'image':
           copy[order].content = (
             <DropZoneField
-              data-value={contentBlocks[order].order}
+              id={order}
               onChange={onImageZoneChange}
-              handleOnDrop={onImageZoneDrop}
               imageFiles={imageFiles}
               touched={false}
             />
           );
-          /* setContent({
-            order: order.current,
-            type: MLContentType.IMAGE,
-            link: null,
-            linkType: null,
-            title: null,
-            text: null,
-            img: temp1,
-          }); */
           break;
         default:
           copy[order].content = <>unknown</>;
@@ -191,7 +163,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
           ) : (
             <button
               value={contentBlocks[i].type}
-              data-value={contentBlocks[i].order}
+              data-value={i}
               onClick={onBlockClick}
               type="button">
               <Icon name="circle-add" />

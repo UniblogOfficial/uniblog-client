@@ -21,7 +21,7 @@ export const multilinkAPI = {
       formData.append(`content[${i}]`, JSON.stringify(content));
     });
     images?.forEach((image, i) => {
-      formData.append(`order[${image.order}]`, image.file);
+      formData.append(`order${image.order}`, image.file);
     });
 
     return api.post(`multilink`, formData, {
