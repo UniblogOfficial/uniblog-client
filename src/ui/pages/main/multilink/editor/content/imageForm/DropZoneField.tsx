@@ -1,6 +1,6 @@
 import React, { FC, DragEvent } from 'react';
 
-import DropZone, { Accept, DropEvent } from 'react-dropzone';
+import DropZone, { DropEvent } from 'react-dropzone';
 
 import { TImageFile } from '../MLContent';
 

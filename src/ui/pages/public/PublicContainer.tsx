@@ -44,9 +44,18 @@ export const PublicContainer = () => {
     </>
   );
   return (
-    <div style={{ background: multilink.background, minHeight: '100vh', padding: '100px' }}>
-      <div>{multilink.name}</div>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>{currentPreviewLayout}</div>
+    <div className="public" style={{ background: multilink.background }}>
+      <div className="paper-title">{multilink.name}</div>
+      {/* <div style={{ display: 'flex', flexDirection: 'column' }}>{currentPreviewLayout}</div> */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          paddingTop: '15px',
+          paddingBottom: '20px',
+        }}>
+        {currentPreviewLayout}
+      </div>
     </div>
   );
 };
