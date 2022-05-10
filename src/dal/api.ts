@@ -35,6 +35,7 @@ api.interceptors.response.use(
         const token = localStorage.getItem('UniblogRefreshToken');
         localStorage.removeItem('UniblogAccessToken');
         localStorage.removeItem('UniblogRefreshToken');
+        if (!token) return new Error('Token not found');
         const response = await axios.get<TAuthResponse<TUserData>>(
           `${process.env.REACT_APP_API_URL}auth/refresh`,
           {

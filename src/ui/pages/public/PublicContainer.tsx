@@ -36,7 +36,12 @@ export const PublicContainer = () => {
         return (
           <div
             key={id[i]}
-            style={{ flex: `0 1 ${template}%`, backgroundColor: isFilled ? '' : '#0002' }}>
+            style={{
+              display: 'flex',
+              flex: `0 1 ${template}%`,
+              paddingBottom: '20px',
+              backgroundColor: isFilled ? '' : '#0002',
+            }}>
             {multilink.content[i] ? getPreviewBlockLayout(multilink.content[i]) : null}
           </div>
         );
@@ -44,15 +49,18 @@ export const PublicContainer = () => {
     </>
   );
   return (
-    <div className="public" style={{ background: multilink.background }}>
+    <div
+      className="public"
+      style={{ display: 'flex', flexDirection: 'column', background: multilink.background }}>
       <div className="paper-title">{multilink.name}</div>
       {/* <div style={{ display: 'flex', flexDirection: 'column' }}>{currentPreviewLayout}</div> */}
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
+          flex: '1 1',
           paddingTop: '15px',
-          paddingBottom: '20px',
+          maxWidth: '500px',
         }}>
         {currentPreviewLayout}
       </div>
