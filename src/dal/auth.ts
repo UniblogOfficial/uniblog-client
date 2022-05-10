@@ -19,13 +19,8 @@ export const authAPI = {
   },
 
   logout() {
-    return api
-      .get(`auth/logout`)
-      .then(response => ({ data: response.data.data, info: response.data.info }))
-      .finally(() => {
-        localStorage.removeItem('UniblogAccessToken');
-        localStorage.removeItem('UniblogRefreshToken');
-      });
+    localStorage.removeItem('UniblogAccessToken');
+    localStorage.removeItem('UniblogRefreshToken');
   },
 
   me() {
