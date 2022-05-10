@@ -187,7 +187,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
             </div>
           </div>
           {stage === EditorStage.PREVIEW && (
-            <>
+            <div className="action-buttons">
               <Button
                 onClick={onNextButtonClick}
                 value="-1"
@@ -197,7 +197,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
               <Button onClick={onPublishButtonClick} className="button _rounded">
                 {t('common:buttons.ok')}
               </Button>
-            </>
+            </div>
           )}
         </div>
       </section>
