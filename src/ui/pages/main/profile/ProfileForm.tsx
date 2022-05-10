@@ -269,12 +269,20 @@ export const ProfileForm: FC<TProfileFormProps> = ({ username, email, onLogout }
             passConfirmationMessage}
         </div>
       </section>
-      <div className="profile__action-buttons _shadowed">
-        <Button onClick={onLogout} className="button button-profile" type="button" variant="ok">
+      <div className="action-buttons">
+        <Button
+          onClick={onLogout}
+          className="button button-profile  _shadowed"
+          type="button"
+          variant="ok">
           {/* {t('buttons.save')} */}
           LogOut
         </Button>
-        <Button className="button button-profile" type="submit" variant="ok" orientation="right">
+        <Button
+          className="button button-profile _shadowed"
+          type="submit"
+          variant="ok"
+          orientation="right">
           {t('buttons.save')}
         </Button>
       </div>
