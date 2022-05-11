@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { TImageFile } from '../MLContent';
+import { TImageFile } from '../../../../common/types/instance';
 
 type TImagePreviewProps = {
   imageFiles: Array<TImageFile>;

@@ -11,19 +11,11 @@ import React, {
 import { DropEvent } from 'react-dropzone';
 
 import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
-import { Nullable, TMLContent } from '../../../../../../common/types/instance';
+import { Nullable, TImageFile, TMLContent } from '../../../../../../common/types/instance';
 import { TMLDraftContent } from '../../../../../../common/types/instance/multilink';
 import temp1 from '../../../../../../img/temp1.png';
 import { Icon } from '../../../../../components/elements';
-
-import { DropZoneField } from './imageForm/DropZoneField';
-
-export type TImageFile = {
-  file: File;
-  name: string;
-  size: number;
-  previewUrl: string;
-};
+import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
 
 type TMLContentProps = {
   template: number[];

@@ -2,12 +2,10 @@ import React, { FC } from 'react';
 
 import { Accept, DropzoneInputProps, DropzoneRootProps, useDropzone } from 'react-dropzone';
 
-import upload from '../../../../../../../img/temp1.png';
-
 type TPlaceholderProps = {
   onDrop: (acceptedFiles: File[]) => void;
 };
-// className={cn(classes.placeholderPreview, { [classes.hasError]: error && touched })}>
+
 export const ImagePlaceholder: FC<TPlaceholderProps> = ({ onDrop }) => {
   const {
     getRootProps,
@@ -47,10 +45,6 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ onDrop }) => {
           </button>
         </div>
       </section>
-      <aside>
-        <h4>List</h4>
-        <p>{lists}</p>
-      </aside>
     </>
   );
 };
