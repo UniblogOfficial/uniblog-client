@@ -11,11 +11,22 @@
 		// .profile__card
 		&__card {
       max-width: 558px;
+          .paper-title {
+            margin-bottom: 16px;
+          }
 		}
 
 		// .profile__title
 		&__title {
 		}
+        //.profile__avatar
+        &__avatar{
+          position: relative;
+          height: 200px;
+          width: 200px;
+          border: 1px solid #EAECEE;
+          border-radius: 7px;
+        }
 
     // .profile__form
 		&__form {
@@ -44,4 +55,3 @@
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
   }
 }
-
