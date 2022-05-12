@@ -1,6 +1,15 @@
 .socialCard {
   display: flex;
   // padding: 12px 19px 12px 24px;
+  :global(.icon-container) {
+    flex: 0 0 40px;
+    :global(.icon-circle-add) {
+      --primary: #44c13c;
+    }
+    :global(.icon-circle-check) {
+      --primary: #44c13c;
+    }
+  }
 }
 
 .imgContainer {
@@ -10,7 +19,7 @@
 }
 
 .title {
-  flex: 1 0 100%;
+  flex: 1 1 100%;
   padding: 0 16px;
   font-weight: 400;
   font-size: 14px;
@@ -19,4 +28,8 @@
   a {
     font-size: 12px;
   }
+}
+
+.icon-container {
+  flex: 0 0 40px;
 }
