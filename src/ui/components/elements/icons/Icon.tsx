@@ -36,7 +36,7 @@ export const Icon: FC<TIconProps> = ({
   id,
   className,
   containerClassName,
-  side = 'left',
+  side,
   size = 'reduced',
   width = 'normal',
   rotate = 0,
@@ -56,7 +56,8 @@ export const Icon: FC<TIconProps> = ({
       case 'left':
         style = `${style} _left`;
         break;
-      // no default
+      default:
+        break;
     }
     switch (width) {
       case 'wide':
