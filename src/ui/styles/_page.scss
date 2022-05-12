@@ -130,11 +130,16 @@
 .content {
   flex: 0 1 83.3333%;
   &__container {
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     max-width: 1200px;
     height: 100%;
     padding: 24px 36px;
+    .footer {
+      margin-top: 24px;
+    }
   }
 }
 

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 export const Footer = React.memo(() => {
   const { t } = useTranslation('pages');
   return (
-    <footer className="footer paper">
+    <footer className="paper footer">
       <ul className="list">
         <li>{t('footer.contacts')}</li>
         <li>{t('footer.blog')}</li>

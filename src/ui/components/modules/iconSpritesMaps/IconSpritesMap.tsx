@@ -11,6 +11,7 @@ const ids = [
   'calendar-add',
   'cart',
   'circle-add',
+  'circle-check',
   'chat',
   'chevron',
   'dollar-sign',

@@ -79,7 +79,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
           template,
           background,
           contentSet: contentSet.map(
-            (content, i) =>
+            (content: Nullable<TMLDraftContent>, i: number) =>
               content || {
                 order: i,
                 type: MLContentType.UNKNOWN,
@@ -115,7 +115,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
   const currentPreviewLayout = (
     <>
-      {multilinkAttrs.template?.map((template, i) => {
+      {multilinkAttrs.template?.map((template: number, i: number) => {
         const isFilled = !!multilinkAttrs.contentSet[i];
         return (
           <div

@@ -4,9 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
 import socials from '../../../../img';
-import { Button } from '../../../components/elements/button/Button';
-import { Icon } from '../../../components/elements/icons/Icon';
-import { Radio } from '../../../components/elements/radio/Radio';
+import { Button, Icon, Radio } from '../../../components/elements';
 import { PageHeader } from '../../../components/modules/headers/PageHeader';
 import { SocialCard } from '../../../components/modules/socialCard/SocialCard';
 
@@ -17,7 +15,7 @@ export const CrosspostingContainer = () => {
   const [temp, setTemp] = useState('now');
   const images = socials.map((social: any) => (
     <li key={social.title}>
-      <SocialCard data={social} titleChange={t('common:links.change', { ns: 'common' })} />
+      <SocialCard data={social} actionTitle={t('common:links.change', { ns: 'common' })} />
     </li>
   ));
   const at =
