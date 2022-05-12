@@ -23,7 +23,7 @@
     padding: 24px 24px 28px;
   }
   &__dash {
-    margin: auto -24px 0;
+    margin: auto -24px 28px;
     height: 1px;
     background-color: #f1f1f1;;
   }
@@ -111,7 +111,7 @@
   a {
     position: relative;
     display: block;
-    padding: 28px 24px 0;
+    padding: 0 24px;
     text-decoration: none;
     color: #4F5B67;
   }

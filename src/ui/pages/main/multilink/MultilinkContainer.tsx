@@ -36,13 +36,13 @@ export const MultilinkContainer = () => {
             <NavLink to="/multilink/new" className="link-nulled">
               <Button className="button button-column _rounded" variant="regular">
                 <Icon name="circle-add" className="nav-icon" size="full" />
-                {t('pages:crossposting.buttons.newPost')}
+                {t('pages:multilink.buttons.create', { ns: 'pages' })}
               </Button>
             </NavLink>
             <NavLink to="/multilink/all" className="link-nulled">
               <Button className="button button-column _rounded" variant="regular">
                 <Icon name="window" className="nav-icon" size="full" />
-                {t('pages:crossposting.buttons.published')}
+                {t('pages:multilink.buttons.published')}
               </Button>
             </NavLink>
           </nav>

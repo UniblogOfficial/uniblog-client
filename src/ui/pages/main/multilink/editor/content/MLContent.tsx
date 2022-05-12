@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 
 import { DropEvent } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 
 import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
 import { Nullable, TImageFile, TMLContent } from '../../../../../../common/types/instance';
@@ -29,14 +30,14 @@ type TContentBlock = {
 };
 
 export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setContent }) => {
-  // const order = useRef<number>(0);
+  const { t } = useTranslation(['pages', 'common']);
   const [textareaValues, setTextareaValues] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
   const [contentBlocks, setContentBlocks] = useState<TContentBlock[]>(
     template.map((block, i) => {
       const isLink = block <= 15;
-      const isText = block > 15 && block < 50;
-      const isPhoto = block >= 50;
+      const isText = block > 15 && block < 40;
+      const isPhoto = block >= 40;
       switch (true) {
         case isLink:
           return { type: MLContentType.LINK, content: null };
@@ -168,7 +169,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
 
   return (
     <>
-      <h3 className="paper-title">Add mediacontent</h3>
+      <h3 className="paper-title">{t('pages:multilink.creation.stages.content')}</h3>
       <div className="multilink-editor__constructor">{templateLayout}</div>
     </>
   );

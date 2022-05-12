@@ -3,6 +3,9 @@
     "addNewPost": "Добавить новый пост",
     "back": "Назад",
     "cancel": "Отмена",
+    "clean": "Очистить",
+    "download": "Загрузить",
+    "logout": "Выйти",
     "next": "Далее",
     "no": "Нет",
     "ok": "OK",
@@ -14,6 +17,7 @@
     "change": "Изменить"
   },
   "placeholders": {
+    "clickToSelect": "Нажмите, чтобы выбрать файл",
     "createNewPass": "Новый пароль",
     "createPass": "Придумайте пароль",
     "enterName": "Имя",
