@@ -1,7 +1,6 @@
-import { TImageFile } from '../../../ui/pages/main/multilink/editor/content/MLContent';
 import { MLContentType, SocialNetwork } from '../../constants';
 
-import { Nullable } from '.';
+import { Nullable, TImageFile } from '.';
 
 export type TMultilink = {
   id: number;

@@ -2,7 +2,7 @@ import { batch } from 'react-redux';
 
 import { AppStatus } from '../../common/constants';
 import { Nullable } from '../../common/types/instance';
-import { TRegisterDto, TLoginDto } from '../../common/types/request/auth.dto';
+import { TLoginDto, TRegisterDto } from '../../common/types/request/auth.dto';
 import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
 import { authAPI } from '../../dal';
 import { AppThunk } from '../store';
@@ -72,20 +72,8 @@ export const requestLogin =
   };
 
 export const logout = (): AppThunk => async dispatch => {
-  /* try {
-    dispatch(setAppStatus('auth loading'));
-    batch(() => {
-      dispatch(setIsLoggedIn(false));
-      dispatch(setIsSignupPassConfirmed(null));
-      dispatch(setSignupUserData(null));
-    });
-    const response = await authAPI.logout();
-    dispatch(setUserData(response.data));
-    dispatch(getCartItems());
-    dispatch(setAppStatus('succeeded'));
-  } catch (e) {
-    handleServerNetworkError(e, 'auth', dispatch);
-  } */
+  authAPI.logout();
+  dispatch(setUserData(null));
 };
 
 export const requestMe = (): AppThunk => async dispatch => {

@@ -1,5 +1,7 @@
 import React, { FC, useCallback } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { Carousel, Icon } from '../../../../../components/elements';
 
 type TMLTemplateProps = {
@@ -7,13 +9,15 @@ type TMLTemplateProps = {
 };
 
 const multilinkTemplates = new Map([
-  [0, [12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
-  [1, [25, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
-  [2, [50, 25, 12.5, 12.5]],
-  [3, [25, 25, 12.5, 12.5, 12.5, 12.5]],
+  [0, [50, 25, 12.5, 12.5]], // sum of elements must be equal to 100
+  [1, [40, 10, 40, 10]],
+  [2, [25, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
+  [3, [12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
+  [4, [25, 25, 12.5, 12.5, 12.5, 12.5]],
 ]);
 
 export const MLTemplate: FC<TMLTemplateProps> = ({ setTemplate }) => {
+  const { t } = useTranslation(['pages', 'common']);
   const setCurrentTemplate = useCallback(
     (stage: number) => {
       const template = multilinkTemplates.get(stage);
@@ -39,7 +43,7 @@ export const MLTemplate: FC<TMLTemplateProps> = ({ setTemplate }) => {
   ];
   return (
     <>
-      <h3 className="paper-title">Choose a template</h3>
+      <h3 className="paper-title">{t('pages:multilink.creation.stages.template')}</h3>
       <div className="multilink-editor__constructor">
         <Carousel
           items={templates}

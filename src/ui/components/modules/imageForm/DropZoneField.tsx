@@ -1,8 +1,8 @@
 import React, { FC, DragEvent, useState, useCallback } from 'react';
 
-import DropZone, { Accept, DropEvent } from 'react-dropzone';
+import DropZone, { DropEvent } from 'react-dropzone';
 
-import { TImageFile } from '../MLContent';
+import { TImageFile } from '../../../../common/types/instance';
 
 import ShowError from './FormErrorRepresenter';
 import { ImagePlaceholder } from './ImagePlaceholder';

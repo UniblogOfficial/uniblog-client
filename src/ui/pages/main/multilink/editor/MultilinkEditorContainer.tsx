@@ -72,14 +72,16 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
   const onPublishButtonClick = () => {
     const { name, background, template, contentSet } = multilinkAttrs;
-    if (background && template && contentSet) {
+    const backgroundDefault = '#fff';
+    console.log(template);
+    if (template && contentSet) {
       dispatch(
         publishMultilink({
           name,
           template,
-          background,
+          background: background || backgroundDefault,
           contentSet: contentSet.map(
-            (content, i) =>
+            (content: Nullable<TMLDraftContent>, i: number) =>
               content || {
                 order: i,
                 type: MLContentType.UNKNOWN,
@@ -115,7 +117,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
   const currentPreviewLayout = (
     <>
-      {multilinkAttrs.template?.map((template, i) => {
+      {multilinkAttrs.template?.map((template: number, i: number) => {
         const isFilled = !!multilinkAttrs.contentSet[i];
         return (
           <div
@@ -168,7 +170,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
         className="preview-area"
         style={stage === EditorStage.PREVIEW ? { flex: '0 0 550px' } : undefined}>
         <div className="paper">
-          <h3 className="paper-title">Preview</h3>
+          <h3 className="paper-title">{t('pages:multilink.creation.stages.preview')}</h3>
           {stage === EditorStage.PREVIEW && <MLPreview username={multilinkAttrs.name} />}
           <div className="preview-device">
             <div className="phone">
@@ -177,7 +179,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                   <Icon name="user" />
                 </div>
                 <h4 className="phone__user-title">
-                  <strong>@VasyaRaper</strong>
+                  <strong>{userData.name}</strong>
                 </h4>
                 <div className="phone__template">{currentPreviewLayout}</div>
               </div>
@@ -187,7 +189,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
             </div>
           </div>
           {stage === EditorStage.PREVIEW && (
-            <>
+            <div className="action-buttons">
               <Button
                 onClick={onNextButtonClick}
                 value="-1"
@@ -197,7 +199,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
               <Button onClick={onPublishButtonClick} className="button _rounded">
                 {t('common:buttons.ok')}
               </Button>
-            </>
+            </div>
           )}
         </div>
       </section>
