@@ -109,7 +109,6 @@ export const LoginForm = () => {
             <Icon
               name="eye"
               onClick={togglePasswordVisibility}
-              side="right"
               size="full"
               primaryColor="#242D35"
               secondaryColor="#242D35"
@@ -121,7 +120,6 @@ export const LoginForm = () => {
             <Icon
               name="eye-slash"
               onClick={togglePasswordVisibility}
-              side="right"
               size="full"
               primaryColor="#4F5B67"
               secondaryColor="#4F5B67"

@@ -1,12 +1,14 @@
 import React, { FC } from 'react';
 
 import { Accept, DropzoneInputProps, DropzoneRootProps, useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 
 type TPlaceholderProps = {
   onDrop: (acceptedFiles: File[]) => void;
 };
 
 export const ImagePlaceholder: FC<TPlaceholderProps> = ({ onDrop }) => {
+  const { t } = useTranslation(['common']);
   const {
     getRootProps,
     getInputProps,
@@ -39,9 +41,8 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ onDrop }) => {
       <section className="dropbox">
         <div className="dropbox" {...getRootProps({ isDragAccept, isFocused, isDragReject })}>
           <input {...getInputProps()} />
-          <p>Drag n drop some files here</p>
           <button type="button" className="btn" onClick={open}>
-            Click to select file
+            {t('common:placeholders.clickToSelect')}
           </button>
         </div>
       </section>

@@ -1,6 +1,8 @@
 /* eslint-disable dot-notation */
 import React, { CSSProperties, FC, useCallback, useMemo, MouseEvent } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { Button } from '../../../../../components/elements';
 
 import styles from './MLBackground.module.scss';
@@ -10,6 +12,7 @@ type TMLBackgroundProps = {
 };
 
 export const MLBackground: FC<TMLBackgroundProps> = ({ setBackground }) => {
+  const { t } = useTranslation(['pages', 'common']);
   const onSnippetClick = useCallback(
     (e: MouseEvent<HTMLInputElement>) => {
       setBackground(e.currentTarget.style.background);
@@ -30,12 +33,12 @@ export const MLBackground: FC<TMLBackgroundProps> = ({ setBackground }) => {
 
   return (
     <>
-      <h3 className="paper-title">Choose a background</h3>
+      <h3 className="paper-title">{t('pages:multilink.creation.stages.background')}</h3>
       <div className="multilink-editor__constructor">
         <ul className="grid bg-menu-grid">{snippets}</ul>
       </div>
       <Button variant="regular" className="button button-download _rounded">
-        Download
+        {t('common:buttons.download')}
       </Button>
     </>
   );
