@@ -13,6 +13,9 @@ import {
   TAppActions,
   TAuthActions,
   TMultilinkActions,
+  TUserActions,
+  TUserState,
+  userReducer,
   // TLayoutActions,
 } from './reducers';
 
@@ -29,6 +32,7 @@ const enhancer = composeEnhancers(
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
+  user: userReducer,
   multilink: multilinkReducer,
 });
 
@@ -41,6 +45,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 export type TState = {
   app: TAppState;
   auth: TAuthState;
+  user: TUserState;
   multilink: TMultilinkState;
 };
-export type TActions = TAppActions | TAuthActions | TMultilinkActions;
+export type TActions = TAppActions | TAuthActions | TUserActions | TMultilinkActions;

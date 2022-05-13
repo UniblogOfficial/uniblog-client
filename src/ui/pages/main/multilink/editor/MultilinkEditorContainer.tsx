@@ -2,10 +2,10 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { publishMultilink, TUserData } from '../../../../../bll/reducers';
+import { publishMultilink } from '../../../../../bll/reducers';
 import { MLContentType } from '../../../../../common/constants';
 import { useAppDispatch, useAppSelector } from '../../../../../common/hooks';
-import { Nullable, TMLContent, TMultilinkDraft } from '../../../../../common/types/instance';
+import { Nullable, TMLContent, TMultilinkDraft, TUser } from '../../../../../common/types/instance';
 import { TMLDraftContent } from '../../../../../common/types/instance/multilink';
 import phone from '../../../../../img/phone.png';
 import { Button, Icon } from '../../../../components/elements';
@@ -16,7 +16,7 @@ import { MLPreview } from './preview/MLPreview';
 import { MLTemplate } from './template/MLTemplate';
 
 type TMultilinkEditorContainerProps = {
-  userData: TUserData;
+  userData: TUser;
 };
 
 enum EditorStage {

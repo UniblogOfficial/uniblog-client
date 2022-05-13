@@ -7,38 +7,20 @@ import { handleServerNetworkError } from '../../common/utils/state/errorHandler'
 import { authAPI } from '../../dal';
 import { AppThunk } from '../store';
 
-import { setAppStatus, setInitialized } from '.';
+import { removeUserData, setAppStatus, setInitialized, setUserData } from '.';
 
 enum AuthActionType {
-  SET_USER_DATA = 'SET_USER_DATA',
   SET_REGISTER_USER_DATA = 'SET_REGISTER_USER_DATA',
   SET_LOGIN_USER_DATA = 'SET_LOGIN_USER_DATA',
 }
 
-export enum Role {
-  UNREGISTERED = 'UNREGISTERED',
-  USER = 'USER',
-  ADMIN = 'ADMIN',
-  MASTER = 'MASTER',
-}
-
-export type TUserData = {
-  id: string;
-  name: string;
-  email: string;
-  role: Role;
-  isActivated?: boolean;
-};
-
 const initialState: TAuthState = {
   registerUserData: null,
   loginUserData: null,
-  userData: null as Nullable<TUserData>,
 };
 
 export const authReducer = (state: TAuthState = initialState, action: TAuthActions): TAuthState => {
   switch (action.type) {
-    case AuthActionType.SET_USER_DATA:
     case AuthActionType.SET_REGISTER_USER_DATA:
     case AuthActionType.SET_LOGIN_USER_DATA:
       return { ...state, ...action.payload };
@@ -48,9 +30,6 @@ export const authReducer = (state: TAuthState = initialState, action: TAuthActio
 };
 
 // actions
-
-export const setUserData = (userData: TUserData | null) =>
-  ({ type: AuthActionType.SET_USER_DATA, payload: { userData } } as const);
 export const setRegisterUserData = (data: Nullable<TRegisterDto>) =>
   ({ type: AuthActionType.SET_REGISTER_USER_DATA, payload: { signupUserData: data } } as const);
 export const setLoginUserData = (data: Nullable<TLoginDto>) =>
@@ -73,7 +52,7 @@ export const requestLogin =
 
 export const logout = (): AppThunk => async dispatch => {
   authAPI.logout();
-  dispatch(setUserData(null));
+  dispatch(removeUserData());
 };
 
 export const requestMe = (): AppThunk => async dispatch => {
@@ -112,9 +91,7 @@ export const requestRegister =
 export type TAuthState = {
   registerUserData: Nullable<TRegisterDto>;
   loginUserData: Nullable<TLoginDto>;
-  userData: Nullable<TUserData>;
 };
 export type TAuthActions =
-  | ReturnType<typeof setUserData>
   | ReturnType<typeof setRegisterUserData>
   | ReturnType<typeof setLoginUserData>;

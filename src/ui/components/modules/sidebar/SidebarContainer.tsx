@@ -3,7 +3,7 @@ import React, { FC, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { TUserData } from '../../../../bll/reducers';
+import { TUser } from '../../../../common/types/instance';
 import { Button } from '../../elements/button/Button';
 import { Icon } from '../../elements/icons/Icon';
 import { TIconName } from '../iconSpritesMaps/IconSpritesMap';
@@ -16,7 +16,7 @@ type TNavLinksDataItem = {
 };
 
 type TSidebarContainerProps = {
-  userData: TUserData;
+  userData: TUser;
 };
 
 export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
