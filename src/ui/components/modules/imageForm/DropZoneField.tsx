@@ -40,12 +40,12 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
   );
 
   return (
-    <div className="App">
+    <>
       {image && image.length > 0 ? (
         <ImagePreview imageFiles={image} />
       ) : (
         <ImagePlaceholder onDrop={onDrop} />
       )}
-    </div>
+    </>
   );
 };

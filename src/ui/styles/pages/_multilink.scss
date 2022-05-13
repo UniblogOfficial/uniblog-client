@@ -186,8 +186,10 @@
 		flex-direction: column;
 		width: 100%;
 		& > * {
+			position: relative;
 			display: flex;
-			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 			margin-bottom: 7%;
 			word-wrap: break-word;
 			&:last-child {
@@ -198,6 +200,12 @@
 			display: flex;
 			margin: auto;
 		}
+  	img {
+			position: absolute;
+    	object-fit: contain;
+    	height: 100%;
+    	width: 100%;
+  	}
 	}
 	// .phone__layout
 	&__layout {
