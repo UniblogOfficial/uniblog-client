@@ -5,7 +5,6 @@ import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 
 import { useAppSelector } from '../../../../common/hooks';
 import { Nullable, TUser } from '../../../../common/types/instance';
-import { Breadcrumbs } from '../../../components/elements/breadcrumbs/Breadcrumbs';
 import { Button } from '../../../components/elements/button/Button';
 import { Icon } from '../../../components/elements/icons/Icon';
 import { PageHeader } from '../../../components/modules/headers/PageHeader';

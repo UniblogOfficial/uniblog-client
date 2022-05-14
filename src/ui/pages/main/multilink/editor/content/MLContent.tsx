@@ -6,17 +6,20 @@ import React, {
   ReactElement,
   ChangeEvent,
   useRef,
+  useEffect,
 } from 'react';
 
-import { DropEvent } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 
 import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
 import { Nullable, TImageFile, TMLContent } from '../../../../../../common/types/instance';
 import { TMLDraftContent } from '../../../../../../common/types/instance/multilink';
-import temp1 from '../../../../../../img/temp1.png';
 import { Icon } from '../../../../../components/elements';
 import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
+import { Modal } from '../../../../../components/modules/modals/Modal';
+
+import { MLLinkForm } from './MLLinkForm';
+import { MLTextarea } from './MLTextarea';
 
 type TMLContentProps = {
   template: number[];
@@ -50,6 +53,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
       }
     }),
   );
+
   const onImageZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
       setImageFiles([imageFile]);
@@ -66,11 +70,8 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
     [setContent],
   );
 
-  const onTextareaChange = useCallback(
-    (e: ChangeEvent<HTMLTextAreaElement>) => {
-      const text = e.target.value;
-      // eslint-disable-next-line no-return-assign
-      const order = +e.currentTarget.dataset.value! as number;
+  const changeTextBlock = useCallback(
+    (text: string, order: number) => {
       setTextareaValues(Object.assign([], textareaValues, { orderIndex: text }));
       setContent({
         order,
@@ -79,15 +80,20 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
         linkType: null,
         title: null,
         text,
-        img: undefined,
+        img: null,
       });
     },
     [setContent, textareaValues],
   );
 
-  /*   const onFilledBlockClick = (e: MouseEvent<HTMLElement>) => {
-    order.current = +e.currentTarget.dataset.value! as number;
-  }; */
+  const closeModal = useCallback(
+    (order: number) => {
+      const copy = [...contentBlocks];
+      copy[order].content = <>Вконтактике</>;
+      setContentBlocks(copy);
+    },
+    [contentBlocks],
+  );
 
   const onBlockClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
@@ -95,25 +101,18 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
       const copy = [...contentBlocks];
       switch (e.currentTarget.value) {
         case 'link':
-          copy[order].content = <>Вконтактике</>;
-          setContent({
-            order,
-            type: MLContentType.LINK,
-            link: 'https://vk.com',
-            linkType: SocialNetwork.VK,
-            title: 'VK',
-            text: 'Вконтактике',
-            img: undefined,
-          });
+          copy[order].content = (
+            <Modal close={() => closeModal(order)}>
+              <MLLinkForm order={order} setContent={() => setContent} />
+            </Modal>
+          );
           break;
         case 'text':
           copy[order].content = (
-            <textarea
-              data-value={order}
+            <MLTextarea
+              order={order}
               value={textareaValues[order]}
-              onChange={onTextareaChange}
-              maxLength={70}
-              className="template__block__textarea"
+              changeTextBlock={changeTextBlock}
             />
           );
           setContent({
@@ -123,7 +122,7 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
             linkType: null,
             title: null,
             text: '',
-            img: undefined,
+            img: null,
           });
           break;
         case 'image':
@@ -141,7 +140,15 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
       }
       setContentBlocks(copy);
     },
-    [contentBlocks, setContent, onTextareaChange, textareaValues, imageFiles, onImageZoneChange],
+    [
+      contentBlocks,
+      setContent,
+      textareaValues,
+      changeTextBlock,
+      onImageZoneChange,
+      imageFiles,
+      closeModal,
+    ],
   );
 
   const templateLayout = (

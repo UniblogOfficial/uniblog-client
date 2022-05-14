@@ -10,17 +10,19 @@ export const userAPI = {
         localStorage.setItem('NonameShopAccessToken', accessToken);
         localStorage.setItem('NonameShopRefreshToken', refreshToken);
       }
-      return { data: response.data.data, info: response.data.info };
+      return { data: response.data.data, message: response.data.message };
     });
   },
 
   updateAvatar(image: File) {
     const formData = new FormData();
     formData.append('avatar', image);
-    return api.post(`user/avatar`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    return api
+      .post(`user/avatar`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(response => ({ data: response.data.data, message: response.data.message }));
   },
 };

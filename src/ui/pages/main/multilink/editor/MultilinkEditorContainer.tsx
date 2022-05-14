@@ -7,6 +7,7 @@ import { MLContentType } from '../../../../../common/constants';
 import { useAppDispatch, useAppSelector } from '../../../../../common/hooks';
 import { Nullable, TMLContent, TMultilinkDraft, TUser } from '../../../../../common/types/instance';
 import { TMLDraftContent } from '../../../../../common/types/instance/multilink';
+import { parseRawImage } from '../../../../../common/utils/ui';
 import phone from '../../../../../img/phone.png';
 import { Button, Icon } from '../../../../components/elements';
 
@@ -32,6 +33,8 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const [stage, setStage] = useState<EditorStage>(1);
   const [multilinkAttrs, setMultilinkAttrs] = useState<TMultilinkDraft>({
     name: userData.name,
+    avatar: userData.avatar,
+    logo: null,
     template: null as Nullable<number[]>,
     background: undefined as undefined | string,
     contentSet: [] as Nullable<TMLDraftContent>[],
@@ -71,13 +74,13 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   );
 
   const onPublishButtonClick = () => {
-    const { name, background, template, contentSet } = multilinkAttrs;
+    const { name, logo, background, template, contentSet } = multilinkAttrs;
     const backgroundDefault = '#fff';
-    console.log(template);
     if (template && contentSet) {
       dispatch(
         publishMultilink({
           name,
+          logo,
           template,
           background: background || backgroundDefault,
           contentSet: contentSet.map(
@@ -89,7 +92,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                 linkType: null,
                 text: null,
                 title: null,
-                img: undefined,
+                img: null,
               },
           ),
         }),
@@ -131,6 +134,8 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
       })}
     </>
   );
+
+  const logoSrc = multilinkAttrs.avatar ? parseRawImage(multilinkAttrs.avatar) : undefined;
 
   return (
     <div
@@ -176,7 +181,11 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
             <div className="phone">
               <div className="phone__container" style={{ background: multilinkAttrs.background }}>
                 <div className="phone__logo">
-                  <Icon name="user" />
+                  {logoSrc ? (
+                    <img className="img-default" src={logoSrc} alt="logo" />
+                  ) : (
+                    <Icon name="user" />
+                  )}
                 </div>
                 <h4 className="phone__user-title">
                   <strong>{userData.name}</strong>

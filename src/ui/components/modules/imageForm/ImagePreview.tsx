@@ -11,7 +11,7 @@ type TImagePreviewProps = {
 const ImagePreview: FC<TImagePreviewProps> = ({ imageFiles }) => {
   const mappedPreview = imageFiles.map(({ name, previewUrl, size }) => (
     <div key={name} className={styles['img-container']}>
-      <img src={previewUrl} alt={name} />
+      <img src={previewUrl} alt={name} className="img-default" />
     </div>
   ));
   return <> {mappedPreview} </>;

@@ -90,7 +90,8 @@ export const publishMultilink =
     const images = multilink.contentSet
       .filter(content => content.img)
       .map(content => ({ order: content.order, file: content.img?.file! }));
-    const response = await multilinkAPI.create(multilinkDto, images);
+    const logo = multilink.logo?.file ?? undefined;
+    const response = await multilinkAPI.create(multilinkDto, images, logo);
   };
 
 // types
