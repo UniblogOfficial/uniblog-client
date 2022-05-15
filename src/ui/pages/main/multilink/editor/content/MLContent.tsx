@@ -11,7 +11,9 @@ import React, {
 
 import { useTranslation } from 'react-i18next';
 
+import { setMLDraftContent } from '../../../../../../bll/reducers';
 import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
+import { useAppDispatch } from '../../../../../../common/hooks';
 import { Nullable, TImageFile, TMLContent } from '../../../../../../common/types/instance';
 import { TMLDraftContent } from '../../../../../../common/types/instance/multilink';
 import { Icon } from '../../../../../components/elements';
@@ -23,8 +25,7 @@ import { MLTextarea } from './MLTextarea';
 
 type TMLContentProps = {
   template: number[];
-  contentSet: Nullable<TMLDraftContent>[];
-  setContent: (data: TMLDraftContent) => void;
+  contentSet: TMLDraftContent[];
 };
 
 type TContentBlock = {
@@ -32,65 +33,44 @@ type TContentBlock = {
   content: Nullable<ReactElement>;
 };
 
-export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setContent }) => {
+export const MLContent: FC<TMLContentProps> = ({ template, contentSet }) => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
-  const [textareaValues, setTextareaValues] = useState<string[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
-  const [contentBlocks, setContentBlocks] = useState<TContentBlock[]>(
-    template.map((block, i) => {
-      const isLink = block <= 15;
-      const isText = block > 15 && block < 40;
-      const isPhoto = block >= 40;
-      switch (true) {
-        case isLink:
-          return { type: MLContentType.LINK, content: null };
-        case isText:
-          return { type: MLContentType.TEXT, content: null };
-        case isPhoto:
-          return { type: MLContentType.IMAGE, content: null };
-        default:
-          return { type: MLContentType.UNKNOWN, content: null };
-      }
-    }),
+  const [contentBlocks, setContentBlocks] = useState<boolean[]>(
+    contentSet.map((block, i) => false),
   );
 
   const onImageZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
       setImageFiles([imageFile]);
-      setContent({
-        order: id || 0,
-        type: MLContentType.IMAGE,
-        link: null,
-        linkType: null,
-        title: null,
-        text: null,
-        img: imageFile,
-      });
+      dispatch(
+        setMLDraftContent({
+          order: id || 0,
+          type: MLContentType.IMAGE,
+          isFilled: true,
+          link: null,
+          linkType: null,
+          title: null,
+          text: null,
+          img: imageFile,
+        }),
+      );
     },
-    [setContent],
+    [dispatch],
   );
 
   const changeTextBlock = useCallback(
     (text: string, order: number) => {
-      setTextareaValues(Object.assign([], textareaValues, { orderIndex: text }));
-      setContent({
-        order,
-        type: MLContentType.TEXT,
-        link: null,
-        linkType: null,
-        title: null,
-        text,
-        img: null,
-      });
+      dispatch(setMLDraftContent({ ...contentSet[order], isFilled: !!text, text }));
     },
-    [setContent, textareaValues],
+    [contentSet, dispatch],
   );
 
   const closeModal = useCallback(
     (order: number) => {
-      const copy = [...contentBlocks];
-      copy[order].content = <>Вконтактике</>;
-      setContentBlocks(copy);
+      setContentBlocks(contentBlocks.map((el, i) => (i === order ? false : el)));
     },
     [contentBlocks],
   );
@@ -98,58 +78,45 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
   const onBlockClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       const order = +e.currentTarget.dataset.value! as number;
-      const copy = [...contentBlocks];
-      switch (e.currentTarget.value) {
-        case 'link':
-          copy[order].content = (
-            <Modal close={() => closeModal(order)}>
-              <MLLinkForm order={order} setContent={() => setContent} />
-            </Modal>
-          );
-          break;
-        case 'text':
-          copy[order].content = (
-            <MLTextarea
-              order={order}
-              value={textareaValues[order]}
-              changeTextBlock={changeTextBlock}
-            />
-          );
-          setContent({
-            order,
-            type: MLContentType.TEXT,
-            link: null,
-            linkType: null,
-            title: null,
-            text: '',
-            img: null,
-          });
-          break;
-        case 'image':
-          copy[order].content = (
-            <DropZoneField
-              id={order}
-              onChange={onImageZoneChange}
-              imageFiles={imageFiles}
-              touched={false}
-            />
-          );
-          break;
-        default:
-          copy[order].content = <>unknown</>;
-      }
-      setContentBlocks(copy);
+      setContentBlocks(contentBlocks.map((el, i) => (i === order ? true : el)));
     },
-    [
-      contentBlocks,
-      setContent,
-      textareaValues,
-      changeTextBlock,
-      onImageZoneChange,
-      imageFiles,
-      closeModal,
-    ],
+    [contentBlocks],
   );
+
+  const contentEditorSwitcher = (order: number, type: MLContentType) => {
+    switch (type) {
+      case MLContentType.TEXT:
+        return (
+          <MLTextarea
+            order={order}
+            value={contentSet[order].text}
+            changeTextBlock={changeTextBlock}
+          />
+        );
+      case MLContentType.LINK:
+        return contentSet[order].isFilled ? (
+          <div className="template__link">
+            <p>{contentSet[order].title}</p>
+            <p>{contentSet[order].link}</p>
+          </div>
+        ) : (
+          <Modal close={() => closeModal(order)}>
+            <MLLinkForm order={order} />
+          </Modal>
+        );
+      case MLContentType.IMAGE:
+        return (
+          <DropZoneField
+            id={order}
+            onChange={onImageZoneChange}
+            imageFiles={imageFiles}
+            touched={false}
+          />
+        );
+      default:
+        return <></>;
+    }
+  };
 
   const templateLayout = (
     <ul className="template">
@@ -157,15 +124,11 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
         <li
           key={id[i]}
           style={{ flex: `0 1 ${block}%` }}
-          className={`template__block ${contentBlocks[i].content ? '_filled' : '_interactive'}`}>
-          {contentBlocks[i].content ? (
-            contentBlocks[i].content
+          className={`template__block ${contentBlocks[i] ? '_filled' : '_interactive'}`}>
+          {contentBlocks[i] ? (
+            contentEditorSwitcher(i, contentSet[i].type)
           ) : (
-            <button
-              value={contentBlocks[i].type}
-              data-value={i}
-              onClick={onBlockClick}
-              type="button">
+            <button value={contentSet[i].type} data-value={i} onClick={onBlockClick} type="button">
               <Icon name="circle-add" />
             </button>
           )}

@@ -5,7 +5,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
+import { setMLDraftContent } from '../../../../../../bll/reducers';
 import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
+import { useAppDispatch } from '../../../../../../common/hooks';
 import { TMLDraftContent } from '../../../../../../common/types/instance';
 import { Button, Input } from '../../../../../components/elements';
 
@@ -16,7 +18,6 @@ type TLinkFormData = {
 
 type TMLLinkFormProps = {
   order: number;
-  setContent: (data: TMLDraftContent) => void;
 };
 
 const MAX_SYMBOLS_TITLE = 24;
@@ -36,7 +37,8 @@ const linkSchema = yup.object().shape({
     .required('Url is required'),
 });
 
-export const MLLinkForm = ({ order, setContent }: TMLLinkFormProps) => {
+export const MLLinkForm = ({ order }: TMLLinkFormProps) => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const {
     register,
@@ -62,21 +64,24 @@ export const MLLinkForm = ({ order, setContent }: TMLLinkFormProps) => {
     dirtyFields[name] && setHelperState(initialHelperState);
   };
   const onSubmit: SubmitHandler<TLinkFormData> = data => {
-    console.log(setContent);
-    return setContent({
-      order,
-      type: MLContentType.LINK,
-      link: data.link,
-      linkType: 'third-party',
-      title: data.title,
-      text: null,
-      img: null,
-    }); // 2
+    console.log(data.link);
+    dispatch(
+      setMLDraftContent({
+        order,
+        type: MLContentType.LINK,
+        isFilled: true,
+        link: data.link,
+        linkType: 'third-party',
+        title: data.title,
+        text: null,
+        img: null,
+      }),
+    );
   };
 
   return (
     <div className="paper _with-button-bottom">
-      <form className="" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+      <form className="template__ml-form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <section className="field">
           <div className="field__input">
             <Input
@@ -94,7 +99,7 @@ export const MLLinkForm = ({ order, setContent }: TMLLinkFormProps) => {
               dirtyFields.title &&
               errors.title &&
               // order of OR statement is important! other errors used for dynamic tips
-              (errors.title?.types?.required || errors.title?.types?.min)}
+              errors.title.message}
           </div>
         </section>
         <section className="field">
@@ -114,7 +119,7 @@ export const MLLinkForm = ({ order, setContent }: TMLLinkFormProps) => {
               dirtyFields.link &&
               errors.link &&
               // order of OR statement is important! other errors used for dynamic tips
-              (errors.link?.types?.required || errors.link?.types?.min)}
+              errors.link.message}
           </div>
         </section>
         <div className="paper__button-container">

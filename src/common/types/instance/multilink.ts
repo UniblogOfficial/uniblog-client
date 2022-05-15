@@ -45,12 +45,13 @@ export type TMultilinkDraft = {
   logo: Nullable<TImageFile>;
   template: Nullable<number[]>;
   background: undefined | string;
-  contentSet: Nullable<TMLDraftContent>[];
+  contentSet: TMLDraftContent[];
 };
 
 export type TMLDraftContent = {
   order: number;
   type: MLContentType;
+  isFilled: boolean;
   link: Nullable<string>;
   linkType: Nullable<SocialNetwork | 'third-party'>;
   title: Nullable<string>;

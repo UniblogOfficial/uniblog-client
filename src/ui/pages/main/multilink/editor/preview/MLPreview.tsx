@@ -1,17 +1,20 @@
 import React, { ChangeEvent, FC, useState } from 'react';
 
+import { setMLDraftName } from '../../../../../../bll/reducers';
+import { useAppDispatch } from '../../../../../../common/hooks';
 import { Button, Icon } from '../../../../../components/elements';
 
 type TMLPreviewProps = {
+  name: string; // multilink name
   username: string;
 };
 
-export const MLPreview: FC<TMLPreviewProps> = ({ username }) => {
-  const [userLink, setUserLink] = useState<string>('');
+export const MLPreview: FC<TMLPreviewProps> = ({ name, username }) => {
+  const dispatch = useAppDispatch();
   const [isValid, setIsValid] = useState(true);
 
   const onLinkClick = () => {
-    window.open(`${process.env.REACT_APP_HOST_PRODUCTION}/${userLink || username}`, '_blank');
+    window.open(`${process.env.REACT_APP_HOST_PRODUCTION}/${name || username}`, '_blank');
   };
 
   const onLinkChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +25,7 @@ export const MLPreview: FC<TMLPreviewProps> = ({ username }) => {
     } else {
       setIsValid(false);
     }
-    setUserLink(e.target.value);
+    dispatch(setMLDraftName(e.target.value));
   };
 
   return (
@@ -30,15 +33,15 @@ export const MLPreview: FC<TMLPreviewProps> = ({ username }) => {
       <div>
         <div className="paper-link">
           {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus */}
-          <div className="paper-link__host" role="link" onClick={onLinkClick}>
+          <span className="paper-link__host" role="link" onClick={onLinkClick}>
             {new URL(process.env.REACT_APP_HOST_PRODUCTION as string).hostname}/
-          </div>
+          </span>
           <input
             className="paper-link__input"
             type="text"
             placeholder={username}
             maxLength={65}
-            value={userLink}
+            value={name}
             onChange={onLinkChange}
           />
           {/* Ну тут типа будет иконка показывающая валидна ссылка или нет */}

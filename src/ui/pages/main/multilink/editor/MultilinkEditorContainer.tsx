@@ -31,50 +31,11 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(1);
-  const [multilinkAttrs, setMultilinkAttrs] = useState<TMultilinkDraft>({
-    name: userData.name,
-    avatar: userData.avatar,
-    logo: null,
-    template: null as Nullable<number[]>,
-    background: undefined as undefined | string,
-    contentSet: [] as Nullable<TMLDraftContent>[],
-  });
-
-  const setTemplate = useCallback(
-    (template: number[]) => {
-      if (multilinkAttrs.template !== template) {
-        setMultilinkAttrs({ ...multilinkAttrs, template, contentSet: template.map(temp => null) });
-      }
-    },
-    [multilinkAttrs],
-  );
-
-  const setBackground = useCallback(
-    (background: string) => {
-      if (multilinkAttrs.background !== background) {
-        setMultilinkAttrs({ ...multilinkAttrs, background });
-      }
-    },
-    [multilinkAttrs],
-  );
-
-  const setContent = useCallback(
-    ({ order, type, link, linkType, title, text, img }: TMLDraftContent) => {
-      if (!multilinkAttrs.contentSet[order]) {
-        const newContentSet = multilinkAttrs.contentSet;
-        newContentSet[order] = { order, type, link, linkType, title, text: '', img };
-        setMultilinkAttrs({ ...multilinkAttrs, contentSet: newContentSet });
-      } else {
-        const newContentSet = multilinkAttrs.contentSet;
-        newContentSet[order] = { order, type, link, linkType, title, text, img };
-        setMultilinkAttrs({ ...multilinkAttrs, contentSet: newContentSet });
-      }
-    },
-    [multilinkAttrs],
+  const { name, avatar, logo, template, background, contentSet } = useAppSelector<TMultilinkDraft>(
+    state => state.multilink.multilinkDraft,
   );
 
   const onPublishButtonClick = () => {
-    const { name, logo, background, template, contentSet } = multilinkAttrs;
     const backgroundDefault = '#fff';
     if (template && contentSet) {
       dispatch(
@@ -83,25 +44,13 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
           logo,
           template,
           background: background || backgroundDefault,
-          contentSet: contentSet.map(
-            (content: Nullable<TMLDraftContent>, i: number) =>
-              content || {
-                order: i,
-                type: MLContentType.UNKNOWN,
-                link: null,
-                linkType: null,
-                text: null,
-                title: null,
-                img: null,
-              },
-          ),
+          contentSet,
         }),
       );
     }
   };
 
   const onNextButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    console.log(e.currentTarget);
     stage < 5 && stage >= 1 && setStage(stage + Number(e.currentTarget.value));
   };
 
@@ -112,30 +61,31 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
       case MLContentType.TEXT:
         return <p className="text">{content.text}</p>;
       case MLContentType.IMAGE:
-        return <img src={content.img?.previewUrl} alt="img" />;
+        return content.isFilled ? <img src={content.img?.previewUrl} alt="img" /> : null;
       default:
         break;
     }
   }, []);
 
-  const currentPreviewLayout = (
-    <>
-      {multilinkAttrs.template?.map((template: number, i: number) => {
-        const isFilled = !!multilinkAttrs.contentSet[i];
-        return (
-          <div
-            key={id[i]}
-            style={{ flex: `0 1 ${template}%`, backgroundColor: isFilled ? '' : '#0002' }}>
-            {multilinkAttrs.contentSet[i]
-              ? getPreviewBlockLayout(multilinkAttrs.contentSet[i]!)
-              : null}
-          </div>
-        );
-      })}
-    </>
+  const currentPreviewLayout = useMemo(
+    () => (
+      <>
+        {template?.map((el: number, i: number) => {
+          const { isFilled } = contentSet[i];
+          return (
+            <div
+              key={id[i]}
+              style={{ flex: `0 1 ${el}%`, backgroundColor: isFilled ? undefined : '#0002' }}>
+              {getPreviewBlockLayout(contentSet[i])}
+            </div>
+          );
+        })}
+      </>
+    ),
+    [contentSet, getPreviewBlockLayout, template],
   );
 
-  const logoSrc = multilinkAttrs.avatar ? parseRawImage(multilinkAttrs.avatar) : undefined;
+  const logoSrc = avatar ? parseRawImage(avatar) : undefined;
 
   return (
     <div
@@ -144,14 +94,10 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
       {stage !== EditorStage.PREVIEW && (
         <section className="ml-creation-area">
           <div className="paper _with-button-bottom">
-            {stage === EditorStage.TEMPLATE && <MLTemplate setTemplate={setTemplate} />}
-            {stage === EditorStage.BACKGROUND && <MLBackground setBackground={setBackground} />}
-            {stage === EditorStage.CONTENT && multilinkAttrs.template && (
-              <MLContent
-                template={multilinkAttrs.template}
-                contentSet={multilinkAttrs.contentSet}
-                setContent={setContent}
-              />
+            {stage === EditorStage.TEMPLATE && <MLTemplate />}
+            {stage === EditorStage.BACKGROUND && <MLBackground />}
+            {stage === EditorStage.CONTENT && template && contentSet && (
+              <MLContent template={template} contentSet={contentSet} />
             )}
 
             {stage > 1 && (
@@ -176,10 +122,10 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
         style={stage === EditorStage.PREVIEW ? { flex: '0 0 550px' } : undefined}>
         <div className="paper">
           <h3 className="paper-title">{t('pages:multilink.creation.stages.preview')}</h3>
-          {stage === EditorStage.PREVIEW && <MLPreview username={multilinkAttrs.name} />}
+          {stage === EditorStage.PREVIEW && <MLPreview name={name} username={userData.name} />}
           <div className="preview-device">
             <div className="phone">
-              <div className="phone__container" style={{ background: multilinkAttrs.background }}>
+              <div className="phone__container" style={{ background }}>
                 <div className="phone__logo">
                   {logoSrc ? (
                     <img className="img-default" src={logoSrc} alt="logo" />
@@ -188,7 +134,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                   )}
                 </div>
                 <h4 className="phone__user-title">
-                  <strong>{userData.name}</strong>
+                  <strong>{name}</strong>
                 </h4>
                 <div className="phone__template">{currentPreviewLayout}</div>
               </div>

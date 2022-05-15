@@ -1,13 +1,15 @@
 import { batch } from 'react-redux';
 
 import { AppStatus } from '../../common/constants';
-import { Nullable } from '../../common/types/instance';
+import { Nullable, TUser } from '../../common/types/instance';
 import { TLoginDto, TRegisterDto } from '../../common/types/request/auth.dto';
 import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
 import { authAPI } from '../../dal';
 import { AppThunk } from '../store';
 
-import { removeUserData, setAppStatus, setInitialized, setUserData } from '.';
+import { setMLDraftLogoFromUserAvatar } from './multilink';
+
+import { removeUserData, setAppStatus, setInitialized, setMLDraftName, setUserData } from '.';
 
 enum AuthActionType {
   SET_REGISTER_USER_DATA = 'SET_REGISTER_USER_DATA',
@@ -61,6 +63,8 @@ export const requestMe = (): AppThunk => async dispatch => {
     const response = await authAPI.me();
     batch(() => {
       dispatch(setUserData(response.data));
+      dispatch(setMLDraftName((response.data as TUser).name));
+      dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
       dispatch(setInitialized());
       dispatch(setAppStatus(AppStatus.SUCCEEDED));
     });

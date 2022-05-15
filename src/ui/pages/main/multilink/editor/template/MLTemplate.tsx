@@ -2,11 +2,11 @@ import React, { FC, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { setMLDraftTemplate } from '../../../../../../bll/reducers';
+import { useAppDispatch } from '../../../../../../common/hooks';
 import { Carousel, Icon } from '../../../../../components/elements';
 
-type TMLTemplateProps = {
-  setTemplate: (template: number[]) => void;
-};
+type TMLTemplateProps = {};
 
 const multilinkTemplates = new Map([
   [0, [50, 25, 12.5, 12.5]], // sum of elements must be equal to 100
@@ -16,16 +16,17 @@ const multilinkTemplates = new Map([
   [4, [25, 25, 12.5, 12.5, 12.5, 12.5]],
 ]);
 
-export const MLTemplate: FC<TMLTemplateProps> = ({ setTemplate }) => {
+export const MLTemplate = () => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const setCurrentTemplate = useCallback(
     (stage: number) => {
       const template = multilinkTemplates.get(stage);
       if (template) {
-        setTemplate(template);
+        dispatch(setMLDraftTemplate(template));
       }
     },
-    [setTemplate],
+    [dispatch],
   );
   const carouselArrows = [
     <div key="arrow1">

@@ -1,24 +1,25 @@
 import React, { ChangeEvent } from 'react';
 
+import { Nullable } from '../../../../../../common/types/instance';
+
 type TMLTextareaProps = {
   order: number;
-  value: string;
+  value: Nullable<string>;
   changeTextBlock: (text: string, order: number) => void;
 };
 
 export const MLTextarea = ({ order, value, changeTextBlock }: TMLTextareaProps) => {
   const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
-    // const order = +e.currentTarget.dataset.value! as number;
     changeTextBlock(text, order);
   };
   return (
     <textarea
       data-value={order}
-      value={value}
+      value={value ?? ''}
       onChange={onTextareaChange}
       maxLength={70}
-      className="template__block__textarea"
+      className="template__textarea"
     />
   );
 };
