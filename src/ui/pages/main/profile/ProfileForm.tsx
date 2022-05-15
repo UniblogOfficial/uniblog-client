@@ -22,6 +22,7 @@ type TProfileFormProps = {
   username?: string;
   email?: string;
   onLogout: () => void;
+  onButtonSaveClick: () => void;
 };
 
 const MIN_SYMBOLS = 8;
@@ -39,8 +40,9 @@ const signupSchema = yup.object().shape({
   passConfirmed: yup.string().notRequired(),
 });
 
-export const ProfileForm: FC<TProfileFormProps> = ({ username, email, onLogout }) => {
+export const ProfileForm: FC<TProfileFormProps> = props => {
   const dispatch = useAppDispatch();
+  const { username, email, onLogout, onButtonSaveClick } = props;
   const { t } = useTranslation('common');
   const {
     register,
@@ -275,12 +277,18 @@ export const ProfileForm: FC<TProfileFormProps> = ({ username, email, onLogout }
           className="button button-profile  _shadowed"
           type="button"
           variant="ok">
-          {/* {t('buttons.save')} */}
-          LogOut
+          {t('buttons.logout')}
         </Button>
-        <Button
+        {/* <Button
           className="button button-profile _shadowed"
           type="submit"
+          variant="ok"
+          orientation="right">
+          {t('buttons.save')}
+        </Button> */}
+        <Button
+          className="button button-profile _shadowed"
+          onClick={onButtonSaveClick}
           variant="ok"
           orientation="right">
           {t('buttons.save')}

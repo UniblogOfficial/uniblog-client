@@ -10,7 +10,7 @@ export const multilinkAPI = {
     // .then(response => ({ data: response.data.data, info: response.data.info }));
   },
 
-  create(multilink: TCreateMLDto, images?: TMLImageDto[]) {
+  create(multilink: TCreateMLDto, images?: TMLImageDto[], logo?: File) {
     const formData = new FormData();
     formData.append('name', multilink.name);
     formData.append('background', multilink.background);
@@ -23,7 +23,7 @@ export const multilinkAPI = {
     images?.forEach((image, i) => {
       formData.append(`order${image.order}`, image.file);
     });
-
+    logo && formData.append('logo', logo);
     return api.post(`multilink`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',

@@ -2,23 +2,22 @@ import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { TUserData } from '../../../../bll/reducers';
-import { selectUserData } from '../../../../bll/selectors';
 import { useAppSelector } from '../../../../common/hooks';
+import { TUser } from '../../../../common/types/instance';
 import socials from '../../../../img';
 import { Button } from '../../../components/elements/button/Button';
 import { SocialAccountState, SocialCard } from '../../../components/modules/socialCard/SocialCard';
 
-type THomeContainerProps = {};
+type THomeContainerProps = {
+  userData: TUser;
+};
 
-export const HomeContainer = () => {
-  const userData = useAppSelector<TUserData | null>(selectUserData);
+export const HomeContainer = ({ userData }: THomeContainerProps) => {
   const [socialData, setSocialData] = useState(() =>
     socials.map(social => ({ type: social.type, state: SocialAccountState.NOT_AVAILABLE })),
   );
 
   const { t } = useTranslation(['pages', 'common']);
-  if (!userData) return null;
 
   const socialActionTitles = [
     t('common:links.add', { ns: 'common' }),

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import { TUserData } from '../bll/reducers';
 import { StatusCode } from '../common/constants';
+import { TUser } from '../common/types/instance';
 
 export const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -36,7 +36,7 @@ api.interceptors.response.use(
         localStorage.removeItem('UniblogAccessToken');
         localStorage.removeItem('UniblogRefreshToken');
         if (!token) return new Error('Token not found');
-        const response = await axios.get<TAuthResponse<TUserData>>(
+        const response = await axios.get<TAuthResponse<TUser>>(
           `${process.env.REACT_APP_API_URL}auth/refresh`,
           {
             withCredentials: true,
@@ -66,10 +66,10 @@ export const mockAPI = axios.create({
 
 export type TResponse<TData = {}> = {
   data: TData;
-  info: Array<string>;
+  message: Array<string>;
 };
 export type TAuthResponse<TData = {}> = {
   data: TData;
   auth: { accessToken: string; refreshToken: string };
-  info: Array<string>;
+  message: Array<string>;
 };

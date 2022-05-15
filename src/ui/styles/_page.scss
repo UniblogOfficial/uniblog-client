@@ -119,6 +119,15 @@
     font-size: 12px;
     line-height: 1.5;
   }
+  // .profile-link__avatar
+  &__avatar {
+    position: absolute;
+    left: 24px;
+    overflow:hidden;
+    width:32px;
+    height:32px;
+    border-radius: 50%;
+  }
   .icon-container {
     width: 32px;
   }
