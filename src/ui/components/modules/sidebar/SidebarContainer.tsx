@@ -3,7 +3,7 @@ import React, { FC, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { TUserData } from '../../../../bll/reducers';
+import { TUser } from '../../../../common/types/instance';
 import { Button } from '../../elements/button/Button';
 import { Icon } from '../../elements/icons/Icon';
 import { TIconName } from '../iconSpritesMaps/IconSpritesMap';
@@ -16,12 +16,12 @@ type TNavLinksDataItem = {
 };
 
 type TSidebarContainerProps = {
-  userData: TUserData;
+  userData: TUser;
 };
 
 export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
   const { t, i18n } = useTranslation(['pages', 'common']);
-
+  const { name, avatar } = userData;
   const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
     i18n.changeLanguage(e.currentTarget.value);
   };
@@ -75,6 +75,9 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
       icon: 'chat',
     },
   ];
+  const avatarSrc = avatar
+    ? `data:${avatar.imageType};base64, ${Buffer.from(avatar.imageData!).toString('base64')}`
+    : undefined;
   const mappedNavLinks = navLinksData.map((data, i) => (
     <li key={data.id} className="nav__item">
       <NavLink exact={i === 0 || false} to={data.href} className="nav__link iconized__L">
@@ -112,8 +115,14 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
         <div className="dash sidebar__dash" />
         <section className="profile-link">
           <NavLink to="/profile" className="iconized__L" exact>
-            <Icon name="user" size="full" />
-            <p>{userData.name}</p>
+            {avatarSrc ? (
+              <div className="profile-link__avatar">
+                <img src={avatarSrc} alt="avatar" className="img-default" />
+              </div>
+            ) : (
+              <Icon name="user" size="full" />
+            )}
+            <p>{name}</p>
             <p className="profile-link__subtitle">{t('pages:navbar.personalAccount')}</p>
           </NavLink>
         </section>

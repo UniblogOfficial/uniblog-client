@@ -3,33 +3,33 @@ import React, { CSSProperties, FC, useCallback, useMemo, MouseEvent } from 'reac
 
 import { useTranslation } from 'react-i18next';
 
+import { setMLDraftBackground } from '../../../../../../bll/reducers';
+import { useAppDispatch } from '../../../../../../common/hooks';
 import { Button } from '../../../../../components/elements';
 
 import styles from './MLBackground.module.scss';
 
-type TMLBackgroundProps = {
-  setBackground: (background: string) => void;
-};
+type TMLBackgroundProps = {};
 
-export const MLBackground: FC<TMLBackgroundProps> = ({ setBackground }) => {
+export const MLBackground = () => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const onSnippetClick = useCallback(
     (e: MouseEvent<HTMLInputElement>) => {
-      setBackground(e.currentTarget.style.background);
+      dispatch(setMLDraftBackground(e.currentTarget.style.background));
     },
-    [setBackground],
+    [dispatch],
   );
-  const snippets = useMemo(() => {
-    const columns = 3;
-    const rows = 3;
-    return bgs.map((props, i) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <li key={i} className={`${styles['bg']}`}>
-        <input onClick={onSnippetClick} style={props} type="button" />
-        <div />
-      </li>
-    ));
-  }, [onSnippetClick]);
+  const snippets = useMemo(
+    () =>
+      bgs.map((props, i) => (
+        <li key={id[i]} className={`${styles['bg']}`}>
+          <input onClick={onSnippetClick} style={props} type="button" />
+          <div />
+        </li>
+      )),
+    [onSnippetClick],
+  );
 
   return (
     <>
@@ -73,3 +73,5 @@ const bgs: CSSProperties[] = [
     background: 'linear-gradient(180deg, #f71fec 0%, #8F94FB 100%)',
   },
 ];
+
+const id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

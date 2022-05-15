@@ -3,10 +3,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 
-import { TUserData } from '../../../../bll/reducers';
 import { useAppSelector } from '../../../../common/hooks';
-import { Nullable } from '../../../../common/types/instance';
-import { Breadcrumbs } from '../../../components/elements/breadcrumbs/Breadcrumbs';
+import { Nullable, TUser } from '../../../../common/types/instance';
 import { Button } from '../../../components/elements/button/Button';
 import { Icon } from '../../../components/elements/icons/Icon';
 import { PageHeader } from '../../../components/modules/headers/PageHeader';
@@ -14,15 +12,12 @@ import { PageHeader } from '../../../components/modules/headers/PageHeader';
 import { MultilinkEditorContainer } from './editor/MultilinkEditorContainer';
 import { MultilinkListContainer } from './MultilinkListContainer';
 
-type TMultilinkContainerProps = {};
+type TMultilinkContainerProps = {
+  userData: TUser;
+};
 
-export const MultilinkContainer = () => {
+export const MultilinkContainer = ({ userData }: TMultilinkContainerProps) => {
   const { t } = useTranslation(['pages', 'common']);
-  const userData = useAppSelector<Nullable<TUserData>>(state => state.auth.userData);
-
-  if (userData === null) {
-    return <Redirect to="/login" />;
-  }
 
   return (
     <div className="multilink">
