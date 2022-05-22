@@ -9,15 +9,15 @@ import { Footer } from '../../components/modules/footer/Footer';
 import { SidebarContainer } from '../../components/modules/sidebar/SidebarContainer';
 import { NotFound } from '../404';
 
-import { AddonsContainer } from './addons/AddonsContainer';
-import { AnalyticsContainer } from './analytics/AnalyticsContainer';
-import { ChatContainer } from './chat/ChatContainer';
 import { CrosspostingContainer } from './crossposting/CrosspostingContainer';
+import { AddonsContainer } from './freezed/addons/AddonsContainer';
+import { AnalyticsContainer } from './freezed/analytics/AnalyticsContainer';
+import { ChatContainer } from './freezed/chat/ChatContainer';
+import { ShopContainer } from './freezed/shop/ShopContainer';
 import { HomeContainer } from './home/HomeContainer';
 import { MultilinkContainer } from './multilink/MultilinkContainer';
 import { PriceContainer } from './price/PriceContainer';
 import { ProfileContainer } from './profile/ProfileContainer';
-import { ShopContainer } from './shop/ShopContainer';
 
 export const MainContainer = () => {
   const dispatch = useAppDispatch();

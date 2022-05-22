@@ -5,7 +5,6 @@ import { ID, MLContentType } from '../../../../common/constants';
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks';
 import { Nullable, TMLContent, TMultilink } from '../../../../common/types/instance';
 import { parseRawImage } from '../../../../common/utils/ui';
-import phone from '../../../../img/phone.png';
 import { Icon } from '../../../components/elements';
 
 type TMultilinkListContainerProps = {};
@@ -70,9 +69,6 @@ export const MultilinkListContainer = () => {
                     <strong>{name}</strong>
                   </h4>
                   <div className="phone__template">{contentLayout}</div>
-                </div>
-                <div className="phone__layout">
-                  <img src={phone} alt="phone-layout" />
                 </div>
               </div>
             </div>

@@ -113,16 +113,16 @@ main {
 
 // <PAGE-SPECIFIC STYLES> ============================================================================================
 @import 'page';
-@import './pages/addons';
-@import './pages/analytics';
+@import './pages/freezed/addons';
+@import './pages/freezed/analytics';
 @import './pages/auth';
-@import './pages/chat';
+@import './pages/freezed/chat';
 @import './pages/crossposting';
 @import './pages/home';
 @import './pages/multilink';
 @import './pages/profile';
 @import './pages/price';
-@import './pages/shop';
+@import './pages/freezed/shop';
 @import './pages/public';
 // </PAGE-SPECIFIC STYLES> ===========================================================================================
 
