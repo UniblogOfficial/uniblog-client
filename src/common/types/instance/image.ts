@@ -4,3 +4,9 @@ export type TImageFile = {
   size: number;
   previewUrl: string;
 };
+
+export type TIncomingImage = {
+  imageName?: string;
+  imageType: string;
+  imageData: string;
+};
