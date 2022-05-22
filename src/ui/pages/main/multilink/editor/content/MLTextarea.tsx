@@ -1,6 +1,7 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
 
 import { Nullable } from '../../../../../../common/types/instance';
+import { Textarea } from '../../../../../components/elements';
 
 type TMLTextareaProps = {
   order: number;
@@ -13,13 +14,14 @@ export const MLTextarea = ({ order, value, changeTextBlock }: TMLTextareaProps) 
     const text = e.target.value;
     changeTextBlock(text, order);
   };
+
   return (
-    <textarea
+    <Textarea
       data-value={order}
       value={value ?? ''}
       onChange={onTextareaChange}
-      maxLength={70}
-      className="template__textarea"
+      maxLength={1023}
+      className="textarea"
     />
   );
 };

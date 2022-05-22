@@ -28,7 +28,7 @@ export const PublicContainer = () => {
       case MLContentType.TEXT:
         return <p className="text">{content.text}</p>;
       case MLContentType.IMAGE:
-        return <img className="img-default" src={parseRawImage(content)} alt="img" />;
+        return <img src={parseRawImage(content)} alt="img" />;
       default:
         return null;
     }
@@ -57,7 +57,7 @@ export const PublicContainer = () => {
     <main style={{ flexDirection: 'column', background: multilink.background }}>
       <div className="public">
         <div className="public__logo">
-          <img className="img-default" src={parseRawImage(multilink.logo)} alt="logo" />
+          <img src={parseRawImage(multilink.logo)} alt="logo" />
         </div>
         <div className="public__title">{multilink.name}</div>
         <div className="public__content">{contentLayout}</div>
