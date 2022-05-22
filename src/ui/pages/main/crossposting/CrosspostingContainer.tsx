@@ -73,7 +73,7 @@ export const CrosspostingContainer = () => {
             </Button>
           </section>
           <section className="planner">
-            <div className="paper">
+            <div className="paper _with-button-bottom">
               <Radio
                 options={['now', 'later']}
                 value={temp}
@@ -84,10 +84,12 @@ export const CrosspostingContainer = () => {
                 onChangeOption={setTemp}
                 className="planner__radio"
               />
+              <div className="paper__button-container">
+                <Button onClick={onNextButtonClick} className="button _paper">
+                  {t('common:buttons.next')}
+                </Button>
+              </div>
             </div>
-            <Button onClick={onNextButtonClick} className="button _rounded">
-              {t('common:buttons.next')}
-            </Button>
           </section>
         </div>
       </main>
