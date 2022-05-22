@@ -1,7 +1,7 @@
 import { AppStatus } from '../../common/constants';
 import { TImageFile } from '../../common/types/instance/image';
 import { Nullable } from '../../common/types/instance/index';
-import { Role, TAvatar, TUser } from '../../common/types/instance/user';
+import { Role, TUser } from '../../common/types/instance/user';
 import { handleServerNetworkError } from '../../common/utils/state';
 import { userAPI } from '../../dal/user';
 import { AppThunk } from '../store';
