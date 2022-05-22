@@ -1,0 +1,61 @@
+.ml-logo {
+  position: relative;
+	margin: 0 auto;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.ml-text {
+  width: 100%;
+}
+
+.ml-images {
+  display: grid;
+  width: 100%;
+  // .ml-images__image
+  &__image {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    img {
+      position: relative;
+    }
+  }
+}
+
+.ml-imagetext {
+  width: 100%;
+  &__image {
+		position: relative;
+		width: 40%;
+		padding-bottom: 40%;
+		height: 0;
+		border: 1px solid #0002;
+		border-radius: 5px;
+	}
+}
+
+.ml-social {
+  display: flex;
+	flex: 1 1 100%;
+	justify-content: space-around;
+	align-items: center;
+	li {
+		position: relative;
+		width: 40px;
+		height: 40px;
+	}
+}
+
+.ml-link {
+  justify-content: center;
+	border-radius: 10px;
+}
+
+.ml-audio {
+  width: 100%;
+}
+
+.ml-video {
+  width: 100%;
+}

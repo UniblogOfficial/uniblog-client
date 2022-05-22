@@ -4,6 +4,7 @@ import React, { CSSProperties, FC, useCallback, useMemo, MouseEvent } from 'reac
 import { useTranslation } from 'react-i18next';
 
 import { setMLDraftBackground } from '../../../../../../bll/reducers';
+import { ID } from '../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../common/hooks';
 import { Button } from '../../../../../components/elements';
 
@@ -23,7 +24,7 @@ export const MLBackground = () => {
   const snippets = useMemo(
     () =>
       bgs.map((props, i) => (
-        <li key={id[i]} className={`${styles['bg']}`}>
+        <li key={ID[i]} className={`${styles['bg']}`}>
           <input onClick={onSnippetClick} style={props} type="button" />
           <div />
         </li>
@@ -33,13 +34,12 @@ export const MLBackground = () => {
 
   return (
     <>
-      <h3 className="paper-title">{t('pages:multilink.creation.stages.background')}</h3>
-      <div className="multilink-editor__constructor">
-        <ul className="grid bg-menu-grid">{snippets}</ul>
+      <ul className="grid bg-menu-grid">{snippets}</ul>
+      <div className="button _center">
+        <Button variant="regular" className="button button-download _rounded">
+          {t('common:buttons.download')}
+        </Button>
       </div>
-      <Button variant="regular" className="button button-download _rounded">
-        {t('common:buttons.download')}
-      </Button>
     </>
   );
 };
@@ -73,5 +73,3 @@ const bgs: CSSProperties[] = [
     background: 'linear-gradient(180deg, #f71fec 0%, #8F94FB 100%)',
   },
 ];
-
-const id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

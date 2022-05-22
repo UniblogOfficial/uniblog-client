@@ -7,8 +7,6 @@ import { handleServerNetworkError } from '../../common/utils/state/errorHandler'
 import { authAPI } from '../../dal';
 import { AppThunk } from '../store';
 
-import { setMLDraftLogoFromUserAvatar } from './multilink';
-
 import { removeUserData, setAppStatus, setInitialized, setMLDraftName, setUserData } from '.';
 
 enum AuthActionType {
@@ -64,7 +62,7 @@ export const requestMe = (): AppThunk => async dispatch => {
     batch(() => {
       dispatch(setUserData(response.data));
       dispatch(setMLDraftName((response.data as TUser).name));
-      dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
+      // dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
       dispatch(setInitialized());
       dispatch(setAppStatus(AppStatus.SUCCEEDED));
     });

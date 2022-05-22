@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, MouseEvent } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
-import { setMLDraftContent } from '../../../../../../bll/reducers';
 import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../common/hooks';
-import { TMLDraftContent } from '../../../../../../common/types/instance';
 import { Button, Input } from '../../../../../components/elements';
 
 type TLinkFormData = {
@@ -18,6 +16,7 @@ type TLinkFormData = {
 
 type TMLLinkFormProps = {
   order: number;
+  close: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const MAX_SYMBOLS_TITLE = 24;
@@ -37,7 +36,7 @@ const linkSchema = yup.object().shape({
     .required('Url is required'),
 });
 
-export const MLLinkForm = ({ order }: TMLLinkFormProps) => {
+export const MLLinkForm = ({ order, close }: TMLLinkFormProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const {
@@ -63,9 +62,9 @@ export const MLLinkForm = ({ order }: TMLLinkFormProps) => {
     // since field touched after first blur, all errors will calculated onChange and always show
     dirtyFields[name] && setHelperState(initialHelperState);
   };
-  const onSubmit: SubmitHandler<TLinkFormData> = data => {
-    console.log(data.link);
-    dispatch(
+  const onSubmit: SubmitHandler<TLinkFormData> = (data, e) => {
+    console.log(e);
+    /* dispatch(
       setMLDraftContent({
         order,
         type: MLContentType.LINK,
@@ -76,58 +75,56 @@ export const MLLinkForm = ({ order }: TMLLinkFormProps) => {
         text: null,
         img: null,
       }),
-    );
+    ); */
   };
 
   return (
-    <div className="paper _with-button-bottom">
-      <form className="template__ml-form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-        <section className="field">
-          <div className="field__input">
-            <Input
-              {...register('title', { value: '' })}
-              type="text"
-              name="title"
-              placeholder="Enter link title"
-              onChangeFocus={state => {
-                onFieldFocusChange('title', state);
-              }}
-            />
-          </div>
-          <div className="field__error">
-            {helperState.title &&
-              dirtyFields.title &&
-              errors.title &&
-              // order of OR statement is important! other errors used for dynamic tips
-              errors.title.message}
-          </div>
-        </section>
-        <section className="field">
-          <div className="field__input">
-            <Input
-              {...register('link', { value: '' })}
-              type="text"
-              name="link"
-              placeholder="Enter link url"
-              onChangeFocus={state => {
-                onFieldFocusChange('link', state);
-              }}
-            />
-          </div>
-          <div className="field__error">
-            {helperState.link &&
-              dirtyFields.link &&
-              errors.link &&
-              // order of OR statement is important! other errors used for dynamic tips
-              errors.link.message}
-          </div>
-        </section>
-        <div className="paper__button-container">
-          <Button value="1" type="submit" className="button _full _paper">
-            {t('common:buttons.ok')}
-          </Button>
+    <form className="template__ml-form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+      <section className="field">
+        <div className="field__input">
+          <Input
+            {...register('title', { value: '' })}
+            type="text"
+            name="title"
+            placeholder="Enter link title"
+            onChangeFocus={state => {
+              onFieldFocusChange('title', state);
+            }}
+          />
         </div>
-      </form>
-    </div>
+        <div className="field__error">
+          {helperState.title &&
+            dirtyFields.title &&
+            errors.title &&
+            // order of OR statement is important! other errors used for dynamic tips
+            errors.title.message}
+        </div>
+      </section>
+      <section className="field">
+        <div className="field__input">
+          <Input
+            {...register('link', { value: '' })}
+            type="text"
+            name="link"
+            placeholder="Enter link url"
+            onChangeFocus={state => {
+              onFieldFocusChange('link', state);
+            }}
+          />
+        </div>
+        <div className="field__error">
+          {helperState.link &&
+            dirtyFields.link &&
+            errors.link &&
+            // order of OR statement is important! other errors used for dynamic tips
+            errors.link.message}
+        </div>
+      </section>
+      <div>
+        <Button data-value="-1" type="submit" onClick={close} className="button _full _rounded">
+          {t('common:buttons.ok')}
+        </Button>
+      </div>
+    </form>
   );
 };
