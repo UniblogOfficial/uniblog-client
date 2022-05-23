@@ -1,46 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import * as yup from 'yup';
 
 import { requestRegister } from '../../../../bll/reducers';
 import { useAppDispatch } from '../../../../common/hooks';
 import { TRegisterDto } from '../../../../common/types/request';
+import { SignupFormData, signupValidatorOptions } from '../../../../common/utils/ui/validators';
 import { Button, Icon, Input } from '../../../components/elements';
 
-export type SignupFormData = {
-  name: string;
-  email: string;
-  password: string;
-  passConfirmed: string;
-};
-
 type TSignupFormProps = {};
-
-const MIN_SYMBOLS_NAME = 3;
-const MAX_SYMBOLS_NAME = 64;
-const MIN_SYMBOLS_PASS = 8;
-const MAX_SYMBOLS_PASS = 64;
-
-const signupSchema = yup.object().shape({
-  name: yup
-    .string()
-    .required('Name is required')
-    .matches(/^[A-Z0-9_-]/i, 'Invalid symbol (A-z, 0-9, -, _)')
-    .min(MIN_SYMBOLS_NAME, `Name must be at least ${MIN_SYMBOLS_NAME} symbols`)
-    .max(MAX_SYMBOLS_NAME, `Name cannot be more than ${MAX_SYMBOLS_NAME} symbols`),
-  email: yup
-    .string()
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Invalid email address')
-    .required('Email is required'),
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(MIN_SYMBOLS_PASS, `Password must be at least ${MIN_SYMBOLS_PASS} symbols`)
-    .max(MAX_SYMBOLS_PASS, `Password cannot be more than ${MAX_SYMBOLS_PASS} symbols`),
-  passConfirmed: yup.string().notRequired(),
-});
 
 export const SignupForm = () => {
   const dispatch = useAppDispatch();
@@ -51,11 +19,7 @@ export const SignupForm = () => {
     formState: { errors, dirtyFields },
     reset,
     clearErrors,
-  } = useForm<SignupFormData>({
-    mode: 'onChange', // important for dynamical tips
-    resolver: yupResolver(signupSchema, { abortEarly: false }),
-    criteriaMode: 'all', // important for dynamical tips
-  });
+  } = useForm<SignupFormData>(signupValidatorOptions);
   const initialHelperState = {
     name: true,
     email: true,
@@ -150,11 +114,8 @@ export const SignupForm = () => {
               name="eye"
               onClick={togglePasswordVisibility}
               side="right"
-              size="full"
               primaryColor="#242D35"
               secondaryColor="#242D35"
-              primaryOpacity="1"
-              secondaryOpacity="1"
               containerClassName="auth-eye"
             />
           ) : (
@@ -162,11 +123,8 @@ export const SignupForm = () => {
               name="eye-slash"
               onClick={togglePasswordVisibility}
               side="right"
-              size="full"
               primaryColor="#4F5B67"
               secondaryColor="#4F5B67"
-              primaryOpacity="1"
-              secondaryOpacity="1"
               containerClassName="auth-eye"
             />
           )}
