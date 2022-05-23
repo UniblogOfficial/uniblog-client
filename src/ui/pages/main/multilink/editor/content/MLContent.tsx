@@ -32,7 +32,7 @@ type TMLContentProps = {
   contentSet: MLContentType[];
   blocks: TMLDraftBlocks;
   blockEditorType: Nullable<MLContentType>;
-  blockEditorOrder: Nullable<number>;
+  blockEditorOrder: number;
   setBlockEditor: (payload: { type: MLContentType; order: number } | null) => void;
 };
 
@@ -231,7 +231,7 @@ export const MLContent = (props: TMLContentProps) => {
   return (
     <>
       {!blockEditorType && actionButtons}
-      {blockEditorType === MLContentType.TEXT && blockEditorOrder && (
+      {blockEditorType === MLContentType.TEXT && (
         <>
           <MLTextarea
             order={blockEditorOrder}
@@ -240,10 +240,18 @@ export const MLContent = (props: TMLContentProps) => {
           />
         </>
       )}
-      {blockEditorType === MLContentType.LINK && blockEditorOrder && (
+      {blockEditorType === MLContentType.LINK && (
         <>
           <MLLinkForm order={blockEditorOrder} close={onButtonEditorClick} />
         </>
+      )}
+      {blockEditorType === MLContentType.LOGO && (
+        <div className="ml-logo-editor">
+          <DropZoneField
+            initialImage={blocks.logoSet[blockEditorOrder]?.image ?? undefined}
+            onChange={onImageZoneChange}
+          />
+        </div>
       )}
       {blockEditorType && blockEditorType !== MLContentType.LINK && (
         <div className="action-buttons">
