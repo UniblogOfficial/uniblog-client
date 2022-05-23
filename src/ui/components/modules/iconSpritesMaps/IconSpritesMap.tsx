@@ -25,6 +25,7 @@ const ids = [
   'grid-2',
   'grid-mosaic',
   'home',
+  'image',
   'language',
   'language-duo',
   'lightning',

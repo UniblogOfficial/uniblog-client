@@ -6,7 +6,7 @@ import { Nullable } from '.';
 
 export type TMultilinkDraft = {
   name: string;
-  background: undefined | string;
+  background: undefined | string | TImageFile;
   contentSet: MLContentType[];
   blocks: TMLDraftBlocks;
 };

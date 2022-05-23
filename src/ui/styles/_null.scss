@@ -80,12 +80,15 @@ select {
   border: none;
 }
 
-button, a, select, input {
-  cursor: pointer;
-}
-
 div, span {
   cursor: default;
+}
+
+button, a, select, input {
+  cursor: pointer;
+  * {
+    cursor: pointer;
+  }
 }
 
 textarea {

@@ -1,5 +1,4 @@
 import React, {
-  FC,
   useCallback,
   useEffect,
   useRef,
@@ -31,22 +30,23 @@ type TIconProps = TDefaulSVGProps & {
   onClick?: (e: MouseEvent<HTMLElement>) => void;
 };
 
-export const Icon: FC<TIconProps> = ({
-  name,
-  id,
-  className,
-  containerClassName,
-  side,
-  size = 'reduced',
-  width = 'normal',
-  rotate = 0,
-  active = true,
-  primaryColor,
-  secondaryColor,
-  primaryOpacity,
-  secondaryOpacity,
-  onClick,
-}) => {
+export const Icon = (props: TIconProps) => {
+  const {
+    name,
+    id,
+    className,
+    containerClassName,
+    side,
+    size = 'full',
+    width = 'normal',
+    rotate = 0,
+    active = true,
+    primaryColor,
+    secondaryColor,
+    primaryOpacity,
+    secondaryOpacity,
+    onClick,
+  } = props;
   const getContainerStyle = useCallback(() => {
     let style = `icon-container ${containerClassName || ''}`;
     switch (side) {
@@ -71,7 +71,7 @@ export const Icon: FC<TIconProps> = ({
     return style;
   }, [side, width, containerClassName]);
 
-  const onClickHandler = (e: MouseEvent<HTMLElement>) => {
+  const onIconClick = (e: MouseEvent<HTMLElement>) => {
     active && onClick && onClick(e);
   };
 
@@ -94,7 +94,7 @@ export const Icon: FC<TIconProps> = ({
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div id={id} className={`${getContainerStyle()}`} onClick={onClickHandler}>
+    <div id={id} className={`${getContainerStyle()}`} onClick={onIconClick}>
       <div style={rotated()} className="icon__rotate">
         <svg ref={ref} className={`icon icon-${name} ${className} ${size}`}>
           <use id={`${name}`} xlinkHref={`#${name}`} />
