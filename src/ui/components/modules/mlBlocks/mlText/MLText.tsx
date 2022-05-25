@@ -21,6 +21,7 @@ export const MLText = ({ block, callback }: TMLTextProps) => {
       className={className}
       style={{
         padding: px(block.padding) ?? '0',
+        margin: px(block.margin),
         background: block.background ?? undefined,
         justifyContent: align,
         fontSize: block.fontSize ?? undefined,
@@ -29,7 +30,7 @@ export const MLText = ({ block, callback }: TMLTextProps) => {
       {callback && (
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
       )}
-      <div className="ml-text">
+      <div className="ml-text" style={{ color: block.color }}>
         {block &&
           block.text!.split('\n').map(line =>
             line ? (
