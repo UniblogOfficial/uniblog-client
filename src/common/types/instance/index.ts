@@ -12,6 +12,8 @@ export type {
   IMLDraftContentSocial,
   IMLDraftContentImage,
   IMLDraftContentImageText,
+  IMLDraftContentVideo,
+  IMLDraftContentShop,
   IMLDraftContentUnknown,
 } from './mlDraft';
 export type { TMultilinkComplete } from './mlComplete';
@@ -125,9 +127,9 @@ arr[0].index */
 /* const strArr = ['a', 'b', 'c', 'b']; // as Enum ElementType[]
 const aArr = ['a', null, null, null]; // as (IA | null)[]
 const bArr = [null, 'b', null, 'b']; // as (IB | null)[]
-const cArr = [null, null, 'c', null]; // as (IC | null)[] */
+const cArr = [null, null, 'c', null]; // as (IC | null)[]
 
-/* [
+[
   [{}: TypeA: {} TypeKeyA],
   [{}: TypeB: {} TypeKeyB],
 ] */

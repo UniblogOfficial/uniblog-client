@@ -14,7 +14,9 @@ import {
   MLLogo,
   MLSocial,
   MLText,
+  MLVideo,
 } from '../../../../components/modules/mlBlocks';
+import { MLShop } from '../../../../components/modules/mlBlocks/mlShop/MLShop';
 
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
@@ -120,6 +122,9 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
             case MLContentType.IMAGETEXT:
               block = blocks.imageTextSet[i];
               return <MLImageText key={ID[i]} block={block} />;
+            case MLContentType.VIDEO:
+              block = blocks.videoSet[i];
+              return <MLVideo key={ID[i]} block={block} />;
             default:
               return <li key={ID[i]} />;
           }
@@ -186,6 +191,24 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
               block = blocks.imageTextSet[i];
               return (
                 <MLImageText
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.VIDEO:
+              block = blocks.videoSet[i];
+              return (
+                <MLVideo
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.SHOP:
+              block = blocks.shopSet[i];
+              return (
+                <MLShop
                   key={ID[i]}
                   block={block}
                   callback={() => setBlockEditor({ type, order: i })}

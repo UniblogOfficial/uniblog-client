@@ -25,6 +25,8 @@ export enum MLContentType {
   SOCIAL = 'social',
   IMAGE = 'image',
   IMAGETEXT = 'imagetext',
+  VIDEO = 'video',
+  SHOP = 'shop',
   UNKNOWN = 'unknown',
 }
 
