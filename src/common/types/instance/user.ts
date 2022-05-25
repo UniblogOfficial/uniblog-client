@@ -1,4 +1,4 @@
-import { Nullable } from '.';
+import { Nullable, TIncomingImage } from '.';
 
 export enum Role {
   UNREGISTERED = 'UNREGISTERED',
@@ -11,12 +11,7 @@ export type TUser = {
   id: string;
   name: string;
   email: string;
-  avatar: Nullable<TAvatar>;
+  avatar: Nullable<TIncomingImage>;
   role: Role;
   isVerified: boolean;
-};
-
-export type TAvatar = {
-  imageType: string;
-  imageData: string;
 };

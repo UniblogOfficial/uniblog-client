@@ -1,14 +1,14 @@
 import { MLContentType, SocialNetwork } from '../../constants';
 
-import { TAvatar } from './user';
+import { TIncomingImage } from './image';
 
-import { Nullable, TImageFile } from '.';
+import { Nullable } from '.';
 
 export type TMultilink = {
   id: number;
   userId: number;
   name: string;
-  logo: Nullable<TAvatar>;
+  logo: Nullable<TIncomingImage>;
   template: number[];
   background: string;
   content: TMLContent[];
@@ -29,7 +29,7 @@ export type TMultilink = {
 
 export type TMLContent = {
   order: number;
-  type: MLContentType;
+  type: MLContentType; // VIDEO
   link: Nullable<string>;
   linkType: Nullable<SocialNetwork | 'third-party'>;
   title: Nullable<string>;
@@ -37,32 +37,4 @@ export type TMLContent = {
   imageName: string | undefined;
   imageType: string | undefined;
   imageData: string | undefined;
-};
-
-export type TMultilinkDraft = {
-  name: string;
-  avatar: Nullable<TAvatar>;
-  logo: Nullable<TImageFile>;
-  template: Nullable<number[]>;
-  background: undefined | string;
-  contentSet: TMLDraftContent[];
-};
-
-export type TMLDraftContent = {
-  order: number;
-  type: MLContentType;
-  isFilled: boolean;
-  link: Nullable<string>;
-  linkType: Nullable<SocialNetwork | 'third-party'>;
-  title: Nullable<string>;
-  text: Nullable<string>;
-  img: Nullable<TImageFile>;
-};
-
-export type TMultilinkComplete = {
-  name: string;
-  logo: Nullable<TImageFile>;
-  template: number[];
-  background: string;
-  contentSet: TMLDraftContent[];
 };

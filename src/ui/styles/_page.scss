@@ -137,7 +137,10 @@
 }
 
 .content {
+  position: relative;
   flex: 0 1 83.3333%;
+  background-color: $bg_primary;
+  z-index: 5;
   &__container {
     position: relative;
     display: flex;

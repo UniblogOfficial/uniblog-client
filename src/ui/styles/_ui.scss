@@ -47,8 +47,19 @@ h4 {
 		background-color: #a0a0a0;
 		color: #fff;
 	}
+	&._center {
+		display: flex;
+		justify-content: center;
+	}
+	&._right {
+		display: flex;
+		justify-content: flex-end;
+	}
 	&._rounded {
 		border-radius: 8px;
+	}
+	&._full {
+		width: 100%;
 	}
 	&._paper {
 		position: absolute;
@@ -64,7 +75,6 @@ h4 {
 	border: 1px solid #eaecee;
 	box-shadow: 0px 4px 27px #0000001a;
 	border-radius: 12px;
-	overflow-x: hidden;
 	background: #fff;
 	&._with-button-bottom {
 		padding-bottom: 0;
@@ -91,6 +101,7 @@ h4 {
 
 .grid {
 	display: grid;
+	min-height: 0;
 	padding-top: 30px;
 	&__row {
 		display: flex;
@@ -135,6 +146,13 @@ h4 {
 	}
 }
 
+.avatar {
+	position: relative;
+	margin: 0 auto;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
 .breadcrumbs {
 	font-weight: 500;
 	font-size: 16px;
@@ -159,12 +177,26 @@ h4 {
 	padding: 0 0 100%;
 }
 
-.img-default {
+.interactive {
+	position: relative;
+	input {
+		position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+		z-index: 100;
+	}
+}
+
+.dropbox {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	top: 0;
 	width: 100%;
 	height: 100%;
-	object-fit: contain;
+	.icon-container {
+		height: 100%;
+		width: 100%;
+	}
 }

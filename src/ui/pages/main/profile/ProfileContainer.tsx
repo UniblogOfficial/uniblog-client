@@ -45,7 +45,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
         <section className="profile__card paper">
           <h3 className="paper-title">{t('pages:profile.subtitles.profile')}</h3>
           <div className="profile__avatar">
-            <DropZoneField onChange={onImageZoneChange} imageFiles={imageFiles} touched={false} />
+            <DropZoneField onChange={onImageZoneChange} touched={false} />
           </div>
           <ProfileForm
             username={userData.name}

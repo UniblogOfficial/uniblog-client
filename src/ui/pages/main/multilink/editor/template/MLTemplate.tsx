@@ -1,71 +1,162 @@
-import React, { FC, useCallback } from 'react';
+import React, { CSSProperties, FC, useCallback, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
 import { setMLDraftTemplate } from '../../../../../../bll/reducers';
+import { ID, MLContentType } from '../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../common/hooks';
+import { TUser } from '../../../../../../common/types/instance';
+import { parseRawImage, px } from '../../../../../../common/utils/ui';
+import socials from '../../../../../../img';
 import { Carousel, Icon } from '../../../../../components/elements';
 
-type TMLTemplateProps = {};
+import { getTemplates } from './templates';
 
-const multilinkTemplates = new Map([
-  [0, [50, 25, 12.5, 12.5]], // sum of elements must be equal to 100
-  [1, [40, 10, 40, 10]],
-  [2, [25, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
-  [3, [12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5]],
-  [4, [25, 25, 12.5, 12.5, 12.5, 12.5]],
-]);
-
-export const MLTemplate = () => {
-  const dispatch = useAppDispatch();
-  const { t } = useTranslation(['pages', 'common']);
-  const setCurrentTemplate = useCallback(
-    (stage: number) => {
-      const template = multilinkTemplates.get(stage);
-      if (template) {
-        dispatch(setMLDraftTemplate(template));
-      }
-    },
-    [dispatch],
-  );
-  const carouselArrows = [
-    <div key="arrow1">
-      <Icon
-        name="chevron"
-        side="left"
-        size="max"
-        rotate={180}
-        containerClassName="carousel-arrow"
-      />
-    </div>,
-    <div key="arrow2">
-      <Icon name="chevron" side="right" size="max" containerClassName="carousel-arrow" />
-    </div>,
-  ];
-  return (
-    <>
-      <h3 className="paper-title">{t('pages:multilink.creation.stages.template')}</h3>
-      <div className="multilink-editor__constructor">
-        <Carousel
-          items={templates}
-          itemsPerView={1}
-          arrows={carouselArrows}
-          arrowStep={1}
-          className="carousel"
-          transitionTime={200}
-          callback={setCurrentTemplate}
-        />
-      </div>
-    </>
-  );
+type TMLTemplateProps = {
+  userData: TUser;
 };
 
-const id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+export const MLTemplate = ({ userData }: TMLTemplateProps) => {
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation(['pages', 'common']);
+  const { name, avatar } = userData;
+  const [templates, setTemplates] = useState(getTemplates(name, avatar));
 
-const templates = Array.from(multilinkTemplates.values()).map((template, i) => (
-  <ul key={id[i]} className="template">
-    {template.map((block, j) => (
-      <li key={id[j]} style={{ flex: `0 1 ${block}%` }} className="template__block" />
-    ))}
-  </ul>
-));
+  const setCurrentTemplate = useCallback(
+    (stage: number) => {
+      if (templates.some((_t, i) => i === stage)) {
+        dispatch(setMLDraftTemplate(templates, stage));
+      }
+    },
+    [dispatch, templates],
+  );
+
+  const getTemplateLayouts = useCallback(
+    () =>
+      templates.map((template, i) => (
+        <ul key={ID[i]} className="template">
+          {template.map((block, j) => {
+            switch (block.type) {
+              case MLContentType.LOGO:
+                return (
+                  <li key={block.order}>
+                    <div
+                      className="ml-logo"
+                      style={{ height: block.size ?? '100px', width: block.size ?? '100px' }}>
+                      <img src={parseRawImage(block.image)} alt="logo" />
+                    </div>
+                  </li>
+                );
+              case MLContentType.TEXT:
+                return (
+                  <li
+                    key={block.order}
+                    style={{
+                      padding: px(block.padding) ?? '0',
+                      background: block.background ?? undefined,
+                      justifyContent: block.align ?? undefined,
+                    }}>
+                    <p
+                      style={{
+                        textAlign: block.align ?? undefined,
+                        fontSize: block.fontSize ?? undefined,
+                        fontWeight: block.fontWeight ?? undefined,
+                      }}>
+                      {block.text}
+                    </p>
+                  </li>
+                );
+              case MLContentType.LINK:
+                return (
+                  <li
+                    key={block.order}
+                    className="ml-link"
+                    style={{
+                      padding: px(block.padding) ?? '0',
+                      margin: px(block.margin) ?? '0',
+                      background: block.background ?? undefined,
+                    }}>
+                    <div style={{ fontSize: block.fontSize ?? undefined }}>{block.title}</div>
+                  </li>
+                );
+              case MLContentType.SOCIAL:
+                return (
+                  <li key={block.order} style={{ padding: px(block.padding) ?? '0' }}>
+                    <ul className="ml-social">
+                      {block.icons.map(icon => {
+                        const data = socials.find(social => social.type === icon);
+                        return (
+                          <li key={icon}>
+                            <img src={data!.src} alt={data?.title} />
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </li>
+                );
+              case MLContentType.IMAGETEXT:
+                const imgMargin = () => {
+                  switch (block.imgPosition) {
+                    case 'left':
+                      return '0 12px 12px 0';
+                    case 'right':
+                      return '0 0 12px 12px';
+                    default:
+                      return '0';
+                  }
+                };
+                return (
+                  <li key={block.order} style={{ padding: px(block.padding) ?? '0' }}>
+                    <div className="ml-imagetext">
+                      <div
+                        className="ml-imagetext__image"
+                        style={{
+                          float: block.imgPosition as CSSProperties['float'],
+                          margin: imgMargin(),
+                        }}>
+                        <img src={block.image?.src} alt="" />
+                      </div>
+                      <p className="ml-imagetext__text">{block.text}</p>
+                    </div>
+                  </li>
+                );
+              default:
+                return <li />;
+            }
+          })}
+        </ul>
+      )),
+    [templates],
+  );
+
+  const carouselArrows = useMemo(
+    () => [
+      <div key="arrow1">
+        <Icon
+          name="chevron"
+          side="left"
+          size="max"
+          rotate={180}
+          containerClassName="carousel-arrow"
+        />
+      </div>,
+      <div key="arrow2">
+        <Icon name="chevron" side="right" size="max" containerClassName="carousel-arrow" />
+      </div>,
+    ],
+    [],
+  );
+  return (
+    <div className="multilink-editor__constructor">
+      <Carousel
+        items={getTemplateLayouts()}
+        itemsPerView={1}
+        arrows={carouselArrows}
+        arrowStep={1}
+        className="carousel"
+        transitionTime={200}
+        callback={setCurrentTemplate}
+      />
+    </div>
+  );
+};

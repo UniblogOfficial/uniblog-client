@@ -117,7 +117,7 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
           <NavLink to="/profile" className="iconized__L" exact>
             {avatarSrc ? (
               <div className="profile-link__avatar">
-                <img src={avatarSrc} alt="avatar" className="img-default" />
+                <img src={avatarSrc} alt="avatar" />
               </div>
             ) : (
               <Icon name="user" size="full" />

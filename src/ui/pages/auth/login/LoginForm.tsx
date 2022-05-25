@@ -1,36 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { NavLink, useHistory } from 'react-router-dom';
-import * as yup from 'yup';
 
 import { requestLogin } from '../../../../bll/reducers';
 import { useAppDispatch } from '../../../../common/hooks';
 import { TLoginDto } from '../../../../common/types/request';
+import { LoginFormData, loginValidatorOptions } from '../../../../common/utils/ui/validators';
 import { Input } from '../../../components/elements';
 import { Button } from '../../../components/elements/button/Button';
 import { Icon } from '../../../components/elements/icons/Icon';
 
-export type LoginFormData = {
-  email: string;
-  password: string;
-};
-
 type TLoginFormProps = {};
-
-const MIN_SYMBOLS = 8;
-
-const signupSchema = yup.object().shape({
-  email: yup
-    .string()
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Invalid email address')
-    .required('Email is required'),
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(MIN_SYMBOLS, `Password must be at least ${MIN_SYMBOLS} symbols`),
-});
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -41,11 +22,7 @@ export const LoginForm = () => {
     formState: { errors, dirtyFields },
     reset,
     clearErrors,
-  } = useForm<LoginFormData>({
-    mode: 'onChange', // important for dynamical tips
-    resolver: yupResolver(signupSchema, { abortEarly: false }),
-    criteriaMode: 'all', // important for dynamical tips
-  });
+  } = useForm<LoginFormData>(loginValidatorOptions);
   const initialHelperState = {
     email: true,
     password: true,
@@ -109,22 +86,16 @@ export const LoginForm = () => {
             <Icon
               name="eye"
               onClick={togglePasswordVisibility}
-              size="full"
               primaryColor="#242D35"
               secondaryColor="#242D35"
-              primaryOpacity="1"
-              secondaryOpacity="1"
               containerClassName="auth-eye"
             />
           ) : (
             <Icon
               name="eye-slash"
               onClick={togglePasswordVisibility}
-              size="full"
               primaryColor="#4F5B67"
               secondaryColor="#4F5B67"
-              primaryOpacity="1"
-              secondaryOpacity="1"
               containerClassName="auth-eye"
             />
           )}

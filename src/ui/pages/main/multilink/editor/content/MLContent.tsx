@@ -11,62 +11,54 @@ import React, {
 
 import { useTranslation } from 'react-i18next';
 
-import { setMLDraftContent } from '../../../../../../bll/reducers';
+import { addMLDraftBlock, setMLDraftTextBlockContent } from '../../../../../../bll/reducers';
 import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../common/hooks';
-import { Nullable, TImageFile, TMLContent } from '../../../../../../common/types/instance';
-import { TMLDraftContent } from '../../../../../../common/types/instance/multilink';
-import { Icon } from '../../../../../components/elements';
+import {
+  IMLDraftContentText,
+  Nullable,
+  TImageFile,
+  TMLContent,
+} from '../../../../../../common/types/instance';
+import { TMLDraftBlocks } from '../../../../../../common/types/instance/mlDraft';
+import { Button, Icon } from '../../../../../components/elements';
 import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
 import { Modal } from '../../../../../components/modules/modals/Modal';
 
 import { MLLinkForm } from './MLLinkForm';
+import { MLShopEditor } from './MLShopEditor';
 import { MLTextarea } from './MLTextarea';
 
 type TMLContentProps = {
-  template: number[];
-  contentSet: TMLDraftContent[];
+  contentSet: MLContentType[];
+  blocks: TMLDraftBlocks;
+  blockEditorType: Nullable<MLContentType>;
+  blockEditorOrder: number;
+  setBlockEditor: (payload: { type: MLContentType; order: number } | null) => void;
 };
 
-type TContentBlock = {
-  type: MLContentType;
-  content: Nullable<ReactElement>;
-};
-
-export const MLContent: FC<TMLContentProps> = ({ template, contentSet }) => {
+export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
+  const { contentSet, blocks, blockEditorType, blockEditorOrder, setBlockEditor } = props;
   const { t } = useTranslation(['pages', 'common']);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
+
   const [contentBlocks, setContentBlocks] = useState<boolean[]>(
     contentSet.map((block, i) => false),
   );
 
-  const onImageZoneChange = useCallback(
-    (imageFile: TImageFile, id?: number) => {
-      setImageFiles([imageFile]);
-      dispatch(
-        setMLDraftContent({
+  const onImageZoneChange = useCallback((imageFile: TImageFile, id?: number) => {
+    setImageFiles([imageFile]);
+    /* dispatch(
+        setMLDraftTextBlockContent({
           order: id || 0,
           type: MLContentType.IMAGE,
           isFilled: true,
-          link: null,
-          linkType: null,
-          title: null,
-          text: null,
-          img: imageFile,
+          images: [imageFile],
         }),
-      );
-    },
-    [dispatch],
-  );
-
-  const changeTextBlock = useCallback(
-    (text: string, order: number) => {
-      dispatch(setMLDraftContent({ ...contentSet[order], isFilled: !!text, text }));
-    },
-    [contentSet, dispatch],
-  );
+      ); */
+  }, []);
 
   const closeModal = useCallback(
     (order: number) => {
@@ -83,7 +75,16 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet }) => {
     [contentBlocks],
   );
 
-  const contentEditorSwitcher = (order: number, type: MLContentType) => {
+  const onButtonEditorClick = (e: MouseEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.dataset.value) {
+      setBlockEditor(null);
+      return;
+    }
+    dispatch(addMLDraftBlock(e.currentTarget.value as MLContentType));
+    setBlockEditor({ type: e.currentTarget.value as MLContentType, order: contentSet.length });
+  };
+
+  /*   const contentEditorSwitcher = (order: number, type: MLContentType) => {
     switch (type) {
       case MLContentType.TEXT:
         return (
@@ -135,12 +136,139 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet }) => {
         </li>
       ))}
     </ul>
+  ); */
+
+  const actionButtons = (
+    <>
+      <div>
+        <Button
+          value={MLContentType.TEXT}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add text block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.LINK}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add link block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.IMAGE}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add image block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.IMAGETEXT}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add image-text block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.SOCIAL}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add socials block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.LOGO}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add logo block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add icon-text block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add divider
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add image-carousel block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add audio block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add video block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.SHOP}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add shop block
+        </Button>
+      </div>
+    </>
   );
 
   return (
     <>
-      <h3 className="paper-title">{t('pages:multilink.creation.stages.content')}</h3>
-      <div className="multilink-editor__constructor">{templateLayout}</div>
+      {!blockEditorType && actionButtons}
+      {blockEditorType === MLContentType.TEXT && (
+        <>
+          <MLTextarea order={blockEditorOrder} block={blocks.textSet[blockEditorOrder]} />
+        </>
+      )}
+      {blockEditorType === MLContentType.LINK && (
+        <>
+          <MLLinkForm order={blockEditorOrder} close={onButtonEditorClick} />
+        </>
+      )}
+      {blockEditorType === MLContentType.LOGO && (
+        <div className="ml-logo-editor">
+          <DropZoneField
+            initialImage={blocks.logoSet[blockEditorOrder]?.image ?? undefined}
+            onChange={onImageZoneChange}
+          />
+        </div>
+      )}
+      {blockEditorType === MLContentType.SHOP && (
+        <div className="ml-shop-editor">
+          <MLShopEditor order={blockEditorOrder} block={blocks.shopSet[blockEditorOrder]} />
+        </div>
+      )}
+      {blockEditorType && blockEditorType !== MLContentType.LINK && (
+        <div className="action-buttons">
+          <Button
+            value={blockEditorType}
+            data-value="-1"
+            variant="cancel"
+            onClick={onButtonEditorClick}
+            className="button _rounded">
+            {t('common:buttons.cancel')}
+          </Button>
+          <Button
+            value={blockEditorType}
+            data-value="-1"
+            onClick={onButtonEditorClick}
+            className="button _rounded">
+            {t('common:buttons.ok')}
+          </Button>
+        </div>
+      )}
     </>
   );
 };
