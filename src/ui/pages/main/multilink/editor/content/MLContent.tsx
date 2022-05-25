@@ -26,6 +26,7 @@ import { DropZoneField } from '../../../../../components/modules/imageForm/DropZ
 import { Modal } from '../../../../../components/modules/modals/Modal';
 
 import { MLLinkForm } from './MLLinkForm';
+import { MLShopEditor } from './MLShopEditor';
 import { MLTextarea } from './MLTextarea';
 
 type TMLContentProps = {
@@ -58,19 +59,6 @@ export const MLContent = (props: TMLContentProps) => {
         }),
       ); */
   }, []);
-
-  const changeTextBlock = useCallback(
-    (text: string, order: number) => {
-      const block = blocks.textSet[order];
-      if (!block) {
-        return;
-      }
-
-      block.text = text;
-      dispatch(setMLDraftTextBlockContent(block, order));
-    },
-    [blocks.textSet, dispatch],
-  );
 
   const closeModal = useCallback(
     (order: number) => {
@@ -225,6 +213,14 @@ export const MLContent = (props: TMLContentProps) => {
           Add video block
         </Button>
       </div>
+      <div>
+        <Button
+          value={MLContentType.SHOP}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add shop block
+        </Button>
+      </div>
     </>
   );
 
@@ -233,11 +229,7 @@ export const MLContent = (props: TMLContentProps) => {
       {!blockEditorType && actionButtons}
       {blockEditorType === MLContentType.TEXT && (
         <>
-          <MLTextarea
-            order={blockEditorOrder}
-            value={blocks.textSet[blockEditorOrder]?.text ?? ''}
-            changeTextBlock={changeTextBlock}
-          />
+          <MLTextarea order={blockEditorOrder} block={blocks.textSet[blockEditorOrder]} />
         </>
       )}
       {blockEditorType === MLContentType.LINK && (
@@ -251,6 +243,11 @@ export const MLContent = (props: TMLContentProps) => {
             initialImage={blocks.logoSet[blockEditorOrder]?.image ?? undefined}
             onChange={onImageZoneChange}
           />
+        </div>
+      )}
+      {blockEditorType === MLContentType.SHOP && (
+        <div className="ml-shop-editor">
+          <MLShopEditor order={blockEditorOrder} block={blocks.shopSet[blockEditorOrder]} />
         </div>
       )}
       {blockEditorType && blockEditorType !== MLContentType.LINK && (

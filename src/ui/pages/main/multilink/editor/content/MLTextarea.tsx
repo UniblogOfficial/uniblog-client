@@ -1,24 +1,32 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
 
-import { Nullable } from '../../../../../../common/types/instance';
+import { setMLDraftTextBlockContent } from '../../../../../../bll/reducers';
+import { useAppDispatch } from '../../../../../../common/hooks';
+import { IMLDraftContentText, Nullable } from '../../../../../../common/types/instance';
 import { Textarea } from '../../../../../components/elements';
 
 type TMLTextareaProps = {
   order: number;
-  value: Nullable<string>;
-  changeTextBlock: (text: string, order: number) => void;
+  block: Nullable<IMLDraftContentText>;
 };
 
-export const MLTextarea = ({ order, value, changeTextBlock }: TMLTextareaProps) => {
+export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
+  const dispatch = useAppDispatch();
   const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
-    changeTextBlock(text, order);
+    if (!block) {
+      return;
+    }
+    block.text = text;
+    dispatch(setMLDraftTextBlockContent(block, order));
   };
+
+  if (!block) return null;
 
   return (
     <Textarea
       data-value={order}
-      value={value ?? ''}
+      value={block.text ?? ''}
       onChange={onTextareaChange}
       maxLength={1023}
       className="textarea"
