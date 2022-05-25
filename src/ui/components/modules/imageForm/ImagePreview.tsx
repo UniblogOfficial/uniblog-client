@@ -1,20 +1,30 @@
 import React, { FC } from 'react';
 
-import { TImageFile } from '../../../../common/types/instance';
+import { TImageFile, TIncomingImage } from '../../../../common/types/instance';
+import { parseRawImage } from '../../../../common/utils/ui';
 
-import styles from './ImagePreview.module.scss';
+import styles from './DropZone.module.scss';
 
 type TImagePreviewProps = {
-  imageFiles: Array<TImageFile>;
+  imageFiles: Array<TImageFile> | TIncomingImage;
 };
 
 const ImagePreview: FC<TImagePreviewProps> = ({ imageFiles }) => {
-  const mappedPreview = imageFiles.map(({ name, previewUrl, size }) => (
-    <div key={name} className={styles['img-container']}>
-      <img src={previewUrl} alt={name} />
-    </div>
-  ));
-  return <> {mappedPreview} </>;
+  const preview = () => {
+    if (Array.isArray(imageFiles)) {
+      return imageFiles.map(({ name, previewUrl, size }) => (
+        <div key={name} className={styles['img-container']}>
+          <img src={previewUrl} alt={name} />
+        </div>
+      ));
+    }
+    return (
+      <div className={styles['img-container']}>
+        <img src={parseRawImage(imageFiles)} alt={imageFiles.imageName} />
+      </div>
+    );
+  };
+  return <> {preview()} </>;
 };
 
 export default ImagePreview;

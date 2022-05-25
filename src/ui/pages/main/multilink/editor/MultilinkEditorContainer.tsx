@@ -3,9 +3,9 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { publishMultilink } from '../../../../../bll/reducers';
-import { MLContentType } from '../../../../../common/constants';
+import { ID, MLContentType } from '../../../../../common/constants';
 import { useAppDispatch, useAppSelector } from '../../../../../common/hooks';
-import { Nullable, TMultilinkDraft, TUser } from '../../../../../common/types/instance';
+import { Nullable, TImageFile, TMultilinkDraft, TUser } from '../../../../../common/types/instance';
 import { Button, Icon } from '../../../../components/elements';
 import {
   MLImages,
@@ -14,7 +14,9 @@ import {
   MLLogo,
   MLSocial,
   MLText,
+  MLVideo,
 } from '../../../../components/modules/mlBlocks';
+import { MLShop } from '../../../../components/modules/mlBlocks/mlShop/MLShop';
 
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
@@ -33,12 +35,14 @@ enum EditorStage {
   PREVIEW = 3,
 }
 
+const voidOrder = -1;
+
 export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ userData }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(0);
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
-  const [blockEditorOrder, setBlockEditorOrder] = useState<Nullable<number>>(null);
+  const [blockEditorOrder, setBlockEditorOrder] = useState(voidOrder);
   const { name, background, contentSet, blocks } = useAppSelector<TMultilinkDraft>(
     state => state.mlDraft,
   );
@@ -59,7 +63,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
       setBlockEditorOrder(payload.order);
     } else {
       setBlockEditorType(null);
-      setBlockEditorOrder(null);
+      setBlockEditorOrder(voidOrder);
     }
   };
 
@@ -86,72 +90,137 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
     }
   };
 
-  const getLayout = useCallback(
+  const templateBackground = background
+    ? background instanceof Object
+      ? `url(${background.previewUrl})`
+      : background
+    : undefined;
+
+  const layout = useMemo(
     () => (
-      <div className="template template_unlimited" style={{ background: background ?? undefined }}>
+      <div
+        className="template template_unlimited"
+        style={{ background: templateBackground ?? undefined }}>
         {contentSet.map((type, i) => {
           let block;
           switch (type) {
             case MLContentType.LOGO:
               block = blocks.logoSet[i];
-              return <MLLogo block={block} />;
+              return <MLLogo key={ID[i]} block={block} />;
             case MLContentType.TEXT:
               block = blocks.textSet[i];
-              return <MLText block={block} />;
+              return <MLText key={ID[i]} block={block} />;
             case MLContentType.LINK:
               block = blocks.linkSet[i];
-              return <MLLink block={block} />;
+              return <MLLink key={ID[i]} block={block} />;
             case MLContentType.SOCIAL:
               block = blocks.socialSet[i];
-              return <MLSocial block={block} />;
+              return <MLSocial key={ID[i]} block={block} />;
             case MLContentType.IMAGE:
               block = blocks.imageSet[i];
-              return <MLImages block={block} />;
+              return <MLImages key={ID[i]} block={block} />;
             case MLContentType.IMAGETEXT:
               block = blocks.imageTextSet[i];
-              return <MLImageText block={block} />;
+              return <MLImageText key={ID[i]} block={block} />;
+            case MLContentType.VIDEO:
+              block = blocks.videoSet[i];
+              return <MLVideo key={ID[i]} block={block} />;
             default:
-              return <li />;
+              return <li key={ID[i]} />;
           }
         })}
       </div>
     ),
-    [background, contentSet, blocks],
+    [templateBackground, contentSet, blocks],
   );
 
-  const getEditableLayout = useCallback(
+  const editableLayout = useMemo(
     () => (
-      <div className="template template_unlimited" style={{ background: background ?? undefined }}>
+      <div
+        className="template template_unlimited"
+        style={{ background: templateBackground ?? undefined }}>
         {contentSet.map((type, i) => {
           let block;
           switch (type) {
             case MLContentType.LOGO:
               block = blocks.logoSet[i];
-              return <MLLogo block={block} callback={() => setBlockEditor({ type, order: i })} />;
+              return (
+                <MLLogo
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
             case MLContentType.TEXT:
               block = blocks.textSet[i];
-              return <MLText block={block} callback={() => setBlockEditor({ type, order: i })} />;
+              return (
+                <MLText
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
             case MLContentType.LINK:
               block = blocks.linkSet[i];
-              return <MLLink block={block} callback={() => setBlockEditor({ type, order: i })} />;
+              return (
+                <MLLink
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
             case MLContentType.SOCIAL:
               block = blocks.socialSet[i];
-              return <MLSocial block={block} callback={() => setBlockEditor({ type, order: i })} />;
+              return (
+                <MLSocial
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
             case MLContentType.IMAGE:
               block = blocks.imageSet[i];
-              return <MLImages block={block} callback={() => setBlockEditor({ type, order: i })} />;
+              return (
+                <MLImages
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
             case MLContentType.IMAGETEXT:
               block = blocks.imageTextSet[i];
               return (
-                <MLImageText block={block} callback={() => setBlockEditor({ type, order: i })} />
+                <MLImageText
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.VIDEO:
+              block = blocks.videoSet[i];
+              return (
+                <MLVideo
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.SHOP:
+              block = blocks.shopSet[i];
+              return (
+                <MLShop
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
               );
             default:
-              return <li />;
+              return <li key={ID[i]} />;
           }
         })}
       </div>
     ),
-    [background, contentSet, blocks],
+    [templateBackground, contentSet, blocks],
   );
   // const logoSrc = avatar ? parseRawImage(avatar) : undefined;
 
@@ -179,13 +248,13 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
           <section className="ml-creation-area">
             {stage === EditorStage.TEMPLATE && <MLTemplate userData={userData} />}
             {stage === EditorStage.BACKGROUND && (
-              <div className="multilink-editor__constructor">{getLayout()}</div>
+              <div className="multilink-editor__constructor">{layout}</div>
             )}
             {stage === EditorStage.CONTENT && (
-              <div className="multilink-editor__constructor">{getEditableLayout()}</div>
+              <div className="multilink-editor__constructor">{editableLayout}</div>
             )}
             {stage === EditorStage.PREVIEW && (
-              <div className="multilink-editor__constructor">{getLayout()}</div>
+              <div className="multilink-editor__constructor">{layout}</div>
             )}
           </section>
           <section className="tools-area">

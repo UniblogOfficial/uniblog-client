@@ -26,13 +26,14 @@ import { DropZoneField } from '../../../../../components/modules/imageForm/DropZ
 import { Modal } from '../../../../../components/modules/modals/Modal';
 
 import { MLLinkForm } from './MLLinkForm';
+import { MLShopEditor } from './MLShopEditor';
 import { MLTextarea } from './MLTextarea';
 
 type TMLContentProps = {
   contentSet: MLContentType[];
   blocks: TMLDraftBlocks;
   blockEditorType: Nullable<MLContentType>;
-  blockEditorOrder: Nullable<number>;
+  blockEditorOrder: number;
   setBlockEditor: (payload: { type: MLContentType; order: number } | null) => void;
 };
 
@@ -58,19 +59,6 @@ export const MLContent = (props: TMLContentProps) => {
         }),
       ); */
   }, []);
-
-  const changeTextBlock = useCallback(
-    (text: string, order: number) => {
-      const block = blocks.textSet[order];
-      if (!block) {
-        return;
-      }
-
-      block.text = text;
-      dispatch(setMLDraftTextBlockContent(block, order));
-    },
-    [blocks.textSet, dispatch],
-  );
 
   const closeModal = useCallback(
     (order: number) => {
@@ -225,25 +213,42 @@ export const MLContent = (props: TMLContentProps) => {
           Add video block
         </Button>
       </div>
+      <div>
+        <Button
+          value={MLContentType.SHOP}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add shop block
+        </Button>
+      </div>
     </>
   );
 
   return (
     <>
       {!blockEditorType && actionButtons}
-      {blockEditorType === MLContentType.TEXT && blockEditorOrder && (
+      {blockEditorType === MLContentType.TEXT && (
         <>
-          <MLTextarea
-            order={blockEditorOrder}
-            value={blocks.textSet[blockEditorOrder]?.text ?? ''}
-            changeTextBlock={changeTextBlock}
-          />
+          <MLTextarea order={blockEditorOrder} block={blocks.textSet[blockEditorOrder]} />
         </>
       )}
-      {blockEditorType === MLContentType.LINK && blockEditorOrder && (
+      {blockEditorType === MLContentType.LINK && (
         <>
           <MLLinkForm order={blockEditorOrder} close={onButtonEditorClick} />
         </>
+      )}
+      {blockEditorType === MLContentType.LOGO && (
+        <div className="ml-logo-editor">
+          <DropZoneField
+            initialImage={blocks.logoSet[blockEditorOrder]?.image ?? undefined}
+            onChange={onImageZoneChange}
+          />
+        </div>
+      )}
+      {blockEditorType === MLContentType.SHOP && (
+        <div className="ml-shop-editor">
+          <MLShopEditor order={blockEditorOrder} block={blocks.shopSet[blockEditorOrder]} />
+        </div>
       )}
       {blockEditorType && blockEditorType !== MLContentType.LINK && (
         <div className="action-buttons">

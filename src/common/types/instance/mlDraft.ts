@@ -6,7 +6,7 @@ import { Nullable } from '.';
 
 export type TMultilinkDraft = {
   name: string;
-  background: undefined | string;
+  background: undefined | string | TImageFile;
   contentSet: MLContentType[];
   blocks: TMLDraftBlocks;
 };
@@ -18,6 +18,8 @@ export type TMLDraftBlocks = {
   logoSet: Nullable<IMLDraftContentLogo>[];
   imageSet: Nullable<IMLDraftContentImage>[];
   imageTextSet: Nullable<IMLDraftContentImageText>[];
+  videoSet: Nullable<IMLDraftContentVideo>[];
+  shopSet: Nullable<IMLDraftContentShop>[];
   unknownSet: Nullable<IMLDraftContentUnknown>[];
 };
 
@@ -26,15 +28,16 @@ interface IMLDraftContent {
   isFilled: boolean;
   padding?: number | number[];
   margin?: number | number[];
+  background?: string;
 }
 
 export interface IMLDraftContentText extends IMLDraftContent {
   type: MLContentType.TEXT;
   text: Nullable<string>;
+  color?: string;
   fontSize?: Nullable<number>;
   fontWeight?: Nullable<number>;
   align?: 'right' | 'left' | 'center' | 'justify';
-  background?: string;
 }
 
 export interface IMLDraftContentLink extends IMLDraftContent {
@@ -42,17 +45,16 @@ export interface IMLDraftContentLink extends IMLDraftContent {
   href: Nullable<string>;
   linkType: Nullable<SocialNetwork | 'third-party'>;
   title: Nullable<string>;
+  color?: string;
   fontSize: Nullable<number>;
   fontWeight: Nullable<number>;
   align: 'right' | 'left' | 'center' | 'justify';
-  background?: string;
 }
 
 export interface IMLDraftContentSocial extends IMLDraftContent {
   type: MLContentType.SOCIAL;
   links: string[];
   icons: SocialNetwork[];
-  background?: string;
 }
 
 export interface IMLDraftContentLogo extends IMLDraftContent {
@@ -65,18 +67,46 @@ export interface IMLDraftContentLogo extends IMLDraftContent {
 export interface IMLDraftContentImage extends IMLDraftContent {
   type: MLContentType.IMAGE;
   images: Nullable<TImageFile & { src: string }>[];
+  grid?: '1fr' | '1fr 1fr' | '1fr 1fr 1fr';
 }
 
 export interface IMLDraftContentImageText extends IMLDraftContent {
   type: MLContentType.IMAGETEXT;
   image: Nullable<TImageFile & { src: string }>;
-  imgPosition: 'top' | 'right' | 'bottom' | 'left';
+  imgPosition: 'right' | 'left';
   text: Nullable<string>;
+  color?: string;
   fontSize: Nullable<number>;
   fontWeight: Nullable<number>;
   hAlign: 'right' | 'left' | 'center' | 'justify';
   vAlign: 'top' | 'center' | 'bottom';
-  background?: string;
+}
+
+export interface IMLDraftContentVideo extends IMLDraftContent {
+  type: MLContentType.VIDEO;
+  url: Nullable<string>;
+}
+
+export interface IMLDraftContentShop extends IMLDraftContent {
+  type: MLContentType.SHOP;
+  grid: '1fr' | '1fr 1fr' | '1fr 1fr 1fr';
+  gap?: number;
+  cells: {
+    order: number;
+    image: Nullable<TImageFile & { src: string }>;
+    background?: string;
+    title: string;
+    subtitle?: string;
+    href?: string;
+    color?: string;
+    fontSize?: Nullable<number>;
+    fontWeight?: Nullable<number>;
+    align?: 'right' | 'left' | 'center';
+    subtitleColor?: string;
+    subtitleFontSize?: number;
+    subtitleFontWeight?: number;
+    subtitleAlign?: 'right' | 'left' | 'center';
+  }[];
 }
 
 export interface IMLDraftContentUnknown extends IMLDraftContent {

@@ -5,6 +5,7 @@ import {
   IMLDraftContentImageText,
   IMLDraftContentLink,
   IMLDraftContentLogo,
+  IMLDraftContentShop,
   IMLDraftContentSocial,
   IMLDraftContentText,
   Nullable,
@@ -80,6 +81,22 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
               order,
               ...defaultImageTextBlockOptions,
             } as IMLDraftContentImageText,
+          ];
+        } else {
+          newBlocks[key] = [...blocks[key], null];
+        }
+      });
+      break;
+
+    case MLContentType.SHOP:
+      getKeys(blocks).forEach(key => {
+        if (key === 'shopSet') {
+          newBlocks[key] = [
+            ...blocks.shopSet,
+            {
+              order,
+              ...defaultShopBlockOptions,
+            } as IMLDraftContentShop,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -191,4 +208,61 @@ const defaultLogoBlockOptions = {
 const defaultSocialBlockOptions = {
   type: MLContentType.SOCIAL,
   isFilled: false,
+};
+
+const defaultShopBlockOptions = {
+  type: MLContentType.SHOP,
+  isFilled: false,
+  grid: '1fr 1fr 1fr',
+  gap: 10,
+  cells: [
+    {
+      order: 0,
+      image: { src: imgPlaceholder },
+      background: '#fff',
+      title: 'Item #1',
+      subtitle: '1$',
+      href: '',
+      color: '#000',
+      fontSize: 16,
+      fontWeight: 400,
+      align: 'left',
+      subtitleColor: '#000',
+      subtitleFontSize: 16,
+      subtitleFontWeight: 700,
+      subtitleAlign: 'center',
+    },
+    {
+      order: 1,
+      image: { src: imgPlaceholder },
+      background: '#fff',
+      title: 'Item #2',
+      subtitle: '2$',
+      href: '',
+      color: '#000',
+      fontSize: 16,
+      fontWeight: 400,
+      align: 'left',
+      subtitleColor: '#000',
+      subtitleFontSize: 16,
+      subtitleFontWeight: 700,
+      subtitleAlign: 'center',
+    },
+    {
+      order: 2,
+      image: { src: imgPlaceholder },
+      background: '#fff',
+      title: 'Item #3',
+      subtitle: '3$',
+      href: '',
+      color: '#000',
+      fontSize: 16,
+      fontWeight: 400,
+      align: 'left',
+      subtitleColor: '#000',
+      subtitleFontSize: 16,
+      subtitleFontWeight: 700,
+      subtitleAlign: 'center',
+    },
+  ],
 };

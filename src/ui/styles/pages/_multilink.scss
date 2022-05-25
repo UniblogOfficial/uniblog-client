@@ -115,6 +115,8 @@
 	height: 780px;
 	border: 10px solid #000;
 	border-radius: 25px;
+	background-position: 50% 0% !important;
+	background-size: cover !important;
 	& > * {
 		display: flex;
 		margin-bottom: 24px;
@@ -175,6 +177,11 @@
 		height: auto;
 		min-height: 780px;
 	}
+}
+
+.ml-logo-editor {
+	position: relative;
+	height: 200px;
 }
 
 .thumbnail {

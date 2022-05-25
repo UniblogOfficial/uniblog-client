@@ -6,18 +6,20 @@ import {
   IMLDraftContentImageText,
   IMLDraftContentLink,
   IMLDraftContentLogo,
+  IMLDraftContentShop,
   IMLDraftContentSocial,
   IMLDraftContentText,
   IMLDraftContentUnknown,
+  IMLDraftContentVideo,
   Nullable,
   TIncomingImage,
   TMultilink,
   TMultilinkComplete,
   TMultilinkDraft,
 } from '../../common/types/instance';
+import { TImageFile } from '../../common/types/instance/image';
 import { TCreateMLDto } from '../../common/types/request/multilink.dto';
 import {
-  getKeys,
   pushMLDraftBlock,
   pushMLDraftBlockLogo,
   pushMLDraftBlockSocial,
@@ -32,10 +34,17 @@ enum mlDraftAction {
   SET_MULTILINK_DRAFT_LOGO_FROM_USER_AVATAR = 'SET_MULTILINK_DRAFT_LOGO_FROM_USER_AVATAR',
   SET_MULTILINK_DRAFT_TEMPLATE = 'SET_MULTILINK_DRAFT_TEMPLATE',
   SET_MULTILINK_DRAFT_BACKGROUND = 'SET_MULTILINK_DRAFT_BACKGROUND',
-  ADD_MULTILINK_DRAFT_BLOCK = 'ADD_MULTILINK_DRAFT_BLOCK',
-  ADD_MULTILINK_DRAFT_BLOCK_LOGO = 'ADD_MULTILINK_DRAFT_BLOCK_LOGO',
-  ADD_MULTILINK_DRAFT_BLOCK_SOCIAL = 'ADD_MULTILINK_DRAFT_BLOCK_SOCIAL',
+  PUSH_MULTILINK_DRAFT_BLOCK = 'PUSH_MULTILINK_DRAFT_BLOCK',
+  PUSH_MULTILINK_DRAFT_BLOCK_LOGO = 'PUSH_MULTILINK_DRAFT_BLOCK_LOGO',
+  PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL = 'PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL',
   SET_MULTILINK_DRAFT_TEXT_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_TEXT_BLOCK_CONTENT',
+  SET_MULTILINK_DRAFT_LOGO_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_LOGO_BLOCK_CONTENT',
+  SET_MULTILINK_DRAFT_LINK_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_LINK_BLOCK_CONTENT',
+  SET_MULTILINK_DRAFT_SOCIAL_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_SOCIAL_BLOCK_CONTENT',
+  SET_MULTILINK_DRAFT_IMAGE_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_IMAGE_BLOCK_CONTENT',
+  SET_MULTILINK_DRAFT_IMAGETEXT_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_IMAGETEXT_BLOCK_CONTENT',
+  SET_MULTILINK_DRAFT_SHOP_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_SHOP_BLOCK_CONTENT',
+  DELETE_MULTILINK_DRAFT_BLOCK = 'DELETE_MULTILINK_DRAFT_BLOCK',
 }
 
 const initialState = {
@@ -49,6 +58,8 @@ const initialState = {
     logoSet: [],
     imageSet: [],
     imageTextSet: [],
+    videoSet: [],
+    shopSet: [],
     unknownSet: [],
   },
 };
@@ -75,15 +86,17 @@ export const mlDraftReducer = (
           linkSet: template.map(block => (block.type === MLContentType.LINK ? block : null)),
           socialSet: template.map(block => (block.type === MLContentType.SOCIAL ? block : null)),
           logoSet: template.map(block => (block.type === MLContentType.LOGO ? block : null)),
-          imageSet: template.map(block => null),
+          imageSet: template.map(block => (block.type === MLContentType.IMAGE ? block : null)),
           imageTextSet: template.map(block =>
             block.type === MLContentType.IMAGETEXT ? block : null,
           ),
+          videoSet: template.map(block => (block.type === MLContentType.VIDEO ? block : null)),
+          shopSet: template.map(block => (block.type === MLContentType.SHOP ? block : null)),
           unknownSet: template.map(block => null),
         },
       };
 
-    case mlDraftAction.ADD_MULTILINK_DRAFT_BLOCK:
+    case mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK:
       let newBlocks = pushMLDraftBlock(action.payload.type, state.blocks, state.contentSet.length);
       return {
         ...state,
@@ -91,7 +104,7 @@ export const mlDraftReducer = (
         blocks: newBlocks,
       };
 
-    case mlDraftAction.ADD_MULTILINK_DRAFT_BLOCK_LOGO:
+    case mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_LOGO:
       newBlocks = pushMLDraftBlockLogo(state.blocks, state.contentSet.length, action.payload.logo);
       return {
         ...state,
@@ -99,7 +112,7 @@ export const mlDraftReducer = (
         blocks: newBlocks,
       };
 
-    case mlDraftAction.ADD_MULTILINK_DRAFT_BLOCK_SOCIAL:
+    case mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL:
       newBlocks = pushMLDraftBlockSocial(
         state.blocks,
         state.contentSet.length,
@@ -144,7 +157,7 @@ export const setMLDraftLogoFromUserAvatar = (avatar: Nullable<TIncomingImage>) =
     payload: { avatar },
   } as const);
 
-export const setMLDraftBackground = (background: string) =>
+export const setMLDraftBackground = (background: string | TImageFile) =>
   ({
     type: mlDraftAction.SET_MULTILINK_DRAFT_BACKGROUND,
     payload: { background },
@@ -152,25 +165,31 @@ export const setMLDraftBackground = (background: string) =>
 
 export const addMLDraftBlock = (type: MLContentType) =>
   ({
-    type: mlDraftAction.ADD_MULTILINK_DRAFT_BLOCK,
+    type: mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK,
     payload: { type },
   } as const);
 
 export const addMLDraftBlockLogo = (logo: Nullable<TIncomingImage>) =>
   ({
-    type: mlDraftAction.ADD_MULTILINK_DRAFT_BLOCK_LOGO,
+    type: mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_LOGO,
     payload: { logo },
   } as const);
 
 export const addMLDraftBlockSocial = (socials: { type: SocialNetwork; href: string }[]) =>
   ({
-    type: mlDraftAction.ADD_MULTILINK_DRAFT_BLOCK_SOCIAL,
+    type: mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL,
     payload: { socials },
   } as const);
 
 export const setMLDraftTextBlockContent = (content: IMLDraftContentText, order: number) =>
   ({
     type: mlDraftAction.SET_MULTILINK_DRAFT_TEXT_BLOCK_CONTENT,
+    payload: { content, order },
+  } as const);
+
+export const setMLDraftShopBlockContent = (content: IMLDraftContentShop, order: number) =>
+  ({
+    type: mlDraftAction.SET_MULTILINK_DRAFT_SHOP_BLOCK_CONTENT,
     payload: { content, order },
   } as const);
 
@@ -204,7 +223,7 @@ export const publishMultilink =
 // types
 export type TMLDraftState = {
   name: string;
-  background: undefined | string;
+  background: undefined | string | TImageFile;
   contentSet: MLContentType[];
   blocks: {
     textSet: Nullable<IMLDraftContentText>[];
@@ -213,6 +232,8 @@ export type TMLDraftState = {
     logoSet: Nullable<IMLDraftContentLogo>[];
     imageSet: Nullable<IMLDraftContentImage>[];
     imageTextSet: Nullable<IMLDraftContentImageText>[];
+    videoSet: Nullable<IMLDraftContentVideo>[];
+    shopSet: Nullable<IMLDraftContentShop>[];
     unknownSet: Nullable<IMLDraftContentUnknown>[];
   };
 };
@@ -225,4 +246,5 @@ export type TMLDraftActions =
   | ReturnType<typeof addMLDraftBlock>
   | ReturnType<typeof addMLDraftBlockLogo>
   | ReturnType<typeof addMLDraftBlockSocial>
-  | ReturnType<typeof setMLDraftTextBlockContent>;
+  | ReturnType<typeof setMLDraftTextBlockContent>
+  | ReturnType<typeof setMLDraftShopBlockContent>;
