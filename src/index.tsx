@@ -10,8 +10,6 @@ import { App } from './ui/App';
 
 import './ui/styles/index.scss';
 
-/* hello)) */
-
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
