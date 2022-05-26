@@ -11,7 +11,7 @@ import React, {
 
 import { useTranslation } from 'react-i18next';
 
-import { addMLDraftBlock, setMLDraftTextBlockContent } from '../../../../../../bll/reducers';
+import { addMLDraftBlock } from '../../../../../../bll/reducers';
 import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../common/hooks';
 import {
@@ -25,7 +25,9 @@ import { Button, Icon } from '../../../../../components/elements';
 import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
 import { Modal } from '../../../../../components/modules/modals/Modal';
 
+import { MLImageEditor } from './MLImageEditor';
 import { MLLinkForm } from './MLLinkForm';
+import { MLLogoEditor } from './MLLogoEditor';
 import { MLShopEditor } from './MLShopEditor';
 import { MLTextarea } from './MLTextarea';
 
@@ -239,10 +241,12 @@ export const MLContent = (props: TMLContentProps) => {
       )}
       {blockEditorType === MLContentType.LOGO && (
         <div className="ml-logo-editor">
-          <DropZoneField
-            initialImage={blocks.logoSet[blockEditorOrder]?.image ?? undefined}
-            onChange={onImageZoneChange}
-          />
+          <MLLogoEditor order={blockEditorOrder} block={blocks.logoSet[blockEditorOrder]} />
+        </div>
+      )}
+      {blockEditorType === MLContentType.IMAGE && (
+        <div className="ml-image-editor">
+          <MLImageEditor order={blockEditorOrder} block={blocks.imageSet[blockEditorOrder]} />
         </div>
       )}
       {blockEditorType === MLContentType.SHOP && (

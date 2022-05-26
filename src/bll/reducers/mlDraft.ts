@@ -13,6 +13,7 @@ import {
   IMLDraftContentVideo,
   Nullable,
   TIncomingImage,
+  TMLDraftBlocks,
   TMultilink,
   TMultilinkComplete,
   TMultilinkDraft,
@@ -37,13 +38,7 @@ enum mlDraftAction {
   PUSH_MULTILINK_DRAFT_BLOCK = 'PUSH_MULTILINK_DRAFT_BLOCK',
   PUSH_MULTILINK_DRAFT_BLOCK_LOGO = 'PUSH_MULTILINK_DRAFT_BLOCK_LOGO',
   PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL = 'PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL',
-  SET_MULTILINK_DRAFT_TEXT_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_TEXT_BLOCK_CONTENT',
-  SET_MULTILINK_DRAFT_LOGO_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_LOGO_BLOCK_CONTENT',
-  SET_MULTILINK_DRAFT_LINK_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_LINK_BLOCK_CONTENT',
-  SET_MULTILINK_DRAFT_SOCIAL_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_SOCIAL_BLOCK_CONTENT',
-  SET_MULTILINK_DRAFT_IMAGE_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_IMAGE_BLOCK_CONTENT',
-  SET_MULTILINK_DRAFT_IMAGETEXT_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_IMAGETEXT_BLOCK_CONTENT',
-  SET_MULTILINK_DRAFT_SHOP_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_SHOP_BLOCK_CONTENT',
+  SET_MULTILINK_DRAFT_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_BLOCK_CONTENT',
   DELETE_MULTILINK_DRAFT_BLOCK = 'DELETE_MULTILINK_DRAFT_BLOCK',
 }
 
@@ -124,14 +119,16 @@ export const mlDraftReducer = (
         blocks: newBlocks,
       };
 
-    case mlDraftAction.SET_MULTILINK_DRAFT_TEXT_BLOCK_CONTENT:
+    case mlDraftAction.SET_MULTILINK_DRAFT_BLOCK_CONTENT:
       return {
         ...state,
         blocks: {
           ...state.blocks,
-          textSet: state.blocks.textSet.map((block, i) =>
-            i === action.payload.order ? action.payload.content : block,
-          ),
+          ...{
+            [`${action.payload.field}`]: state.blocks.textSet.map((block, i) =>
+              i === action.payload.order ? action.payload.content : block,
+            ),
+          },
         },
       };
     default:
@@ -181,16 +178,10 @@ export const addMLDraftBlockSocial = (socials: { type: SocialNetwork; href: stri
     payload: { socials },
   } as const);
 
-export const setMLDraftTextBlockContent = (content: IMLDraftContentText, order: number) =>
+export const setMLDraftBlockContent = <T>(content: T, order: number, field: keyof TMLDraftBlocks) =>
   ({
-    type: mlDraftAction.SET_MULTILINK_DRAFT_TEXT_BLOCK_CONTENT,
-    payload: { content, order },
-  } as const);
-
-export const setMLDraftShopBlockContent = (content: IMLDraftContentShop, order: number) =>
-  ({
-    type: mlDraftAction.SET_MULTILINK_DRAFT_SHOP_BLOCK_CONTENT,
-    payload: { content, order },
+    type: mlDraftAction.SET_MULTILINK_DRAFT_BLOCK_CONTENT,
+    payload: { content, order, field },
   } as const);
 
 // thunks
@@ -246,5 +237,4 @@ export type TMLDraftActions =
   | ReturnType<typeof addMLDraftBlock>
   | ReturnType<typeof addMLDraftBlockLogo>
   | ReturnType<typeof addMLDraftBlockSocial>
-  | ReturnType<typeof setMLDraftTextBlockContent>
-  | ReturnType<typeof setMLDraftShopBlockContent>;
+  | ReturnType<typeof setMLDraftBlockContent>;
