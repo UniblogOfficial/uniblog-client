@@ -5,13 +5,14 @@ import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { initialize } from '../bll/reducers';
 import { useAppDispatch, useAppSelector } from '../common/hooks';
 
+import { Icon } from './components/elements';
 import { NotFound } from './pages/404';
 import { AdminContainer } from './pages/admin/AdminContainer';
 import { LoginContainer } from './pages/auth/login/LoginContainer';
 import { SignupContainer } from './pages/auth/signup/SignupContainer';
 import { VerificationContainer } from './pages/auth/verification/VerificationContainer';
 import { MainContainer } from './pages/main/MainContainer';
-import { PublicContainer } from './pages/public/PublicContainer';
+import { PublicMLContainer } from './pages/public/PublicMLContainer';
 
 export const Routes = (props: any) => {
   const dispatch = useAppDispatch();
@@ -28,14 +29,23 @@ export const Routes = (props: any) => {
 
   if (!isInitialized) {
     return (
-      <div style={{ position: 'fixed', top: '50%', textAlign: 'center', width: '100%' }}>
-        preloader
+      <div
+        style={{
+          position: 'absolute',
+          margin: 'auto',
+          width: '75px',
+          height: '75px',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}>
+        <Icon name="arrow-clockwise" containerClassName="preloader" />
       </div>
     );
   }
 
   if (isMultilinkMode && isInitialized) {
-    return <PublicContainer />;
+    return <PublicMLContainer />;
   }
 
   return (

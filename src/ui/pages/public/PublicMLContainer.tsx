@@ -7,9 +7,9 @@ import { useAppSelector } from '../../../common/hooks';
 import { TMLContent } from '../../../common/types/instance';
 import { parseRawImage } from '../../../common/utils/ui';
 
-type TPublicContainerProps = {};
+type TPublicMLContainerProps = {};
 
-export const PublicContainer = () => {
+export const PublicMLContainer = () => {
   const multilink = useAppSelector(state => state.multilink.multilink);
   const getBlockLayout = useCallback((content: TMLContent) => {
     switch (content.type) {

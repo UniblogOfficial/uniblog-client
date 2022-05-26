@@ -1,6 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
 
-import { setMLDraftTextBlockContent } from '../../../../../../bll/reducers';
+import { setMLDraftBlockContent } from '../../../../../../bll/reducers';
 import { useAppDispatch } from '../../../../../../common/hooks';
 import { IMLDraftContentText, Nullable } from '../../../../../../common/types/instance';
 import { Textarea } from '../../../../../components/elements';
@@ -18,7 +18,7 @@ export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
       return;
     }
     block.text = text;
-    dispatch(setMLDraftTextBlockContent(block, order));
+    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
   };
 
   if (!block) return null;

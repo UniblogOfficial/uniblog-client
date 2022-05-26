@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IMLDraftContentShop, Nullable } from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
+import { parseRawImage, px } from '../../../../../common/utils/ui';
 
 type TMLShopProps = {
   block: Nullable<IMLDraftContentShop>;
@@ -16,18 +16,38 @@ export const MLShop = ({ block, callback }: TMLShopProps) => {
       {callback && (
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
       )}
-      <ul
-        className="ml-shop__list"
-        style={{ width: '100%', display: 'grid', gridTemplateColumns: block.grid }}>
-        {block.cells.map((cell, i) => (
-          <li key={cell.order} style={{ width: '100%', backgroundColor: cell.background }}>
-            <div style={{ position: 'relative', width: '100%', height: '100px' }}>
-              <img src={cell.image?.src} alt="" />
-            </div>
-            <p>{cell.title}</p>
-            <p>{cell.subtitle}</p>
-          </li>
-        ))}
+      <ul className="ml-shop__list" style={{ gridTemplateColumns: block.grid, gap: block.gap }}>
+        {block.cells.map((cell, i) => {
+          const imgSrc = cell.image && cell.image?.src ? cell.image?.src : cell.image?.previewUrl;
+          return (
+            <li
+              key={cell.order}
+              className="ml-shop__item"
+              style={{ width: '100%', backgroundColor: cell.background }}>
+              <div style={{ position: 'relative', width: '100%' }}>
+                <img src={imgSrc} alt="" />
+              </div>
+              <p
+                style={{
+                  textAlign: cell.align,
+                  fontSize: cell.fontSize ?? undefined,
+                  fontWeight: cell.fontWeight ?? undefined,
+                  color: cell.color,
+                }}>
+                {cell.title}
+              </p>
+              <p
+                style={{
+                  textAlign: cell.subtitleAlign,
+                  fontSize: cell.subtitleFontSize ?? undefined,
+                  fontWeight: cell.subtitleFontWeight ?? undefined,
+                  color: cell.subtitleColor,
+                }}>
+                {cell.subtitle}
+              </p>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
