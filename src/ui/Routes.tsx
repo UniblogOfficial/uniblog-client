@@ -6,6 +6,7 @@ import { initialize } from '../bll/reducers';
 import { useAppDispatch, useAppSelector } from '../common/hooks';
 
 import { NotFound } from './pages/404';
+import { AdminContainer } from './pages/admin/AdminContainer';
 import { LoginContainer } from './pages/auth/login/LoginContainer';
 import { SignupContainer } from './pages/auth/signup/SignupContainer';
 import { VerificationContainer } from './pages/auth/verification/VerificationContainer';
@@ -45,6 +46,7 @@ export const Routes = (props: any) => {
       <Route path="/callback" render={() => <div>OAuth in progress...</div>} />
       {/* <Route path="/recovery" render={() => <PassRecoveryContainer />} />
     <Route path="/new-password" render={() => <NewPassContainer />} /> */}
+      <Route path="/admin" render={() => <AdminContainer />} />
       <Route path="/" render={() => <MainContainer />} />
     </Switch>
   );

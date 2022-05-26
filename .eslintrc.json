@@ -44,6 +44,7 @@
     "consistent-return": "off",
     "default-case": ["warn", { "commentPattern": "^no default$" }],
     "dot-location": ["warn", "property"],
+    "dot-notation": ["off"],
     "eqeqeq": ["warn", "smart"],
     "new-parens": "warn",
     "no-shadow": "off",

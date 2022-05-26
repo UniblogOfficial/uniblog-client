@@ -42,6 +42,18 @@
     }
   },
   "multilink": {
+    "buttons": {
+      "create": "Создать",
+      "published": "Опубликованные"
+    },
+    "creation": {
+      "stages": {
+        "background": "Выберите фон",
+        "content": "Добавьте медиа контент",
+        "preview": "Предпросмотр",
+        "template": "Выберите шаблон"
+      }
+    },
     "title": "Мультиссылка"
   },
   "navbar": {

@@ -3,28 +3,33 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { logout, TUserData } from '../../../../bll/reducers';
+import { logout, requestSaveAvatar, TUserState } from '../../../../bll/reducers';
 import { selectUserData } from '../../../../bll/selectors';
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks';
-import { TImageFile } from '../../../../common/types/instance';
-import { Breadcrumbs } from '../../../components/elements/breadcrumbs/Breadcrumbs';
-import { Button } from '../../../components/elements/button/Button';
+import { TImageFile, TUser } from '../../../../common/types/instance';
 import { PageHeader } from '../../../components/modules/headers/PageHeader';
 import { DropZoneField } from '../../../components/modules/imageForm/DropZoneField';
 
 import { ProfileForm } from './ProfileForm';
 
-type TProfileContainerProps = {};
+type TProfileContainerProps = {
+  userData: TUser;
+};
 
-export const ProfileContainer = () => {
+export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
   const dispatch = useAppDispatch();
-  const userData = useAppSelector<TUserData | null>(selectUserData);
   const { t } = useTranslation(['pages', 'common']);
 
   const onLogoutButtonClick = () => {
     dispatch(logout());
   };
+
+  const saveAvatar = useCallback(() => {
+    if (imageFiles.length) {
+      dispatch(requestSaveAvatar(imageFiles[0]));
+    }
+  }, [dispatch, imageFiles]);
 
   const onImageZoneChange = useCallback((imageFile: TImageFile, id?: number) => {
     if (imageFile.size <= 1024 * 1024) {
@@ -43,12 +48,13 @@ export const ProfileContainer = () => {
         <section className="profile__card paper">
           <h3 className="paper-title">{t('pages:profile.subtitles.profile')}</h3>
           <div className="profile__avatar">
-            <DropZoneField onChange={onImageZoneChange} imageFiles={imageFiles} touched={false} />
+            <DropZoneField onChange={onImageZoneChange} touched={false} />
           </div>
           <ProfileForm
-            username={userData?.name}
-            email={userData?.email}
+            username={userData.name}
+            email={userData.email}
             onLogout={onLogoutButtonClick}
+            onButtonSaveClick={saveAvatar}
           />
         </section>
       </main>

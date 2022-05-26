@@ -6,142 +6,118 @@ import React, {
   ReactElement,
   ChangeEvent,
   useRef,
+  useEffect,
 } from 'react';
 
-import { DropEvent } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 
+import { addMLDraftBlock, setMLDraftTextBlockContent } from '../../../../../../bll/reducers';
 import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
-import { Nullable, TImageFile, TMLContent } from '../../../../../../common/types/instance';
-import { TMLDraftContent } from '../../../../../../common/types/instance/multilink';
-import temp1 from '../../../../../../img/temp1.png';
-import { Icon } from '../../../../../components/elements';
+import { useAppDispatch } from '../../../../../../common/hooks';
+import {
+  IMLDraftContentText,
+  Nullable,
+  TImageFile,
+  TMLContent,
+} from '../../../../../../common/types/instance';
+import { TMLDraftBlocks } from '../../../../../../common/types/instance/mlDraft';
+import { Button, Icon } from '../../../../../components/elements';
 import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
+import { Modal } from '../../../../../components/modules/modals/Modal';
+
+import { MLLinkForm } from './MLLinkForm';
+import { MLShopEditor } from './MLShopEditor';
+import { MLTextarea } from './MLTextarea';
 
 type TMLContentProps = {
-  template: number[];
-  contentSet: Nullable<TMLDraftContent>[];
-  setContent: (data: TMLDraftContent) => void;
+  contentSet: MLContentType[];
+  blocks: TMLDraftBlocks;
+  blockEditorType: Nullable<MLContentType>;
+  blockEditorOrder: number;
+  setBlockEditor: (payload: { type: MLContentType; order: number } | null) => void;
 };
 
-type TContentBlock = {
-  type: MLContentType;
-  content: Nullable<ReactElement>;
-};
-
-export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setContent }) => {
-  // const order = useRef<number>(0);
-  const [textareaValues, setTextareaValues] = useState<string[]>([]);
+export const MLContent = (props: TMLContentProps) => {
+  const dispatch = useAppDispatch();
+  const { contentSet, blocks, blockEditorType, blockEditorOrder, setBlockEditor } = props;
+  const { t } = useTranslation(['pages', 'common']);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
-  const [contentBlocks, setContentBlocks] = useState<TContentBlock[]>(
-    template.map((block, i) => {
-      const isLink = block <= 15;
-      const isText = block > 15 && block < 50;
-      const isPhoto = block >= 50;
-      switch (true) {
-        case isLink:
-          return { type: MLContentType.LINK, content: null };
-        case isText:
-          return { type: MLContentType.TEXT, content: null };
-        case isPhoto:
-          return { type: MLContentType.IMAGE, content: null };
-        default:
-          return { type: MLContentType.UNKNOWN, content: null };
-      }
-    }),
-  );
-  const onImageZoneChange = useCallback(
-    (imageFile: TImageFile, id?: number) => {
-      setImageFiles([imageFile]);
-      setContent({
-        order: id || 0,
-        type: MLContentType.IMAGE,
-        link: null,
-        linkType: null,
-        title: null,
-        text: null,
-        img: imageFile,
-      });
-    },
-    [setContent],
+
+  const [contentBlocks, setContentBlocks] = useState<boolean[]>(
+    contentSet.map((block, i) => false),
   );
 
-  const onTextareaChange = useCallback(
-    (e: ChangeEvent<HTMLTextAreaElement>) => {
-      const text = e.target.value;
-      // eslint-disable-next-line no-return-assign
-      const order = +e.currentTarget.dataset.value! as number;
-      setTextareaValues(Object.assign([], textareaValues, { orderIndex: text }));
-      setContent({
-        order,
-        type: MLContentType.TEXT,
-        link: null,
-        linkType: null,
-        title: null,
-        text,
-        img: undefined,
-      });
-    },
-    [setContent, textareaValues],
-  );
+  const onImageZoneChange = useCallback((imageFile: TImageFile, id?: number) => {
+    setImageFiles([imageFile]);
+    /* dispatch(
+        setMLDraftTextBlockContent({
+          order: id || 0,
+          type: MLContentType.IMAGE,
+          isFilled: true,
+          images: [imageFile],
+        }),
+      ); */
+  }, []);
 
-  /*   const onFilledBlockClick = (e: MouseEvent<HTMLElement>) => {
-    order.current = +e.currentTarget.dataset.value! as number;
-  }; */
+  const closeModal = useCallback(
+    (order: number) => {
+      setContentBlocks(contentBlocks.map((el, i) => (i === order ? false : el)));
+    },
+    [contentBlocks],
+  );
 
   const onBlockClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       const order = +e.currentTarget.dataset.value! as number;
-      const copy = [...contentBlocks];
-      switch (e.currentTarget.value) {
-        case 'link':
-          copy[order].content = <>Вконтактике</>;
-          setContent({
-            order,
-            type: MLContentType.LINK,
-            link: 'https://vk.com',
-            linkType: SocialNetwork.VK,
-            title: 'VK',
-            text: 'Вконтактике',
-            img: undefined,
-          });
-          break;
-        case 'text':
-          copy[order].content = (
-            <textarea
-              data-value={order}
-              value={textareaValues[order]}
-              onChange={onTextareaChange}
-              maxLength={70}
-              className="template__block__textarea"
-            />
-          );
-          setContent({
-            order,
-            type: MLContentType.TEXT,
-            link: null,
-            linkType: null,
-            title: null,
-            text: '',
-            img: undefined,
-          });
-          break;
-        case 'image':
-          copy[order].content = (
-            <DropZoneField
-              id={order}
-              onChange={onImageZoneChange}
-              imageFiles={imageFiles}
-              touched={false}
-            />
-          );
-          break;
-        default:
-          copy[order].content = <>unknown</>;
-      }
-      setContentBlocks(copy);
+      setContentBlocks(contentBlocks.map((el, i) => (i === order ? true : el)));
     },
-    [contentBlocks, setContent, onTextareaChange, textareaValues, imageFiles, onImageZoneChange],
+    [contentBlocks],
   );
+
+  const onButtonEditorClick = (e: MouseEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.dataset.value) {
+      setBlockEditor(null);
+      return;
+    }
+    dispatch(addMLDraftBlock(e.currentTarget.value as MLContentType));
+    setBlockEditor({ type: e.currentTarget.value as MLContentType, order: contentSet.length });
+  };
+
+  /*   const contentEditorSwitcher = (order: number, type: MLContentType) => {
+    switch (type) {
+      case MLContentType.TEXT:
+        return (
+          <MLTextarea
+            order={order}
+            value={contentSet[order].text}
+            changeTextBlock={changeTextBlock}
+          />
+        );
+      case MLContentType.LINK:
+        return contentSet[order].isFilled ? (
+          <div className="template__link">
+            <p>{contentSet[order].title}</p>
+            <p>{contentSet[order].link}</p>
+          </div>
+        ) : (
+          <Modal close={() => closeModal(order)}>
+            <MLLinkForm order={order} />
+          </Modal>
+        );
+      case MLContentType.IMAGE:
+        return (
+          <DropZoneField
+            id={order}
+            onChange={onImageZoneChange}
+            imageFiles={imageFiles}
+            touched={false}
+          />
+        );
+      default:
+        return <></>;
+    }
+  };
 
   const templateLayout = (
     <ul className="template">
@@ -149,27 +125,150 @@ export const MLContent: FC<TMLContentProps> = ({ template, contentSet, setConten
         <li
           key={id[i]}
           style={{ flex: `0 1 ${block}%` }}
-          className={`template__block ${contentBlocks[i].content ? '_filled' : '_interactive'}`}>
-          {contentBlocks[i].content ? (
-            contentBlocks[i].content
+          className={`template__block ${contentBlocks[i] ? '_filled' : '_interactive'}`}>
+          {contentBlocks[i] ? (
+            contentEditorSwitcher(i, contentSet[i].type)
           ) : (
-            <button
-              value={contentBlocks[i].type}
-              data-value={i}
-              onClick={onBlockClick}
-              type="button">
+            <button value={contentSet[i].type} data-value={i} onClick={onBlockClick} type="button">
               <Icon name="circle-add" />
             </button>
           )}
         </li>
       ))}
     </ul>
+  ); */
+
+  const actionButtons = (
+    <>
+      <div>
+        <Button
+          value={MLContentType.TEXT}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add text block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.LINK}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add link block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.IMAGE}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add image block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.IMAGETEXT}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add image-text block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.SOCIAL}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add socials block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.LOGO}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add logo block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add icon-text block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add divider
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add image-carousel block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add audio block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add video block
+        </Button>
+      </div>
+      <div>
+        <Button
+          value={MLContentType.SHOP}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add shop block
+        </Button>
+      </div>
+    </>
   );
 
   return (
     <>
-      <h3 className="paper-title">Add mediacontent</h3>
-      <div className="multilink-editor__constructor">{templateLayout}</div>
+      {!blockEditorType && actionButtons}
+      {blockEditorType === MLContentType.TEXT && (
+        <>
+          <MLTextarea order={blockEditorOrder} block={blocks.textSet[blockEditorOrder]} />
+        </>
+      )}
+      {blockEditorType === MLContentType.LINK && (
+        <>
+          <MLLinkForm order={blockEditorOrder} close={onButtonEditorClick} />
+        </>
+      )}
+      {blockEditorType === MLContentType.LOGO && (
+        <div className="ml-logo-editor">
+          <DropZoneField
+            initialImage={blocks.logoSet[blockEditorOrder]?.image ?? undefined}
+            onChange={onImageZoneChange}
+          />
+        </div>
+      )}
+      {blockEditorType === MLContentType.SHOP && (
+        <div className="ml-shop-editor">
+          <MLShopEditor order={blockEditorOrder} block={blocks.shopSet[blockEditorOrder]} />
+        </div>
+      )}
+      {blockEditorType && blockEditorType !== MLContentType.LINK && (
+        <div className="action-buttons">
+          <Button
+            value={blockEditorType}
+            data-value="-1"
+            variant="cancel"
+            onClick={onButtonEditorClick}
+            className="button _rounded">
+            {t('common:buttons.cancel')}
+          </Button>
+          <Button
+            value={blockEditorType}
+            data-value="-1"
+            onClick={onButtonEditorClick}
+            className="button _rounded">
+            {t('common:buttons.ok')}
+          </Button>
+        </div>
+      )}
     </>
   );
 };

@@ -1,10 +1,7 @@
-import axios from 'axios';
 import { batch } from 'react-redux';
 
 import { AppStatus } from '../../common/constants';
-import { Nullable, TMultilink, TMultilinkDraft } from '../../common/types/instance';
-import { TMLDraftContent, TMultilinkComplete } from '../../common/types/instance/multilink';
-import { TCreateMLDto } from '../../common/types/request/multilink.dto';
+import { Nullable, TMultilink } from '../../common/types/instance';
 import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
 import { multilinkAPI } from '../../dal';
 import { AppThunk } from '../store';
@@ -14,11 +11,12 @@ import { requestMe } from './auth';
 
 enum multilinkAction {
   SET_MULTILINK = 'SET_MULTILINK',
+  SET_ALL_MULTILINKS = 'SET_ALL_MULTILINKS',
 }
 
 const initialState = {
   multilink: null,
-  multilinkDraft: null,
+  allMultilinks: null,
 };
 
 export const multilinkReducer = (
@@ -27,6 +25,7 @@ export const multilinkReducer = (
 ): TMultilinkState => {
   switch (action.type) {
     case multilinkAction.SET_MULTILINK:
+    case multilinkAction.SET_ALL_MULTILINKS:
       return {
         ...state,
         ...action.payload,
@@ -36,14 +35,20 @@ export const multilinkReducer = (
   }
 };
 // actions
+// public multilink
 export const setMultilink = (multilink: TMultilink) =>
   ({
     type: multilinkAction.SET_MULTILINK,
     payload: { multilink },
   } as const);
 
-// thunks
+export const setAllMultilinks = (allMultilinks: TMultilink[]) =>
+  ({
+    type: multilinkAction.SET_ALL_MULTILINKS,
+    payload: { allMultilinks },
+  } as const);
 
+// thunks
 export const getMultilink =
   (name: string): AppThunk =>
   async dispatch => {
@@ -67,35 +72,27 @@ export const getMultilink =
     }
   };
 
-export const publishMultilink =
-  (multilink: TMultilinkComplete): AppThunk =>
-  async dispatch => {
-    dispatch(setAppStatus(AppStatus.USERDATA_LOADING));
-    const multilinkDto: TCreateMLDto = {
-      name: multilink.name,
-      background: multilink.background,
-      template: multilink.template,
-      content: multilink.contentSet.map(content => {
-        const { img, link, linkType, order, text, title, type } = content;
-        return {
-          order,
-          type,
-          link: link ?? undefined,
-          linkType: linkType ?? undefined,
-          title: title ?? undefined,
-          text: text ?? undefined,
-        };
-      }),
-    };
-    const images = multilink.contentSet
-      .filter(content => content.img)
-      .map(content => ({ order: content.order + 1, file: content.img?.file! }));
-    const response = await multilinkAPI.create(multilinkDto, images);
-  };
+export const getAllMultilinks = (): AppThunk => async dispatch => {
+  try {
+    dispatch(setAppStatus(AppStatus.CONTENT_LOADING));
+    const response = await multilinkAPI.getAll();
+    if (response.data) {
+      batch(() => {
+        dispatch(setAllMultilinks(response.data));
+        dispatch(setAppStatus(AppStatus.SUCCEEDED));
+      });
+    }
+  } catch (e) {
+    handleServerNetworkError(e, AppStatus.CONTENT_FAILED, dispatch);
+  }
+};
 
 // types
 export type TMultilinkState = {
   multilink: Nullable<TMultilink>;
-  multilinkDraft: Nullable<TMultilinkDraft>;
+  allMultilinks: Nullable<TMultilink[]>;
 };
-export type TMultilinkActions = ReturnType<typeof setMultilink>;
+
+export type TMultilinkActions =
+  | ReturnType<typeof setMultilink>
+  | ReturnType<typeof setAllMultilinks>;

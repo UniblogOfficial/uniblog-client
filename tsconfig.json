@@ -9,7 +9,8 @@
     "allowJs": true,
     "types": [
       "node",
-      "webpack-env"
+      "webpack-env",
+      "jest"
     ],
     "skipLibCheck": true,
     "strict": true,

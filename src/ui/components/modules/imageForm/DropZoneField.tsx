@@ -2,7 +2,7 @@ import React, { FC, DragEvent, useState, useCallback } from 'react';
 
 import DropZone, { DropEvent } from 'react-dropzone';
 
-import { TImageFile } from '../../../../common/types/instance';
+import { TImageFile, TIncomingImage } from '../../../../common/types/instance';
 
 import ShowError from './FormErrorRepresenter';
 import { ImagePlaceholder } from './ImagePlaceholder';
@@ -10,14 +10,14 @@ import ImagePreview from './ImagePreview';
 
 type TDropZoneFieldProps = {
   onChange: (imageFile: TImageFile, id?: number) => void;
-  imageFiles: Array<TImageFile>;
+  initialImage?: TIncomingImage;
   error?: string;
-  touched: boolean;
+  touched?: boolean;
   id?: number;
 };
 
 export const DropZoneField: FC<TDropZoneFieldProps> = ({
-  imageFiles,
+  initialImage,
   onChange,
   error,
   touched,
@@ -40,12 +40,10 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
   );
 
   return (
-    <div className="App">
-      {image && image.length > 0 ? (
-        <ImagePreview imageFiles={image} />
-      ) : (
-        <ImagePlaceholder onDrop={onDrop} />
-      )}
-    </div>
+    <>
+      {image.length > 0 && <ImagePreview imageFiles={image} />}
+      {image.length === 0 && initialImage && <ImagePreview imageFiles={image} />}
+      <ImagePlaceholder isFilled={image.length > 0} onDrop={onDrop} />
+    </>
   );
 };

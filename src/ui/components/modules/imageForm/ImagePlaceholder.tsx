@@ -1,12 +1,20 @@
 import React, { FC } from 'react';
 
 import { Accept, DropzoneInputProps, DropzoneRootProps, useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
+
+import { IconColor } from '../../../../common/constants';
+import { Icon } from '../../elements';
+
+import styles from './DropZone.module.scss';
 
 type TPlaceholderProps = {
+  isFilled: boolean;
   onDrop: (acceptedFiles: File[]) => void;
 };
 
-export const ImagePlaceholder: FC<TPlaceholderProps> = ({ onDrop }) => {
+export const ImagePlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) => {
+  const { t } = useTranslation(['common']);
   const {
     getRootProps,
     getInputProps,
@@ -17,10 +25,7 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ onDrop }) => {
     isDragReject,
   } = useDropzone({
     accept: {
-      'image/png': ['.png'],
-      'image/jpg': ['.jpeg', '.jpg'],
-      'image/gif': ['.gif'],
-      'image/bmp': ['.bmp'],
+      'image/*': ['.png', '.jpeg', '.jpg', '.gif', '.bmp'],
     },
     onDrop,
     noClick: true,
@@ -36,15 +41,25 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ onDrop }) => {
   return (
     <>
       {' '}
-      <section className="dropbox">
-        <div className="dropbox" {...getRootProps({ isDragAccept, isFocused, isDragReject })}>
-          <input {...getInputProps()} />
-          <p>Drag n drop some files here</p>
-          <button type="button" className="btn" onClick={open}>
-            Click to select file
-          </button>
-        </div>
-      </section>
+      <div className="dropbox" {...getRootProps({ isDragAccept, isFocused, isDragReject })}>
+        {!isFilled && (
+          <Icon name="image" size="reduced" primaryColor="#d4dee8" secondaryColor="#d4dee8" />
+        )}
+        <input {...getInputProps()} />
+        <button type="button" className={styles['button']} onClick={open}>
+          {isFilled ? (
+            <Icon
+              name="arrows-rotate"
+              size="reduced"
+              className={styles['button__icon']}
+              primaryColor={IconColor.OK}
+              secondaryColor={IconColor.INFO}
+            />
+          ) : (
+            t('common:placeholders.clickToSelect')
+          )}
+        </button>
+      </div>
     </>
   );
 };

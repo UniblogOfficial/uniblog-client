@@ -1,4 +1,6 @@
 export { handleServerNetworkError } from './errorHandler';
+export { pushMLDraftBlock, pushMLDraftBlockLogo, pushMLDraftBlockSocial } from './pushMLDraftBlock';
+// =======================================================================================================
 export const getKeys = Object.keys as <T extends Object>(obj: T) => Array<keyof T>;
 // =======================================================================================================
 export const convertObjToFlags = <T>(obj: T) =>
@@ -21,6 +23,6 @@ export const trim = (string: string, char: string) => {
 // trim('|hello|world|', '|'); // => 'hello|world'
 // =======================================================================================================
 export const validateMLRoute = (routes: string[], currentRoute: string) => {
-  if (routes.indexOf(currentRoute) === -1) return true;
+  if (routes.indexOf(`/${currentRoute.split('/')[1]}`) === -1) return true;
   return false;
 };

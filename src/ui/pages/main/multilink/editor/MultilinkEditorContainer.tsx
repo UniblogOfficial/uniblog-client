@@ -2,207 +2,286 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { publishMultilink, TUserData } from '../../../../../bll/reducers';
-import { MLContentType } from '../../../../../common/constants';
+import { publishMultilink } from '../../../../../bll/reducers';
+import { ID, MLContentType } from '../../../../../common/constants';
 import { useAppDispatch, useAppSelector } from '../../../../../common/hooks';
-import { Nullable, TMLContent, TMultilinkDraft } from '../../../../../common/types/instance';
-import { TMLDraftContent } from '../../../../../common/types/instance/multilink';
-import phone from '../../../../../img/phone.png';
+import { Nullable, TImageFile, TMultilinkDraft, TUser } from '../../../../../common/types/instance';
 import { Button, Icon } from '../../../../components/elements';
+import {
+  MLImages,
+  MLImageText,
+  MLLink,
+  MLLogo,
+  MLSocial,
+  MLText,
+  MLVideo,
+} from '../../../../components/modules/mlBlocks';
+import { MLShop } from '../../../../components/modules/mlBlocks/mlShop/MLShop';
 
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
 import { MLTemplate } from './template/MLTemplate';
+import { MLTemplates } from './template/MLTemplates';
 
 type TMultilinkEditorContainerProps = {
-  userData: TUserData;
+  userData: TUser;
 };
 
 enum EditorStage {
-  TEMPLATE = 1,
-  BACKGROUND = 2,
-  CONTENT = 3,
-  PREVIEW = 4,
+  TEMPLATE = 0,
+  BACKGROUND = 1,
+  CONTENT = 2,
+  PREVIEW = 3,
 }
+
+const voidOrder = -1;
 
 export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ userData }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
-  const [stage, setStage] = useState<EditorStage>(1);
-  const [multilinkAttrs, setMultilinkAttrs] = useState<TMultilinkDraft>({
-    name: userData.name,
-    template: null as Nullable<number[]>,
-    background: undefined as undefined | string,
-    contentSet: [] as Nullable<TMLDraftContent>[],
-  });
-
-  const setTemplate = useCallback(
-    (template: number[]) => {
-      if (multilinkAttrs.template !== template) {
-        setMultilinkAttrs({ ...multilinkAttrs, template, contentSet: template.map(temp => null) });
-      }
-    },
-    [multilinkAttrs],
+  const [stage, setStage] = useState<EditorStage>(0);
+  const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
+  const [blockEditorOrder, setBlockEditorOrder] = useState(voidOrder);
+  const { name, background, contentSet, blocks } = useAppSelector<TMultilinkDraft>(
+    state => state.mlDraft,
   );
 
-  const setBackground = useCallback(
-    (background: string) => {
-      if (multilinkAttrs.background !== background) {
-        setMultilinkAttrs({ ...multilinkAttrs, background });
-      }
-    },
-    [multilinkAttrs],
+  const stageTitles = useMemo(
+    () => [
+      t('pages:multilink.creation.stages.template'),
+      t('pages:multilink.creation.stages.background'),
+      t('pages:multilink.creation.stages.content'),
+      t('pages:multilink.creation.stages.preview'),
+    ],
+    [t],
   );
 
-  const setContent = useCallback(
-    ({ order, type, link, linkType, title, text, img }: TMLDraftContent) => {
-      if (!multilinkAttrs.contentSet[order]) {
-        const newContentSet = multilinkAttrs.contentSet;
-        newContentSet[order] = { order, type, link, linkType, title, text: '', img };
-        setMultilinkAttrs({ ...multilinkAttrs, contentSet: newContentSet });
-      } else {
-        const newContentSet = multilinkAttrs.contentSet;
-        newContentSet[order] = { order, type, link, linkType, title, text, img };
-        setMultilinkAttrs({ ...multilinkAttrs, contentSet: newContentSet });
-      }
-    },
-    [multilinkAttrs],
-  );
+  const setBlockEditor = (payload: { type: MLContentType; order: number } | null) => {
+    if (payload) {
+      setBlockEditorType(payload.type);
+      setBlockEditorOrder(payload.order);
+    } else {
+      setBlockEditorType(null);
+      setBlockEditorOrder(voidOrder);
+    }
+  };
 
   const onPublishButtonClick = () => {
-    const { name, background, template, contentSet } = multilinkAttrs;
-    if (background && template && contentSet) {
+    /* const backgroundDefault = '#fff';
+    if (contentSet) {
       dispatch(
         publishMultilink({
           name,
-          template,
-          background,
-          contentSet: contentSet.map(
-            (content, i) =>
-              content || {
-                order: i,
-                type: MLContentType.UNKNOWN,
-                link: null,
-                linkType: null,
-                text: null,
-                title: null,
-                img: undefined,
-              },
-          ),
+          logo,
+          background: background || backgroundDefault,
+          contentSet,
         }),
       );
-    }
+    } */
   };
 
   const onNextButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    console.log(e.currentTarget);
-    stage < 5 && stage >= 1 && setStage(stage + Number(e.currentTarget.value));
+    if (Number(e.currentTarget.value) > 0) {
+      stage < 3 && setStage(stage + Number(e.currentTarget.value)); // to next stage
+    }
+    if (Number(e.currentTarget.value) < 0) {
+      stage > 0 && setStage(stage + Number(e.currentTarget.value)); // to previous stage
+    }
   };
 
-  const getPreviewBlockLayout = useCallback((content: TMLDraftContent) => {
-    switch (content.type) {
-      case MLContentType.LINK:
-        return <div className="link">{content.title}</div>;
-      case MLContentType.TEXT:
-        return <p className="text">{content.text}</p>;
-      case MLContentType.IMAGE:
-        return <img src={content.img?.previewUrl} alt="img" />;
-      default:
-        break;
-    }
-  }, []);
+  const templateBackground = background
+    ? background instanceof Object
+      ? `url(${background.previewUrl})`
+      : background
+    : undefined;
 
-  const currentPreviewLayout = (
-    <>
-      {multilinkAttrs.template?.map((template, i) => {
-        const isFilled = !!multilinkAttrs.contentSet[i];
-        return (
-          <div
-            key={id[i]}
-            style={{ flex: `0 1 ${template}%`, backgroundColor: isFilled ? '' : '#0002' }}>
-            {multilinkAttrs.contentSet[i]
-              ? getPreviewBlockLayout(multilinkAttrs.contentSet[i]!)
-              : null}
-          </div>
-        );
-      })}
-    </>
+  const layout = useMemo(
+    () => (
+      <div
+        className="template template_unlimited"
+        style={{ background: templateBackground ?? undefined }}>
+        {contentSet.map((type, i) => {
+          let block;
+          switch (type) {
+            case MLContentType.LOGO:
+              block = blocks.logoSet[i];
+              return <MLLogo key={ID[i]} block={block} />;
+            case MLContentType.TEXT:
+              block = blocks.textSet[i];
+              return <MLText key={ID[i]} block={block} />;
+            case MLContentType.LINK:
+              block = blocks.linkSet[i];
+              return <MLLink key={ID[i]} block={block} />;
+            case MLContentType.SOCIAL:
+              block = blocks.socialSet[i];
+              return <MLSocial key={ID[i]} block={block} />;
+            case MLContentType.IMAGE:
+              block = blocks.imageSet[i];
+              return <MLImages key={ID[i]} block={block} />;
+            case MLContentType.IMAGETEXT:
+              block = blocks.imageTextSet[i];
+              return <MLImageText key={ID[i]} block={block} />;
+            case MLContentType.VIDEO:
+              block = blocks.videoSet[i];
+              return <MLVideo key={ID[i]} block={block} />;
+            default:
+              return <li key={ID[i]} />;
+          }
+        })}
+      </div>
+    ),
+    [templateBackground, contentSet, blocks],
   );
+
+  const editableLayout = useMemo(
+    () => (
+      <div
+        className="template template_unlimited"
+        style={{ background: templateBackground ?? undefined }}>
+        {contentSet.map((type, i) => {
+          let block;
+          switch (type) {
+            case MLContentType.LOGO:
+              block = blocks.logoSet[i];
+              return (
+                <MLLogo
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.TEXT:
+              block = blocks.textSet[i];
+              return (
+                <MLText
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.LINK:
+              block = blocks.linkSet[i];
+              return (
+                <MLLink
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.SOCIAL:
+              block = blocks.socialSet[i];
+              return (
+                <MLSocial
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.IMAGE:
+              block = blocks.imageSet[i];
+              return (
+                <MLImages
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.IMAGETEXT:
+              block = blocks.imageTextSet[i];
+              return (
+                <MLImageText
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.VIDEO:
+              block = blocks.videoSet[i];
+              return (
+                <MLVideo
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            case MLContentType.SHOP:
+              block = blocks.shopSet[i];
+              return (
+                <MLShop
+                  key={ID[i]}
+                  block={block}
+                  callback={() => setBlockEditor({ type, order: i })}
+                />
+              );
+            default:
+              return <li key={ID[i]} />;
+          }
+        })}
+      </div>
+    ),
+    [templateBackground, contentSet, blocks],
+  );
+  // const logoSrc = avatar ? parseRawImage(avatar) : undefined;
 
   return (
-    <div
-      className="grid__row multilink-editor"
-      style={stage === EditorStage.PREVIEW ? { justifyContent: 'center' } : undefined}>
-      {stage !== EditorStage.PREVIEW && (
-        <section className="ml-creation-area">
-          <div className="paper _with-button-bottom">
-            {stage === EditorStage.TEMPLATE && <MLTemplate setTemplate={setTemplate} />}
-            {stage === EditorStage.BACKGROUND && <MLBackground setBackground={setBackground} />}
-            {stage === EditorStage.CONTENT && multilinkAttrs.template && (
-              <MLContent
-                template={multilinkAttrs.template}
-                contentSet={multilinkAttrs.contentSet}
-                setContent={setContent}
-              />
-            )}
-
-            {stage > 1 && (
-              <Button
-                onClick={onNextButtonClick}
-                value="-1"
-                className="button _back-ml-editor _rounded">
-                {t('common:buttons.back')}
-              </Button>
-            )}
-
-            <div className="paper__button-container">
-              <Button onClick={onNextButtonClick} value="1" className="button _full _paper">
-                {t('common:buttons.next')}
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
-      <section
-        className="preview-area"
-        style={stage === EditorStage.PREVIEW ? { flex: '0 0 550px' } : undefined}>
-        <div className="paper">
-          <h3 className="paper-title">Preview</h3>
-          {stage === EditorStage.PREVIEW && <MLPreview username={multilinkAttrs.name} />}
-          <div className="preview-device">
-            <div className="phone">
-              <div className="phone__container" style={{ background: multilinkAttrs.background }}>
-                <div className="phone__logo">
-                  <Icon name="user" />
-                </div>
-                <h4 className="phone__user-title">
-                  <strong>@VasyaRaper</strong>
-                </h4>
-                <div className="phone__template">{currentPreviewLayout}</div>
-              </div>
-              <div className="phone__layout">
-                <img src={phone} alt="phone-layout" />
-              </div>
-            </div>
-          </div>
-          {stage === EditorStage.PREVIEW && (
-            <div className="action-buttons">
-              <Button
-                onClick={onNextButtonClick}
-                value="-1"
-                className="button _back-ml-editor _rounded">
-                {t('common:buttons.back')}
-              </Button>
-              <Button onClick={onPublishButtonClick} className="button _rounded">
-                {t('common:buttons.ok')}
-              </Button>
-            </div>
+    <>
+      <div className="grid__row multilink-editor__nav paper">
+        <div className="button">
+          {stage > 0 && (
+            <Button onClick={onNextButtonClick} value="-1" className="button _rounded">
+              {t('common:buttons.back')}
+            </Button>
           )}
         </div>
-      </section>
-    </div>
+        <h3 className="paper-title">{stageTitles[stage]}</h3>
+        <div className="button _right">
+          <Button onClick={onNextButtonClick} value="1" className="button _rounded">
+            {t('common:buttons.next')}
+          </Button>
+        </div>
+      </div>
+      <div
+        className="grid__row paper"
+        style={stage === EditorStage.PREVIEW ? { justifyContent: 'center' } : undefined}>
+        <div className="multilink-editor">
+          <section className="ml-creation-area">
+            {stage === EditorStage.TEMPLATE && <MLTemplate userData={userData} />}
+            {stage === EditorStage.BACKGROUND && (
+              <div className="multilink-editor__constructor">{layout}</div>
+            )}
+            {stage === EditorStage.CONTENT && (
+              <div className="multilink-editor__constructor">{editableLayout}</div>
+            )}
+            {stage === EditorStage.PREVIEW && (
+              <div className="multilink-editor__constructor">{layout}</div>
+            )}
+          </section>
+          <section className="tools-area">
+            <div className="tools-area__container">
+              {stage === EditorStage.TEMPLATE && <MLTemplates userData={userData} />}
+              {stage === EditorStage.BACKGROUND && <MLBackground />}
+              {stage === EditorStage.CONTENT && (
+                <MLContent
+                  contentSet={contentSet}
+                  blocks={blocks}
+                  blockEditorType={blockEditorType}
+                  blockEditorOrder={blockEditorOrder}
+                  setBlockEditor={setBlockEditor}
+                />
+              )}
+              {stage === EditorStage.PREVIEW && <MLPreview name={name} username={userData.name} />}
+              {stage === EditorStage.PREVIEW && (
+                <div className="action-buttons">
+                  <Button onClick={onPublishButtonClick} className="button _rounded">
+                    {t('common:buttons.ok')}
+                  </Button>
+                </div>
+              )}
+            </div>
+          </section>
+        </div>
+      </div>
+    </>
   );
 };
-
-const id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
