@@ -18,11 +18,14 @@ export const MLImages = ({ block, callback }: TMLImagesProps) => {
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
       )}
       <div className="ml-images">
-        {block.images.map((image, i) => (
-          <div key={ID[i]} className="ml-images__image">
-            <img src={image?.src} alt="" />
-          </div>
-        ))}
+        {block.images.map((image, i) => {
+          const imgSrc = image && image?.src ? image?.src : image?.previewUrl;
+          return (
+            <div key={ID[i]} className="ml-images__image">
+              <img src={imgSrc} alt="" />
+            </div>
+          );
+        })}
       </div>
     </section>
   );

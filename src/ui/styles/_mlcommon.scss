@@ -1,8 +1,16 @@
 .ml-logo {
-  position: relative;
-	margin: 0 auto;
-	border-radius: 50%;
-	overflow: hidden;
+  &__logo {
+    position: relative;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  &__banner {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    overflow: hidden;
+  }
 }
 
 .ml-text {
@@ -26,34 +34,58 @@
 .ml-imagetext {
   width: 100%;
   &__image {
-		position: relative;
-		width: 40%;
-		padding-bottom: 40%;
-		height: 0;
-		border: 1px solid #0002;
-		border-radius: 5px;
-	}
+    position: relative;
+    width: 40%;
+    padding-bottom: 40%;
+    height: 0;
+    border: 1px solid #0002;
+    border-radius: 5px;
+  }
 }
 
 .ml-social {
   display: flex;
-	flex: 1 1 100%;
-	justify-content: space-around;
-	align-items: center;
-	li {
-		position: relative;
-		width: 40px;
-		height: 40px;
-	}
+  flex: 1 1 100%;
+  justify-content: space-around;
+  align-items: center;
+  li {
+    position: relative;
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .ml-link {
   justify-content: center;
-	border-radius: 10px;
+  border-radius: 10px;
 }
 
 .ml-audio {
   width: 100%;
+}
+
+.ml-shop {
+  &__list {
+    display: grid;
+    width: 100%;
+  }
+  &__item {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 2px 5px #0000001a;
+    & > * {
+      margin-bottom: 5px;
+    }
+    img {
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: none;
+    }
+    p {
+      padding: 0 5px;
+    }
+  }
 }
 
 .ml-video {

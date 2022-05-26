@@ -41,7 +41,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                 return (
                   <li key={block.order}>
                     <div
-                      className="ml-logo"
+                      className="ml-logo__logo"
                       style={{ height: block.size ?? '100px', width: block.size ?? '100px' }}>
                       <img src={parseRawImage(block.image)} alt="logo" />
                     </div>
@@ -121,7 +121,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                   </li>
                 );
               default:
-                return <li />;
+                return <li key={block.order} />;
             }
           })}
         </ul>
