@@ -1,4 +1,20 @@
 import { MLContentType, SocialNetwork } from '../../constants';
+import {
+  IMLDraftContentImage,
+  IMLDraftContentImageText,
+  IMLDraftContentLink,
+  IMLDraftContentLogo,
+  IMLDraftContentShop,
+  IMLDraftContentSocial,
+  IMLDraftContentText,
+  IMLDraftContentUnknown,
+  IMLDraftContentVideo,
+  TImageFile,
+  TMLImageContentImage,
+  TMLImageContentImageText,
+  TMLImageContentLogo,
+  TMLImageContentShop,
+} from '../instance';
 
 export type TCreateMLDto = {
   // exm. "VasyaRaper"
@@ -6,19 +22,30 @@ export type TCreateMLDto = {
   // exm. "#fff"
   background: string;
 
-  content: TContentDto[];
+  contentSet: MLContentType[];
+  textSet: IMLDraftContentTextDto[];
+  linkSet: IMLDraftContentLinkDto[];
+  socialSet: IMLDraftContentSocialDto[];
+  logoSet: IMLDraftContentLogoDto[];
+  imageSet: IMLDraftContentImageDto[];
+  imageTextSet: IMLDraftContentImageTextDto[];
+  videoSet: IMLDraftContentVideoDto[];
+  shopSet: IMLDraftContentShopDto[];
 };
 
-export type TMLImageDto = {
-  order: number;
-  file: File;
+export type TCreateMLImagesDto = {
+  background?: TImageFile;
+  logoSet: TMLImageContentLogo<TImageFile>[];
+  imageSet: TMLImageContentImage<TImageFile>[];
+  imageTextSet: TMLImageContentImageText<TImageFile>[];
+  shopSet: TMLImageContentShop<TImageFile>[];
 };
 
-type TContentDto = {
-  order: number;
-  type: MLContentType;
-  link?: string;
-  linkType?: SocialNetwork | 'third-party';
-  title?: string;
-  text?: string;
-};
+interface IMLDraftContentTextDto extends IMLDraftContentText {}
+interface IMLDraftContentLinkDto extends IMLDraftContentLink {}
+interface IMLDraftContentSocialDto extends IMLDraftContentSocial {}
+interface IMLDraftContentLogoDto extends IMLDraftContentLogo {}
+interface IMLDraftContentImageDto extends IMLDraftContentImage {}
+interface IMLDraftContentImageTextDto extends IMLDraftContentImageText {}
+interface IMLDraftContentVideoDto extends IMLDraftContentVideo {}
+interface IMLDraftContentShopDto extends IMLDraftContentShop {}
