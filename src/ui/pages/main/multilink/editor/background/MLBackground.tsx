@@ -3,7 +3,7 @@ import React, { CSSProperties, FC, useCallback, useMemo, MouseEvent, useState } 
 
 import { useTranslation } from 'react-i18next';
 
-import { setMLDraftBackground } from '../../../../../../bll/reducers';
+import { setMLDraftBackground, setMLDraftBackgroundImage } from '../../../../../../bll/reducers';
 import { ID } from '../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../common/hooks';
 import { TImageFile } from '../../../../../../common/types/instance';
@@ -28,7 +28,7 @@ export const MLBackground = () => {
 
   const onImageZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
-      dispatch(setMLDraftBackground(imageFile));
+      dispatch(setMLDraftBackgroundImage(imageFile));
       setImageFiles([imageFile]);
     },
     [dispatch],

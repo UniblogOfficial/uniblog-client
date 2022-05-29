@@ -1,14 +1,21 @@
 import React from 'react';
 
-import { IMLDraftContentShop, Nullable } from '../../../../../common/types/instance';
+import {
+  IMLDraftContentShop,
+  Nullable,
+  TImageFile,
+  TMLImageContentShop,
+} from '../../../../../common/types/instance';
 import { parseRawImage, px } from '../../../../../common/utils/ui';
+import imgPlaceholder from '../../../../../img/img-placeholder.png';
 
 type TMLShopProps = {
   block: Nullable<IMLDraftContentShop>;
+  images: Nullable<TMLImageContentShop<TImageFile>>;
   callback?: <T>(payload: T) => void;
 };
 
-export const MLShop = ({ block, callback }: TMLShopProps) => {
+export const MLShop = ({ block, images, callback }: TMLShopProps) => {
   if (!block) return null;
   const className = callback ? 'ml-shop interactive' : 'ml-shop';
   return (
@@ -18,7 +25,9 @@ export const MLShop = ({ block, callback }: TMLShopProps) => {
       )}
       <ul className="ml-shop__list" style={{ gridTemplateColumns: block.grid, gap: block.gap }}>
         {block.cells.map((cell, i) => {
-          const imgSrc = cell.image && cell.image?.src ? cell.image?.src : cell.image?.previewUrl;
+          const imgSrc = images?.cells[i]
+            ? images.cells[i]?.previewUrl
+            : cell.image ?? imgPlaceholder;
           return (
             <li
               key={cell.order}

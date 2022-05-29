@@ -1,28 +1,36 @@
 import React, { useCallback, useState } from 'react';
 
-import { setMLDraftBlockContent } from '../../../../../../bll/reducers';
+import {
+  setMLDraftBlockContent,
+  setMLDraftBlockContentImage,
+} from '../../../../../../bll/reducers';
 import { ID } from '../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../common/hooks';
-import { IMLDraftContentShop, Nullable, TImageFile } from '../../../../../../common/types/instance';
+import {
+  IMLDraftContentShop,
+  Nullable,
+  TImageFile,
+  TMLImageContentShop,
+} from '../../../../../../common/types/instance';
 import { Button, Input } from '../../../../../components/elements';
 import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
 
 type TMLShopEditorProps = {
   order: number;
   block: Nullable<IMLDraftContentShop>;
+  images: Nullable<TMLImageContentShop<TImageFile>>;
 };
 
-export const MLShopEditor = ({ order, block }: TMLShopEditorProps) => {
+export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
   const dispatch = useAppDispatch();
-  const [images, setImages] = useState<TImageFile[]>([]);
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
-      if (block && id !== undefined) {
-        block.cells[id].image = { ...imageFile, src: '' };
-        dispatch(setMLDraftBlockContent(block, order, 'shopSet'));
+      if (images && id !== undefined) {
+        images.cells[id] = imageFile;
+        dispatch(setMLDraftBlockContentImage(images, order, 'shopSet'));
       }
     },
-    [block, dispatch, order],
+    [dispatch, images, order],
   );
   if (!block) return <p>Error: Block not found</p>;
   const fields = block.cells.map((cell, i) => (

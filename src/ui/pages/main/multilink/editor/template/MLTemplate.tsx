@@ -43,7 +43,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                     <div
                       className="ml-logo__logo"
                       style={{ height: block.size ?? '100px', width: block.size ?? '100px' }}>
-                      <img src={parseRawImage(block.image)} alt="logo" />
+                      <img src={block.logo!} alt="logo" />
                     </div>
                   </li>
                 );
@@ -114,7 +114,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                           float: block.imgPosition as CSSProperties['float'],
                           margin: imgMargin(),
                         }}>
-                        <img src={block.image?.src} alt="" />
+                        <img src={block.image!} alt="" />
                       </div>
                       <p className="ml-imagetext__text">{block.text}</p>
                     </div>

@@ -1,38 +1,52 @@
 import React, { useCallback, useState, MouseEvent } from 'react';
 
-import { setMLDraftBlockContent } from '../../../../../../bll/reducers';
-import { ID } from '../../../../../../common/constants';
+import {
+  setMLDraftBlockContent,
+  setMLDraftBlockContentImage,
+} from '../../../../../../bll/reducers';
 import { useAppDispatch } from '../../../../../../common/hooks';
-import { IMLDraftContentLogo, Nullable, TImageFile } from '../../../../../../common/types/instance';
+import {
+  IMLDraftContentLogo,
+  Nullable,
+  TImageFile,
+  TMLImageContentLogo,
+} from '../../../../../../common/types/instance';
 import { Button, Input } from '../../../../../components/elements';
 import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
 
 type TMLLogoEditorProps = {
   order: number;
   block: Nullable<IMLDraftContentLogo>;
+  images: Nullable<TMLImageContentLogo<TImageFile>>;
 };
 
-export const MLLogoEditor = ({ order, block }: TMLLogoEditorProps) => {
+// private!
+enum ImageType {
+  LOGO = 1,
+  BANNER = 2,
+}
+
+export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
   const dispatch = useAppDispatch();
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
-      if (block && id !== undefined) {
-        if (id === 1) {
-          block.image = { ...imageFile, imageData: '', imageType: '' };
+      if (images && id !== undefined) {
+        if (id === ImageType.LOGO) {
+          images.logo = imageFile;
         }
-        if (id === 2) {
-          block.banner = { ...imageFile, src: '' };
+        if (id === ImageType.BANNER) {
+          images.banner = imageFile;
         }
-        dispatch(setMLDraftBlockContent(block, order, 'logoSet'));
+        dispatch(setMLDraftBlockContentImage(images, order, 'logoSet'));
       }
     },
-    [block, dispatch, order],
+    [dispatch, images, order],
   );
   const onDeleteButtonClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       if (block && e.currentTarget.value) {
         if (e.currentTarget.value === '1') {
-          block.image = null;
+          // block.image = null;
         }
         if (e.currentTarget.value === '2') {
           block.banner = null;

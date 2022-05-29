@@ -12,6 +12,7 @@ import {
   TIncomingImage,
   TMLDraftBlocks,
 } from '../../types/instance';
+import { parseRawImage } from '../ui/index';
 
 import { getKeys } from '.';
 
@@ -124,7 +125,7 @@ export const pushMLDraftBlockLogo = (
         ...blocks.logoSet,
         {
           order,
-          image: logo,
+          logo: logo ? parseRawImage(logo) : '',
           isFilled: !!logo,
           ...defaultLogoBlockOptions,
         } as IMLDraftContentLogo,
@@ -184,14 +185,14 @@ const defaultLinkBlockOptions = {
 const defaultImageBlockOptions = {
   type: MLContentType.IMAGE,
   isFilled: false,
-  images: [{ src: imgPlaceholder }],
+  images: [imgPlaceholder],
   padding: [0, 24],
 };
 
 const defaultImageTextBlockOptions = {
   type: MLContentType.IMAGETEXT,
   isFilled: false,
-  image: { src: imgPlaceholder },
+  image: imgPlaceholder,
   text: '',
   imgPosition: 'left',
   vAlign: 'top',
@@ -219,7 +220,7 @@ const defaultShopBlockOptions = {
   cells: [
     {
       order: 0,
-      image: { src: imgPlaceholder },
+      image: imgPlaceholder,
       background: '#fff',
       title: 'Item #1',
       subtitle: '1$',
