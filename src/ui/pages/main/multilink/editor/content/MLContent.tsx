@@ -29,7 +29,7 @@ import { MLImageEditor } from './MLImageEditor';
 import { MLLinkForm } from './MLLinkForm';
 import { MLLogoEditor } from './MLLogoEditor';
 import { MLShopEditor } from './MLShopEditor';
-import { MLTextarea } from './MLTextarea';
+import { MLTextarea } from './MLTextarea/MLTextarea';
 
 type TMLContentProps = {
   contentSet: MLContentType[];

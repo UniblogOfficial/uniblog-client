@@ -21,7 +21,6 @@ const fontWeightText: string[] = ['normal', 'bold', '900'];
 
 export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
   const dispatch = useAppDispatch();
-  const [colors, setColors] = useState<boolean>(false);
   const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
     if (!block) {
