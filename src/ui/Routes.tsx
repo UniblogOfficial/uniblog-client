@@ -37,20 +37,7 @@ export const Routes = (props: any) => {
   }, [dispatch, firstEnterUrl]);
 
   if (!isInitialized) {
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          margin: 'auto',
-          width: '75px',
-          height: '75px',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-        }}>
-        <Icon name="arrow-clockwise" containerClassName="preloader" />
-      </div>
-    );
+    return <Preloader />;
   }
 
   if (isMultilinkMode && isInitialized) {
