@@ -47,7 +47,7 @@ export interface IMLDraftContentText extends IMLDraftContent {
   text: Nullable<string>;
   color?: string;
   fontSize?: Nullable<number>;
-  fontWeight?: Nullable<number>;
+  fontWeight?: Nullable<number | string>;
   align?: 'right' | 'left' | 'center' | 'justify';
 }
 

@@ -10,6 +10,7 @@
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.0",
     "react": "^17.0.2",
+    "react-colorful": "^5.5.1",
     "react-dom": "^17.0.2",
     "react-dropzone": "^14.2.1",
     "react-hook-form": "^7.19.1",
