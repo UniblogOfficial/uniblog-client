@@ -1,17 +1,39 @@
 import { MLContentType, SocialNetwork } from '../../constants';
 
-import { TIncomingImage } from './image';
-
-import { Nullable } from '.';
+import {
+  IMLDraftContentImage,
+  IMLDraftContentImageText,
+  IMLDraftContentLink,
+  IMLDraftContentLogo,
+  IMLDraftContentShop,
+  IMLDraftContentSocial,
+  IMLDraftContentText,
+  IMLDraftContentVideo,
+  Nullable,
+  TIncomingImage,
+} from '.';
 
 export type TMultilink = {
-  id: number;
-  userId: number;
-  name: string;
-  logo: Nullable<TIncomingImage>;
-  template: number[];
+  // id: number;
+  // userId: number;
+  // name: string;
   background: string;
-  content: TMLContent[];
+  // clickCount: number;
+  contentSet: MLContentType[];
+
+  textSet: IMLDraftContentText[];
+  linkSet: IMLDraftContentLink[];
+  socialSet: IMLDraftContentSocial[];
+  logoSet: IMLDraftContentLogo[];
+  imageSet: IMLDraftContentImage[];
+  imageTextSet: IMLDraftContentImageText[];
+  videoSet: IMLDraftContentVideo[];
+  shopSet: IMLDraftContentShop[];
+
+  images: Array<{ id: number; order: number; suborder: number } & TIncomingImage>;
+  // createdAt: string;
+  // updatedAt: string;
+  // deletedAt: Nullable<string>;
   // temporary data about owner
   /*   user: {
           "id": 4,
@@ -25,16 +47,4 @@ export type TMultilink = {
           "createdAt": "2022-05-03T21:57:23.871Z",
           "updatedAt": "2022-05-03T21:57:23.871Z"
       } */
-};
-
-export type TMLContent = {
-  order: number;
-  type: MLContentType; // VIDEO
-  link: Nullable<string>;
-  linkType: Nullable<SocialNetwork | 'third-party'>;
-  title: Nullable<string>;
-  text: Nullable<string>;
-  imageName: string | undefined;
-  imageType: string | undefined;
-  imageData: string | undefined;
 };

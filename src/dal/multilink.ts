@@ -6,7 +6,7 @@ export const multilinkAPI = {
   get(name: string, id?: string) {
     return api
       .get(`multilink/${name}`)
-      .then(response => ({ data: response.data.data, message: response.data.message }));
+      .then(response => ({ data: response.data, message: response.data.message }));
   },
 
   getAll() {
@@ -43,27 +43,27 @@ export const multilinkAPI = {
     formData.append(`videoSet`, JSON.stringify(videoSet));
 
     if (images.background) {
-      formData.append(`backgroundImage`, images.background.file);
+      formData.append('images', images.background.file, 'backgroundImage');
     }
 
     images.logoSet.forEach((block, i) => {
-      block.logo && formData.append(`${block.order}_logo_1`, block.logo.file);
-      block.banner && formData.append(`${block.order}_logo_2`, block.banner.file);
+      block.logo && formData.append('images', block.logo.file, `${block.order}_logo_1`);
+      block.banner && formData.append('images', block.banner.file, `${block.order}_logo_2`);
     });
 
     images.imageSet.forEach((block, i) => {
       block.images.forEach((image, j) => {
-        image && formData.append(`${block.order}_image_${j}`, image.file);
+        image && formData.append('images', image.file, `${block.order}_image_${j}`);
       });
     });
 
     images.imageTextSet.forEach((block, i) => {
-      block.image && formData.append(`${block.order}_imagetext_0`, block.image.file);
+      block.image && formData.append('images', block.image.file, `${block.order}_imagetext_0`);
     });
 
     images.shopSet.forEach((block, i) => {
       block.cells.forEach((cell, j) => {
-        cell && formData.append(`${block.order}_shop_${j}`, cell.file);
+        cell && formData.append('images', cell.file, `${block.order}_shop_${j}`);
       });
     });
 

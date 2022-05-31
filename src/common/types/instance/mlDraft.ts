@@ -65,7 +65,7 @@ export interface IMLDraftContentLink extends IMLDraftContent {
 export interface IMLDraftContentSocial extends IMLDraftContent {
   type: MLContentType.SOCIAL;
   links: string[];
-  icons: SocialNetwork[];
+  linkTypes: SocialNetwork[];
 }
 
 export interface IMLDraftContentLogo extends IMLDraftContent {

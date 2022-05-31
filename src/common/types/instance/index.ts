@@ -22,7 +22,7 @@ export type {
   TMLImageContentShop,
 } from './mlDraft';
 export type { TMultilinkComplete } from './mlComplete';
-export type { TMultilink, TMLContent } from './mlPublic';
+export type { TMultilink } from './mlPublic';
 
 //
 //
