@@ -105,7 +105,7 @@ export const MLTemplates = memo(({ userData }: TMLTemplatesProps) => {
                 return (
                   <li key={ID[j]} style={{ padding: px(block.padding, 5) }}>
                     <ul className="ml-social">
-                      {block.icons.map(icon => {
+                      {block.linkTypes.map(icon => {
                         const data = socials.find(social => social.type === icon);
                         return (
                           <li

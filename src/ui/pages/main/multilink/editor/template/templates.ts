@@ -11,7 +11,7 @@ import {
   IMLDraftContentShop,
   IMLDraftContentImage,
 } from '../../../../../../common/types/instance/mlDraft';
-import imgPlaceholder from '../../../../../../img/img-placeholder.png';
+import { parseRawImage } from '../../../../../../common/utils/ui';
 
 export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
   [
@@ -19,7 +19,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
       {
         order: 0,
         isFilled: !!avatar,
-        image: avatar,
+        logo: avatar ? parseRawImage(avatar) : '',
         size: 100,
         type: MLContentType.LOGO,
       } as IMLDraftContentLogo,
@@ -31,6 +31,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontSize: 22,
         fontWeight: 700,
         align: 'center',
+        margin: [0, 0, 24],
         padding: [12, 24],
         background: '#0002',
       } as IMLDraftContentText,
@@ -44,7 +45,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           'https://instagram.com',
           'https://facebook.com/',
         ],
-        icons: [
+        linkTypes: [
           SocialNetwork.VK,
           SocialNetwork.YOUTUBE,
           SocialNetwork.INSTAGRAM,
@@ -59,6 +60,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit quos, quod natus fugiat eaque quae, eius sed beatae, et impedit doloribus! Doloremque, ut alias repellendus ducimus illum recusandae saepe possimus laboriosam accusamus rem debitis odit non a eveniet perferendis numquam sit labore nihil impedit. Eos dicta harum at libero dignissimos.',
         fontSize: 18,
         fontWeight: 400,
+        margin: [0, 0, 24],
         padding: [0, 24],
       } as IMLDraftContentText,
       {
@@ -105,7 +107,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
       {
         order: 0,
         isFilled: false,
-        image: avatar,
+        logo: avatar ? parseRawImage(avatar) : '',
         size: 100,
         type: MLContentType.LOGO,
       } as IMLDraftContentLogo,
@@ -117,6 +119,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontSize: 22,
         fontWeight: 700,
         align: 'center',
+        margin: [0, 0, 24],
         padding: [12, 24],
         background: '#0002',
       } as IMLDraftContentText,
@@ -127,6 +130,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit quos, quod natus fugiat eaque quae, eius sed beatae, et impedit doloribus! Doloremque, ut alias repellendus ducimus illum recusandae saepe possimus laboriosam accusamus rem debitis odit non a eveniet perferendis numquam sit labore nihil impedit. Eos dicta harum at libero dignissimos.',
         fontSize: 18,
         fontWeight: 400,
+        margin: [0, 0, 24],
         padding: [0, 24],
       } as IMLDraftContentText,
       {
@@ -178,7 +182,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           'https://instagram.com',
           'https://facebook.com/',
         ],
-        icons: [
+        linkTypes: [
           SocialNetwork.VK,
           SocialNetwork.YOUTUBE,
           SocialNetwork.INSTAGRAM,
@@ -191,7 +195,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
       {
         order: 0,
         isFilled: false,
-        image: avatar,
+        logo: avatar ? parseRawImage(avatar) : '',
         size: 100,
         type: MLContentType.LOGO,
       } as IMLDraftContentLogo,
@@ -219,7 +223,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         order: 3,
         isFilled: false,
         type: MLContentType.IMAGETEXT,
-        image: { src: imgPlaceholder },
+        image: null,
         text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit quos, quod natus fugiat eaque quae, eius sed beatae, et impedit doloribus!',
         imgPosition: 'left',
         vAlign: 'top',
@@ -231,7 +235,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         order: 4,
         isFilled: false,
         type: MLContentType.IMAGETEXT,
-        image: { src: imgPlaceholder },
+        image: null,
         text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit quos, quod natus fugiat eaque quae, eius sed beatae, et impedit doloribus!',
         imgPosition: 'right',
         vAlign: 'top',
@@ -262,7 +266,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           'https://instagram.com',
           'https://facebook.com/',
         ],
-        icons: [
+        linkTypes: [
           SocialNetwork.VK,
           SocialNetwork.YOUTUBE,
           SocialNetwork.INSTAGRAM,
@@ -275,7 +279,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
       {
         order: 0,
         isFilled: !!avatar,
-        image: avatar,
+        logo: avatar ? parseRawImage(avatar) : '',
         size: 100,
         type: MLContentType.LOGO,
       } as IMLDraftContentLogo,
@@ -288,6 +292,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontSize: 14,
         fontWeight: 400,
         align: 'left',
+        margin: [0, 0, 24],
         padding: [24, 24],
         background: '#85A4CC',
       } as IMLDraftContentText,
@@ -309,6 +314,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         isFilled: true,
         type: MLContentType.VIDEO,
         url: 'https://www.youtube.com/embed/hYu0d-4SX_Y',
+        margin: [0, 0, 24],
         padding: [0, 24],
       } as IMLDraftContentVideo,
       {
@@ -333,7 +339,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         cells: [
           {
             order: 0,
-            image: { src: imgPlaceholder },
+            image: null,
             background: '#fff',
             title: 'Курс "ВСПОМНИТЬ ВСЁ" 2022 (повторение всех заданий ЕГЭ)',
             subtitle: '2 490 ₽',
@@ -349,7 +355,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           },
           {
             order: 1,
-            image: { src: imgPlaceholder },
+            image: null,
             background: '#fff',
             title: 'Видеокурс 1-11 задания ЕГЭ 2022 профиль (первая часть с нуля)',
             subtitle: '990 ₽',
@@ -365,7 +371,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           },
           {
             order: 2,
-            image: { src: imgPlaceholder },
+            image: null,
             background: '#fff',
             title:
               'Видеокурс 12 задания ЕГЭ 2022 профиль (тригонометрия и другие типы 12-х с нуля)',
@@ -382,7 +388,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           },
           {
             order: 3,
-            image: { src: imgPlaceholder },
+            image: null,
             background: '#fff',
             title: 'Видеокурс 13 задания ЕГЭ 2022 профиль (стереометрия с нуля)',
             subtitle: '790 ₽',
@@ -398,7 +404,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           },
           {
             order: 4,
-            image: { src: imgPlaceholder },
+            image: null,
             background: '#fff',
             title: 'Видеокурс 10 задания ЕГЭ 2022 профиль (неравенства с нуля)',
             subtitle: '790 ₽',
@@ -414,7 +420,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           },
           {
             order: 5,
-            image: { src: imgPlaceholder },
+            image: null,
             background: '#fff',
             title: 'Видеокурс 16 задания ЕГЭ 2022 профиль (планиметрия с нуля)',
             subtitle: '990 ₽',
@@ -430,7 +436,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           },
           {
             order: 6,
-            image: { src: imgPlaceholder },
+            image: null,
             background: '#fff',
             title: 'Видеокурс 15 задания ЕГЭ 2022 профиль (кредиты и другие виды 15-х с нуля)',
             subtitle: '790 ₽',
@@ -446,7 +452,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           },
           {
             order: 7,
-            image: { src: imgPlaceholder },
+            image: null,
             background: '#fff',
             title: 'Видеокурс 17 задания ЕГЭ 2022 профиль (параметры с нуля)',
             subtitle: '990 ₽',
@@ -461,13 +467,15 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
             subtitleAlign: 'center',
           },
         ],
+        margin: [0, 0, 24],
         padding: [12, 24],
       } as IMLDraftContentShop,
       {
         order: 6,
         isFilled: true,
         type: MLContentType.IMAGE,
-        images: [{ src: imgPlaceholder }],
+        images: [null],
+        margin: [0, 0, 24],
         padding: [12, 48],
       } as IMLDraftContentImage,
       {
@@ -479,7 +487,66 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           'https://www.youtube.com/channel/UC7Z3j8Cgsa2NnBmKAl7uOuQ',
           'https://instagram.com/shkola_pifagora',
         ],
-        icons: [SocialNetwork.VK, SocialNetwork.YOUTUBE, SocialNetwork.INSTAGRAM],
+        linkTypes: [SocialNetwork.VK, SocialNetwork.YOUTUBE, SocialNetwork.INSTAGRAM],
+        margin: [0, 0, 24],
+        padding: [12, 24],
+      } as IMLDraftContentSocial,
+    ],
+    [
+      {
+        order: 0,
+        isFilled: false,
+        logo: avatar ? parseRawImage(avatar) : '',
+        size: 100,
+        type: MLContentType.LOGO,
+      } as IMLDraftContentLogo,
+      {
+        order: 1,
+        isFilled: false,
+        type: MLContentType.TEXT,
+        text: name,
+        fontSize: 22,
+        fontWeight: 700,
+        align: 'center',
+        margin: [0, 0, 24],
+        padding: [12, 24],
+        background: '#0002',
+      } as IMLDraftContentText,
+      {
+        order: 2,
+        isFilled: false,
+        type: MLContentType.TEXT,
+        text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit quos, quod natus fugiat eaque quae, eius sed beatae, et impedit doloribus! Doloremque, ut alias repellendus ducimus illum recusandae saepe possimus laboriosam accusamus rem debitis odit non a eveniet perferendis numquam sit labore nihil impedit. Eos dicta harum at libero dignissimos.',
+        fontSize: 18,
+        fontWeight: 400,
+        margin: [0, 0, 24],
+        padding: [0, 24],
+      } as IMLDraftContentText,
+      {
+        order: 3,
+        isFilled: true,
+        type: MLContentType.IMAGE,
+        images: [null],
+        margin: [0, 0, 24],
+        padding: [12, 48],
+      } as IMLDraftContentImage,
+      {
+        order: 4,
+        isFilled: false,
+        type: MLContentType.SOCIAL,
+        links: [
+          'https://vk.com',
+          'https://youtube.com',
+          'https://instagram.com',
+          'https://facebook.com/',
+        ],
+        linkTypes: [
+          SocialNetwork.VK,
+          SocialNetwork.YOUTUBE,
+          SocialNetwork.INSTAGRAM,
+          SocialNetwork.FACEBOOK,
+        ],
+        margin: [0, 0, 24],
         padding: [12, 24],
       } as IMLDraftContentSocial,
     ],

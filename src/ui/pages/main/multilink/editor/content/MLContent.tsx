@@ -1,39 +1,28 @@
-import React, {
-  FC,
-  useCallback,
-  MouseEvent,
-  useState,
-  ReactElement,
-  ChangeEvent,
-  useRef,
-  useEffect,
-} from 'react';
+import React, { useCallback, MouseEvent, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
 import { addMLDraftBlock } from '../../../../../../bll/reducers';
-import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
+import { MLContentType } from '../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../common/hooks';
 import {
-  IMLDraftContentText,
   Nullable,
   TImageFile,
-  TMLContent,
+  TMLDraftBlocks,
+  TMLDraftImages,
 } from '../../../../../../common/types/instance';
-import { TMLDraftBlocks } from '../../../../../../common/types/instance/mlDraft';
-import { Button, Icon } from '../../../../../components/elements';
-import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
-import { Modal } from '../../../../../components/modules/modals/Modal';
+import { Button } from '../../../../../components/elements';
 
 import { MLImageEditor } from './MLImageEditor';
 import { MLLinkForm } from './MLLinkForm';
 import { MLLogoEditor } from './MLLogoEditor';
 import { MLShopEditor } from './MLShopEditor';
-import { MLTextarea } from './MLTextarea';
+import { MLTextarea } from './MLTextarea/MLTextarea';
 
 type TMLContentProps = {
   contentSet: MLContentType[];
   blocks: TMLDraftBlocks;
+  images: TMLDraftImages;
   blockEditorType: Nullable<MLContentType>;
   blockEditorOrder: number;
   setBlockEditor: (payload: { type: MLContentType; order: number } | null) => void;
@@ -41,7 +30,7 @@ type TMLContentProps = {
 
 export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
-  const { contentSet, blocks, blockEditorType, blockEditorOrder, setBlockEditor } = props;
+  const { contentSet, blocks, images, blockEditorType, blockEditorOrder, setBlockEditor } = props;
   const { t } = useTranslation(['pages', 'common']);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
@@ -49,18 +38,6 @@ export const MLContent = (props: TMLContentProps) => {
   const [contentBlocks, setContentBlocks] = useState<boolean[]>(
     contentSet.map((block, i) => false),
   );
-
-  const onImageZoneChange = useCallback((imageFile: TImageFile, id?: number) => {
-    setImageFiles([imageFile]);
-    /* dispatch(
-        setMLDraftTextBlockContent({
-          order: id || 0,
-          type: MLContentType.IMAGE,
-          isFilled: true,
-          images: [imageFile],
-        }),
-      ); */
-  }, []);
 
   const closeModal = useCallback(
     (order: number) => {
@@ -85,60 +62,6 @@ export const MLContent = (props: TMLContentProps) => {
     dispatch(addMLDraftBlock(e.currentTarget.value as MLContentType));
     setBlockEditor({ type: e.currentTarget.value as MLContentType, order: contentSet.length });
   };
-
-  /*   const contentEditorSwitcher = (order: number, type: MLContentType) => {
-    switch (type) {
-      case MLContentType.TEXT:
-        return (
-          <MLTextarea
-            order={order}
-            value={contentSet[order].text}
-            changeTextBlock={changeTextBlock}
-          />
-        );
-      case MLContentType.LINK:
-        return contentSet[order].isFilled ? (
-          <div className="template__link">
-            <p>{contentSet[order].title}</p>
-            <p>{contentSet[order].link}</p>
-          </div>
-        ) : (
-          <Modal close={() => closeModal(order)}>
-            <MLLinkForm order={order} />
-          </Modal>
-        );
-      case MLContentType.IMAGE:
-        return (
-          <DropZoneField
-            id={order}
-            onChange={onImageZoneChange}
-            imageFiles={imageFiles}
-            touched={false}
-          />
-        );
-      default:
-        return <></>;
-    }
-  };
-
-  const templateLayout = (
-    <ul className="template">
-      {template.map((block, i) => (
-        <li
-          key={id[i]}
-          style={{ flex: `0 1 ${block}%` }}
-          className={`template__block ${contentBlocks[i] ? '_filled' : '_interactive'}`}>
-          {contentBlocks[i] ? (
-            contentEditorSwitcher(i, contentSet[i].type)
-          ) : (
-            <button value={contentSet[i].type} data-value={i} onClick={onBlockClick} type="button">
-              <Icon name="circle-add" />
-            </button>
-          )}
-        </li>
-      ))}
-    </ul>
-  ); */
 
   const actionButtons = (
     <>
@@ -241,17 +164,29 @@ export const MLContent = (props: TMLContentProps) => {
       )}
       {blockEditorType === MLContentType.LOGO && (
         <div className="ml-logo-editor">
-          <MLLogoEditor order={blockEditorOrder} block={blocks.logoSet[blockEditorOrder]} />
+          <MLLogoEditor
+            order={blockEditorOrder}
+            block={blocks.logoSet[blockEditorOrder]}
+            images={images.blocks.logoSet[blockEditorOrder]}
+          />
         </div>
       )}
       {blockEditorType === MLContentType.IMAGE && (
         <div className="ml-image-editor">
-          <MLImageEditor order={blockEditorOrder} block={blocks.imageSet[blockEditorOrder]} />
+          <MLImageEditor
+            order={blockEditorOrder}
+            block={blocks.imageSet[blockEditorOrder]}
+            images={images.blocks.imageSet[blockEditorOrder]}
+          />
         </div>
       )}
       {blockEditorType === MLContentType.SHOP && (
         <div className="ml-shop-editor">
-          <MLShopEditor order={blockEditorOrder} block={blocks.shopSet[blockEditorOrder]} />
+          <MLShopEditor
+            order={blockEditorOrder}
+            block={blocks.shopSet[blockEditorOrder]}
+            images={images.blocks.shopSet[blockEditorOrder]}
+          />
         </div>
       )}
       {blockEditorType && blockEditorType !== MLContentType.LINK && (
@@ -276,5 +211,3 @@ export const MLContent = (props: TMLContentProps) => {
     </>
   );
 };
-
-const id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
