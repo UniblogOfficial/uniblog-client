@@ -3,13 +3,11 @@ import React, { useCallback, MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { addMLDraftBlock } from '../../../../../../bll/reducers';
-import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
+import { MLContentType } from '../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../common/hooks';
 import {
-  IMLDraftContentText,
   Nullable,
   TImageFile,
-  TMLContent,
   TMLDraftBlocks,
   TMLDraftImages,
 } from '../../../../../../common/types/instance';

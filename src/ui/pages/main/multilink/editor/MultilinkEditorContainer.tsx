@@ -84,7 +84,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
   const getLayout = useCallback(
     (editable: boolean, limited: boolean) => {
-      const templateClassName = limited ? 'template' : 'template template_unlimited';
+      const templateClassName = limited ? 'ml-template' : 'ml-template template_unlimited';
       const templateBackground = images.background
         ? `url(${images.background.previewUrl})`
         : background;
@@ -108,7 +108,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                 return <MLLink key={ID[i]} block={block} callback={callback} />;
               case MLContentType.SOCIAL:
                 block = blocks.socialSet[i];
-                return <MLSocial key={ID[i]} block={block} callback={callback} />;
+                return <MLSocial key={ID[i]} block={block} callback={callback} isPublic={false} />;
               case MLContentType.IMAGE:
                 block = blocks.imageSet[i];
                 image = images.blocks.imageSet[i];
