@@ -6,7 +6,7 @@ export const multilinkAPI = {
   get(name: string, id?: string) {
     return api
       .get(`multilink/${name}`)
-      .then(response => ({ data: response.data, message: response.data.message }));
+      .then(response => ({ data: response.data.data, message: response.data.message }));
   },
 
   getAll() {

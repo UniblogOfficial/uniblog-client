@@ -59,7 +59,7 @@ export const getMultilink =
       if (response.data) {
         batch(() => {
           dispatch(setMultilinkMode(true));
-          dispatch(setMultilink(normalizeMLPublic(response.data)));
+          dispatch(setMultilink(normalizeMLPublic(response.data.multilink)));
           dispatch(setAppStatus(AppStatus.SUCCEEDED));
           dispatch(setInitialized());
         });

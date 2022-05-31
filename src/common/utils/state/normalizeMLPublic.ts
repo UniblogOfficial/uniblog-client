@@ -62,7 +62,8 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
         }
         break;
       case MLContentType.SHOP:
-        const cellImages: any = images
+        const cellImages: any = [];
+        images
           .filter(image => image.order === i)
           .forEach(img => {
             cellImages[img.suborder] = parseRawImage(img);
