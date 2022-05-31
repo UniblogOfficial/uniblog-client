@@ -2,10 +2,12 @@
   margin: 0 auto;
 	padding: 24px 0;
 	width: 375px;
-	height: 760px;
+	height: auto;
+	min-height: 780px;
 	border-radius: 25px;
 	background-position: 50% 0% !important;
 	background-size: cover !important;
+
 	& > * {
 		display: flex;
 		margin-bottom: 24px;

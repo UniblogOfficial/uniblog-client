@@ -65,7 +65,7 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 block = multilink.shopSet.find(el => el.order === i);
                 image = null;
                 if (!block) return null;
-                return <MLShop key={ID[i]} block={block} images={image} />;
+                return <MLShop key={ID[i]} block={block} images={image} isPublic />;
               default:
                 return <li key={ID[i]} />;
             }

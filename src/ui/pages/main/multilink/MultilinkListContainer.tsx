@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { getAllMultilinks } from '../../../../bll/reducers';
+import { ID } from '../../../../common/constants';
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks';
 import { Nullable, TMultilink } from '../../../../common/types/instance';
 import { PublicMultilink } from '../../public/PublicMultilink';
@@ -16,9 +17,11 @@ export const MultilinkListContainer = () => {
 
   const mappedMLs =
     multilinks &&
-    multilinks.map(multilink => (
-      <PublicMultilink key={multilink.background} multilink={multilink} className="ml-template" />
+    multilinks.map((multilink, i) => (
+      <div key={ID[i]} className="grid__row">
+        <PublicMultilink multilink={multilink} className="ml-template" />
+      </div>
     ));
 
-  return <div className="grid__row">{mappedMLs}</div>;
+  return <>{mappedMLs}</>;
 };

@@ -6,7 +6,7 @@ import socials from '../../../../../img';
 
 type TMLSocialProps = {
   block: Nullable<IMLDraftContentSocial>;
-  isPublic: boolean;
+  isPublic?: boolean;
   callback?: <T>(payload: T) => void;
 };
 

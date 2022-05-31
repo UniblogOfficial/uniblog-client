@@ -108,7 +108,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                 return <MLLink key={ID[i]} block={block} callback={callback} />;
               case MLContentType.SOCIAL:
                 block = blocks.socialSet[i];
-                return <MLSocial key={ID[i]} block={block} callback={callback} isPublic={false} />;
+                return <MLSocial key={ID[i]} block={block} callback={callback} />;
               case MLContentType.IMAGE:
                 block = blocks.imageSet[i];
                 image = images.blocks.imageSet[i];
