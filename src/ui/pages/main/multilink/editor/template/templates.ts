@@ -31,6 +31,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontSize: 22,
         fontWeight: 700,
         align: 'center',
+        margin: [0, 0, 24],
         padding: [12, 24],
         background: '#0002',
       } as IMLDraftContentText,
@@ -44,7 +45,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           'https://instagram.com',
           'https://facebook.com/',
         ],
-        icons: [
+        linkTypes: [
           SocialNetwork.VK,
           SocialNetwork.YOUTUBE,
           SocialNetwork.INSTAGRAM,
@@ -59,6 +60,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit quos, quod natus fugiat eaque quae, eius sed beatae, et impedit doloribus! Doloremque, ut alias repellendus ducimus illum recusandae saepe possimus laboriosam accusamus rem debitis odit non a eveniet perferendis numquam sit labore nihil impedit. Eos dicta harum at libero dignissimos.',
         fontSize: 18,
         fontWeight: 400,
+        margin: [0, 0, 24],
         padding: [0, 24],
       } as IMLDraftContentText,
       {
@@ -117,6 +119,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontSize: 22,
         fontWeight: 700,
         align: 'center',
+        margin: [0, 0, 24],
         padding: [12, 24],
         background: '#0002',
       } as IMLDraftContentText,
@@ -127,6 +130,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit quos, quod natus fugiat eaque quae, eius sed beatae, et impedit doloribus! Doloremque, ut alias repellendus ducimus illum recusandae saepe possimus laboriosam accusamus rem debitis odit non a eveniet perferendis numquam sit labore nihil impedit. Eos dicta harum at libero dignissimos.',
         fontSize: 18,
         fontWeight: 400,
+        margin: [0, 0, 24],
         padding: [0, 24],
       } as IMLDraftContentText,
       {
@@ -178,7 +182,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           'https://instagram.com',
           'https://facebook.com/',
         ],
-        icons: [
+        linkTypes: [
           SocialNetwork.VK,
           SocialNetwork.YOUTUBE,
           SocialNetwork.INSTAGRAM,
@@ -262,7 +266,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           'https://instagram.com',
           'https://facebook.com/',
         ],
-        icons: [
+        linkTypes: [
           SocialNetwork.VK,
           SocialNetwork.YOUTUBE,
           SocialNetwork.INSTAGRAM,
@@ -288,6 +292,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontSize: 14,
         fontWeight: 400,
         align: 'left',
+        margin: [0, 0, 24],
         padding: [24, 24],
         background: '#85A4CC',
       } as IMLDraftContentText,
@@ -309,6 +314,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         isFilled: true,
         type: MLContentType.VIDEO,
         url: 'https://www.youtube.com/embed/hYu0d-4SX_Y',
+        margin: [0, 0, 24],
         padding: [0, 24],
       } as IMLDraftContentVideo,
       {
@@ -461,6 +467,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
             subtitleAlign: 'center',
           },
         ],
+        margin: [0, 0, 24],
         padding: [12, 24],
       } as IMLDraftContentShop,
       {
@@ -468,6 +475,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         isFilled: true,
         type: MLContentType.IMAGE,
         images: [null],
+        margin: [0, 0, 24],
         padding: [12, 48],
       } as IMLDraftContentImage,
       {
@@ -479,7 +487,66 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           'https://www.youtube.com/channel/UC7Z3j8Cgsa2NnBmKAl7uOuQ',
           'https://instagram.com/shkola_pifagora',
         ],
-        icons: [SocialNetwork.VK, SocialNetwork.YOUTUBE, SocialNetwork.INSTAGRAM],
+        linkTypes: [SocialNetwork.VK, SocialNetwork.YOUTUBE, SocialNetwork.INSTAGRAM],
+        margin: [0, 0, 24],
+        padding: [12, 24],
+      } as IMLDraftContentSocial,
+    ],
+    [
+      {
+        order: 0,
+        isFilled: false,
+        logo: avatar ? parseRawImage(avatar) : '',
+        size: 100,
+        type: MLContentType.LOGO,
+      } as IMLDraftContentLogo,
+      {
+        order: 1,
+        isFilled: false,
+        type: MLContentType.TEXT,
+        text: name,
+        fontSize: 22,
+        fontWeight: 700,
+        align: 'center',
+        margin: [0, 0, 24],
+        padding: [12, 24],
+        background: '#0002',
+      } as IMLDraftContentText,
+      {
+        order: 2,
+        isFilled: false,
+        type: MLContentType.TEXT,
+        text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit quos, quod natus fugiat eaque quae, eius sed beatae, et impedit doloribus! Doloremque, ut alias repellendus ducimus illum recusandae saepe possimus laboriosam accusamus rem debitis odit non a eveniet perferendis numquam sit labore nihil impedit. Eos dicta harum at libero dignissimos.',
+        fontSize: 18,
+        fontWeight: 400,
+        margin: [0, 0, 24],
+        padding: [0, 24],
+      } as IMLDraftContentText,
+      {
+        order: 3,
+        isFilled: true,
+        type: MLContentType.IMAGE,
+        images: [null],
+        margin: [0, 0, 24],
+        padding: [12, 48],
+      } as IMLDraftContentImage,
+      {
+        order: 4,
+        isFilled: false,
+        type: MLContentType.SOCIAL,
+        links: [
+          'https://vk.com',
+          'https://youtube.com',
+          'https://instagram.com',
+          'https://facebook.com/',
+        ],
+        linkTypes: [
+          SocialNetwork.VK,
+          SocialNetwork.YOUTUBE,
+          SocialNetwork.INSTAGRAM,
+          SocialNetwork.FACEBOOK,
+        ],
+        margin: [0, 0, 24],
         padding: [12, 24],
       } as IMLDraftContentSocial,
     ],

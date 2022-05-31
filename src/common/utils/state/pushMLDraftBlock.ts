@@ -150,7 +150,7 @@ export const pushMLDraftBlockSocial = (
         {
           order,
           links: socials.map(social => social.href),
-          icons: socials.map(social => social.type),
+          linkTypes: socials.map(social => social.type),
           ...defaultSocialBlockOptions,
         } as IMLDraftContentSocial,
       ];

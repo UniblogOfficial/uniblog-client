@@ -34,7 +34,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
   const getTemplateLayouts = useCallback(
     () =>
       templates.map((template, i) => (
-        <ul key={ID[i]} className="template">
+        <ul key={ID[i]} className="ml-template">
           {template.map((block, j) => {
             switch (block.type) {
               case MLContentType.LOGO:
@@ -83,7 +83,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                 return (
                   <li key={block.order} style={{ padding: px(block.padding) ?? '0' }}>
                     <ul className="ml-social">
-                      {block.icons.map(icon => {
+                      {block.linkTypes.map(icon => {
                         const data = socials.find(social => social.type === icon);
                         return (
                           <li key={icon}>
