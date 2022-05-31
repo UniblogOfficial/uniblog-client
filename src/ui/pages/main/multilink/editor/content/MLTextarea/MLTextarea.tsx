@@ -1,9 +1,10 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { HexColorPicker } from 'react-colorful';
 
 import { setMLDraftBlockContent } from '../../../../../../../bll/reducers';
 import { useAppDispatch } from '../../../../../../../common/hooks';
+import { useDebounce } from '../../../../../../../common/hooks/useDebounce.';
 import { IMLDraftContentText, Nullable } from '../../../../../../../common/types/instance';
 import { Radio, Textarea } from '../../../../../../components/elements';
 
@@ -21,14 +22,22 @@ const fontWeightText: string[] = ['normal', 'bold', '900'];
 
 export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
   const dispatch = useAppDispatch();
+  const [text, setText] = useState(block?.text ?? '');
   const [colors, setColors] = useState<boolean>(false);
+  const debouncedValue = useDebounce(text, 500);
+
+  useEffect(() => {
+    if (block) {
+      block.text = debouncedValue;
+      dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+    }
+  }, [debouncedValue]);
   const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const text = e.target.value;
+    const newText = e.target.value;
     if (!block) {
       return;
     }
-    block.text = text;
-    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+    setText(newText);
   };
 
   const onAlignChange = (align: AlignTextType) => {
@@ -68,7 +77,7 @@ export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
       <div>
         <Textarea
           data-value={order}
-          value={block.text ?? ''}
+          value={text}
           onChange={onTextareaChange}
           maxLength={1023}
           className="textarea"
