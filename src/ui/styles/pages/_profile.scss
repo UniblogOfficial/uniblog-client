@@ -1,57 +1,73 @@
 .profile {
 
-		// .profile__header
-		&__header {
-		}
+  // .profile__header
+  &__header {
+  }
 
-		// .profile__main
-		&__main {
-		}
+  // .profile__main
+  &__main {
+  }
 
-		// .profile__card
-		&__card {
-      max-width: 558px;
-          .paper-title {
-            margin-bottom: 16px;
-          }
-		}
+  // .profile__card
+  &__card {
+    max-width: 558px;
 
-		// .profile__title
-		&__title {
-		}
-        //.profile__avatar
-        &__avatar{
-          position: relative;
-          height: 200px;
-          width: 200px;
-          border: 1px solid #EAECEE;
-          border-radius: 7px;
-        }
+    .paper-title {
+      margin-bottom: 16px;
+    }
+  }
 
+  // .profile__title
+  &__title {
+  }
+
+  //.profile__avatar
+  &__avatar {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    border: 1px solid #EAECEE;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .icon-container {
+      position: absolute;
+      z-index: 10;
+      width: 20px;
+      height: 20px;
+
+      .icon {
+        cursor: pointer;
+        --primary: blue;
+      }
+    }
+  }
     // .profile__form
-		&__form {
+    &__form {
       padding-top: 16px;
-		}
-}
+    }
+  }
 
-.button-profile {
-  // display: flex;
-  //align-items: center;
-  //justify-content: flex-end;
-  height: 38px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 100%;
-  overflow: hidden;
-  text-decoration: none;
-  color: #ffffff;
-  max-width: 115px;
-  border-radius: 8px;
-  button {
+  .button-profile {
+    // display: flex;
+    //align-items: center;
+    //justify-content: flex-end;
+    height: 38px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    overflow: hidden;
+    text-decoration: none;
+    color: #ffffff;
     max-width: 115px;
     border-radius: 8px;
+
+    button {
+      max-width: 115px;
+      border-radius: 8px;
+    }
+
+    &._shadowed {
+      filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
+    }
   }
-  &._shadowed {
-    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
-  }
-}

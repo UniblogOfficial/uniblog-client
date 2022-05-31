@@ -42,7 +42,7 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
   return (
     <>
       {image.length > 0 && <ImagePreview imageFiles={image} />}
-      {image.length === 0 && initialImage && <ImagePreview imageFiles={image} />}
+      {image.length === 0 && initialImage && <ImagePreview imageFiles={initialImage} />}
       <ImagePlaceholder isFilled={image.length > 0} onDrop={onDrop} />
     </>
   );
