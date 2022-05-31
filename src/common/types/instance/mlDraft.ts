@@ -1,14 +1,15 @@
 import { MLContentType, SocialNetwork } from '../../constants';
 
-import { TImageFile, TIncomingImage } from './image';
+import { TImageFile } from './image';
 
 import { Nullable } from '.';
 
 export type TMultilinkDraft = {
   name: string;
-  background: undefined | string | TImageFile;
+  background: string;
   contentSet: MLContentType[];
   blocks: TMLDraftBlocks;
+  images: TMLDraftImages;
 };
 
 export type TMLDraftBlocks = {
@@ -21,6 +22,16 @@ export type TMLDraftBlocks = {
   videoSet: Nullable<IMLDraftContentVideo>[];
   shopSet: Nullable<IMLDraftContentShop>[];
   unknownSet: Nullable<IMLDraftContentUnknown>[];
+};
+
+export type TMLDraftImages = {
+  background: Nullable<TImageFile>;
+  blocks: {
+    logoSet: Nullable<TMLImageContentLogo<TImageFile>>[];
+    imageSet: Nullable<TMLImageContentImage<TImageFile>>[];
+    imageTextSet: Nullable<TMLImageContentImageText<TImageFile>>[];
+    shopSet: Nullable<TMLImageContentShop<TImageFile>>[];
+  };
 };
 
 interface IMLDraftContent {
@@ -36,7 +47,7 @@ export interface IMLDraftContentText extends IMLDraftContent {
   text: Nullable<string>;
   color?: string;
   fontSize?: Nullable<number>;
-  fontWeight?: Nullable<number>;
+  fontWeight?: Nullable<number | string>;
   align?: 'right' | 'left' | 'center' | 'justify';
 }
 
@@ -54,25 +65,25 @@ export interface IMLDraftContentLink extends IMLDraftContent {
 export interface IMLDraftContentSocial extends IMLDraftContent {
   type: MLContentType.SOCIAL;
   links: string[];
-  icons: SocialNetwork[];
+  linkTypes: SocialNetwork[];
 }
 
 export interface IMLDraftContentLogo extends IMLDraftContent {
   type: MLContentType.LOGO;
-  image: Nullable<TImageFile & TIncomingImage>;
-  banner?: Nullable<TImageFile & { src: string }>;
+  logo: Nullable<string>;
+  banner?: Nullable<string>;
   size: Nullable<number>;
 }
 
 export interface IMLDraftContentImage extends IMLDraftContent {
   type: MLContentType.IMAGE;
-  images: Nullable<TImageFile & { src: string }>[];
+  images: Nullable<string>[];
   grid?: '1fr' | '1fr 1fr' | '1fr 1fr 1fr';
 }
 
 export interface IMLDraftContentImageText extends IMLDraftContent {
   type: MLContentType.IMAGETEXT;
-  image: Nullable<TImageFile & { src: string }>;
+  image: Nullable<string>;
   imgPosition: 'right' | 'left';
   text: Nullable<string>;
   color?: string;
@@ -93,7 +104,7 @@ export interface IMLDraftContentShop extends IMLDraftContent {
   gap?: number;
   cells: {
     order: number;
-    image: Nullable<TImageFile & { src: string }>;
+    image: Nullable<string>;
     background?: string;
     title: string;
     subtitle?: string;
@@ -112,3 +123,26 @@ export interface IMLDraftContentShop extends IMLDraftContent {
 export interface IMLDraftContentUnknown extends IMLDraftContent {
   type: MLContentType.UNKNOWN;
 }
+
+// image blocks types
+
+export type TMLImageContentLogo<TImage> = {
+  order: number;
+  logo: Nullable<TImage>;
+  banner?: Nullable<TImage>;
+};
+
+export type TMLImageContentImage<TImage> = {
+  order: number;
+  images: Nullable<TImage>[];
+};
+
+export type TMLImageContentImageText<TImage> = {
+  order: number;
+  image: Nullable<TImage>;
+};
+
+export type TMLImageContentShop<TImage> = {
+  order: number;
+  cells: Nullable<TImage>[];
+};

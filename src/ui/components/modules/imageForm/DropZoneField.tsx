@@ -1,6 +1,7 @@
 import React, { FC, DragEvent, useState, useCallback } from 'react';
 
 import DropZone, { DropEvent } from 'react-dropzone';
+import { string } from 'yup';
 
 import { TImageFile, TIncomingImage } from '../../../../common/types/instance';
 
@@ -11,7 +12,7 @@ import ImagePreview from './ImagePreview';
 type TDropZoneFieldProps = {
   onChange: (imageFile: TImageFile, id?: number) => void;
   initialImage?: TIncomingImage;
-  error?: string;
+  // error?: string;
   touched?: boolean;
   id?: number;
 };
@@ -19,11 +20,12 @@ type TDropZoneFieldProps = {
 export const DropZoneField: FC<TDropZoneFieldProps> = ({
   initialImage,
   onChange,
-  error,
+  // error,
   touched,
   id,
 }) => {
   const [image, setImage] = useState<TImageFile[]>([]);
+  const [error, setError] = useState<string>('');
 
   const onDrop = useCallback(
     (file: File[]) => {
@@ -33,17 +35,23 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
         previewUrl: URL.createObjectURL(file[0]),
         size: file[0].size,
       };
-      setImage([fileData]);
-      fileData && onChange(fileData, id);
+      if (fileData.size <= 1024 * 1024) {
+        setImage([fileData]);
+        fileData && onChange(fileData, id);
+        setError('');
+      } else setError('Файл больше 1 мб');
     },
     [onChange, id],
   );
 
   return (
     <>
-      {image.length > 0 && <ImagePreview imageFiles={image} />}
-      {image.length === 0 && initialImage && <ImagePreview imageFiles={initialImage} />}
-      <ImagePlaceholder isFilled={image.length > 0} onDrop={onDrop} />
+      <div className="dropbox">
+        {image.length > 0 && <ImagePreview imageFiles={image} />}
+        {image.length === 0 && initialImage && <ImagePreview imageFiles={image} />}
+        <ImagePlaceholder isFilled={image.length > 0} onDrop={onDrop} />
+      </div>
+      {error && <p className="field__error">{error}</p>}
     </>
   );
 };

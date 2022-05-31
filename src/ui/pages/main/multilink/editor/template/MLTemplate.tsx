@@ -34,16 +34,16 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
   const getTemplateLayouts = useCallback(
     () =>
       templates.map((template, i) => (
-        <ul key={ID[i]} className="template">
+        <ul key={ID[i]} className="ml-template">
           {template.map((block, j) => {
             switch (block.type) {
               case MLContentType.LOGO:
                 return (
                   <li key={block.order}>
                     <div
-                      className="ml-logo"
+                      className="ml-logo__logo"
                       style={{ height: block.size ?? '100px', width: block.size ?? '100px' }}>
-                      <img src={parseRawImage(block.image)} alt="logo" />
+                      <img src={block.logo!} alt="logo" />
                     </div>
                   </li>
                 );
@@ -83,7 +83,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                 return (
                   <li key={block.order} style={{ padding: px(block.padding) ?? '0' }}>
                     <ul className="ml-social">
-                      {block.icons.map(icon => {
+                      {block.linkTypes.map(icon => {
                         const data = socials.find(social => social.type === icon);
                         return (
                           <li key={icon}>
@@ -114,14 +114,14 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                           float: block.imgPosition as CSSProperties['float'],
                           margin: imgMargin(),
                         }}>
-                        <img src={block.image?.src} alt="" />
+                        <img src={block.image!} alt="" />
                       </div>
                       <p className="ml-imagetext__text">{block.text}</p>
                     </div>
                   </li>
                 );
               default:
-                return <li />;
+                return <li key={block.order} />;
             }
           })}
         </ul>

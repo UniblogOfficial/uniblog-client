@@ -12,6 +12,7 @@ import {
   TIncomingImage,
   TMLDraftBlocks,
 } from '../../types/instance';
+import { parseRawImage } from '../ui/index';
 
 import { getKeys } from '.';
 
@@ -124,7 +125,7 @@ export const pushMLDraftBlockLogo = (
         ...blocks.logoSet,
         {
           order,
-          image: logo,
+          logo: logo ? parseRawImage(logo) : '',
           isFilled: !!logo,
           ...defaultLogoBlockOptions,
         } as IMLDraftContentLogo,
@@ -149,7 +150,7 @@ export const pushMLDraftBlockSocial = (
         {
           order,
           links: socials.map(social => social.href),
-          icons: socials.map(social => social.type),
+          linkTypes: socials.map(social => social.type),
           ...defaultSocialBlockOptions,
         } as IMLDraftContentSocial,
       ];
@@ -184,14 +185,14 @@ const defaultLinkBlockOptions = {
 const defaultImageBlockOptions = {
   type: MLContentType.IMAGE,
   isFilled: false,
-  images: [{ src: imgPlaceholder }],
+  images: [imgPlaceholder],
   padding: [0, 24],
 };
 
 const defaultImageTextBlockOptions = {
   type: MLContentType.IMAGETEXT,
   isFilled: false,
-  image: { src: imgPlaceholder },
+  image: imgPlaceholder,
   text: '',
   imgPosition: 'left',
   vAlign: 'top',
@@ -215,20 +216,21 @@ const defaultShopBlockOptions = {
   isFilled: false,
   grid: '1fr 1fr 1fr',
   gap: 10,
+  padding: [0, 24],
   cells: [
     {
       order: 0,
-      image: { src: imgPlaceholder },
+      image: imgPlaceholder,
       background: '#fff',
       title: 'Item #1',
       subtitle: '1$',
       href: '',
       color: '#000',
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: 400,
       align: 'left',
       subtitleColor: '#000',
-      subtitleFontSize: 16,
+      subtitleFontSize: 14,
       subtitleFontWeight: 700,
       subtitleAlign: 'center',
     },
@@ -240,11 +242,11 @@ const defaultShopBlockOptions = {
       subtitle: '2$',
       href: '',
       color: '#000',
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: 400,
       align: 'left',
       subtitleColor: '#000',
-      subtitleFontSize: 16,
+      subtitleFontSize: 14,
       subtitleFontWeight: 700,
       subtitleAlign: 'center',
     },
@@ -256,11 +258,11 @@ const defaultShopBlockOptions = {
       subtitle: '3$',
       href: '',
       color: '#000',
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: 400,
       align: 'left',
       subtitleColor: '#000',
-      subtitleFontSize: 16,
+      subtitleFontSize: 14,
       subtitleFontWeight: 700,
       subtitleAlign: 'center',
     },

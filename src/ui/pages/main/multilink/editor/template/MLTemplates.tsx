@@ -30,7 +30,7 @@ export const MLTemplates = memo(({ userData }: TMLTemplatesProps) => {
                 return (
                   <li key={ID[j]}>
                     <div
-                      className="ml-logo"
+                      className="ml-logo__logo"
                       style={{
                         height: px(block.size, 5),
                         width: px(block.size, 5),
@@ -105,7 +105,7 @@ export const MLTemplates = memo(({ userData }: TMLTemplatesProps) => {
                 return (
                   <li key={ID[j]} style={{ padding: px(block.padding, 5) }}>
                     <ul className="ml-social">
-                      {block.icons.map(icon => {
+                      {block.linkTypes.map(icon => {
                         const data = socials.find(social => social.type === icon);
                         return (
                           <li
@@ -175,7 +175,7 @@ export const MLTemplates = memo(({ userData }: TMLTemplatesProps) => {
                   </li>
                 );
               default:
-                return <li />;
+                return <li key={ID[j]} />;
             }
           })}
         </ul>

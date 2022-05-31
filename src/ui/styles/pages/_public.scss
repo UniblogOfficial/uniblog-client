@@ -1,15 +1,25 @@
-.public {
-  display: flex;
-  flex: 0 1 800px;
-  flex-direction: column;
+.ml-public {
+  margin: 0 auto;
+	padding: 24px 0;
+	width: 375px;
+	height: auto;
+	min-height: 780px;
+	border-radius: 25px;
+	background-position: 50% 0% !important;
+	background-size: cover !important;
+
+	& > * {
+		display: flex;
+		margin-bottom: 24px;
+		word-wrap: break-word;
+		overflow: hidden;
+		&:last-child {
+			margin-bottom: 0 !important;
+		}
+	}
   margin: auto;
   max-width: 450px;
-  text-align: center;
-  padding: 20px;
-  border: 1px solid #fff5;
-  border-radius: 10px;
   box-shadow: 0 0 100px 10px #0005;
-  font-size: 18px;
   // .public__logo
   &__logo {
     position: relative;
