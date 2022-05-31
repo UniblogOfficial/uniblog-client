@@ -6,6 +6,7 @@ import React from 'react';
 const ids = [
   'analytics',
   'arrow',
+  'arrow-clockwise',
   'arrows-rotate',
   'calendar',
   'calendar-add',

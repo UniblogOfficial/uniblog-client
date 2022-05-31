@@ -6,6 +6,7 @@ export type { TImageFile, TIncomingImage } from './image';
 export type {
   TMultilinkDraft,
   TMLDraftBlocks,
+  TMLDraftImages,
   IMLDraftContentText,
   IMLDraftContentLink,
   IMLDraftContentLogo,
@@ -15,9 +16,13 @@ export type {
   IMLDraftContentVideo,
   IMLDraftContentShop,
   IMLDraftContentUnknown,
+  TMLImageContentLogo,
+  TMLImageContentImage,
+  TMLImageContentImageText,
+  TMLImageContentShop,
 } from './mlDraft';
 export type { TMultilinkComplete } from './mlComplete';
-export type { TMultilink, TMLContent } from './mlPublic';
+export type { TMultilink } from './mlPublic';
 
 //
 //

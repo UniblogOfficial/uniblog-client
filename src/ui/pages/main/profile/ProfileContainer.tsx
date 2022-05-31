@@ -32,7 +32,10 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
   }, [dispatch, imageFiles]);
 
   const onImageZoneChange = useCallback((imageFile: TImageFile, id?: number) => {
-    setImageFiles([imageFile]);
+    if (imageFile.size <= 1024 * 1024) {
+      console.log('Файл подходит');
+      setImageFiles([imageFile]);
+    } else console.log('Файл больше 1 мб');
   }, []);
 
   return (

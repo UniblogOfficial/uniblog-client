@@ -11,6 +11,13 @@ type TPriceContainerProps = {};
 
 export const PriceContainer = () => {
   const { t } = useTranslation(['pages', 'common']);
+  const onNichtKlickButtonClick = () => {
+    const newWindow = document.open(
+      `${process.env.REACT_APP_HOST_DEVELOPMENT}/purchase?t=wwcs9v`,
+      '_blank',
+      'width=777,height=666',
+    );
+  };
   return (
     <div className="price">
       <PageHeader pageTitle={t('pages:price.title')} />
@@ -19,7 +26,9 @@ export const PriceContainer = () => {
           <h1 className="page-title">{t('pages:price.title')}</h1>
         </div>
         <div className="grid__row">
-          <section className="paper promo">11</section>
+          <section className="paper promo">
+            <Button onClick={onNichtKlickButtonClick}>Klick mich nicht!</Button>
+          </section>
         </div>
         <div className="grid__row">
           <section className="r-paper price-grid">21</section>
