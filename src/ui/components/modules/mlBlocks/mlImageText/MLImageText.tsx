@@ -1,14 +1,21 @@
 import React, { CSSProperties } from 'react';
 
-import { IMLDraftContentImageText, Nullable } from '../../../../../common/types/instance';
+import {
+  IMLDraftContentImageText,
+  Nullable,
+  TImageFile,
+  TMLImageContentImageText,
+} from '../../../../../common/types/instance';
 import { px } from '../../../../../common/utils/ui';
+import imgPlaceholder from '../../../../../img/img-placeholder.png';
 
 type TMLImageTextProps = {
   block: Nullable<IMLDraftContentImageText>;
+  images: Nullable<TMLImageContentImageText<TImageFile>>;
   callback?: <T>(payload: T) => void;
 };
 
-export const MLImageText = ({ block, callback }: TMLImageTextProps) => {
+export const MLImageText = ({ block, images, callback }: TMLImageTextProps) => {
   if (!block) return null;
   const imgMargin = (imageTextBlock: IMLDraftContentImageText) => {
     switch (imageTextBlock.imgPosition) {
@@ -20,6 +27,7 @@ export const MLImageText = ({ block, callback }: TMLImageTextProps) => {
         return '0';
     }
   };
+  const imgSrc = images?.image ? images.image.previewUrl : block.image ?? imgPlaceholder;
   const className = callback ? 'interactive' : undefined;
   return (
     <section className={className} style={{ padding: px(block.padding) ?? '0' }}>
@@ -33,7 +41,7 @@ export const MLImageText = ({ block, callback }: TMLImageTextProps) => {
             float: block.imgPosition as CSSProperties['float'],
             margin: imgMargin(block),
           }}>
-          <img src={block.image?.src} alt="" />
+          <img src={imgSrc} alt="" />
         </div>
         <p className="ml-imagetext__text">{block.text}</p>
       </div>

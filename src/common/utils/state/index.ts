@@ -26,3 +26,8 @@ export const validateMLRoute = (routes: string[], currentRoute: string) => {
   if (routes.indexOf(`/${currentRoute.split('/')[1]}`) === -1) return true;
   return false;
 };
+// =======================================================================================================
+export const notNull = <T>(argument: T | null): argument is T => argument !== null;
+
+export const isDefined = <T>(argument: T | undefined): argument is T => argument !== undefined;
+// =======================================================================================================

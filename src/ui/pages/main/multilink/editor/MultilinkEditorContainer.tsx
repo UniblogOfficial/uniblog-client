@@ -43,7 +43,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const [stage, setStage] = useState<EditorStage>(0);
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
   const [blockEditorOrder, setBlockEditorOrder] = useState(voidOrder);
-  const { name, background, contentSet, blocks } = useAppSelector<TMultilinkDraft>(
+  const { name, background, contentSet, blocks, images } = useAppSelector<TMultilinkDraft>(
     state => state.mlDraft,
   );
 
@@ -68,17 +68,9 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   };
 
   const onPublishButtonClick = () => {
-    /* const backgroundDefault = '#fff';
     if (contentSet) {
-      dispatch(
-        publishMultilink({
-          name,
-          logo,
-          background: background || backgroundDefault,
-          contentSet,
-        }),
-      );
-    } */
+      dispatch(publishMultilink({ name, background, contentSet, blocks, images }));
+    }
   };
 
   const onNextButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -90,139 +82,57 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
     }
   };
 
-  const templateBackground = background
-    ? background instanceof Object
-      ? `url(${background.previewUrl})`
-      : background
-    : undefined;
-
-  const layout = useMemo(
-    () => (
-      <div
-        className="template template_unlimited"
-        style={{ background: templateBackground ?? undefined }}>
-        {contentSet.map((type, i) => {
-          let block;
-          switch (type) {
-            case MLContentType.LOGO:
-              block = blocks.logoSet[i];
-              return <MLLogo key={ID[i]} block={block} />;
-            case MLContentType.TEXT:
-              block = blocks.textSet[i];
-              return <MLText key={ID[i]} block={block} />;
-            case MLContentType.LINK:
-              block = blocks.linkSet[i];
-              return <MLLink key={ID[i]} block={block} />;
-            case MLContentType.SOCIAL:
-              block = blocks.socialSet[i];
-              return <MLSocial key={ID[i]} block={block} />;
-            case MLContentType.IMAGE:
-              block = blocks.imageSet[i];
-              return <MLImages key={ID[i]} block={block} />;
-            case MLContentType.IMAGETEXT:
-              block = blocks.imageTextSet[i];
-              return <MLImageText key={ID[i]} block={block} />;
-            case MLContentType.VIDEO:
-              block = blocks.videoSet[i];
-              return <MLVideo key={ID[i]} block={block} />;
-            default:
-              return <li key={ID[i]} />;
-          }
-        })}
-      </div>
-    ),
-    [templateBackground, contentSet, blocks],
+  const getLayout = useCallback(
+    (editable: boolean, limited: boolean) => {
+      const templateClassName = limited ? 'ml-template' : 'ml-template ml-template_unlimited';
+      const templateBackground = images.background
+        ? `url(${images.background.previewUrl})`
+        : background;
+      return (
+        <div className={templateClassName} style={{ background: templateBackground }}>
+          {contentSet.map((type, i) => {
+            let block;
+            let image;
+            const callback = editable ? () => setBlockEditor({ type, order: i }) : undefined;
+            switch (type) {
+              case MLContentType.LOGO:
+                block = blocks.logoSet[i];
+                // variable image is one or set of images of current block
+                image = images.blocks.logoSet[i];
+                return <MLLogo key={ID[i]} block={block} images={image} callback={callback} />;
+              case MLContentType.TEXT:
+                block = blocks.textSet[i];
+                return <MLText key={ID[i]} block={block} callback={callback} />;
+              case MLContentType.LINK:
+                block = blocks.linkSet[i];
+                return <MLLink key={ID[i]} block={block} callback={callback} />;
+              case MLContentType.SOCIAL:
+                block = blocks.socialSet[i];
+                return <MLSocial key={ID[i]} block={block} callback={callback} />;
+              case MLContentType.IMAGE:
+                block = blocks.imageSet[i];
+                image = images.blocks.imageSet[i];
+                return <MLImages key={ID[i]} block={block} images={image} callback={callback} />;
+              case MLContentType.IMAGETEXT:
+                block = blocks.imageTextSet[i];
+                image = images.blocks.imageTextSet[i];
+                return <MLImageText key={ID[i]} block={block} images={image} callback={callback} />;
+              case MLContentType.VIDEO:
+                block = blocks.videoSet[i];
+                return <MLVideo key={ID[i]} block={block} callback={callback} />;
+              case MLContentType.SHOP:
+                block = blocks.shopSet[i];
+                image = images.blocks.shopSet[i];
+                return <MLShop key={ID[i]} block={block} images={image} callback={callback} />;
+              default:
+                return <li key={ID[i]} />;
+            }
+          })}
+        </div>
+      );
+    },
+    [contentSet, blocks, background, images.blocks, images.background],
   );
-
-  const editableLayout = useMemo(
-    () => (
-      <div
-        className="template template_unlimited"
-        style={{ background: templateBackground ?? undefined }}>
-        {contentSet.map((type, i) => {
-          let block;
-          switch (type) {
-            case MLContentType.LOGO:
-              block = blocks.logoSet[i];
-              return (
-                <MLLogo
-                  key={ID[i]}
-                  block={block}
-                  callback={() => setBlockEditor({ type, order: i })}
-                />
-              );
-            case MLContentType.TEXT:
-              block = blocks.textSet[i];
-              return (
-                <MLText
-                  key={ID[i]}
-                  block={block}
-                  callback={() => setBlockEditor({ type, order: i })}
-                />
-              );
-            case MLContentType.LINK:
-              block = blocks.linkSet[i];
-              return (
-                <MLLink
-                  key={ID[i]}
-                  block={block}
-                  callback={() => setBlockEditor({ type, order: i })}
-                />
-              );
-            case MLContentType.SOCIAL:
-              block = blocks.socialSet[i];
-              return (
-                <MLSocial
-                  key={ID[i]}
-                  block={block}
-                  callback={() => setBlockEditor({ type, order: i })}
-                />
-              );
-            case MLContentType.IMAGE:
-              block = blocks.imageSet[i];
-              return (
-                <MLImages
-                  key={ID[i]}
-                  block={block}
-                  callback={() => setBlockEditor({ type, order: i })}
-                />
-              );
-            case MLContentType.IMAGETEXT:
-              block = blocks.imageTextSet[i];
-              return (
-                <MLImageText
-                  key={ID[i]}
-                  block={block}
-                  callback={() => setBlockEditor({ type, order: i })}
-                />
-              );
-            case MLContentType.VIDEO:
-              block = blocks.videoSet[i];
-              return (
-                <MLVideo
-                  key={ID[i]}
-                  block={block}
-                  callback={() => setBlockEditor({ type, order: i })}
-                />
-              );
-            case MLContentType.SHOP:
-              block = blocks.shopSet[i];
-              return (
-                <MLShop
-                  key={ID[i]}
-                  block={block}
-                  callback={() => setBlockEditor({ type, order: i })}
-                />
-              );
-            default:
-              return <li key={ID[i]} />;
-          }
-        })}
-      </div>
-    ),
-    [templateBackground, contentSet, blocks],
-  );
-  // const logoSrc = avatar ? parseRawImage(avatar) : undefined;
 
   return (
     <>
@@ -248,13 +158,13 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
           <section className="ml-creation-area">
             {stage === EditorStage.TEMPLATE && <MLTemplate userData={userData} />}
             {stage === EditorStage.BACKGROUND && (
-              <div className="multilink-editor__constructor">{layout}</div>
+              <div className="multilink-editor__constructor">{getLayout(false, false)}</div>
             )}
             {stage === EditorStage.CONTENT && (
-              <div className="multilink-editor__constructor">{editableLayout}</div>
+              <div className="multilink-editor__constructor">{getLayout(true, false)}</div>
             )}
             {stage === EditorStage.PREVIEW && (
-              <div className="multilink-editor__constructor">{layout}</div>
+              <div className="multilink-editor__constructor">{getLayout(false, true)}</div>
             )}
           </section>
           <section className="tools-area">
@@ -265,6 +175,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                 <MLContent
                   contentSet={contentSet}
                   blocks={blocks}
+                  images={images}
                   blockEditorType={blockEditorType}
                   blockEditorOrder={blockEditorOrder}
                   setBlockEditor={setBlockEditor}

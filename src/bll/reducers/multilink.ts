@@ -3,6 +3,7 @@ import { batch } from 'react-redux';
 import { AppStatus } from '../../common/constants';
 import { Nullable, TMultilink } from '../../common/types/instance';
 import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
+import { normalizeMLPublic } from '../../common/utils/state/normalizeMLPublic';
 import { multilinkAPI } from '../../dal';
 import { AppThunk } from '../store';
 
@@ -58,7 +59,7 @@ export const getMultilink =
       if (response.data) {
         batch(() => {
           dispatch(setMultilinkMode(true));
-          dispatch(setMultilink(response.data));
+          dispatch(setMultilink(normalizeMLPublic(response.data.multilink)));
           dispatch(setAppStatus(AppStatus.SUCCEEDED));
           dispatch(setInitialized());
         });
@@ -78,7 +79,9 @@ export const getAllMultilinks = (): AppThunk => async dispatch => {
     const response = await multilinkAPI.getAll();
     if (response.data) {
       batch(() => {
-        dispatch(setAllMultilinks(response.data));
+        dispatch(
+          setAllMultilinks(response.data.multilinks.map((ml: TMultilink) => normalizeMLPublic(ml))),
+        );
         dispatch(setAppStatus(AppStatus.SUCCEEDED));
       });
     }

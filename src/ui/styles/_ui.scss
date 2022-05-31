@@ -205,3 +205,28 @@ h4 {
 		width: 100%;
 	}
 }
+
+.preloader {
+	width: 100%;
+	height: 100%;
+	.icon {
+		--primary: #4040f2;
+		--secondary: #4040f2;
+		animation: spin__slip infinite 2s 0.5s running;
+	}
+}
+
+@keyframes spin__slip {
+	0% {
+		transform: rotate(0deg);
+	}
+	7% {
+		transform: rotate(-25deg);
+	}
+	14% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(720deg);
+	}
+}

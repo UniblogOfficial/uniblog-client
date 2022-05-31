@@ -1,9 +1,15 @@
 import { Nullable } from '../../types/instance';
+import { isDefined } from '../state';
 
 export const capitalizeFirst = (s: string) => (s && s[0].toUpperCase() + s.slice(1)) || '';
 
-export const parseRawImage = (rawImage: any) =>
-  `data:${rawImage.imageType};base64, ${Buffer.from(rawImage.imageData!).toString('base64')}`;
+export const parseRawImage = (rawImage: any) => {
+  if (isDefined(rawImage)) {
+    return `data:${rawImage.imageType};base64, ${Buffer.from(rawImage.imageData!).toString(
+      'base64',
+    )}`;
+  }
+};
 
 export const px = (value?: Nullable<number | number[]>, divider?: number) => {
   // look ui-utils.test to find out what happened
