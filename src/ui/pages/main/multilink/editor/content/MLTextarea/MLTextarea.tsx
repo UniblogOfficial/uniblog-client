@@ -6,7 +6,8 @@ import { setMLDraftBlockContent } from '../../../../../../../bll/reducers';
 import { useAppDispatch } from '../../../../../../../common/hooks';
 import { useDebounce } from '../../../../../../../common/hooks/useDebounce.';
 import { IMLDraftContentText, Nullable } from '../../../../../../../common/types/instance';
-import { Radio, Textarea } from '../../../../../../components/elements';
+import { Icon, Textarea } from '../../../../../../components/elements';
+import { Select } from '../../../../../../components/elements/select/Select';
 
 import styles from './MLTextarea.module.scss';
 
@@ -16,14 +17,14 @@ type TMLTextareaProps = {
 };
 
 type AlignTextType = 'right' | 'left' | 'center' | 'justify';
-const alignText: Array<AlignTextType> = ['right', 'left', 'center', 'justify'];
+const colorType: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
 const fontSizeText: string[] = ['12', '14', '16', '18', '20', '22'];
-const fontWeightText: string[] = ['normal', 'bold', '900'];
 
 export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
   const dispatch = useAppDispatch();
   const [text, setText] = useState(block?.text ?? '');
-  const [colors, setColors] = useState<boolean>(false);
+  const [color, setColor] = useState<boolean>(false);
+  const [backgroundColors, setBackgroundColors] = useState<boolean>(false);
   const debouncedValue = useDebounce(text, 500);
 
   useEffect(() => {
@@ -48,11 +49,20 @@ export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
     dispatch(setMLDraftBlockContent(block, order, 'textSet'));
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const onColorChange = (color: string) => {
     if (!block) {
       return;
     }
     block.color = color;
+    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+  };
+
+  const onBackgroundColorChange = (backgroundColor: string) => {
+    if (!block) {
+      return;
+    }
+    block.background = backgroundColor;
     dispatch(setMLDraftBlockContent(block, order, 'textSet'));
   };
 
@@ -82,47 +92,81 @@ export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
           maxLength={1023}
           className="textarea"
         />
+        Align & Bolt:
         <div className={styles.flex__row3}>
-          <span className={styles.alignText}>
-            Align text:
-            <div className={styles.radio}>
-              <Radio
-                options={alignText}
-                onChangeOption={onAlignChange}
-                value={block.align}
-                className="planner__radio"
-              />
-            </div>
-          </span>
-          <span className={styles.alignText}>
-            Weight text:
-            <div className={styles.radio}>
-              <Radio
-                options={fontWeightText}
-                onChangeOption={onFontWeightChange}
-                value={String(block.fontWeight)}
-                className="planner__radio"
-              />
-            </div>
-          </span>
-          <span className={styles.alignText}>
-            Size text:
-            <div className={styles.radio}>
-              <Radio
-                options={fontSizeText}
-                onChangeOption={onTextSizeChange}
-                value={String(block.fontSize)}
-                className="planner__radio"
-              />
-            </div>
-          </span>
+          <Icon
+            name="text-align-left"
+            containerClassName="draw_text"
+            onClick={() => onAlignChange('left')}
+          />
+          <Icon
+            name="text-align-center"
+            containerClassName="draw_text"
+            onClick={() => onAlignChange('center')}
+          />
+          <Icon
+            name="text-align-right"
+            containerClassName="draw_text"
+            onClick={() => onAlignChange('right')}
+          />
+          <Icon
+            name="text-align-justify"
+            containerClassName="draw_text"
+            onClick={() => onAlignChange('justify')}
+          />
+          <Icon
+            name="text-bolt"
+            containerClassName="draw_text"
+            onClick={() => onFontWeightChange(block?.fontWeight === 'bold' ? 'normal' : 'bold')}
+          />
         </div>
-
-        <div className={styles.colorText}>
-          Color text:
-          <div className={styles.color}>
-            <HexColorPicker color={block.color} onChange={onColorChange} />
-          </div>
+        <div className={styles.select}>
+          Size:
+          <Select options={fontSizeText} onChangeOption={onTextSizeChange} />
+        </div>
+        <div>
+          Text Color:
+          {colorType.map((m, index) => (
+            // eslint-disable-next-line react/jsx-key
+            <input
+              type="button"
+              className={styles.circle}
+              style={{ backgroundColor: m }}
+              onClick={() => onColorChange(m)}
+            />
+          ))}
+          <input type="button" className={styles.circleGradient} onClick={() => setColor(true)} />
+          {color && (
+            <HexColorPicker
+              color={block.color}
+              onChange={onColorChange}
+              onBlur={() => setColor(false)}
+            />
+          )}
+        </div>
+        <div style={{ paddingTop: '15px' }}>
+          Background:
+          {colorType.map((m, index) => (
+            // eslint-disable-next-line react/jsx-key
+            <input
+              type="button"
+              className={styles.circle}
+              style={{ backgroundColor: m }}
+              onClick={() => onBackgroundColorChange(m)}
+            />
+          ))}
+          <input
+            type="button"
+            className={styles.circleGradient}
+            onClick={() => setBackgroundColors(true)}
+          />
+          {backgroundColors && (
+            <HexColorPicker
+              color={block.background}
+              onChange={onBackgroundColorChange}
+              onBlur={() => setBackgroundColors(false)}
+            />
+          )}
         </div>
       </div>
     </>
