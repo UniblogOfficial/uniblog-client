@@ -22,13 +22,17 @@ export const MLSocial = ({ block, isPublic, callback }: TMLSocialProps) => {
         {block.linkTypes.map((icon, i) => {
           const data = socials.find(social => social.type === icon);
           return isPublic ? (
-            <li key={icon}>
+            <li
+              key={icon}
+              style={{ height: block.size ?? undefined, width: block.size ?? undefined }}>
               <a href={block.links[i]}>
                 <img src={data!.src} alt={data?.title} />
               </a>
             </li>
           ) : (
-            <li key={icon}>
+            <li
+              key={icon}
+              style={{ height: block.size ?? undefined, width: block.size ?? undefined }}>
               <img src={data!.src} alt={data?.title} />
             </li>
           );

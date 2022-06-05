@@ -7,7 +7,7 @@ import {
   TIncomingImage,
   TMLImageContentLogo,
 } from '../../../../../common/types/instance';
-import { parseRawImage } from '../../../../../common/utils/ui';
+import { parseRawImage, px } from '../../../../../common/utils/ui';
 
 type TMLLogoProps = {
   block: Nullable<IMLDraftContentLogo>;
@@ -39,7 +39,12 @@ export const MLLogo = ({ block, callback, images }: TMLLogoProps) => {
   if (!block) return null;
   const className = callback ? 'ml-logo interactive' : 'ml-logo';
   return (
-    <section className={className}>
+    <section
+      className={className}
+      style={{
+        padding: px(block.padding) ?? '0',
+        margin: px(block.margin),
+      }}>
       {callback && (
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
       )}
