@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 
 import { initialize } from '../bll/reducers';
 import { selectAppStatus } from '../bll/selectors';
@@ -8,8 +8,6 @@ import { AppStatus } from '../common/constants';
 import { useAppDispatch, useAppSelector } from '../common/hooks';
 
 import { Preloader } from './components/elements/preloader/Preloader';
-import { Modal } from './components/modules/modals/Modal';
-import { NotFound } from './pages/404';
 import { AdminContainer } from './pages/admin/AdminContainer';
 import { LoginContainer } from './pages/auth/login/LoginContainer';
 import { SignupContainer } from './pages/auth/signup/SignupContainer';
