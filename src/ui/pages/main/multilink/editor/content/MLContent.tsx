@@ -14,10 +14,10 @@ import {
 import { Button } from '../../../../../components/elements';
 
 import { MLImageEditor } from './MLImageEditor';
-import { MLLinkForm } from './MLLinkForm';
+import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
 import { MLShopEditor } from './MLShopEditor';
-import { MLTextarea } from './MLTextarea/MLTextarea';
+import { MLTextEditor } from './MLTextarea/MLTextEditor';
 
 type TMLContentProps = {
   contentSet: MLContentType[];
@@ -151,7 +151,7 @@ export const MLContent = (props: TMLContentProps) => {
       }
       case MLContentType.TEXT: {
         const currentBlock = blocks.textSet[blockEditorOrder];
-        return currentBlock && <MLTextarea order={blockEditorOrder} block={currentBlock} />;
+        return currentBlock && <MLTextEditor order={blockEditorOrder} block={currentBlock} />;
       }
       case MLContentType.IMAGETEXT: {
         const currentBlock = blocks.imageTextSet[blockEditorOrder];
@@ -173,7 +173,9 @@ export const MLContent = (props: TMLContentProps) => {
       }
       case MLContentType.LINK: {
         const currentBlock = blocks.linkSet[blockEditorOrder];
-        return currentBlock && <MLLinkForm order={blockEditorOrder} close={onButtonEditorClick} />;
+        return (
+          currentBlock && <MLLinkEditor order={blockEditorOrder} close={onButtonEditorClick} />
+        );
       }
       case MLContentType.SOCIAL: {
         const currentBlock = blocks.socialSet[blockEditorOrder];
