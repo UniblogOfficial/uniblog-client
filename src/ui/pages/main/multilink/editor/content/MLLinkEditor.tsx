@@ -14,7 +14,7 @@ type TLinkFormData = {
   link: string;
 };
 
-type TMLLinkFormProps = {
+type TMLLinkEditorProps = {
   order: number;
   close: (e: MouseEvent<HTMLButtonElement>) => void;
 };
@@ -36,7 +36,7 @@ const linkSchema = yup.object().shape({
     .required('Url is required'),
 });
 
-export const MLLinkForm = ({ order, close }: TMLLinkFormProps) => {
+export const MLLinkEditor = ({ order, close }: TMLLinkEditorProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const {

@@ -1,86 +1,66 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
-import { HexColorPicker } from 'react-colorful';
+import { RgbaStringColorPicker } from 'react-colorful';
 
 import { setMLDraftBlockContent } from '../../../../../../../bll/reducers';
-import { useAppDispatch } from '../../../../../../../common/hooks';
-import { useDebounce } from '../../../../../../../common/hooks/useDebounce.';
-import { IMLDraftContentText, Nullable } from '../../../../../../../common/types/instance';
+import { useAppDispatch, useDebounce, useThrottle } from '../../../../../../../common/hooks';
+import { IMLDraftContentText } from '../../../../../../../common/types/instance';
 import { Icon, Textarea } from '../../../../../../components/elements';
 import { Select } from '../../../../../../components/elements/select/Select';
 
-import styles from './MLTextarea.module.scss';
+import styles from './MLTextEditor.module.scss';
 
-type TMLTextareaProps = {
+type TMLTextEditorProps = {
   order: number;
-  block: Nullable<IMLDraftContentText>;
+  block: IMLDraftContentText;
 };
 
 type AlignTextType = 'right' | 'left' | 'center' | 'justify';
-const colorType: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
+const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
 const fontSizeText: string[] = ['12', '14', '16', '18', '20', '22'];
 
-export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
+export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const dispatch = useAppDispatch();
-  const [text, setText] = useState(block?.text ?? '');
-  const [color, setColor] = useState<boolean>(false);
-  const [backgroundColors, setBackgroundColors] = useState<boolean>(false);
-  const debouncedValue = useDebounce(text, 500);
+  const dispatchDebounced = useDebounce(dispatch, 200);
+  const dispatchThrottled = useThrottle(dispatch, 200);
+  const [text, setText] = useState(block.text ?? '');
+  const [isTextColorPickerVisible, setIsTextColorPickerVisible] = useState<boolean>(false);
+  const [isBgColorPickerVisible, setisBgColorPickerVisible] = useState(false);
 
   useEffect(() => {
-    if (block) {
-      block.text = debouncedValue;
-      dispatch(setMLDraftBlockContent(block, order, 'textSet'));
-    }
-  }, [debouncedValue]);
+    setText(block.text ?? '');
+  }, [block]);
+
   const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
-    if (!block) {
-      return;
-    }
     setText(newText);
+    block.text = newText;
+    dispatchThrottled(setMLDraftBlockContent(block, order, 'textSet'));
   };
 
   const onAlignChange = (align: AlignTextType) => {
-    if (!block) {
-      return;
-    }
     block.align = align;
     dispatch(setMLDraftBlockContent(block, order, 'textSet'));
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   const onColorChange = (color: string) => {
-    if (!block) {
-      return;
-    }
     block.color = color;
     dispatch(setMLDraftBlockContent(block, order, 'textSet'));
   };
 
   const onBackgroundColorChange = (backgroundColor: string) => {
-    if (!block) {
-      return;
-    }
     block.background = backgroundColor;
     dispatch(setMLDraftBlockContent(block, order, 'textSet'));
   };
 
   const onTextSizeChange = (fontSize: string) => {
-    if (!block) {
-      return;
-    }
     block.fontSize = +fontSize;
     dispatch(setMLDraftBlockContent(block, order, 'textSet'));
   };
   const onFontWeightChange = (fontWeight: string) => {
-    if (!block) {
-      return;
-    }
     block.fontWeight = fontWeight;
     dispatch(setMLDraftBlockContent(block, order, 'textSet'));
   };
-  if (!block) return null;
 
   return (
     <>
@@ -92,7 +72,7 @@ export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
           maxLength={1023}
           className="textarea"
         />
-        Align & Bolt:
+        Align & Bold:
         <div className={styles.flex__row3}>
           <Icon
             name="text-align-left"
@@ -126,45 +106,49 @@ export const MLTextarea = ({ order, block }: TMLTextareaProps) => {
         </div>
         <div>
           Text Color:
-          {colorType.map((m, index) => (
-            // eslint-disable-next-line react/jsx-key
+          {defaultColors.map((color, index) => (
             <input
+              key={color}
               type="button"
               className={styles.circle}
-              style={{ backgroundColor: m }}
-              onClick={() => onColorChange(m)}
-            />
-          ))}
-          <input type="button" className={styles.circleGradient} onClick={() => setColor(true)} />
-          {color && (
-            <HexColorPicker
-              color={block.color}
-              onChange={onColorChange}
-              onBlur={() => setColor(false)}
-            />
-          )}
-        </div>
-        <div style={{ paddingTop: '15px' }}>
-          Background:
-          {colorType.map((m, index) => (
-            // eslint-disable-next-line react/jsx-key
-            <input
-              type="button"
-              className={styles.circle}
-              style={{ backgroundColor: m }}
-              onClick={() => onBackgroundColorChange(m)}
+              style={{ backgroundColor: color }}
+              onClick={() => onColorChange(color)}
             />
           ))}
           <input
             type="button"
             className={styles.circleGradient}
-            onClick={() => setBackgroundColors(true)}
+            onClick={() => setIsTextColorPickerVisible(true)}
           />
-          {backgroundColors && (
-            <HexColorPicker
-              color={block.background}
+          {isTextColorPickerVisible && (
+            <RgbaStringColorPicker
+              color={block.color}
+              onChange={onColorChange}
+              onBlur={() => setIsTextColorPickerVisible(false)}
+            />
+          )}
+        </div>
+        <div style={{ paddingTop: '15px' }}>
+          Background:
+          {defaultColors.map((color, index) => (
+            // eslint-disable-next-line react/jsx-key
+            <input
+              type="button"
+              className={styles.circle}
+              style={{ backgroundColor: color }}
+              onClick={() => onBackgroundColorChange(color)}
+            />
+          ))}
+          <input
+            type="button"
+            className={styles.circleGradient}
+            onClick={() => setisBgColorPickerVisible(true)}
+          />
+          {isBgColorPickerVisible && (
+            <RgbaStringColorPicker
+              color={block.background ?? '#ffff'}
               onChange={onBackgroundColorChange}
-              onBlur={() => setBackgroundColors(false)}
+              onBlur={() => setisBgColorPickerVisible(false)}
             />
           )}
         </div>
