@@ -3,9 +3,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { RgbaStringColorPicker } from 'react-colorful';
 
 import { setMLDraftBlockContent } from '../../../../../../../bll/reducers';
-import { useAppDispatch } from '../../../../../../../common/hooks';
-import { useDebounce } from '../../../../../../../common/hooks/useDebounce.';
-import { IMLDraftContentText, Nullable } from '../../../../../../../common/types/instance';
+import { useAppDispatch, useDebounce, useThrottle } from '../../../../../../../common/hooks';
+import { IMLDraftContentText } from '../../../../../../../common/types/instance';
 import { Icon, Textarea } from '../../../../../../components/elements';
 import { Select } from '../../../../../../components/elements/select/Select';
 
@@ -22,19 +21,21 @@ const fontSizeText: string[] = ['12', '14', '16', '18', '20', '22'];
 
 export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const dispatch = useAppDispatch();
-  const [text, setText] = useState(block?.text ?? '');
+  const dispatchDebounced = useDebounce(dispatch, 200);
+  const dispatchThrottled = useThrottle(dispatch, 200);
+  const [text, setText] = useState(block.text ?? '');
   const [isTextColorPickerVisible, setIsTextColorPickerVisible] = useState<boolean>(false);
   const [isBgColorPickerVisible, setisBgColorPickerVisible] = useState(false);
-  const debouncedValue = useDebounce(text, 500);
 
   useEffect(() => {
-    block.text = debouncedValue;
-    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
-  }, [block, debouncedValue, dispatch, order]);
+    setText(block.text ?? '');
+  }, [block]);
 
   const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     setText(newText);
+    block.text = newText;
+    dispatchThrottled(setMLDraftBlockContent(block, order, 'textSet'));
   };
 
   const onAlignChange = (align: AlignTextType) => {

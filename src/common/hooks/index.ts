@@ -9,6 +9,9 @@ export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
 export const useAppSelector: TypedUseSelectorHook<TState> = useSelector;
 
 export * from './useWindowSize';
+export * from './useDebounce';
+export * from './useThrottle';
+export * from './useEffectOnce';
 
 export const useOnMouseDownOutside = (callback: (e: MouseEvent) => void) => {
   const innerRef = useRef<HTMLDivElement>(null);

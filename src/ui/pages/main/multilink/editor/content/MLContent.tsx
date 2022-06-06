@@ -17,7 +17,7 @@ import { MLImageEditor } from './MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
 import { MLShopEditor } from './MLShopEditor';
-import { MLTextEditor } from './MLTextarea/MLTextEditor';
+import { MLTextEditor } from './MLTextEditor/MLTextEditor';
 
 type TMLContentProps = {
   contentSet: MLContentType[];
