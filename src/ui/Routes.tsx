@@ -19,10 +19,7 @@ export const Routes = (props: any) => {
   const dispatch = useAppDispatch();
 
   const status = useAppSelector(selectAppStatus);
-  const loadingStatus =
-    status === AppStatus.USERDATA_LOADING ||
-    status === AppStatus.AUTH_LOADING ||
-    status === AppStatus.CONTENT_LOADING;
+  const loadingStatus = status === AppStatus.USERDATA_LOADING || status === AppStatus.AUTH_LOADING;
 
   const { isInitialized, isMultilinkMode } = useAppSelector(state => state.app);
 

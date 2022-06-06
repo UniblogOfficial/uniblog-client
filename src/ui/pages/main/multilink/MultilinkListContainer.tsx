@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 
 import { getAllMultilinks } from '../../../../bll/reducers';
-import { ID } from '../../../../common/constants';
+import { selectAppStatus } from '../../../../bll/selectors';
+import { AppStatus, ID } from '../../../../common/constants';
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks';
 import { Nullable, TMultilink } from '../../../../common/types/instance';
+import { Preloader } from '../../../components/elements/preloader/Preloader';
 import { PublicMultilink } from '../../public/PublicMultilink';
 
 type TMultilinkListContainerProps = {};
@@ -11,6 +13,9 @@ type TMultilinkListContainerProps = {};
 export const MultilinkListContainer = () => {
   const dispatch = useAppDispatch();
   const multilinks = useAppSelector<Nullable<TMultilink[]>>(state => state.multilink.allMultilinks);
+  const status = useAppSelector(selectAppStatus);
+  const loadingStatus = status === AppStatus.CONTENT_LOADING;
+
   useEffect(() => {
     dispatch(getAllMultilinks());
   }, [dispatch]);
@@ -23,5 +28,12 @@ export const MultilinkListContainer = () => {
       </div>
     ));
 
+  if (loadingStatus) {
+    return (
+      <div className="loading">
+        <Preloader />
+      </div>
+    );
+  }
   return <>{mappedMLs}</>;
 };
