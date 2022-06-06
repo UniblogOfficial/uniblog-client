@@ -34,7 +34,8 @@ export const MLText = ({ block, callback }: TMLTextProps) => {
         {block &&
           block.text!.split('\n').map((line, i) =>
             line ? (
-              <p key={line} style={{ textAlign: align }}>
+              // eslint-disable-next-line react/no-array-index-key
+              <p key={i} style={{ textAlign: align }}>
                 {line.replaceAll('   ', '\u00a0 \u00a0').replaceAll('  ', '\u00a0 ')}
               </p>
             ) : (
