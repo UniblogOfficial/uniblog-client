@@ -1,4 +1,6 @@
-import { MLContentType } from '../../constants';
+import { parseRawImage } from '../ui';
+
+import { MLContentType } from 'common/constants';
 import {
   IMLDraftContentImage,
   IMLDraftContentImageText,
@@ -10,8 +12,7 @@ import {
   IMLDraftContentVideo,
   Nullable,
   TMultilink,
-} from '../../types/instance';
-import { parseRawImage } from '../ui';
+} from 'common/types/instance';
 
 export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
   const { contentSet, images } = multilink;

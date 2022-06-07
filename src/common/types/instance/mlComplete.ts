@@ -1,5 +1,3 @@
-import { MLContentType } from '../../constants';
-
 import {
   IMLDraftContentText,
   IMLDraftContentLink,
@@ -8,9 +6,10 @@ import {
   IMLDraftContentImage,
   IMLDraftContentImageText,
   IMLDraftContentUnknown,
-} from './mlDraft';
+  Nullable,
+} from '.';
 
-import { Nullable } from '.';
+import { MLContentType } from 'common/constants';
 
 export type TMultilinkComplete = {
   name: string;

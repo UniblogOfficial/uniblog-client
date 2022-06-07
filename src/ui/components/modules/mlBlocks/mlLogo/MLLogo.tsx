@@ -6,8 +6,8 @@ import {
   TImageFile,
   TIncomingImage,
   TMLImageContentLogo,
-} from '../../../../../common/types/instance';
-import { parseRawImage, px } from '../../../../../common/utils/ui';
+} from 'common/types/instance';
+import { parseRawImage, px } from 'common/utils/ui';
 
 type TMLLogoProps = {
   block: Nullable<IMLDraftContentLogo>;

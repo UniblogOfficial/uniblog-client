@@ -1,6 +1,9 @@
 import { batch } from 'react-redux';
 
-import { AppStatus, MLContentType, SocialNetwork } from '../../common/constants';
+import { setAppStatus } from '.';
+
+import { AppThunk } from 'bll/store';
+import { AppStatus, MLContentType, SocialNetwork } from 'common/constants';
 import {
   IMLDraftContentImage,
   IMLDraftContentImageText,
@@ -13,6 +16,7 @@ import {
   IMLDraftContentVideo,
   Nullable,
   TIncomingImage,
+  TImageFile,
   TMLDraftBlocks,
   TMLDraftImages,
   TMLImageContentImage,
@@ -22,21 +26,16 @@ import {
   TMultilink,
   TMultilinkComplete,
   TMultilinkDraft,
-} from '../../common/types/instance';
-import { TImageFile } from '../../common/types/instance/image';
-import { TCreateMLDto, TCreateMLImagesDto } from '../../common/types/request/multilink.dto';
+} from 'common/types/instance';
+import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request/multilink.dto';
 import {
   pushMLDraftBlock,
   pushMLDraftBlockLogo,
   pushMLDraftBlockSocial,
   notNull,
-} from '../../common/utils/state';
-import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
-import { multilinkAPI } from '../../dal';
-import { getTemplates } from '../../ui/pages/main/multilink/editor/template/templates';
-import { AppThunk } from '../store';
-
-import { setAppStatus } from '.';
+} from 'common/utils/state';
+import { multilinkAPI } from 'dal';
+import { getTemplates } from 'ui/pages/main/multilink/editor/template/templates';
 
 enum mlDraftAction {
   SET_MULTILINK_DRAFT_NAME = 'SET_MULTILINK_DRAFT_NAME',

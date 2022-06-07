@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { IMLDraftContentVideo, Nullable } from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
+import { IMLDraftContentVideo, Nullable } from 'common/types/instance';
+import { px } from 'common/utils/ui';
 
 type TMLVideoProps = {
   block: Nullable<IMLDraftContentVideo>;

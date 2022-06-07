@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { IMLDraftContentLink, Nullable } from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
+import { IMLDraftContentLink, Nullable } from 'common/types/instance';
+import { px } from 'common/utils/ui';
 
 type TMLLinkProps = {
   block: Nullable<IMLDraftContentLink>;

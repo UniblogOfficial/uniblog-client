@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { IMLDraftContentSocial, Nullable } from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
-import socials from '../../../../../img';
+import { IMLDraftContentSocial, Nullable } from 'common/types/instance';
+import { px } from 'common/utils/ui';
+import socials from 'img';
 
 type TMLSocialProps = {
   block: Nullable<IMLDraftContentSocial>;

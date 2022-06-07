@@ -1,14 +1,13 @@
 import { batch } from 'react-redux';
 
-import { AppStatus } from '../../common/constants';
-import { Nullable, TMultilink } from '../../common/types/instance';
-import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
-import { normalizeMLPublic } from '../../common/utils/state/normalizeMLPublic';
-import { multilinkAPI } from '../../dal';
-import { AppThunk } from '../store';
+import { setAppStatus, setInitialized, setMultilinkMode, requestMe } from '.';
 
-import { setAppStatus, setInitialized, setMultilinkMode } from './app';
-import { requestMe } from './auth';
+import { AppThunk } from 'bll/store';
+import { AppStatus } from 'common/constants';
+import { Nullable, TMultilink } from 'common/types/instance';
+import { handleServerNetworkError } from 'common/utils/state/errorHandler';
+import { normalizeMLPublic } from 'common/utils/state/normalizeMLPublic';
+import { multilinkAPI } from 'dal';
 
 enum multilinkAction {
   SET_MULTILINK = 'SET_MULTILINK',

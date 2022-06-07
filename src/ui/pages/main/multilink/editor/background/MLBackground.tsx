@@ -3,14 +3,14 @@ import React, { CSSProperties, FC, useCallback, useMemo, MouseEvent, useState } 
 
 import { useTranslation } from 'react-i18next';
 
-import { setMLDraftBackground, setMLDraftBackgroundImage } from '../../../../../../bll/reducers';
-import { ID } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import { TImageFile } from '../../../../../../common/types/instance';
-import { Button } from '../../../../../components/elements';
-import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
-
 import styles from './MLBackground.module.scss';
+
+import { setMLDraftBackground, setMLDraftBackgroundImage } from 'bll/reducers';
+import { ID } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
+import { TImageFile } from 'common/types/instance';
+import { Button } from 'ui/components/elements';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 
 type TMLBackgroundProps = {};
 

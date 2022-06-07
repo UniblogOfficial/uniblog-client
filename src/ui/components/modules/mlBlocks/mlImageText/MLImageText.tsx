@@ -5,9 +5,9 @@ import {
   Nullable,
   TImageFile,
   TMLImageContentImageText,
-} from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
-import imgPlaceholder from '../../../../../img/img-placeholder.png';
+} from 'common/types/instance';
+import { px } from 'common/utils/ui';
+import imgPlaceholder from 'img/img-placeholder.png';
 
 type TMLImageTextProps = {
   block: Nullable<IMLDraftContentImageText>;

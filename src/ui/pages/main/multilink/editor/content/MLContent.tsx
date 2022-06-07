@@ -2,22 +2,17 @@ import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { addMLDraftBlock } from '../../../../../../bll/reducers';
-import { MLContentType } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import {
-  Nullable,
-  TImageFile,
-  TMLDraftBlocks,
-  TMLDraftImages,
-} from '../../../../../../common/types/instance';
-import { Button } from '../../../../../components/elements';
-
 import { MLImageEditor } from './MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
 import { MLShopEditor } from './MLShopEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
+
+import { addMLDraftBlock } from 'bll/reducers';
+import { MLContentType } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
+import { Nullable, TImageFile, TMLDraftBlocks, TMLDraftImages } from 'common/types/instance';
+import { Button } from 'ui/components/elements';
 
 type TMLContentProps = {
   contentSet: MLContentType[];

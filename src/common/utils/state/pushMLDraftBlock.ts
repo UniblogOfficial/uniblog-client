@@ -1,5 +1,8 @@
-import imgPlaceholder from '../../../img/img-placeholder.png';
-import { MLContentType, SocialNetwork } from '../../constants';
+import { parseRawImage } from '../ui';
+
+import { getKeys } from '.';
+
+import { MLContentType, SocialNetwork } from 'common/constants';
 import {
   IMLDraftContentImage,
   IMLDraftContentImageText,
@@ -11,10 +14,8 @@ import {
   Nullable,
   TIncomingImage,
   TMLDraftBlocks,
-} from '../../types/instance';
-import { parseRawImage } from '../ui/index';
-
-import { getKeys } from '.';
+} from 'common/types/instance';
+import imgPlaceholder from 'img/img-placeholder.png';
 
 // at this moment function just push block at the END!!!
 // except logo and social!

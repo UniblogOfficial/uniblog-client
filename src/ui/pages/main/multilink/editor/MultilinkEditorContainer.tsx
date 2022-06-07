@@ -2,27 +2,27 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { publishMultilink } from '../../../../../bll/reducers';
-import { ID, MLContentType } from '../../../../../common/constants';
-import { useAppDispatch, useAppSelector } from '../../../../../common/hooks';
-import { Nullable, TImageFile, TMultilinkDraft, TUser } from '../../../../../common/types/instance';
-import { Button, Icon } from '../../../../components/elements';
-import {
-  MLImages,
-  MLImageText,
-  MLLink,
-  MLLogo,
-  MLSocial,
-  MLText,
-  MLVideo,
-} from '../../../../components/modules/mlBlocks';
-import { MLShop } from '../../../../components/modules/mlBlocks/mlShop/MLShop';
-
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
 import { MLTemplate } from './template/MLTemplate';
 import { MLTemplates } from './template/MLTemplates';
+
+import { publishMultilink } from 'bll/reducers';
+import { ID, MLContentType } from 'common/constants';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { Nullable, TImageFile, TMultilinkDraft, TUser } from 'common/types/instance';
+import { Button, Icon } from 'ui/components/elements';
+import {
+  MLImages,
+  MLImageText,
+  MLLink,
+  MLLogo,
+  MLShop,
+  MLSocial,
+  MLText,
+  MLVideo,
+} from 'ui/components/modules/mlBlocks';
 
 type TMultilinkEditorContainerProps = {
   userData: TUser;

@@ -1,19 +1,16 @@
 import React, { useCallback, useState } from 'react';
 
-import {
-  setMLDraftBlockContent,
-  setMLDraftBlockContentImage,
-} from '../../../../../../bll/reducers';
-import { ID } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
+import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { ID } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
 import {
   IMLDraftContentImage,
   Nullable,
   TImageFile,
   TMLImageContentImage,
-} from '../../../../../../common/types/instance';
-import { Button, Input } from '../../../../../components/elements';
-import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
+} from 'common/types/instance';
+import { Button, Input } from 'ui/components/elements';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 
 type TMLImageEditorProps = {
   order: number;

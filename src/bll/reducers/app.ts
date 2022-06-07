@@ -1,10 +1,9 @@
-import { AppStatus, PrivatePath, PublicPath } from '../../common/constants';
-import { Nullable } from '../../common/types/instance';
-import { trim, validateMLRoute } from '../../common/utils/state/index';
-import { AppThunk } from '../store';
+import { requestMe, getMultilink } from '.';
 
-import { requestMe } from './auth';
-import { getMultilink } from './multilink';
+import { AppThunk } from 'bll/store';
+import { AppStatus, PrivatePath, PublicPath } from 'common/constants';
+import { Nullable } from 'common/types/instance';
+import { trim, validateMLRoute } from 'common/utils/state';
 
 // variables
 enum AppActionType {

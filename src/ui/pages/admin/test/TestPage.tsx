@@ -4,19 +4,19 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { Redirect } from 'react-router-dom';
 
-import { ArrowNavSpritesMap } from '../../../components/modules/iconSpritesMaps/ArrowNavSpritesMap';
-import { AuthSpritesMap } from '../../../components/modules/iconSpritesMaps/AuthSpritesMap';
-import { BrandSpritesMap } from '../../../components/modules/iconSpritesMaps/BrandSpritesMap';
-import { CommerceSpritesMap } from '../../../components/modules/iconSpritesMaps/CommerceSpritesMap';
-import { CommonUISpritesMap } from '../../../components/modules/iconSpritesMaps/CommonUISpritesMap';
-import { CRUDSpritesMap } from '../../../components/modules/iconSpritesMaps/CRUDSpritesMap';
-import { CurrencySpritesMap } from '../../../components/modules/iconSpritesMaps/CurrencySpritesMap';
-import { FeatureSpritesMap } from '../../../components/modules/iconSpritesMaps/FeatureSpritesMap';
-import { FilterSpritesMap } from '../../../components/modules/iconSpritesMaps/FilterSpritesMap';
-import { IconSpritesMap } from '../../../components/modules/iconSpritesMaps/IconSpritesMap';
-import { LayoutSpritesMap } from '../../../components/modules/iconSpritesMaps/LayoutSpritesMap';
-import { LocalizationSpritesMap } from '../../../components/modules/iconSpritesMaps/LocalizationSpritesMap';
-import { MiscSpritesMap } from '../../../components/modules/iconSpritesMaps/MiscSpritesMap';
+import { ArrowNavSpritesMap } from 'ui/components/modules/iconSpritesMaps/ArrowNavSpritesMap';
+import { AuthSpritesMap } from 'ui/components/modules/iconSpritesMaps/AuthSpritesMap';
+import { BrandSpritesMap } from 'ui/components/modules/iconSpritesMaps/BrandSpritesMap';
+import { CommerceSpritesMap } from 'ui/components/modules/iconSpritesMaps/CommerceSpritesMap';
+import { CommonUISpritesMap } from 'ui/components/modules/iconSpritesMaps/CommonUISpritesMap';
+import { CRUDSpritesMap } from 'ui/components/modules/iconSpritesMaps/CRUDSpritesMap';
+import { CurrencySpritesMap } from 'ui/components/modules/iconSpritesMaps/CurrencySpritesMap';
+import { FeatureSpritesMap } from 'ui/components/modules/iconSpritesMaps/FeatureSpritesMap';
+import { FilterSpritesMap } from 'ui/components/modules/iconSpritesMaps/FilterSpritesMap';
+import { IconSpritesMap } from 'ui/components/modules/iconSpritesMaps/IconSpritesMap';
+import { LayoutSpritesMap } from 'ui/components/modules/iconSpritesMaps/LayoutSpritesMap';
+import { LocalizationSpritesMap } from 'ui/components/modules/iconSpritesMaps/LocalizationSpritesMap';
+import { MiscSpritesMap } from 'ui/components/modules/iconSpritesMaps/MiscSpritesMap';
 
 // import styles from './TestPage.module.scss';
 

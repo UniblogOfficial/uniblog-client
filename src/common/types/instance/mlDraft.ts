@@ -1,8 +1,6 @@
-import { MLContentType, SocialNetwork } from '../../constants';
+import { TImageFile, Nullable } from '.';
 
-import { TImageFile } from './image';
-
-import { Nullable } from '.';
+import { MLContentType, SocialNetwork } from 'common/constants';
 
 export type TMultilinkDraft = {
   name: string;

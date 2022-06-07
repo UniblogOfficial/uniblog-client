@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
-import { MLContentType, ID } from '../../../common/constants';
-import { TMultilink } from '../../../common/types/instance';
+import { MLContentType, ID } from 'common/constants';
+import { TMultilink } from 'common/types/instance';
 import {
   MLLogo,
   MLText,
@@ -10,8 +10,8 @@ import {
   MLImages,
   MLImageText,
   MLVideo,
-} from '../../components/modules/mlBlocks';
-import { MLShop } from '../../components/modules/mlBlocks/mlShop/MLShop';
+} from 'ui/components/modules/mlBlocks';
+import { MLShop } from 'ui/components/modules/mlBlocks/mlShop/MLShop';
 
 type TMultilinkProps = {
   multilink: TMultilink;

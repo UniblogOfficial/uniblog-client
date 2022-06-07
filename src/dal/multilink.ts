@@ -1,6 +1,6 @@
-import { TCreateMLDto, TCreateMLImagesDto } from '../common/types/request';
+import { api } from '.';
 
-import { api } from './api';
+import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request';
 
 export const multilinkAPI = {
   get(name: string, id?: string) {

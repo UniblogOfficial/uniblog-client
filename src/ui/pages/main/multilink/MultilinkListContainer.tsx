@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 
-import { getAllMultilinks } from '../../../../bll/reducers';
-import { selectAppStatus } from '../../../../bll/selectors';
-import { AppStatus, ID } from '../../../../common/constants';
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks';
-import { Nullable, TMultilink } from '../../../../common/types/instance';
-import { Preloader } from '../../../components/elements/preloader/Preloader';
 import { PublicMultilink } from '../../public/PublicMultilink';
+
+import { getAllMultilinks } from 'bll/reducers';
+import { selectAppStatus } from 'bll/selectors';
+import { AppStatus, ID } from 'common/constants';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { Nullable, TMultilink } from 'common/types/instance';
+import { Preloader } from 'ui/components/elements';
 
 type TMultilinkListContainerProps = {};
 

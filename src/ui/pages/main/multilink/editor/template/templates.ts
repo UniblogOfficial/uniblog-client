@@ -1,6 +1,4 @@
-import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
-import { Nullable } from '../../../../../../common/types/instance';
-import { TIncomingImage } from '../../../../../../common/types/instance/image';
+import { MLContentType, SocialNetwork } from 'common/constants';
 import {
   IMLDraftContentLogo,
   IMLDraftContentText,
@@ -10,8 +8,10 @@ import {
   IMLDraftContentVideo,
   IMLDraftContentShop,
   IMLDraftContentImage,
-} from '../../../../../../common/types/instance/mlDraft';
-import { parseRawImage } from '../../../../../../common/utils/ui';
+  Nullable,
+  TIncomingImage,
+} from 'common/types/instance';
+import { parseRawImage } from 'common/utils/ui';
 
 export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
   [
@@ -565,5 +565,55 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         margin: [0, 0, 24],
         padding: [0, 24],
       } as IMLDraftContentText,
+    ],
+    [
+      {
+        order: 0,
+        isFilled: !!avatar,
+        logo: avatar ? parseRawImage(avatar) : '',
+        size: 143,
+        type: MLContentType.LOGO,
+        margin: [56, 116, 56],
+      } as IMLDraftContentLogo,
+      {
+        order: 1,
+        isFilled: false,
+        type: MLContentType.TEXT,
+        text: 'Евгений',
+        fontSize: 22,
+        fontWeight: 700,
+        align: 'center',
+        color: '#fff',
+        margin: [0, 0, 60],
+        padding: [18, 40],
+      } as IMLDraftContentText,
+      {
+        order: 2,
+        isFilled: true,
+        type: MLContentType.VIDEO,
+        url: 'https://widget.qiwi.com/widgets/middle-widget-300x300?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsXMCEHsEfvcM9fWDrHZGpWKAFeZPjiJbFtPjyxAanWqYMcU9DSN7wMpc8VGAVjmd9yjdSQRA92xGdkxFbtNyRSzFPrYeoktJhC8rNxvbe',
+        margin: [0, 0, 24],
+        padding: [0, 24],
+      } as IMLDraftContentVideo,
+      {
+        order: 3,
+        isFilled: false,
+        type: MLContentType.SOCIAL,
+        links: [
+          'https://vk.com/kracko23',
+          'https://discordapp.com/users/534986739513819138/',
+          'https://tlgg.ru/Evgeny163',
+          'https://msng.link/o/?krasikov.evgeny=ig',
+        ],
+        linkTypes: [
+          SocialNetwork.VK,
+          SocialNetwork.YOUTUBE,
+          SocialNetwork.TELEGRAM,
+          SocialNetwork.INSTAGRAM,
+        ],
+        size: 65,
+        margin: [0, 0, 60],
+        padding: [12, 12],
+      } as IMLDraftContentSocial,
     ],
   ] as const;

@@ -1,4 +1,4 @@
-import { MLContentType, SocialNetwork } from '../../constants';
+import { MLContentType, SocialNetwork } from 'common/constants';
 import {
   IMLDraftContentImage,
   IMLDraftContentImageText,
@@ -14,7 +14,7 @@ import {
   TMLImageContentImageText,
   TMLImageContentLogo,
   TMLImageContentShop,
-} from '../instance';
+} from 'common/types/instance';
 
 export type TCreateMLDto = {
   // exm. "VasyaRaper"

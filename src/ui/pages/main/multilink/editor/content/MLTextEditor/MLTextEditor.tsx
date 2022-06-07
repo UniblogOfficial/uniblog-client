@@ -2,13 +2,12 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { RgbaStringColorPicker } from 'react-colorful';
 
-import { setMLDraftBlockContent } from '../../../../../../../bll/reducers';
-import { useAppDispatch, useDebounce, useThrottle } from '../../../../../../../common/hooks';
-import { IMLDraftContentText } from '../../../../../../../common/types/instance';
-import { Icon, Textarea } from '../../../../../../components/elements';
-import { Select } from '../../../../../../components/elements/select/Select';
-
 import styles from './MLTextEditor.module.scss';
+
+import { setMLDraftBlockContent } from 'bll/reducers';
+import { useAppDispatch, useDebounce, useThrottle } from 'common/hooks';
+import { IMLDraftContentText } from 'common/types/instance';
+import { Icon, Select, Textarea } from 'ui/components/elements';
 
 type TMLTextEditorProps = {
   order: number;

@@ -1,18 +1,15 @@
 import React, { useCallback, useState, MouseEvent } from 'react';
 
-import {
-  setMLDraftBlockContent,
-  setMLDraftBlockContentImage,
-} from '../../../../../../bll/reducers';
-import { useAppDispatch } from '../../../../../../common/hooks';
+import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { useAppDispatch } from 'common/hooks';
 import {
   IMLDraftContentLogo,
   Nullable,
   TImageFile,
   TMLImageContentLogo,
-} from '../../../../../../common/types/instance';
-import { Button, Input } from '../../../../../components/elements';
-import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
+} from 'common/types/instance';
+import { Button, Input } from 'ui/components/elements';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 
 type TMLLogoEditorProps = {
   order: number;

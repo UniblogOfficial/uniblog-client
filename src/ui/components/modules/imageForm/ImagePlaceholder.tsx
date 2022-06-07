@@ -40,8 +40,7 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) =>
 
   return (
     <>
-      {' '}
-      <div {...getRootProps({ isDragAccept, isFocused, isDragReject })}>
+      <div {...getRootProps()}>
         {!isFilled && (
           <Icon name="image" size="reduced" primaryColor="#d4dee8" secondaryColor="#d4dee8" />
         )}

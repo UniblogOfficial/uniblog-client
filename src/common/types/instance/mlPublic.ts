@@ -1,5 +1,3 @@
-import { MLContentType, SocialNetwork } from '../../constants';
-
 import {
   IMLDraftContentImage,
   IMLDraftContentImageText,
@@ -12,6 +10,8 @@ import {
   Nullable,
   TIncomingImage,
 } from '.';
+
+import { MLContentType, SocialNetwork } from 'common/constants';
 
 export type TMultilink = {
   // id: number;

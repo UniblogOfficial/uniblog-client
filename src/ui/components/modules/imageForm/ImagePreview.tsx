@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 
-import { TImageFile, TIncomingImage } from '../../../../common/types/instance';
-import { parseRawImage } from '../../../../common/utils/ui';
-
 import styles from './DropZone.module.scss';
+
+import { TImageFile, TIncomingImage } from 'common/types/instance';
+import { parseRawImage } from 'common/utils/ui';
 
 type TImagePreviewProps = {
   imageFiles: Array<TImageFile> | TIncomingImage;

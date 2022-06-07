@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import socials from '../../../../img';
-import { Button, Radio } from '../../../components/elements';
-import { SocialCard } from '../../../components/modules/socialCard/SocialCard';
+import socials from 'img';
+import { Button, Radio } from 'ui/components/elements';
+import { SocialCard } from 'ui/components/modules/socialCard/SocialCard';
 
 export const XPostEditorContainer = () => {
   const { t } = useTranslation(['pages', 'common']);

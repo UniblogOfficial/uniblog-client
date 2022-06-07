@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { useAppSelector } from '../../../../common/hooks';
-import { TUser } from '../../../../common/types/instance';
-import socials from '../../../../img';
-import { Button } from '../../../components/elements/button/Button';
-import { SocialAccountState, SocialCard } from '../../../components/modules/socialCard/SocialCard';
+import { useAppSelector } from 'common/hooks';
+import { TUser } from 'common/types/instance';
+import socials from 'img';
+import { Button } from 'ui/components/elements/button/Button';
+import { SocialAccountState, SocialCard } from 'ui/components/modules/socialCard/SocialCard';
 
 type THomeContainerProps = {
   userData: TUser;

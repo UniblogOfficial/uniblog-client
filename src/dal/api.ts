@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import { StatusCode } from '../common/constants';
-import { TUser } from '../common/types/instance';
+import { StatusCode } from 'common/constants';
+import { TUser } from 'common/types/instance';
 
 export const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

@@ -1,6 +1,6 @@
-import { TCreateUserDto, TRegisterDto } from '../common/types/request';
+import { api } from '.';
 
-import { api } from './api';
+import { TCreateUserDto, TRegisterDto } from 'common/types/request';
 
 export const userAPI = {
   create({ email, password }: TCreateUserDto) {

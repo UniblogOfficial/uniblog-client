@@ -5,9 +5,9 @@ import {
   Nullable,
   TImageFile,
   TMLImageContentShop,
-} from '../../../../../common/types/instance';
-import { parseRawImage, px } from '../../../../../common/utils/ui';
-import imgPlaceholder from '../../../../../img/img-placeholder.png';
+} from 'common/types/instance';
+import { parseRawImage, px } from 'common/utils/ui';
+import imgPlaceholder from 'img/img-placeholder.png';
 
 type TMLShopProps = {
   block: Nullable<IMLDraftContentShop>;

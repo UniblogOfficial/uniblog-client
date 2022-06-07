@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { ID } from '../../../../../common/constants';
+import { ID } from 'common/constants';
 import {
   IMLDraftContentImage,
   Nullable,
   TImageFile,
   TMLImageContentImage,
-} from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
-import imgPlaceholder from '../../../../../img/img-placeholder.png';
+} from 'common/types/instance';
+import { px } from 'common/utils/ui';
+import imgPlaceholder from 'img/img-placeholder.png';
 
 type TMLImagesProps = {
   block: Nullable<IMLDraftContentImage>;
