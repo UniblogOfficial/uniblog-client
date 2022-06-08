@@ -6,6 +6,8 @@ import React, {
   SelectHTMLAttributes,
 } from 'react';
 
+import { ID } from '../../../../common/constants';
+
 import styles from './Select.module.scss';
 
 type TDefaultRadioProps = DetailedHTMLProps<
@@ -33,10 +35,7 @@ export const Select = <TValue extends string>({
     onChangeOption && onChangeOption(e.currentTarget.value as TValue);
   };
 
-  const mappedOptions = options
-    ? // eslint-disable-next-line react/jsx-key
-      options.map((o, i) => <option>{o}</option>)
-    : [];
+  const mappedOptions = options ? options.map((o, i) => <option key={ID[i]}>{o}</option>) : [];
 
   return (
     <div>
