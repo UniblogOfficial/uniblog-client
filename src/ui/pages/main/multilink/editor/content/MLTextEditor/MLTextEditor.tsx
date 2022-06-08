@@ -109,7 +109,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
       }
     }
 
-    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onMarginChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -151,7 +151,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
       block.margin[3] = +margin;
     }
 
-    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   return (

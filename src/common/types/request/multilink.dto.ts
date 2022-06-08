@@ -7,7 +7,6 @@ import {
   IMLDraftShop,
   IMLDraftSocial,
   IMLDraftText,
-  IMLDraftContentUnknown,
   IMLDraftVideo,
   TImageFile,
   TMLImageContentImage,

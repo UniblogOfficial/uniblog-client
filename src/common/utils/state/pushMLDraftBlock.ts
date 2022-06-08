@@ -162,7 +162,7 @@ export const pushMLDraftBlockSocial = (
   return newBlocks as TMLDraftBlocks;
 };
 
-const defaultTextBlockOptions = {
+const defaultTextBlockOptions: Omit<IMLDraftText, 'order'> = {
   type: MLContentType.TEXT,
   isFilled: false,
   text: '',
@@ -170,7 +170,7 @@ const defaultTextBlockOptions = {
   padding: [0, 24],
 };
 
-const defaultLinkBlockOptions = {
+const defaultLinkBlockOptions: Omit<IMLDraftLink, 'order'> = {
   type: MLContentType.LINK,
   isFilled: false,
   href: '',
@@ -183,36 +183,41 @@ const defaultLinkBlockOptions = {
   background: `#f${Math.random().toString(16).substr(-4)}f40`,
 };
 
-const defaultImageBlockOptions = {
+const defaultImageBlockOptions: Omit<IMLDraftImage, 'order'> = {
   type: MLContentType.IMAGE,
   isFilled: false,
   images: [imgPlaceholder],
+  imgPosition: 'bottom',
+  textPosition: 'outside',
   padding: [0, 24],
 };
 
-const defaultImageTextBlockOptions = {
+const defaultImageTextBlockOptions: Omit<IMLDraftImageText, 'order'> = {
   type: MLContentType.IMAGETEXT,
   isFilled: false,
   image: imgPlaceholder,
   text: '',
   imgPosition: 'left',
+  hAlign: 'left',
   vAlign: 'top',
   fontSize: 18,
   fontWeight: 400,
   padding: [0, 24],
 };
 
-const defaultLogoBlockOptions = {
+const defaultLogoBlockOptions: Omit<IMLDraftLogo, 'order' | 'isFilled' | 'logo'> = {
   type: MLContentType.LOGO,
   size: 100,
+  hAlign: 'center',
+  vAlign: 'center',
 };
 
-const defaultSocialBlockOptions = {
+const defaultSocialBlockOptions: Omit<IMLDraftSocial, 'order' | 'links' | 'linkTypes'> = {
   type: MLContentType.SOCIAL,
   isFilled: false,
 };
 
-const defaultShopBlockOptions = {
+const defaultShopBlockOptions: Omit<IMLDraftShop, 'order'> = {
   type: MLContentType.SHOP,
   isFilled: false,
   grid: '1fr 1fr 1fr',
@@ -226,46 +231,30 @@ const defaultShopBlockOptions = {
       title: 'Item #1',
       subtitle: '1$',
       href: '',
-      color: '#000',
-      fontSize: 14,
-      fontWeight: 400,
-      align: 'left',
-      subtitleColor: '#000',
-      subtitleFontSize: 14,
-      subtitleFontWeight: 700,
-      subtitleAlign: 'center',
     },
     {
       order: 1,
-      image: { src: imgPlaceholder },
+      image: imgPlaceholder,
       background: '#fff',
       title: 'Item #2',
       subtitle: '2$',
       href: '',
-      color: '#000',
-      fontSize: 14,
-      fontWeight: 400,
-      align: 'left',
-      subtitleColor: '#000',
-      subtitleFontSize: 14,
-      subtitleFontWeight: 700,
-      subtitleAlign: 'center',
     },
     {
       order: 2,
-      image: { src: imgPlaceholder },
+      image: imgPlaceholder,
       background: '#fff',
       title: 'Item #3',
       subtitle: '3$',
       href: '',
-      color: '#000',
-      fontSize: 14,
-      fontWeight: 400,
-      align: 'left',
-      subtitleColor: '#000',
-      subtitleFontSize: 14,
-      subtitleFontWeight: 700,
-      subtitleAlign: 'center',
     },
   ],
+  color: '#000',
+  fontSize: 14,
+  fontWeight: 400,
+  align: 'left',
+  subtitleColor: '#000',
+  subtitleFontSize: 14,
+  subtitleFontWeight: 700,
+  subtitleAlign: 'center',
 };

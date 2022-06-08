@@ -5,7 +5,6 @@ import {
   IMLDraftLogo,
   IMLDraftImage,
   IMLDraftImageText,
-  IMLDraftContentUnknown,
   Nullable,
 } from '.';
 
@@ -21,5 +20,4 @@ export type TMultilinkComplete = {
   logoBlocks: Nullable<IMLDraftLogo>[];
   imageBlocks: Nullable<IMLDraftImage>[];
   imageTextBlocks: Nullable<IMLDraftImageText>[];
-  unknownSet: Nullable<IMLDraftContentUnknown>[];
 };
