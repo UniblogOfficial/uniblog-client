@@ -35,7 +35,7 @@ const socialsFormattedPopularitySequence = [
   'Pinterest',
 ];
 
-const socials = importAll(require.context('./socials/', false, /\.(png|jpe?g|svg)$/));
+const socials = importAll(require.context('./', false, /\.(png|jpe?g|svg)$/));
 
 export default socials
   // sort according to popularity

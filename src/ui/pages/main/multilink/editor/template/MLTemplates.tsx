@@ -5,7 +5,7 @@ import { getTemplates } from './templates';
 import { ID, MLContentType } from 'common/constants';
 import { TUser } from 'common/types/instance';
 import { px } from 'common/utils/ui';
-import socials from 'img';
+import socials from 'img/socials';
 
 type TMLTemplatesProps = {
   userData: TUser;

@@ -2,37 +2,37 @@ import { parseRawImage } from '../ui';
 
 import { MLContentType } from 'common/constants';
 import {
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentLink,
-  IMLDraftContentLogo,
-  IMLDraftContentShop,
-  IMLDraftContentSocial,
-  IMLDraftContentText,
-  IMLDraftContentVideo,
+  IMLDraftImage,
+  IMLDraftImageText,
+  IMLDraftLink,
+  IMLDraftLogo,
+  IMLDraftShop,
+  IMLDraftSocial,
+  IMLDraftText,
+  IMLDraftVideo,
   Nullable,
   TMultilink,
 } from 'common/types/instance';
 
 export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
-  const { contentSet, images } = multilink;
+  const { contentMap, images } = multilink;
 
-  const logoSet: IMLDraftContentLogo[] = [];
-  const imageSet: IMLDraftContentImage[] = [];
-  const imageTextSet: IMLDraftContentImageText[] = [];
-  const shopSet: IMLDraftContentShop[] = [];
+  const logoBlocks: IMLDraftLogo[] = [];
+  const imageBlocks: IMLDraftImage[] = [];
+  const imageTextBlocks: IMLDraftImageText[] = [];
+  const shopBlocks: IMLDraftShop[] = [];
 
   let background = parseRawImage(images.find(image => image.order === 9999));
   if (background) {
     background = `url('${background}')`;
   }
-  contentSet.forEach((type, i) => {
+  contentMap.forEach((type, i) => {
     let block;
     switch (type) {
       case MLContentType.LOGO:
-        block = multilink.logoSet.find(b => b.order === i);
+        block = multilink.logoBlocks.find(b => b.order === i);
         if (block) {
-          logoSet.push({
+          logoBlocks.push({
             ...block,
             logo:
               parseRawImage(images.find(image => image.order === i && image.suborder === 1)) ??
@@ -42,9 +42,9 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
         }
         break;
       case MLContentType.IMAGE:
-        block = multilink.imageSet.find(b => b.order === i);
+        block = multilink.imageBlocks.find(b => b.order === i);
         if (block) {
-          imageSet.push({
+          imageBlocks.push({
             ...block,
             images: images
               .filter(image => image.order === i)
@@ -54,9 +54,9 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
         }
         break;
       case MLContentType.IMAGETEXT:
-        block = multilink.imageTextSet.find(b => b.order === i);
+        block = multilink.imageTextBlocks.find(b => b.order === i);
         if (block) {
-          imageTextSet.push({
+          imageTextBlocks.push({
             ...block,
             image: parseRawImage(images.find(image => image.order === i)) ?? null,
           });
@@ -69,9 +69,9 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
           .forEach(img => {
             cellImages[img.suborder] = parseRawImage(img);
           });
-        block = multilink.shopSet.find(b => b.order === i);
+        block = multilink.shopBlocks.find(b => b.order === i);
         if (block) {
-          shopSet.push({
+          shopBlocks.push({
             ...block,
             cells: block.cells.map((cell, j) => ({
               ...cell,
@@ -88,10 +88,10 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
   return {
     ...multilink,
     background: background ?? multilink.background,
-    contentSet,
-    logoSet,
-    imageSet,
-    imageTextSet,
-    shopSet,
+    contentMap,
+    logoBlocks,
+    imageBlocks,
+    imageTextBlocks,
+    shopBlocks,
   };
 };

@@ -1,12 +1,12 @@
 import {
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentLink,
-  IMLDraftContentLogo,
-  IMLDraftContentShop,
-  IMLDraftContentSocial,
-  IMLDraftContentText,
-  IMLDraftContentVideo,
+  IMLDraftImage,
+  IMLDraftImageText,
+  IMLDraftLink,
+  IMLDraftLogo,
+  IMLDraftShop,
+  IMLDraftSocial,
+  IMLDraftText,
+  IMLDraftVideo,
   Nullable,
   TIncomingImage,
 } from '.';
@@ -19,16 +19,16 @@ export type TMultilink = {
   // name: string;
   background: string;
   // clickCount: number;
-  contentSet: MLContentType[];
+  contentMap: MLContentType[];
 
-  textSet: IMLDraftContentText[];
-  linkSet: IMLDraftContentLink[];
-  socialSet: IMLDraftContentSocial[];
-  logoSet: IMLDraftContentLogo[];
-  imageSet: IMLDraftContentImage[];
-  imageTextSet: IMLDraftContentImageText[];
-  videoSet: IMLDraftContentVideo[];
-  shopSet: IMLDraftContentShop[];
+  textBlocks: IMLDraftText[];
+  linkBlocks: IMLDraftLink[];
+  socialBlocks: IMLDraftSocial[];
+  logoBlocks: IMLDraftLogo[];
+  imageBlocks: IMLDraftImage[];
+  imageTextBlocks: IMLDraftImageText[];
+  videoBlocks: IMLDraftVideo[];
+  shopBlocks: IMLDraftShop[];
 
   images: Array<{ id: number; order: number; suborder: number } & TIncomingImage>;
   // createdAt: string;

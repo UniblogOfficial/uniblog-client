@@ -18,16 +18,30 @@ export enum SocialNetwork {
   PINTEREST = 'pinterest',
 }
 
+export enum SocialService {
+  BOOSTY = 'boosty',
+  DISCORD = 'discord',
+  PATREON = 'patreon',
+  TWITCH = 'twitch',
+}
+
 export enum MLContentType {
   TEXT = 'text',
   LINK = 'link',
   LOGO = 'logo',
   SOCIAL = 'social',
+  BUTTON = 'button',
+  POST = 'post',
   IMAGE = 'image',
   IMAGETEXT = 'imagetext',
+  CAROUSEL = 'carousel',
   VIDEO = 'video',
+  AUDIO = 'audio',
+  WIDGET = 'widget',
   SHOP = 'shop',
-  UNKNOWN = 'unknown',
+  VOTE = 'vote',
+  MAP = 'map',
+  DIVIDER = 'divider',
 }
 
 export enum AppStatus {

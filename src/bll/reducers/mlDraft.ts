@@ -5,15 +5,14 @@ import { setAppStatus } from '.';
 import { AppThunk } from 'bll/store';
 import { AppStatus, MLContentType, SocialNetwork } from 'common/constants';
 import {
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentLink,
-  IMLDraftContentLogo,
-  IMLDraftContentShop,
-  IMLDraftContentSocial,
-  IMLDraftContentText,
-  IMLDraftContentUnknown,
-  IMLDraftContentVideo,
+  IMLDraftImage,
+  IMLDraftImageText,
+  IMLDraftLink,
+  IMLDraftLogo,
+  IMLDraftShop,
+  IMLDraftSocial,
+  IMLDraftText,
+  IMLDraftVideo,
   Nullable,
   TIncomingImage,
   TImageFile,
@@ -26,6 +25,9 @@ import {
   TMultilink,
   TMultilinkComplete,
   TMultilinkDraft,
+  TMLImageContentButton,
+  TMLImageContentCarousel,
+  TMLImageContentLink,
 } from 'common/types/instance';
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request/multilink.dto';
 import {
@@ -51,28 +53,39 @@ enum mlDraftAction {
   DELETE_MULTILINK_DRAFT_BLOCK = 'DELETE_MULTILINK_DRAFT_BLOCK',
 }
 
-const initialState = {
+const initialState: TMLDraftState = {
   name: '',
   background: '#fff',
-  contentSet: [],
+  contentMap: [],
   blocks: {
-    textSet: [],
-    linkSet: [],
-    socialSet: [],
-    logoSet: [],
-    imageSet: [],
-    imageTextSet: [],
-    videoSet: [],
-    shopSet: [],
-    unknownSet: [],
+    textBlocks: [],
+    linkBlocks: [],
+    socialBlocks: [],
+    logoBlocks: [],
+    imageBlocks: [],
+    imageTextBlocks: [],
+    videoBlocks: [],
+    shopBlocks: [],
+    audioBlocks: [],
+    buttonBlocks: [],
+    carouselBlocks: [],
+    dividerBlocks: [],
+    mapBlocks: [],
+    postBlocks: [],
+    voteBlocks: [],
+    widgetBlocks: [],
   },
+
   images: {
     background: null,
     blocks: {
-      logoSet: [],
-      imageSet: [],
-      imageTextSet: [],
-      shopSet: [],
+      logoBlocks: [],
+      imageBlocks: [],
+      imageTextBlocks: [],
+      shopBlocks: [],
+      buttonBlocks: [],
+      carouselBlocks: [],
+      linkBlocks: [],
     },
   },
 };
@@ -102,66 +115,77 @@ export const mlDraftReducer = (
       const { template } = action.payload;
       return {
         ...state,
-        contentSet: template.map(block => block.type),
+        contentMap: template.map(block => block.type),
         blocks: {
-          textSet: template.map(block => (block.type === MLContentType.TEXT ? block : null)),
-          linkSet: template.map(block => (block.type === MLContentType.LINK ? block : null)),
-          socialSet: template.map(block => (block.type === MLContentType.SOCIAL ? block : null)),
-          logoSet: template.map(block => (block.type === MLContentType.LOGO ? block : null)),
-          imageSet: template.map(block => (block.type === MLContentType.IMAGE ? block : null)),
-          imageTextSet: template.map(block =>
+          textBlocks: template.map(block => (block.type === MLContentType.TEXT ? block : null)),
+          linkBlocks: template.map(block => (block.type === MLContentType.LINK ? block : null)),
+          socialBlocks: template.map(block => (block.type === MLContentType.SOCIAL ? block : null)),
+          logoBlocks: template.map(block => (block.type === MLContentType.LOGO ? block : null)),
+          imageBlocks: template.map(block => (block.type === MLContentType.IMAGE ? block : null)),
+          imageTextBlocks: template.map(block =>
             block.type === MLContentType.IMAGETEXT ? block : null,
           ),
-          videoSet: template.map(block => (block.type === MLContentType.VIDEO ? block : null)),
-          shopSet: template.map(block => (block.type === MLContentType.SHOP ? block : null)),
-          unknownSet: template.map(block => null),
+          videoBlocks: template.map(block => (block.type === MLContentType.VIDEO ? block : null)),
+          shopBlocks: template.map(block => (block.type === MLContentType.SHOP ? block : null)),
+          // audioBlocks: template.map(block => (block.type === MLContentType.AUDIO ? block : null)),
+          audioBlocks: template.map(block => null),
+          buttonBlocks: template.map(block => null),
+          carouselBlocks: template.map(block => null),
+          dividerBlocks: template.map(block => null),
+          mapBlocks: template.map(block => null),
+          postBlocks: template.map(block => null),
+          voteBlocks: template.map(block => null),
+          widgetBlocks: template.map(block => null),
         },
         images: {
           background: null,
           blocks: {
-            logoSet: template.map((block, i) =>
+            logoBlocks: template.map((block, i) =>
               block.type === MLContentType.LOGO ? { order: i, logo: null } : null,
             ),
-            imageSet: template.map((block, i) =>
+            imageBlocks: template.map((block, i) =>
               block.type === MLContentType.IMAGE ? { order: i, images: [null] } : null,
             ),
-            imageTextSet: template.map((block, i) =>
+            imageTextBlocks: template.map((block, i) =>
               block.type === MLContentType.IMAGETEXT ? { order: i, image: null } : null,
             ),
-            shopSet: template.map((block, i) =>
+            shopBlocks: template.map((block, i) =>
               block.type === MLContentType.SHOP
                 ? { order: i, cells: block.cells.map(() => null) }
                 : null,
             ),
+            buttonBlocks: template.map((block, i) => null),
+            carouselBlocks: template.map((block, i) => null),
+            linkBlocks: template.map((block, i) => null),
           },
         },
       };
 
     case mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK:
-      let newBlocks = pushMLDraftBlock(action.payload.type, state.blocks, state.contentSet.length);
+      let newBlocks = pushMLDraftBlock(action.payload.type, state.blocks, state.contentMap.length);
       return {
         ...state,
-        contentSet: [...state.contentSet, action.payload.type],
+        contentMap: [...state.contentMap, action.payload.type],
         blocks: newBlocks,
       };
 
     case mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_LOGO:
-      newBlocks = pushMLDraftBlockLogo(state.blocks, state.contentSet.length, action.payload.logo);
+      newBlocks = pushMLDraftBlockLogo(state.blocks, state.contentMap.length, action.payload.logo);
       return {
         ...state,
-        contentSet: [...state.contentSet, MLContentType.LOGO],
+        contentMap: [...state.contentMap, MLContentType.LOGO],
         blocks: newBlocks,
       };
 
     case mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL:
       newBlocks = pushMLDraftBlockSocial(
         state.blocks,
-        state.contentSet.length,
+        state.contentMap.length,
         action.payload.socials,
       );
       return {
         ...state,
-        contentSet: [...state.contentSet, MLContentType.SOCIAL],
+        contentMap: [...state.contentMap, MLContentType.SOCIAL],
         blocks: newBlocks,
       };
 
@@ -258,7 +282,16 @@ export const setMLDraftBlockContentImage = <T>(
   order: number,
   field: keyof Omit<
     TMLDraftBlocks,
-    'textSet' | 'linkSet' | 'socialSet' | 'videoSet' | 'unknownSet'
+    | 'textBlocks'
+    | 'linkBlocks'
+    | 'socialBlocks'
+    | 'videoBlocks'
+    | 'audioBlocks'
+    | 'widgetBlocks'
+    | 'voteBlocks'
+    | 'mapBlocks'
+    | 'postBlocks'
+    | 'dividerBlocks'
   >,
 ) =>
   ({
@@ -271,26 +304,26 @@ export const publishMultilink =
   (multilink: TMultilinkDraft): AppThunk =>
   async dispatch => {
     dispatch(setAppStatus(AppStatus.USERDATA_LOADING));
-    const { name, background, contentSet, blocks, images } = multilink;
+    const { name, background, contentMap, blocks, images } = multilink;
     const multilinkDto: TCreateMLDto = {
       name,
       background,
-      contentSet,
-      textSet: blocks.textSet.filter(notNull),
-      linkSet: blocks.linkSet.filter(notNull),
-      socialSet: blocks.socialSet.filter(notNull),
-      logoSet: blocks.logoSet.filter(notNull).map(block => ({ ...block, logo: null })),
-      imageSet: blocks.imageSet.filter(notNull),
-      imageTextSet: blocks.imageTextSet.filter(notNull),
-      videoSet: blocks.videoSet.filter(notNull),
-      shopSet: blocks.shopSet.filter(notNull),
+      contentMap,
+      textBlocks: blocks.textBlocks.filter(notNull),
+      linkBlocks: blocks.linkBlocks.filter(notNull),
+      socialBlocks: blocks.socialBlocks.filter(notNull),
+      logoBlocks: blocks.logoBlocks.filter(notNull).map(block => ({ ...block, logo: null })),
+      imageBlocks: blocks.imageBlocks.filter(notNull),
+      imageTextBlocks: blocks.imageTextBlocks.filter(notNull),
+      videoBlocks: blocks.videoBlocks.filter(notNull),
+      shopBlocks: blocks.shopBlocks.filter(notNull),
     };
     const imagesDto: TCreateMLImagesDto = {
       background: images.background ?? undefined,
-      logoSet: images.blocks.logoSet.filter(notNull),
-      imageSet: images.blocks.imageSet.filter(notNull),
-      imageTextSet: images.blocks.imageTextSet.filter(notNull),
-      shopSet: images.blocks.shopSet.filter(notNull),
+      logoBlocks: images.blocks.logoBlocks.filter(notNull),
+      imageBlocks: images.blocks.imageBlocks.filter(notNull),
+      imageTextBlocks: images.blocks.imageTextBlocks.filter(notNull),
+      shopBlocks: images.blocks.shopBlocks.filter(notNull),
     };
     const response = await multilinkAPI.create(multilinkDto, imagesDto);
   };
@@ -299,25 +332,18 @@ export const publishMultilink =
 export type TMLDraftState = {
   name: string;
   background: string;
-  contentSet: MLContentType[];
-  blocks: {
-    textSet: Nullable<IMLDraftContentText>[];
-    linkSet: Nullable<IMLDraftContentLink>[];
-    socialSet: Nullable<IMLDraftContentSocial>[];
-    logoSet: Nullable<IMLDraftContentLogo>[];
-    imageSet: Nullable<IMLDraftContentImage>[];
-    imageTextSet: Nullable<IMLDraftContentImageText>[];
-    videoSet: Nullable<IMLDraftContentVideo>[];
-    shopSet: Nullable<IMLDraftContentShop>[];
-    unknownSet: Nullable<IMLDraftContentUnknown>[];
-  };
+  contentMap: MLContentType[];
+  blocks: TMLDraftBlocks;
   images: {
     background: Nullable<TImageFile>;
     blocks: {
-      logoSet: Nullable<TMLImageContentLogo<TImageFile>>[];
-      imageSet: Nullable<TMLImageContentImage<TImageFile>>[];
-      imageTextSet: Nullable<TMLImageContentImageText<TImageFile>>[];
-      shopSet: Nullable<TMLImageContentShop<TImageFile>>[];
+      logoBlocks: Nullable<TMLImageContentLogo<TImageFile>>[];
+      linkBlocks: Nullable<TMLImageContentLink<TImageFile>>[];
+      imageBlocks: Nullable<TMLImageContentImage<TImageFile>>[];
+      imageTextBlocks: Nullable<TMLImageContentImageText<TImageFile>>[];
+      shopBlocks: Nullable<TMLImageContentShop<TImageFile>>[];
+      buttonBlocks: Nullable<TMLImageContentButton<TImageFile>>[];
+      carouselBlocks: Nullable<TMLImageContentCarousel<TImageFile>>[];
     };
   };
 };

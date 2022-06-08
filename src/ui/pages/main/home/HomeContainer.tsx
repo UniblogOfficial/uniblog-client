@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useAppSelector } from 'common/hooks';
 import { TUser } from 'common/types/instance';
-import socials from 'img';
+import socials from 'img/socials';
 import { Button } from 'ui/components/elements/button/Button';
 import { SocialAccountState, SocialCard } from 'ui/components/modules/socialCard/SocialCard';
 

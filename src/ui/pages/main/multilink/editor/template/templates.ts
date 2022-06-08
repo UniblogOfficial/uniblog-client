@@ -1,13 +1,13 @@
 import { MLContentType, SocialNetwork } from 'common/constants';
 import {
-  IMLDraftContentLogo,
-  IMLDraftContentText,
-  IMLDraftContentLink,
-  IMLDraftContentSocial,
-  IMLDraftContentImageText,
-  IMLDraftContentVideo,
-  IMLDraftContentShop,
-  IMLDraftContentImage,
+  IMLDraftLogo,
+  IMLDraftText,
+  IMLDraftLink,
+  IMLDraftSocial,
+  IMLDraftImageText,
+  IMLDraftVideo,
+  IMLDraftShop,
+  IMLDraftImage,
   Nullable,
   TIncomingImage,
 } from 'common/types/instance';
@@ -22,7 +22,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         logo: avatar ? parseRawImage(avatar) : '',
         size: 100,
         type: MLContentType.LOGO,
-      } as IMLDraftContentLogo,
+      } as IMLDraftLogo,
       {
         order: 1,
         isFilled: false,
@@ -34,7 +34,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         margin: [0, 0, 24],
         padding: [12, 24],
         background: '#0002',
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 2,
         isFilled: false,
@@ -52,7 +52,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           SocialNetwork.FACEBOOK,
         ],
         padding: [12, 24],
-      } as IMLDraftContentSocial,
+      } as IMLDraftSocial,
       {
         order: 3,
         isFilled: false,
@@ -62,7 +62,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontWeight: 400,
         margin: [0, 0, 24],
         padding: [0, 24],
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 4,
         isFilled: false,
@@ -75,7 +75,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         padding: [12, 24],
         margin: [0, 24, 12],
         background: `#f${Math.random().toString(16).substr(-4)}f40`,
-      } as IMLDraftContentLink,
+      } as IMLDraftLink,
       {
         order: 5,
         isFilled: false,
@@ -88,7 +88,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         padding: [12, 24],
         margin: [0, 24, 12],
         background: `#f${Math.random().toString(16).substr(-4)}f40`,
-      } as IMLDraftContentLink,
+      } as IMLDraftLink,
       {
         order: 6,
         isFilled: false,
@@ -101,7 +101,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         padding: [12, 24],
         margin: [0, 24, 24],
         background: `#f${Math.random().toString(16).substr(-4)}f40`,
-      } as IMLDraftContentLink,
+      } as IMLDraftLink,
     ],
     [
       {
@@ -110,7 +110,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         logo: avatar ? parseRawImage(avatar) : '',
         size: 100,
         type: MLContentType.LOGO,
-      } as IMLDraftContentLogo,
+      } as IMLDraftLogo,
       {
         order: 1,
         isFilled: false,
@@ -122,7 +122,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         margin: [0, 0, 24],
         padding: [12, 24],
         background: '#0002',
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 2,
         isFilled: false,
@@ -132,7 +132,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontWeight: 400,
         margin: [0, 0, 24],
         padding: [0, 24],
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 3,
         isFilled: false,
@@ -145,7 +145,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         padding: [12, 24],
         margin: [0, 24, 12],
         background: `#f${Math.random().toString(16).substr(-4)}f40`,
-      } as IMLDraftContentLink,
+      } as IMLDraftLink,
       {
         order: 4,
         isFilled: false,
@@ -158,7 +158,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         padding: [12, 24],
         margin: [0, 24, 12],
         background: `#f${Math.random().toString(16).substr(-4)}f40`,
-      } as IMLDraftContentLink,
+      } as IMLDraftLink,
       {
         order: 5,
         isFilled: false,
@@ -171,7 +171,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         padding: [12, 24],
         margin: [0, 24, 24],
         background: `#f${Math.random().toString(16).substr(-4)}f40`,
-      } as IMLDraftContentLink,
+      } as IMLDraftLink,
       {
         order: 6,
         isFilled: false,
@@ -189,7 +189,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           SocialNetwork.FACEBOOK,
         ],
         padding: [12, 24],
-      } as IMLDraftContentSocial,
+      } as IMLDraftSocial,
     ],
     [
       {
@@ -198,7 +198,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         logo: avatar ? parseRawImage(avatar) : '',
         size: 100,
         type: MLContentType.LOGO,
-      } as IMLDraftContentLogo,
+      } as IMLDraftLogo,
       {
         order: 1,
         isFilled: false,
@@ -209,7 +209,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         align: 'center',
         padding: [12, 24],
         background: '#0002',
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 2,
         isFilled: false,
@@ -218,7 +218,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontSize: 18,
         fontWeight: 400,
         padding: [0, 24],
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 3,
         isFilled: false,
@@ -230,7 +230,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontSize: 18,
         fontWeight: 400,
         padding: [0, 24],
-      } as IMLDraftContentImageText,
+      } as IMLDraftImageText,
       {
         order: 4,
         isFilled: false,
@@ -242,7 +242,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontSize: 18,
         fontWeight: 400,
         padding: [0, 24],
-      } as IMLDraftContentImageText,
+      } as IMLDraftImageText,
       {
         order: 5,
         isFilled: false,
@@ -255,7 +255,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         padding: [12, 24],
         margin: [0, 24, 12],
         background: `#f${Math.random().toString(16).substr(-4)}f40`,
-      } as IMLDraftContentLink,
+      } as IMLDraftLink,
       {
         order: 6,
         isFilled: false,
@@ -273,7 +273,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
           SocialNetwork.FACEBOOK,
         ],
         padding: [12, 24],
-      } as IMLDraftContentSocial,
+      } as IMLDraftSocial,
     ],
     [
       {
@@ -282,7 +282,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         logo: avatar ? parseRawImage(avatar) : '',
         size: 100,
         type: MLContentType.LOGO,
-      } as IMLDraftContentLogo,
+      } as IMLDraftLogo,
       {
         order: 1,
         isFilled: true,
@@ -295,7 +295,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         margin: [0, 0, 24],
         padding: [24, 24],
         background: '#85A4CC',
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 2,
         isFilled: true,
@@ -308,7 +308,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         padding: [12, 24],
         margin: [0, 0, 12],
         background: '#85A4CC',
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 3,
         isFilled: true,
@@ -316,7 +316,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         url: 'https://www.youtube.com/embed/hYu0d-4SX_Y',
         margin: [0, 0, 24],
         padding: [0, 24],
-      } as IMLDraftContentVideo,
+      } as IMLDraftVideo,
       {
         order: 4,
         isFilled: true,
@@ -329,7 +329,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         padding: [12, 24],
         margin: [0, 0, 12],
         background: '#85A4CC',
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 5,
         isFilled: true,
@@ -469,7 +469,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         ],
         margin: [0, 0, 24],
         padding: [12, 24],
-      } as IMLDraftContentShop,
+      } as IMLDraftShop,
       {
         order: 6,
         isFilled: true,
@@ -477,7 +477,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         images: [null],
         margin: [0, 0, 24],
         padding: [12, 48],
-      } as IMLDraftContentImage,
+      } as IMLDraftImage,
       {
         order: 7,
         isFilled: true,
@@ -490,7 +490,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         linkTypes: [SocialNetwork.VK, SocialNetwork.YOUTUBE, SocialNetwork.INSTAGRAM],
         margin: [0, 0, 24],
         padding: [12, 24],
-      } as IMLDraftContentSocial,
+      } as IMLDraftSocial,
     ],
     [
       {
@@ -500,7 +500,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         size: 143,
         type: MLContentType.LOGO,
         margin: [56, 116, 36],
-      } as IMLDraftContentLogo,
+      } as IMLDraftLogo,
       {
         order: 1,
         isFilled: false,
@@ -512,7 +512,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         color: '#fff',
         margin: [0, 0, 60],
         padding: [0, 40],
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 2,
         isFilled: false,
@@ -532,7 +532,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         size: 65,
         margin: [0, 0, 60],
         padding: [12, 12],
-      } as IMLDraftContentSocial,
+      } as IMLDraftSocial,
       {
         order: 3,
         isFilled: false,
@@ -544,7 +544,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         color: '#fff',
         margin: [0, 0, 12],
         padding: [0, 24],
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 4,
         isFilled: true,
@@ -552,7 +552,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         images: [null],
         margin: [0, 0, 6],
         padding: [0, 92],
-      } as IMLDraftContentImage,
+      } as IMLDraftImage,
       {
         order: 5,
         isFilled: false,
@@ -564,7 +564,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         color: '#fff',
         margin: [0, 0, 24],
         padding: [0, 24],
-      } as IMLDraftContentText,
+      } as IMLDraftText,
     ],
     [
       {
@@ -574,7 +574,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         size: 143,
         type: MLContentType.LOGO,
         margin: [56, 116, 56],
-      } as IMLDraftContentLogo,
+      } as IMLDraftLogo,
       {
         order: 1,
         isFilled: false,
@@ -586,7 +586,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         color: '#fff',
         margin: [0, 0, 60],
         padding: [18, 40],
-      } as IMLDraftContentText,
+      } as IMLDraftText,
       {
         order: 2,
         isFilled: true,
@@ -594,7 +594,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         url: 'https://widget.qiwi.com/widgets/middle-widget-300x300?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsXMCEHsEfvcM9fWDrHZGpWKAFeZPjiJbFtPjyxAanWqYMcU9DSN7wMpc8VGAVjmd9yjdSQRA92xGdkxFbtNyRSzFPrYeoktJhC8rNxvbe',
         margin: [0, 0, 24],
         padding: [0, 24],
-      } as IMLDraftContentVideo,
+      } as IMLDraftVideo,
       {
         order: 3,
         isFilled: false,
@@ -614,6 +614,6 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         size: 65,
         margin: [0, 0, 60],
         padding: [12, 12],
-      } as IMLDraftContentSocial,
+      } as IMLDraftSocial,
     ],
   ] as const;

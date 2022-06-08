@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import socials from 'img';
+import socials from 'img/socials';
 import { Button, Radio } from 'ui/components/elements';
 import { SocialCard } from 'ui/components/modules/socialCard/SocialCard';
 

@@ -6,12 +6,12 @@ import styles from './MLTextEditor.module.scss';
 
 import { setMLDraftBlockContent } from 'bll/reducers';
 import { useAppDispatch, useDebounce, useThrottle } from 'common/hooks';
-import { IMLDraftContentText } from 'common/types/instance';
+import { IMLDraftText } from 'common/types/instance';
 import { Icon, Select, Textarea } from 'ui/components/elements';
 
 type TMLTextEditorProps = {
   order: number;
-  block: IMLDraftContentText;
+  block: IMLDraftText;
 };
 
 type AlignTextType = 'right' | 'left' | 'center' | 'justify';
@@ -34,31 +34,31 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
     const newText = e.target.value;
     setText(newText);
     block.text = newText;
-    dispatchThrottled(setMLDraftBlockContent(block, order, 'textSet'));
+    dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onAlignChange = (align: AlignTextType) => {
     block.align = align;
-    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onColorChange = (color: string) => {
     block.color = color;
-    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onBackgroundColorChange = (backgroundColor: string) => {
     block.background = backgroundColor;
-    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onTextSizeChange = (fontSize: string) => {
     block.fontSize = +fontSize;
-    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
-  const onFontWeightChange = (fontWeight: string) => {
+  const onFontWeightChange = (fontWeight: number) => {
     block.fontWeight = fontWeight;
-    dispatch(setMLDraftBlockContent(block, order, 'textSet'));
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   return (
@@ -96,7 +96,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
           <Icon
             name="text-bolt"
             containerClassName="draw_text"
-            onClick={() => onFontWeightChange(block?.fontWeight === 'bold' ? 'normal' : 'bold')}
+            onClick={() => onFontWeightChange(block?.fontWeight === 400 ? 700 : 400)}
           />
         </div>
         <div className={styles.select}>

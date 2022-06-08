@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { IMLDraftContentSocial, Nullable } from 'common/types/instance';
+import { IMLDraftSocial, Nullable } from 'common/types/instance';
 import { px } from 'common/utils/ui';
-import socials from 'img';
+import socials from 'img/socials';
 
 type TMLSocialProps = {
-  block: Nullable<IMLDraftContentSocial>;
+  block: Nullable<IMLDraftSocial>;
   isPublic?: boolean;
   callback?: <T>(payload: T) => void;
 };

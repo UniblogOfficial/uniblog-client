@@ -3,18 +3,13 @@ import React, { useCallback, useState } from 'react';
 import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
 import { ID } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
-import {
-  IMLDraftContentShop,
-  Nullable,
-  TImageFile,
-  TMLImageContentShop,
-} from 'common/types/instance';
+import { IMLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
 import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 
 type TMLShopEditorProps = {
   order: number;
-  block: Nullable<IMLDraftContentShop>;
+  block: Nullable<IMLDraftShop>;
   images: Nullable<TMLImageContentShop<TImageFile>>;
 };
 
@@ -24,7 +19,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
     (imageFile: TImageFile, id?: number) => {
       if (images && id !== undefined) {
         images.cells[id] = imageFile;
-        dispatch(setMLDraftBlockContentImage(images, order, 'shopSet'));
+        dispatch(setMLDraftBlockContentImage(images, order, 'shopBlocks'));
       }
     },
     [dispatch, images, order],

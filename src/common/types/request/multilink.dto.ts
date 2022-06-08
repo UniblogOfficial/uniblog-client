@@ -1,14 +1,14 @@
 import { MLContentType, SocialNetwork } from 'common/constants';
 import {
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentLink,
-  IMLDraftContentLogo,
-  IMLDraftContentShop,
-  IMLDraftContentSocial,
-  IMLDraftContentText,
+  IMLDraftImage,
+  IMLDraftImageText,
+  IMLDraftLink,
+  IMLDraftLogo,
+  IMLDraftShop,
+  IMLDraftSocial,
+  IMLDraftText,
   IMLDraftContentUnknown,
-  IMLDraftContentVideo,
+  IMLDraftVideo,
   TImageFile,
   TMLImageContentImage,
   TMLImageContentImageText,
@@ -22,30 +22,30 @@ export type TCreateMLDto = {
   // exm. "#fff"
   background: string;
 
-  contentSet: MLContentType[];
-  textSet: IMLDraftContentTextDto[];
-  linkSet: IMLDraftContentLinkDto[];
-  socialSet: IMLDraftContentSocialDto[];
-  logoSet: IMLDraftContentLogoDto[];
-  imageSet: IMLDraftContentImageDto[];
-  imageTextSet: IMLDraftContentImageTextDto[];
-  videoSet: IMLDraftContentVideoDto[];
-  shopSet: IMLDraftContentShopDto[];
+  contentMap: MLContentType[];
+  textBlocks: IMLDraftContentTextDto[];
+  linkBlocks: IMLDraftContentLinkDto[];
+  socialBlocks: IMLDraftContentSocialDto[];
+  logoBlocks: IMLDraftContentLogoDto[];
+  imageBlocks: IMLDraftContentImageDto[];
+  imageTextBlocks: IMLDraftContentImageTextDto[];
+  videoBlocks: IMLDraftContentVideoDto[];
+  shopBlocks: IMLDraftContentShopDto[];
 };
 
 export type TCreateMLImagesDto = {
   background?: TImageFile;
-  logoSet: TMLImageContentLogo<TImageFile>[];
-  imageSet: TMLImageContentImage<TImageFile>[];
-  imageTextSet: TMLImageContentImageText<TImageFile>[];
-  shopSet: TMLImageContentShop<TImageFile>[];
+  logoBlocks: TMLImageContentLogo<TImageFile>[];
+  imageBlocks: TMLImageContentImage<TImageFile>[];
+  imageTextBlocks: TMLImageContentImageText<TImageFile>[];
+  shopBlocks: TMLImageContentShop<TImageFile>[];
 };
 
-interface IMLDraftContentTextDto extends IMLDraftContentText {}
-interface IMLDraftContentLinkDto extends IMLDraftContentLink {}
-interface IMLDraftContentSocialDto extends IMLDraftContentSocial {}
-interface IMLDraftContentLogoDto extends IMLDraftContentLogo {}
-interface IMLDraftContentImageDto extends IMLDraftContentImage {}
-interface IMLDraftContentImageTextDto extends IMLDraftContentImageText {}
-interface IMLDraftContentVideoDto extends IMLDraftContentVideo {}
-interface IMLDraftContentShopDto extends IMLDraftContentShop {}
+interface IMLDraftContentTextDto extends IMLDraftText {}
+interface IMLDraftContentLinkDto extends IMLDraftLink {}
+interface IMLDraftContentSocialDto extends IMLDraftSocial {}
+interface IMLDraftContentLogoDto extends IMLDraftLogo {}
+interface IMLDraftContentImageDto extends IMLDraftImage {}
+interface IMLDraftContentImageTextDto extends IMLDraftImageText {}
+interface IMLDraftContentVideoDto extends IMLDraftVideo {}
+interface IMLDraftContentShopDto extends IMLDraftShop {}

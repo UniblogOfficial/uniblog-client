@@ -4,13 +4,13 @@ import { getKeys } from '.';
 
 import { MLContentType, SocialNetwork } from 'common/constants';
 import {
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentLink,
-  IMLDraftContentLogo,
-  IMLDraftContentShop,
-  IMLDraftContentSocial,
-  IMLDraftContentText,
+  IMLDraftImage,
+  IMLDraftImageText,
+  IMLDraftLink,
+  IMLDraftLogo,
+  IMLDraftShop,
+  IMLDraftSocial,
+  IMLDraftText,
   Nullable,
   TIncomingImage,
   TMLDraftBlocks,
@@ -26,14 +26,14 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
       // for every field of blocks obj do
       getKeys(blocks).forEach(key => {
         // if current field is target for adding chosen block
-        if (key === 'textSet') {
+        if (key === 'textBlocks') {
           // push default block at the end of array
           newBlocks[key] = [
-            ...blocks.textSet,
+            ...blocks.textBlocks,
             {
               order,
               ...defaultTextBlockOptions,
-            } as IMLDraftContentText,
+            } as IMLDraftText,
           ];
           // for other fields just push null at the end for data consistency
         } else {
@@ -44,13 +44,13 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
 
     case MLContentType.LINK:
       getKeys(blocks).forEach(key => {
-        if (key === 'linkSet') {
+        if (key === 'linkBlocks') {
           newBlocks[key] = [
-            ...blocks.linkSet,
+            ...blocks.linkBlocks,
             {
               order,
               ...defaultLinkBlockOptions,
-            } as IMLDraftContentLink,
+            } as IMLDraftLink,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -60,13 +60,13 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
 
     case MLContentType.IMAGE:
       getKeys(blocks).forEach(key => {
-        if (key === 'imageSet') {
+        if (key === 'imageBlocks') {
           newBlocks[key] = [
-            ...blocks.imageSet,
+            ...blocks.imageBlocks,
             {
               order,
               ...defaultImageBlockOptions,
-            } as IMLDraftContentImage,
+            } as IMLDraftImage,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -76,13 +76,13 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
 
     case MLContentType.IMAGETEXT:
       getKeys(blocks).forEach(key => {
-        if (key === 'imageTextSet') {
+        if (key === 'imageTextBlocks') {
           newBlocks[key] = [
-            ...blocks.imageTextSet,
+            ...blocks.imageTextBlocks,
             {
               order,
               ...defaultImageTextBlockOptions,
-            } as IMLDraftContentImageText,
+            } as IMLDraftImageText,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -92,13 +92,13 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
 
     case MLContentType.SHOP:
       getKeys(blocks).forEach(key => {
-        if (key === 'shopSet') {
+        if (key === 'shopBlocks') {
           newBlocks[key] = [
-            ...blocks.shopSet,
+            ...blocks.shopBlocks,
             {
               order,
               ...defaultShopBlockOptions,
-            } as IMLDraftContentShop,
+            } as IMLDraftShop,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -121,15 +121,15 @@ export const pushMLDraftBlockLogo = (
 ) => {
   const newBlocks = {} as any;
   getKeys(blocks).forEach(key => {
-    if (key === 'logoSet') {
+    if (key === 'logoBlocks') {
       newBlocks[key] = [
-        ...blocks.logoSet,
+        ...blocks.logoBlocks,
         {
           order,
           logo: logo ? parseRawImage(logo) : '',
           isFilled: !!logo,
           ...defaultLogoBlockOptions,
-        } as IMLDraftContentLogo,
+        } as IMLDraftLogo,
       ];
     } else {
       newBlocks[key] = [...blocks[key], null];
@@ -145,15 +145,15 @@ export const pushMLDraftBlockSocial = (
 ) => {
   const newBlocks = {} as any;
   getKeys(blocks).forEach(key => {
-    if (key === 'socialSet') {
+    if (key === 'socialBlocks') {
       newBlocks[key] = [
-        ...blocks.socialSet,
+        ...blocks.socialBlocks,
         {
           order,
           links: socials.map(social => social.href),
           linkTypes: socials.map(social => social.type),
           ...defaultSocialBlockOptions,
-        } as IMLDraftContentSocial,
+        } as IMLDraftSocial,
       ];
     } else {
       newBlocks[key] = [...blocks[key], null];

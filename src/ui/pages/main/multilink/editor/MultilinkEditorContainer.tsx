@@ -43,7 +43,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const [stage, setStage] = useState<EditorStage>(0);
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
   const [blockEditorOrder, setBlockEditorOrder] = useState(voidOrder);
-  const { name, background, contentSet, blocks, images } = useAppSelector<TMultilinkDraft>(
+  const { name, background, contentMap, blocks, images } = useAppSelector<TMultilinkDraft>(
     state => state.mlDraft,
   );
 
@@ -68,8 +68,8 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   };
 
   const onPublishButtonClick = () => {
-    if (contentSet) {
-      dispatch(publishMultilink({ name, background, contentSet, blocks, images }));
+    if (contentMap) {
+      dispatch(publishMultilink({ name, background, contentMap, blocks, images }));
     }
   };
 
@@ -90,39 +90,39 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
         : background;
       return (
         <div className={templateClassName} style={{ background: templateBackground }}>
-          {contentSet.map((type, i) => {
+          {contentMap.map((type, i) => {
             let block;
             let image;
             const callback = editable ? () => setBlockEditor({ type, order: i }) : undefined;
             switch (type) {
               case MLContentType.LOGO:
-                block = blocks.logoSet[i];
+                block = blocks.logoBlocks[i];
                 // variable image is one or set of images of current block
-                image = images.blocks.logoSet[i];
+                image = images.blocks.logoBlocks[i];
                 return <MLLogo key={ID[i]} block={block} images={image} callback={callback} />;
               case MLContentType.TEXT:
-                block = blocks.textSet[i];
+                block = blocks.textBlocks[i];
                 return <MLText key={ID[i]} block={block} callback={callback} />;
               case MLContentType.LINK:
-                block = blocks.linkSet[i];
+                block = blocks.linkBlocks[i];
                 return <MLLink key={ID[i]} block={block} callback={callback} />;
               case MLContentType.SOCIAL:
-                block = blocks.socialSet[i];
+                block = blocks.socialBlocks[i];
                 return <MLSocial key={ID[i]} block={block} callback={callback} />;
               case MLContentType.IMAGE:
-                block = blocks.imageSet[i];
-                image = images.blocks.imageSet[i];
+                block = blocks.imageBlocks[i];
+                image = images.blocks.imageBlocks[i];
                 return <MLImages key={ID[i]} block={block} images={image} callback={callback} />;
               case MLContentType.IMAGETEXT:
-                block = blocks.imageTextSet[i];
-                image = images.blocks.imageTextSet[i];
+                block = blocks.imageTextBlocks[i];
+                image = images.blocks.imageTextBlocks[i];
                 return <MLImageText key={ID[i]} block={block} images={image} callback={callback} />;
               case MLContentType.VIDEO:
-                block = blocks.videoSet[i];
+                block = blocks.videoBlocks[i];
                 return <MLVideo key={ID[i]} block={block} callback={callback} />;
               case MLContentType.SHOP:
-                block = blocks.shopSet[i];
-                image = images.blocks.shopSet[i];
+                block = blocks.shopBlocks[i];
+                image = images.blocks.shopBlocks[i];
                 return <MLShop key={ID[i]} block={block} images={image} callback={callback} />;
               default:
                 return <li key={ID[i]} />;
@@ -131,7 +131,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
         </div>
       );
     },
-    [contentSet, blocks, background, images.blocks, images.background],
+    [contentMap, blocks, background, images.blocks, images.background],
   );
 
   return (
@@ -173,7 +173,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
               {stage === EditorStage.BACKGROUND && <MLBackground />}
               {stage === EditorStage.CONTENT && (
                 <MLContent
-                  contentSet={contentSet}
+                  contentMap={contentMap}
                   blocks={blocks}
                   images={images}
                   blockEditorType={blockEditorType}

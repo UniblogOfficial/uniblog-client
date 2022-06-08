@@ -9,7 +9,7 @@ import { ID, MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { TUser } from 'common/types/instance';
 import { parseRawImage, px } from 'common/utils/ui';
-import socials from 'img';
+import socials from 'img/socials';
 import { Carousel, Icon } from 'ui/components/elements';
 
 type TMLTemplateProps = {

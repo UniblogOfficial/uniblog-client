@@ -15,7 +15,7 @@ import { Nullable, TImageFile, TMLDraftBlocks, TMLDraftImages } from 'common/typ
 import { Button } from 'ui/components/elements';
 
 type TMLContentProps = {
-  contentSet: MLContentType[];
+  contentMap: MLContentType[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
   blockEditorType: Nullable<MLContentType>;
@@ -25,7 +25,7 @@ type TMLContentProps = {
 
 export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
-  const { contentSet, blocks, images, blockEditorType, blockEditorOrder, setBlockEditor } = props;
+  const { contentMap, blocks, images, blockEditorType, blockEditorOrder, setBlockEditor } = props;
   const { t } = useTranslation(['pages', 'common']);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
@@ -37,9 +37,9 @@ export const MLContent = (props: TMLContentProps) => {
         return;
       }
       dispatch(addMLDraftBlock(e.currentTarget.value as MLContentType));
-      setBlockEditor({ type: e.currentTarget.value as MLContentType, order: contentSet.length });
+      setBlockEditor({ type: e.currentTarget.value as MLContentType, order: contentMap.length });
     },
-    [contentSet.length, dispatch, setBlockEditor],
+    [contentMap.length, dispatch, setBlockEditor],
   );
 
   const actionButtons = (
@@ -131,60 +131,60 @@ export const MLContent = (props: TMLContentProps) => {
   const currentEditor = useMemo(() => {
     switch (blockEditorType) {
       case MLContentType.LOGO: {
-        const currentBlock = blocks.logoSet[blockEditorOrder];
+        const currentBlock = blocks.logoBlocks[blockEditorOrder];
         return (
           currentBlock && (
             <div className="ml-logo-editor">
               <MLLogoEditor
                 order={blockEditorOrder}
                 block={currentBlock}
-                images={images.blocks.logoSet[blockEditorOrder]}
+                images={images.blocks.logoBlocks[blockEditorOrder]}
               />
             </div>
           )
         );
       }
       case MLContentType.TEXT: {
-        const currentBlock = blocks.textSet[blockEditorOrder];
+        const currentBlock = blocks.textBlocks[blockEditorOrder];
         return currentBlock && <MLTextEditor order={blockEditorOrder} block={currentBlock} />;
       }
       case MLContentType.IMAGETEXT: {
-        const currentBlock = blocks.imageTextSet[blockEditorOrder];
+        const currentBlock = blocks.imageTextBlocks[blockEditorOrder];
         return currentBlock && <>Not implemented</>;
       }
       case MLContentType.IMAGE: {
-        const currentBlock = blocks.imageSet[blockEditorOrder];
+        const currentBlock = blocks.imageBlocks[blockEditorOrder];
         return (
           currentBlock && (
             <div className="ml-image-editor">
               <MLImageEditor
                 order={blockEditorOrder}
                 block={currentBlock}
-                images={images.blocks.imageSet[blockEditorOrder]}
+                images={images.blocks.imageBlocks[blockEditorOrder]}
               />
             </div>
           )
         );
       }
       case MLContentType.LINK: {
-        const currentBlock = blocks.linkSet[blockEditorOrder];
+        const currentBlock = blocks.linkBlocks[blockEditorOrder];
         return (
           currentBlock && <MLLinkEditor order={blockEditorOrder} close={onButtonEditorClick} />
         );
       }
       case MLContentType.SOCIAL: {
-        const currentBlock = blocks.socialSet[blockEditorOrder];
+        const currentBlock = blocks.socialBlocks[blockEditorOrder];
         return currentBlock && <>Not implemented</>;
       }
       case MLContentType.SHOP: {
-        const currentBlock = blocks.shopSet[blockEditorOrder];
+        const currentBlock = blocks.shopBlocks[blockEditorOrder];
         return (
           currentBlock && (
             <div className="ml-shop-editor">
               <MLShopEditor
                 order={blockEditorOrder}
-                block={blocks.shopSet[blockEditorOrder]}
-                images={images.blocks.shopSet[blockEditorOrder]}
+                block={blocks.shopBlocks[blockEditorOrder]}
+                images={images.blocks.shopBlocks[blockEditorOrder]}
               />
             </div>
           )
