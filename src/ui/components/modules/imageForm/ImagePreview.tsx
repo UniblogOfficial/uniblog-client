@@ -6,7 +6,7 @@ import { parseRawImage } from '../../../../common/utils/ui';
 import styles from './DropZone.module.scss';
 
 type TImagePreviewProps = {
-  imageFiles: Array<TImageFile> | TIncomingImage;
+  imageFiles: Array<TImageFile> | string;
 };
 
 const ImagePreview: FC<TImagePreviewProps> = ({ imageFiles }) => {
@@ -20,7 +20,7 @@ const ImagePreview: FC<TImagePreviewProps> = ({ imageFiles }) => {
     }
     return (
       <div className={styles['img-container']}>
-        <img src={parseRawImage(imageFiles)} alt={imageFiles.imageName} />
+        <img src={imageFiles} alt="preview" />
       </div>
     );
   };

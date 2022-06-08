@@ -1,6 +1,6 @@
 import { MLContentType, SocialNetwork } from '../../constants';
 
-import { TImageFile } from './image';
+import { TImageFile, TIncomingImage } from './image';
 
 import { Nullable } from '.';
 
