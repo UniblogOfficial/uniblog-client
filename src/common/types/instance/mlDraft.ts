@@ -1,5 +1,8 @@
 import { TImageFile, Nullable } from '.';
 
+import { TImageFile, TIncomingImage } from './image';
+
+import { Nullable } from '.';
 import { MLContentType, SocialNetwork, SocialService } from 'common/constants';
 import { TIconName } from 'ui/components/modules/iconSpritesMaps/IconSpritesMap';
 

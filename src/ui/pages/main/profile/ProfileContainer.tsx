@@ -12,6 +12,7 @@ import { Button, Icon } from 'ui/components/elements';
 import { PageHeader } from 'ui/components/modules/headers/PageHeader';
 import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 import { Modal } from 'ui/components/modules/modals/Modal';
+import { parseRawImage } from 'common/utils/ui';
 
 type TProfileContainerProps = {
   userData: TUser;
@@ -84,7 +85,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
                   <DropZoneField
                     onChange={onImageZoneChange}
                     touched={false}
-                    initialImage={avatar ?? undefined}
+                    initialImage={parseRawImage(avatar) ?? undefined}
                   />
                 </div>
                 <div className="paper__button-container">

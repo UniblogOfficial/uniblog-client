@@ -234,13 +234,13 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
           <input
             type="button"
             className={styles.circleGradient}
-            onClick={() => setisBgColorPickerVisible(true)}
+            onClick={() => setIsBgColorPickerVisible(true)}
           />
           {isBgColorPickerVisible && (
             <RgbaStringColorPicker
               color={block.background ?? '#ffff'}
               onChange={onBackgroundColorChange}
-              onBlur={() => setisBgColorPickerVisible(false)}
+              onBlur={() => setIsBgColorPickerVisible(false)}
             />
           )}
           <div style={{ marginTop: '15px' }}>Padding:</div>
