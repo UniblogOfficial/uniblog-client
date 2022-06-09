@@ -1,22 +1,14 @@
 import React, { useCallback, useState, MouseEvent } from 'react';
 
-import {
-  setMLDraftBlockContent,
-  setMLDraftBlockContentImage,
-} from '../../../../../../bll/reducers';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import {
-  IMLDraftContentLogo,
-  Nullable,
-  TImageFile,
-  TMLImageContentLogo,
-} from '../../../../../../common/types/instance';
-import { Button, Input } from '../../../../../components/elements';
-import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
+import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { useAppDispatch } from 'common/hooks';
+import { IMLDraftLogo, Nullable, TImageFile, TMLImageContentLogo } from 'common/types/instance';
+import { Button, Input } from 'ui/components/elements';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 
 type TMLLogoEditorProps = {
   order: number;
-  block: Nullable<IMLDraftContentLogo>;
+  block: Nullable<IMLDraftLogo>;
   images: Nullable<TMLImageContentLogo<TImageFile>>;
 };
 
@@ -37,7 +29,7 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
         if (id === ImageType.BANNER) {
           images.banner = imageFile;
         }
-        dispatch(setMLDraftBlockContentImage(images, order, 'logoSet'));
+        dispatch(setMLDraftBlockContentImage(images, order, 'logoBlocks'));
       }
     },
     [dispatch, images, order],
@@ -51,7 +43,7 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
         if (e.currentTarget.value === '2') {
           block.banner = null;
         }
-        dispatch(setMLDraftBlockContent(block, order, 'logoSet'));
+        dispatch(setMLDraftBlockContent(block, order, 'logoBlocks'));
       }
     },
     [block, dispatch, order],

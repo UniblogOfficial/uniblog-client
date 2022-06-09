@@ -1,13 +1,13 @@
 import { batch } from 'react-redux';
 
-import { AppStatus } from '../../common/constants';
-import { Nullable, TUser } from '../../common/types/instance';
-import { TLoginDto, TRegisterDto } from '../../common/types/request/auth.dto';
-import { handleServerNetworkError } from '../../common/utils/state/errorHandler';
-import { authAPI } from '../../dal';
-import { AppThunk } from '../store';
-
 import { removeUserData, setAppStatus, setInitialized, setMLDraftName, setUserData } from '.';
+
+import { AppThunk } from 'bll/store';
+import { AppStatus } from 'common/constants';
+import { Nullable, TUser } from 'common/types/instance';
+import { TLoginDto, TRegisterDto } from 'common/types/request/auth.dto';
+import { handleServerNetworkError } from 'common/utils/state/errorHandler';
+import { authAPI } from 'dal';
 
 enum AuthActionType {
   SET_REGISTER_USER_DATA = 'SET_REGISTER_USER_DATA',

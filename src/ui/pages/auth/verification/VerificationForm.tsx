@@ -5,10 +5,10 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { NavLink, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 
-import { useAppDispatch } from '../../../../common/hooks';
-import { Input } from '../../../components/elements';
-import { Button } from '../../../components/elements/button/Button';
-import { Icon } from '../../../components/elements/icons/Icon';
+import { useAppDispatch } from 'common/hooks';
+import { Input } from 'ui/components/elements';
+import { Button } from 'ui/components/elements/button/Button';
+import { Icon } from 'ui/components/elements/icons/Icon';
 
 export type VerificationFormData = {
   code: string;

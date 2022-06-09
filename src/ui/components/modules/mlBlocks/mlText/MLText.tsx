@@ -1,10 +1,10 @@
 import React, { MouseEvent } from 'react';
 
-import { IMLDraftContentText, Nullable } from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
+import { IMLDraftText, Nullable } from 'common/types/instance';
+import { px } from 'common/utils/ui';
 
 type TMLTextProps = {
-  block: Nullable<IMLDraftContentText>;
+  block: Nullable<IMLDraftText>;
   callback?: <T>(payload: T) => void;
 };
 

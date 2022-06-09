@@ -1,20 +1,21 @@
-import imgPlaceholder from '../../../img/img-placeholder.png';
-import { MLContentType, SocialNetwork } from '../../constants';
+import { parseRawImage } from '../ui';
+
+import { getKeys } from '.';
+
+import { MLContentType, SocialNetwork } from 'common/constants';
 import {
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentLink,
-  IMLDraftContentLogo,
-  IMLDraftContentShop,
-  IMLDraftContentSocial,
-  IMLDraftContentText,
+  IMLDraftImage,
+  IMLDraftImageText,
+  IMLDraftLink,
+  IMLDraftLogo,
+  IMLDraftShop,
+  IMLDraftSocial,
+  IMLDraftText,
   Nullable,
   TIncomingImage,
   TMLDraftBlocks,
-} from '../../types/instance';
-import { parseRawImage } from '../ui/index';
-
-import { getKeys } from '.';
+} from 'common/types/instance';
+import imgPlaceholder from 'img/img-placeholder.png';
 
 // at this moment function just push block at the END!!!
 // except logo and social!
@@ -25,14 +26,14 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
       // for every field of blocks obj do
       getKeys(blocks).forEach(key => {
         // if current field is target for adding chosen block
-        if (key === 'textSet') {
+        if (key === 'textBlocks') {
           // push default block at the end of array
           newBlocks[key] = [
-            ...blocks.textSet,
+            ...blocks.textBlocks,
             {
               order,
               ...defaultTextBlockOptions,
-            } as IMLDraftContentText,
+            } as IMLDraftText,
           ];
           // for other fields just push null at the end for data consistency
         } else {
@@ -43,13 +44,13 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
 
     case MLContentType.LINK:
       getKeys(blocks).forEach(key => {
-        if (key === 'linkSet') {
+        if (key === 'linkBlocks') {
           newBlocks[key] = [
-            ...blocks.linkSet,
+            ...blocks.linkBlocks,
             {
               order,
               ...defaultLinkBlockOptions,
-            } as IMLDraftContentLink,
+            } as IMLDraftLink,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -59,13 +60,13 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
 
     case MLContentType.IMAGE:
       getKeys(blocks).forEach(key => {
-        if (key === 'imageSet') {
+        if (key === 'imageBlocks') {
           newBlocks[key] = [
-            ...blocks.imageSet,
+            ...blocks.imageBlocks,
             {
               order,
               ...defaultImageBlockOptions,
-            } as IMLDraftContentImage,
+            } as IMLDraftImage,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -75,13 +76,13 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
 
     case MLContentType.IMAGETEXT:
       getKeys(blocks).forEach(key => {
-        if (key === 'imageTextSet') {
+        if (key === 'imageTextBlocks') {
           newBlocks[key] = [
-            ...blocks.imageTextSet,
+            ...blocks.imageTextBlocks,
             {
               order,
               ...defaultImageTextBlockOptions,
-            } as IMLDraftContentImageText,
+            } as IMLDraftImageText,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -91,13 +92,13 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
 
     case MLContentType.SHOP:
       getKeys(blocks).forEach(key => {
-        if (key === 'shopSet') {
+        if (key === 'shopBlocks') {
           newBlocks[key] = [
-            ...blocks.shopSet,
+            ...blocks.shopBlocks,
             {
               order,
               ...defaultShopBlockOptions,
-            } as IMLDraftContentShop,
+            } as IMLDraftShop,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -120,15 +121,15 @@ export const pushMLDraftBlockLogo = (
 ) => {
   const newBlocks = {} as any;
   getKeys(blocks).forEach(key => {
-    if (key === 'logoSet') {
+    if (key === 'logoBlocks') {
       newBlocks[key] = [
-        ...blocks.logoSet,
+        ...blocks.logoBlocks,
         {
           order,
           logo: logo ? parseRawImage(logo) : '',
           isFilled: !!logo,
           ...defaultLogoBlockOptions,
-        } as IMLDraftContentLogo,
+        } as IMLDraftLogo,
       ];
     } else {
       newBlocks[key] = [...blocks[key], null];
@@ -144,15 +145,15 @@ export const pushMLDraftBlockSocial = (
 ) => {
   const newBlocks = {} as any;
   getKeys(blocks).forEach(key => {
-    if (key === 'socialSet') {
+    if (key === 'socialBlocks') {
       newBlocks[key] = [
-        ...blocks.socialSet,
+        ...blocks.socialBlocks,
         {
           order,
           links: socials.map(social => social.href),
           linkTypes: socials.map(social => social.type),
           ...defaultSocialBlockOptions,
-        } as IMLDraftContentSocial,
+        } as IMLDraftSocial,
       ];
     } else {
       newBlocks[key] = [...blocks[key], null];
@@ -161,7 +162,7 @@ export const pushMLDraftBlockSocial = (
   return newBlocks as TMLDraftBlocks;
 };
 
-const defaultTextBlockOptions = {
+const defaultTextBlockOptions: Omit<IMLDraftText, 'order'> = {
   type: MLContentType.TEXT,
   isFilled: false,
   text: '',
@@ -169,7 +170,7 @@ const defaultTextBlockOptions = {
   padding: [0, 24],
 };
 
-const defaultLinkBlockOptions = {
+const defaultLinkBlockOptions: Omit<IMLDraftLink, 'order'> = {
   type: MLContentType.LINK,
   isFilled: false,
   href: '',
@@ -182,36 +183,41 @@ const defaultLinkBlockOptions = {
   background: `#f${Math.random().toString(16).substr(-4)}f40`,
 };
 
-const defaultImageBlockOptions = {
+const defaultImageBlockOptions: Omit<IMLDraftImage, 'order'> = {
   type: MLContentType.IMAGE,
   isFilled: false,
   images: [imgPlaceholder],
+  imgPosition: 'bottom',
+  textPosition: 'outside',
   padding: [0, 24],
 };
 
-const defaultImageTextBlockOptions = {
+const defaultImageTextBlockOptions: Omit<IMLDraftImageText, 'order'> = {
   type: MLContentType.IMAGETEXT,
   isFilled: false,
   image: imgPlaceholder,
   text: '',
   imgPosition: 'left',
+  hAlign: 'left',
   vAlign: 'top',
   fontSize: 18,
   fontWeight: 400,
   padding: [0, 24],
 };
 
-const defaultLogoBlockOptions = {
+const defaultLogoBlockOptions: Omit<IMLDraftLogo, 'order' | 'isFilled' | 'logo'> = {
   type: MLContentType.LOGO,
   size: 100,
+  hAlign: 'center',
+  vAlign: 'center',
 };
 
-const defaultSocialBlockOptions = {
+const defaultSocialBlockOptions: Omit<IMLDraftSocial, 'order' | 'links' | 'linkTypes'> = {
   type: MLContentType.SOCIAL,
   isFilled: false,
 };
 
-const defaultShopBlockOptions = {
+const defaultShopBlockOptions: Omit<IMLDraftShop, 'order'> = {
   type: MLContentType.SHOP,
   isFilled: false,
   grid: '1fr 1fr 1fr',
@@ -225,46 +231,30 @@ const defaultShopBlockOptions = {
       title: 'Item #1',
       subtitle: '1$',
       href: '',
-      color: '#000',
-      fontSize: 14,
-      fontWeight: 400,
-      align: 'left',
-      subtitleColor: '#000',
-      subtitleFontSize: 14,
-      subtitleFontWeight: 700,
-      subtitleAlign: 'center',
     },
     {
       order: 1,
-      image: { src: imgPlaceholder },
+      image: imgPlaceholder,
       background: '#fff',
       title: 'Item #2',
       subtitle: '2$',
       href: '',
-      color: '#000',
-      fontSize: 14,
-      fontWeight: 400,
-      align: 'left',
-      subtitleColor: '#000',
-      subtitleFontSize: 14,
-      subtitleFontWeight: 700,
-      subtitleAlign: 'center',
     },
     {
       order: 2,
-      image: { src: imgPlaceholder },
+      image: imgPlaceholder,
       background: '#fff',
       title: 'Item #3',
       subtitle: '3$',
       href: '',
-      color: '#000',
-      fontSize: 14,
-      fontWeight: 400,
-      align: 'left',
-      subtitleColor: '#000',
-      subtitleFontSize: 14,
-      subtitleFontWeight: 700,
-      subtitleAlign: 'center',
     },
   ],
+  color: '#000',
+  fontSize: 14,
+  fontWeight: 400,
+  align: 'left',
+  subtitleColor: '#000',
+  subtitleFontSize: 14,
+  subtitleFontWeight: 700,
+  subtitleAlign: 'center',
 };

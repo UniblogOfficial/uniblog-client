@@ -1,6 +1,6 @@
-import { TCreateMLDto, TCreateMLImagesDto } from '../common/types/request';
+import { api } from '.';
 
-import { api } from './api';
+import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request';
 
 export const multilinkAPI = {
   get(name: string, id?: string) {
@@ -19,49 +19,49 @@ export const multilinkAPI = {
     const {
       name,
       background,
-      contentSet,
-      logoSet,
-      imageSet,
-      imageTextSet,
-      linkSet,
-      shopSet,
-      socialSet,
-      textSet,
-      videoSet,
+      contentMap,
+      logoBlocks,
+      imageBlocks,
+      imageTextBlocks,
+      linkBlocks,
+      shopBlocks,
+      socialBlocks,
+      textBlocks,
+      videoBlocks,
     } = multilink;
     const formData = new FormData();
     formData.append('name', name);
     formData.append('background', background);
-    formData.append(`contentSet`, JSON.stringify(contentSet));
-    formData.append(`logoSet`, JSON.stringify(logoSet));
-    formData.append(`imageSet`, JSON.stringify(imageSet));
-    formData.append(`imageTextSet`, JSON.stringify(imageTextSet));
-    formData.append(`linkSet`, JSON.stringify(linkSet));
-    formData.append(`shopSet`, JSON.stringify(shopSet));
-    formData.append(`socialSet`, JSON.stringify(socialSet));
-    formData.append(`textSet`, JSON.stringify(textSet));
-    formData.append(`videoSet`, JSON.stringify(videoSet));
+    formData.append(`contentMap`, JSON.stringify(contentMap));
+    formData.append(`logoBlocks`, JSON.stringify(logoBlocks));
+    formData.append(`imageBlocks`, JSON.stringify(imageBlocks));
+    formData.append(`imageTextBlocks`, JSON.stringify(imageTextBlocks));
+    formData.append(`linkBlocks`, JSON.stringify(linkBlocks));
+    formData.append(`shopBlocks`, JSON.stringify(shopBlocks));
+    formData.append(`socialBlocks`, JSON.stringify(socialBlocks));
+    formData.append(`textBlocks`, JSON.stringify(textBlocks));
+    formData.append(`videoBlocks`, JSON.stringify(videoBlocks));
 
     if (images.background) {
       formData.append('images', images.background.file, 'backgroundImage');
     }
 
-    images.logoSet.forEach((block, i) => {
+    images.logoBlocks.forEach((block, i) => {
       block.logo && formData.append('images', block.logo.file, `${block.order}_logo_1`);
       block.banner && formData.append('images', block.banner.file, `${block.order}_logo_2`);
     });
 
-    images.imageSet.forEach((block, i) => {
+    images.imageBlocks.forEach((block, i) => {
       block.images.forEach((image, j) => {
         image && formData.append('images', image.file, `${block.order}_image_${j}`);
       });
     });
 
-    images.imageTextSet.forEach((block, i) => {
+    images.imageTextBlocks.forEach((block, i) => {
       block.image && formData.append('images', block.image.file, `${block.order}_imagetext_0`);
     });
 
-    images.shopSet.forEach((block, i) => {
+    images.shopBlocks.forEach((block, i) => {
       block.cells.forEach((cell, j) => {
         cell && formData.append('images', cell.file, `${block.order}_shop_${j}`);
       });

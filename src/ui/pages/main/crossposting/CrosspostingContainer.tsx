@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import socials from '../../../../img';
-import { Button, Icon, Radio } from '../../../components/elements';
-import { PageHeader } from '../../../components/modules/headers/PageHeader';
-import { SocialCard } from '../../../components/modules/socialCard/SocialCard';
+import socials from 'img/socials';
+import { Button, Icon, Radio } from 'ui/components/elements';
+import { PageHeader } from 'ui/components/modules/headers/PageHeader';
+import { SocialCard } from 'ui/components/modules/socialCard/SocialCard';
 
 type TCrosspostingContainerProps = {};
 

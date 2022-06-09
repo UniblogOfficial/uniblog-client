@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { Icon } from '../../../components/elements/icons/Icon';
+import { Icon } from 'ui/components/elements/icons/Icon';
 
 export const XPublicationsContainer = () => {
   const { t } = useTranslation(['pages', 'common']);

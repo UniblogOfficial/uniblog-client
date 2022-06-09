@@ -1,16 +1,11 @@
-import React, { CSSProperties, FC, memo, useCallback, useMemo, useState } from 'react';
-
-import { useTranslation } from 'react-i18next';
-
-import { setMLDraftTemplate } from '../../../../../../bll/reducers';
-import { ID, MLContentType } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import { TUser } from '../../../../../../common/types/instance';
-import { parseRawImage, px } from '../../../../../../common/utils/ui';
-import socials from '../../../../../../img';
-import { Carousel, Icon } from '../../../../../components/elements';
+import React, { CSSProperties, memo, useMemo, useState } from 'react';
 
 import { getTemplates } from './templates';
+
+import { ID, MLContentType } from 'common/constants';
+import { TUser } from 'common/types/instance';
+import { px } from 'common/utils/ui';
+import socials from 'img/socials';
 
 type TMLTemplatesProps = {
   userData: TUser;

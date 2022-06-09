@@ -3,11 +3,11 @@ import React, { FC, DragEvent, useState, useCallback } from 'react';
 import DropZone, { DropEvent } from 'react-dropzone';
 import { string } from 'yup';
 
-import { TImageFile, TIncomingImage } from '../../../../common/types/instance';
-
 import ShowError from './FormErrorRepresenter';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import ImagePreview from './ImagePreview';
+
+import { TImageFile, TIncomingImage } from 'common/types/instance';
 
 type TDropZoneFieldProps = {
   onChange: (imageFile: TImageFile, id?: number) => void;

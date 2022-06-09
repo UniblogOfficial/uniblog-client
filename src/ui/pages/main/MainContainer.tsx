@@ -2,11 +2,6 @@ import React, { useLayoutEffect } from 'react';
 
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
-import { TUserState } from '../../../bll/reducers';
-import { selectUserData } from '../../../bll/selectors';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { Footer } from '../../components/modules/footer/Footer';
-import { SidebarContainer } from '../../components/modules/sidebar/SidebarContainer';
 import { NotFound } from '../404';
 
 import { CrosspostingContainer } from './crossposting/CrosspostingContainer';
@@ -18,6 +13,12 @@ import { HomeContainer } from './home/HomeContainer';
 import { MultilinkContainer } from './multilink/MultilinkContainer';
 import { PriceContainer } from './price/PriceContainer';
 import { ProfileContainer } from './profile/ProfileContainer';
+
+import { TUserState } from 'bll/reducers';
+import { selectUserData } from 'bll/selectors';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { Footer } from 'ui/components/modules/footer/Footer';
+import { SidebarContainer } from 'ui/components/modules/sidebar/SidebarContainer';
 
 export const MainContainer = () => {
   const dispatch = useAppDispatch();

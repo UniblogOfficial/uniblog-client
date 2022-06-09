@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FC, useState } from 'react';
 
-import { setMLDraftName } from '../../../../../../bll/reducers';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import { Button, Icon } from '../../../../../components/elements';
+import { setMLDraftName } from 'bll/reducers';
+import { useAppDispatch } from 'common/hooks';
+import { Button, Icon } from 'ui/components/elements';
 
 type TMLPreviewProps = {
   name: string; // multilink name

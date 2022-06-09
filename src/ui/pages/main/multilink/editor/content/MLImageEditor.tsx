@@ -1,23 +1,15 @@
 import React, { useCallback, useState } from 'react';
 
-import {
-  setMLDraftBlockContent,
-  setMLDraftBlockContentImage,
-} from '../../../../../../bll/reducers';
-import { ID } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import {
-  IMLDraftContentImage,
-  Nullable,
-  TImageFile,
-  TMLImageContentImage,
-} from '../../../../../../common/types/instance';
-import { Button, Input } from '../../../../../components/elements';
-import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField';
+import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { ID } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
+import { IMLDraftImage, Nullable, TImageFile, TMLImageContentImage } from 'common/types/instance';
+import { Button, Input } from 'ui/components/elements';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 
 type TMLImageEditorProps = {
   order: number;
-  block: Nullable<IMLDraftContentImage>;
+  block: Nullable<IMLDraftImage>;
   images: Nullable<TMLImageContentImage<TImageFile>>;
 };
 
@@ -27,7 +19,7 @@ export const MLImageEditor = ({ order, block, images }: TMLImageEditorProps) => 
     (imageFile: TImageFile, id?: number) => {
       if (images && id !== undefined) {
         images.images[id] = imageFile;
-        dispatch(setMLDraftBlockContentImage(images, order, 'imageSet'));
+        dispatch(setMLDraftBlockContentImage(images, order, 'imageBlocks'));
       }
     },
     [dispatch, images, order],

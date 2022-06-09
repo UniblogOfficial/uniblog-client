@@ -2,15 +2,15 @@ import React, { CSSProperties, FC, useCallback, useMemo, useState } from 'react'
 
 import { useTranslation } from 'react-i18next';
 
-import { setMLDraftTemplate } from '../../../../../../bll/reducers';
-import { ID, MLContentType } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import { TUser } from '../../../../../../common/types/instance';
-import { parseRawImage, px } from '../../../../../../common/utils/ui';
-import socials from '../../../../../../img';
-import { Carousel, Icon } from '../../../../../components/elements';
-
 import { getTemplates } from './templates';
+
+import { setMLDraftTemplate } from 'bll/reducers';
+import { ID, MLContentType } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
+import { TUser } from 'common/types/instance';
+import { parseRawImage, px } from 'common/utils/ui';
+import socials from 'img/socials';
+import { Carousel, Icon } from 'ui/components/elements';
 
 type TMLTemplateProps = {
   userData: TUser;

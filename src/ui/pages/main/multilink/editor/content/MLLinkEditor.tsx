@@ -5,9 +5,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
-import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import { Button, Input } from '../../../../../components/elements';
+import { MLContentType, SocialNetwork } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
+import { Button, Input } from 'ui/components/elements';
 
 type TLinkFormData = {
   title: string;

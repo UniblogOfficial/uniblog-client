@@ -1,6 +1,6 @@
 import React from 'react';
 
-import sber from '../../../img/sber-online.png';
+import sber from 'img/sber-online.png';
 
 type TPurchaseContainerProps = {};
 
