@@ -8,11 +8,11 @@ import { ProfileForm } from './ProfileForm';
 import { logout, requestSaveAvatar } from 'bll/reducers';
 import { useAppDispatch } from 'common/hooks';
 import { TImageFile, TUser } from 'common/types/instance';
+import { parseRawImage } from 'common/utils/ui';
 import { Button, Icon } from 'ui/components/elements';
 import { PageHeader } from 'ui/components/modules/headers/PageHeader';
 import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 import { Modal } from 'ui/components/modules/modals/Modal';
-import { parseRawImage } from 'common/utils/ui';
 
 type TProfileContainerProps = {
   userData: TUser;
