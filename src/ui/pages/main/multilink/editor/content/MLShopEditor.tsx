@@ -44,27 +44,29 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
     [dispatch, images, order],
   );
 
-  const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const currentOrder = e.currentTarget.dataset.value;
     if (block && currentOrder) {
-      setTitles(
-        titles.map((title, index) => (index === +currentOrder ? e.currentTarget.value : title)),
-      );
-      block.cells[+currentOrder].title = e.currentTarget.value;
-      dispatchThrottled(setMLDraftBlockContent(block, order, 'shopSet'));
-    }
-  };
-
-  const onSubTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const currentOrder = e.currentTarget.dataset.value;
-    if (block && currentOrder) {
-      setSubTitles(
-        subtitles.map((subtitle, index) =>
-          index === +currentOrder ? e.currentTarget.value : subtitle,
-        ),
-      );
-      block.cells[+currentOrder].subtitle = e.currentTarget.value;
-      dispatchThrottled(setMLDraftBlockContent(block, order, 'shopSet'));
+      switch (e.currentTarget.name) {
+        case 'title':
+          setTitles(
+            titles.map((title, index) => (index === +currentOrder ? e.currentTarget.value : title)),
+          );
+          block.cells[+currentOrder].title = e.currentTarget.value;
+          dispatchThrottled(setMLDraftBlockContent(block, order, 'shopSet'));
+          break;
+        case 'subtitle':
+          setSubTitles(
+            subtitles.map((subtitle, index) =>
+              index === +currentOrder ? e.currentTarget.value : subtitle,
+            ),
+          );
+          block.cells[+currentOrder].subtitle = e.currentTarget.value;
+          dispatchThrottled(setMLDraftBlockContent(block, order, 'shopSet'));
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -88,7 +90,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
           placeholder="Enter title"
           value={titles[i]}
           data-value={i}
-          onChange={onTitleChange}
+          onChange={onChangeInput}
         />
       </div>
       <div className="field__input">
@@ -98,7 +100,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
           placeholder="Enter subtitle"
           value={subtitles[i]}
           data-value={i}
-          onChange={onSubTitleChange}
+          onChange={onChangeInput}
         />
       </div>
     </li>
