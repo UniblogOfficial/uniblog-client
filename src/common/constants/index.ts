@@ -26,22 +26,29 @@ export enum SocialService {
 }
 
 export enum MLContentType {
-  TEXT = 'text',
-  LINK = 'link',
-  LOGO = 'logo',
-  SOCIAL = 'social',
-  BUTTON = 'button',
-  POST = 'post',
-  IMAGE = 'image',
-  IMAGETEXT = 'imagetext',
-  CAROUSEL = 'carousel',
-  VIDEO = 'video',
-  AUDIO = 'audio',
-  WIDGET = 'widget',
-  SHOP = 'shop',
-  VOTE = 'vote',
-  MAP = 'map',
-  DIVIDER = 'divider',
+  TEXT = 'textBlocks',
+  LINK = 'linkBlocks',
+  LOGO = 'logoBlocks',
+  SOCIAL = 'socialBlocks',
+  BUTTON = 'buttonBlocks',
+  POST = 'postBlocks',
+  IMAGE = 'imageBlocks',
+  IMAGETEXT = 'imageTextBlocks',
+  CAROUSEL = 'carouselBlocks',
+  VIDEO = 'videoBlocks',
+  AUDIO = 'audioBlocks',
+  WIDGET = 'widgetBlocks',
+  SHOP = 'shopBlocks',
+  VOTE = 'voteBlocks',
+  MAP = 'mapBlocks',
+  DIVIDER = 'dividerBlocks',
+}
+
+export enum MLConstructorStage {
+  TEMPLATE = 0,
+  BACKGROUND = 1,
+  CONTENT = 2,
+  PREVIEW = 3,
 }
 
 export enum AppStatus {

@@ -1,33 +1,14 @@
-import { batch } from 'react-redux';
-
 import { setAppStatus } from '.';
 
 import { AppThunk } from 'bll/store';
-import { AppStatus, MLContentType, SocialNetwork } from 'common/constants';
+import { AppStatus, MLConstructorStage, MLContentType, SocialNetwork } from 'common/constants';
 import {
-  IMLDraftImage,
-  IMLDraftImageText,
-  IMLDraftLink,
-  IMLDraftLogo,
-  IMLDraftShop,
-  IMLDraftSocial,
-  IMLDraftText,
-  IMLDraftVideo,
   Nullable,
   TIncomingImage,
   TImageFile,
   TMLDraftBlocks,
   TMLDraftImages,
-  TMLImageContentImage,
-  TMLImageContentImageText,
-  TMLImageContentLogo,
-  TMLImageContentShop,
-  TMultilink,
-  TMultilinkComplete,
   TMultilinkDraft,
-  TMLImageContentButton,
-  TMLImageContentCarousel,
-  TMLImageContentLink,
 } from 'common/types/instance';
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request/multilink.dto';
 import {
@@ -88,6 +69,8 @@ const initialState: TMLDraftState = {
       linkBlocks: [],
     },
   },
+  // in-app values
+  currentStage: MLConstructorStage.TEMPLATE,
 };
 
 export const mlDraftReducer = (
@@ -280,18 +263,15 @@ export const setMLDraftBlockContent = <T>(content: T, order: number, field: keyo
 export const setMLDraftBlockContentImage = <T>(
   images: T,
   order: number,
-  field: keyof Omit<
+  field: keyof Pick<
     TMLDraftBlocks,
-    | 'textBlocks'
+    | 'logoBlocks'
+    | 'imageBlocks'
+    | 'imageTextBlocks'
+    | 'shopBlocks'
+    | 'carouselBlocks'
+    | 'buttonBlocks'
     | 'linkBlocks'
-    | 'socialBlocks'
-    | 'videoBlocks'
-    | 'audioBlocks'
-    | 'widgetBlocks'
-    | 'voteBlocks'
-    | 'mapBlocks'
-    | 'postBlocks'
-    | 'dividerBlocks'
   >,
 ) =>
   ({
@@ -310,20 +290,33 @@ export const publishMultilink =
       background,
       contentMap,
       textBlocks: blocks.textBlocks.filter(notNull),
-      linkBlocks: blocks.linkBlocks.filter(notNull),
       socialBlocks: blocks.socialBlocks.filter(notNull),
+      videoBlocks: blocks.videoBlocks.filter(notNull),
+      audioBlocks: blocks.audioBlocks.filter(notNull),
+      dividerBlocks: blocks.dividerBlocks.filter(notNull),
+      mapBlocks: blocks.mapBlocks.filter(notNull),
+      postBlocks: blocks.postBlocks.filter(notNull),
+      voteBlocks: blocks.voteBlocks.filter(notNull),
+      widgetBlocks: blocks.widgetBlocks.filter(notNull),
+
       logoBlocks: blocks.logoBlocks.filter(notNull).map(block => ({ ...block, logo: null })),
+      linkBlocks: blocks.linkBlocks.filter(notNull),
       imageBlocks: blocks.imageBlocks.filter(notNull),
       imageTextBlocks: blocks.imageTextBlocks.filter(notNull),
-      videoBlocks: blocks.videoBlocks.filter(notNull),
       shopBlocks: blocks.shopBlocks.filter(notNull),
+      carouselBlock: blocks.carouselBlocks.filter(notNull),
+      buttonBlock: blocks.buttonBlocks.filter(notNull),
     };
     const imagesDto: TCreateMLImagesDto = {
       background: images.background ?? undefined,
+
       logoBlocks: images.blocks.logoBlocks.filter(notNull),
       imageBlocks: images.blocks.imageBlocks.filter(notNull),
       imageTextBlocks: images.blocks.imageTextBlocks.filter(notNull),
       shopBlocks: images.blocks.shopBlocks.filter(notNull),
+      buttonBlocks: images.blocks.buttonBlocks.filter(notNull),
+      carouselBlocks: images.blocks.carouselBlocks.filter(notNull),
+      linkBlocks: images.blocks.linkBlocks.filter(notNull),
     };
     const response = await multilinkAPI.create(multilinkDto, imagesDto);
   };
@@ -334,18 +327,9 @@ export type TMLDraftState = {
   background: string;
   contentMap: MLContentType[];
   blocks: TMLDraftBlocks;
-  images: {
-    background: Nullable<TImageFile>;
-    blocks: {
-      logoBlocks: Nullable<TMLImageContentLogo<TImageFile>>[];
-      linkBlocks: Nullable<TMLImageContentLink<TImageFile>>[];
-      imageBlocks: Nullable<TMLImageContentImage<TImageFile>>[];
-      imageTextBlocks: Nullable<TMLImageContentImageText<TImageFile>>[];
-      shopBlocks: Nullable<TMLImageContentShop<TImageFile>>[];
-      buttonBlocks: Nullable<TMLImageContentButton<TImageFile>>[];
-      carouselBlocks: Nullable<TMLImageContentCarousel<TImageFile>>[];
-    };
-  };
+  images: TMLDraftImages;
+  // in-app values
+  currentStage: MLConstructorStage;
 };
 
 export type TMLDraftActions =

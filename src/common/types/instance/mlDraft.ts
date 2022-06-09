@@ -6,6 +6,7 @@ import { TIconName } from 'ui/components/modules/iconSpritesMaps/IconSpritesMap'
 export type TMultilinkDraft = {
   name: string;
   background: string;
+  // maxWidth
   contentMap: MLContentType[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
@@ -23,6 +24,7 @@ export type TMLDraftBlocks = {
   dividerBlocks: Nullable<IMLDraftDivider>[];
   // gridBlocks: Nullable<IMLDraftGrid>[];
   // accordeonBlocks: Nullable<IMLDraftAccordeon>[];
+
   // images populated blocks
   linkBlocks: Nullable<IMLDraftLink>[];
   logoBlocks: Nullable<IMLDraftLogo>[];
