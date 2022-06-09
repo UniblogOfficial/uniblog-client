@@ -3,8 +3,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { Breadcrumbs } from '../../elements/breadcrumbs/Breadcrumbs';
-import { Button } from '../../elements/button/Button';
+import { Button, Breadcrumbs } from 'ui/components/elements';
 
 type TPageHeaderProps = {
   pageTitle: string;

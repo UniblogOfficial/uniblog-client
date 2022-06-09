@@ -1,26 +1,23 @@
-import { MLContentType } from '../../constants';
-
 import {
-  IMLDraftContentText,
-  IMLDraftContentLink,
-  IMLDraftContentSocial,
-  IMLDraftContentLogo,
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentUnknown,
-} from './mlDraft';
+  IMLDraftText,
+  IMLDraftLink,
+  IMLDraftSocial,
+  IMLDraftLogo,
+  IMLDraftImage,
+  IMLDraftImageText,
+  Nullable,
+} from '.';
 
-import { Nullable } from '.';
+import { MLContentType } from 'common/constants';
 
 export type TMultilinkComplete = {
   name: string;
   background: string;
-  contentSet: MLContentType[];
-  textSet: Nullable<IMLDraftContentText>[];
-  linkSet: Nullable<IMLDraftContentLink>[];
-  socialSet: Nullable<IMLDraftContentSocial>[];
-  logoSet: Nullable<IMLDraftContentLogo>[];
-  imageSet: Nullable<IMLDraftContentImage>[];
-  imageTextSet: Nullable<IMLDraftContentImageText>[];
-  unknownSet: Nullable<IMLDraftContentUnknown>[];
+  contentMap: MLContentType[];
+  textBlocks: Nullable<IMLDraftText>[];
+  linkBlocks: Nullable<IMLDraftLink>[];
+  socialBlocks: Nullable<IMLDraftSocial>[];
+  logoBlocks: Nullable<IMLDraftLogo>[];
+  imageBlocks: Nullable<IMLDraftImage>[];
+  imageTextBlocks: Nullable<IMLDraftImageText>[];
 };

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { setAppStatus, setError, TAppActions } from '../../../bll/reducers/app';
-import { AppStatus } from '../../constants';
+import { setAppStatus, setError, TAppActions } from 'bll/reducers';
+import { AppStatus } from 'common/constants';
 
 const ERROR_RESET_TIMEOUT = 3000;
 

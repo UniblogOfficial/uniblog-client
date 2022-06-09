@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { IMLDraftContentLink, Nullable } from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
+import { IMLDraftLink, Nullable } from 'common/types/instance';
+import { px } from 'common/utils/ui';
 
 type TMLLinkProps = {
-  block: Nullable<IMLDraftContentLink>;
+  block: Nullable<IMLDraftLink>;
   callback?: <T>(payload: T) => void;
 };
 

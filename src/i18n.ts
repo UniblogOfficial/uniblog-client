@@ -4,12 +4,12 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 
-import auth_en from './ui/locales/en/auth.json';
-import common_en from './ui/locales/en/common.json';
-import pages_en from './ui/locales/en/pages.all.json';
-import auth_ru from './ui/locales/ru/auth.json';
-import common_ru from './ui/locales/ru/common.json';
-import pages_ru from './ui/locales/ru/pages.all.json';
+import auth_en from 'ui/locales/en/auth.json';
+import common_en from 'ui/locales/en/common.json';
+import pages_en from 'ui/locales/en/pages.all.json';
+import auth_ru from 'ui/locales/ru/auth.json';
+import common_ru from 'ui/locales/ru/common.json';
+import pages_ru from 'ui/locales/ru/pages.all.json';
 
 export const namespaces = {
   pages: {

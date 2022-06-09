@@ -1,12 +1,11 @@
-import { AppStatus } from '../../common/constants';
-import { TImageFile } from '../../common/types/instance/image';
-import { Nullable } from '../../common/types/instance/index';
-import { Role, TUser } from '../../common/types/instance/user';
-import { handleServerNetworkError } from '../../common/utils/state';
-import { userAPI } from '../../dal/user';
-import { AppThunk } from '../store';
+import { setAppStatus } from '.';
 
-import { setAppStatus } from './app';
+import { AppThunk } from 'bll/store';
+import { AppStatus } from 'common/constants';
+import { TImageFile, Nullable, Role, TUser } from 'common/types/instance';
+import { handleServerNetworkError } from 'common/utils/state';
+import { userAPI } from 'dal';
+
 // variables
 enum UserActionType {
   SET_USER_DATA = 'SET_USER_DATA',

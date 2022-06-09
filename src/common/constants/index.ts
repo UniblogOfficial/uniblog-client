@@ -18,16 +18,37 @@ export enum SocialNetwork {
   PINTEREST = 'pinterest',
 }
 
+export enum SocialService {
+  BOOSTY = 'boosty',
+  DISCORD = 'discord',
+  PATREON = 'patreon',
+  TWITCH = 'twitch',
+}
+
 export enum MLContentType {
-  TEXT = 'text',
-  LINK = 'link',
-  LOGO = 'logo',
-  SOCIAL = 'social',
-  IMAGE = 'image',
-  IMAGETEXT = 'imagetext',
-  VIDEO = 'video',
-  SHOP = 'shop',
-  UNKNOWN = 'unknown',
+  TEXT = 'textBlocks',
+  LINK = 'linkBlocks',
+  LOGO = 'logoBlocks',
+  SOCIAL = 'socialBlocks',
+  BUTTON = 'buttonBlocks',
+  POST = 'postBlocks',
+  IMAGE = 'imageBlocks',
+  IMAGETEXT = 'imageTextBlocks',
+  CAROUSEL = 'carouselBlocks',
+  VIDEO = 'videoBlocks',
+  AUDIO = 'audioBlocks',
+  WIDGET = 'widgetBlocks',
+  SHOP = 'shopBlocks',
+  VOTE = 'voteBlocks',
+  MAP = 'mapBlocks',
+  DIVIDER = 'dividerBlocks',
+}
+
+export enum MLConstructorStage {
+  TEMPLATE = 0,
+  BACKGROUND = 1,
+  CONTENT = 2,
+  PREVIEW = 3,
 }
 
 export enum AppStatus {
