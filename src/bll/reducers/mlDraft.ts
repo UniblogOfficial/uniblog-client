@@ -304,8 +304,8 @@ export const publishMultilink =
       imageBlocks: blocks.imageBlocks.filter(notNull),
       imageTextBlocks: blocks.imageTextBlocks.filter(notNull),
       shopBlocks: blocks.shopBlocks.filter(notNull),
-      carouselBlock: blocks.carouselBlocks.filter(notNull),
-      buttonBlock: blocks.buttonBlocks.filter(notNull),
+      carouselBlocks: blocks.carouselBlocks.filter(notNull),
+      buttonBlocks: blocks.buttonBlocks.filter(notNull),
     };
     const imagesDto: TCreateMLImagesDto = {
       background: images.background ?? undefined,

@@ -49,8 +49,8 @@ export type TCreateMLDto = {
   imageBlocks: IMLCreateImageDto[];
   imageTextBlocks: IMLCreateImageTextDto[];
   shopBlocks: IMLCreateShopDto[];
-  buttonBlock: IMLCreateButtonDto[];
-  carouselBlock: IMLCreateCarouselDto[];
+  buttonBlocks: IMLCreateButtonDto[];
+  carouselBlocks: IMLCreateCarouselDto[];
 };
 
 export type TCreateMLImagesDto = {

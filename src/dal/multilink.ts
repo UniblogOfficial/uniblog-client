@@ -1,6 +1,7 @@
 import { api } from '.';
 
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request';
+import { getKeys } from 'common/utils/state';
 
 export const multilinkAPI = {
   get(name: string, id?: string) {
@@ -16,39 +17,26 @@ export const multilinkAPI = {
   },
 
   create(multilink: TCreateMLDto, images: TCreateMLImagesDto) {
-    const {
-      name,
-      background,
-      contentMap,
-      logoBlocks,
-      imageBlocks,
-      imageTextBlocks,
-      linkBlocks,
-      shopBlocks,
-      socialBlocks,
-      textBlocks,
-      videoBlocks,
-    } = multilink;
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('background', background);
-    formData.append(`contentMap`, JSON.stringify(contentMap));
-    formData.append(`logoBlocks`, JSON.stringify(logoBlocks));
-    formData.append(`imageBlocks`, JSON.stringify(imageBlocks));
-    formData.append(`imageTextBlocks`, JSON.stringify(imageTextBlocks));
-    formData.append(`linkBlocks`, JSON.stringify(linkBlocks));
-    formData.append(`shopBlocks`, JSON.stringify(shopBlocks));
-    formData.append(`socialBlocks`, JSON.stringify(socialBlocks));
-    formData.append(`textBlocks`, JSON.stringify(textBlocks));
-    formData.append(`videoBlocks`, JSON.stringify(videoBlocks));
+    getKeys(multilink).forEach(key => {
+      formData.append(key, JSON.stringify(multilink[key]));
+    });
 
     if (images.background) {
       formData.append('images', images.background.file, 'backgroundImage');
     }
 
     images.logoBlocks.forEach((block, i) => {
-      block.logo && formData.append('images', block.logo.file, `${block.order}_logo_1`);
-      block.banner && formData.append('images', block.banner.file, `${block.order}_logo_2`);
+      block.logo && formData.append('images', block.logo.file, `${block.order}_logo_0`);
+      block.banner && formData.append('images', block.banner.file, `${block.order}_logo_1`);
+    });
+
+    images.linkBlocks.forEach((block, i) => {
+      block.image && formData.append('images', block.image.file, `${block.order}_link_0`);
+    });
+
+    images.buttonBlocks.forEach((block, i) => {
+      block.image && formData.append('images', block.image.file, `${block.order}_button_0`);
     });
 
     images.imageBlocks.forEach((block, i) => {
@@ -59,6 +47,12 @@ export const multilinkAPI = {
 
     images.imageTextBlocks.forEach((block, i) => {
       block.image && formData.append('images', block.image.file, `${block.order}_imagetext_0`);
+    });
+
+    images.carouselBlocks.forEach((block, i) => {
+      block.images.forEach((image, j) => {
+        image && formData.append('images', image.file, `${block.order}_carousel_${j}`);
+      });
     });
 
     images.shopBlocks.forEach((block, i) => {
