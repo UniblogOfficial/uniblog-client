@@ -27,7 +27,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const dispatchThrottled = useThrottle(dispatch, 200);
   const [text, setText] = useState(block.text ?? '');
   const [isTextColorPickerVisible, setIsTextColorPickerVisible] = useState<boolean>(false);
-  const [isBgColorPickerVisible, setisBgColorPickerVisible] = useState(false);
+  const [isBgColorPickerVisible, setIsBgColorPickerVisible] = useState(false);
   const [isPaddingLeftRight, setIsPaddingLeftRight] = useState(false);
   const [isMarginLeftRight, setIsMarginLeftRight] = useState(false);
   const [isPaddingTopBottom, setIsPaddingTopBottom] = useState(false);

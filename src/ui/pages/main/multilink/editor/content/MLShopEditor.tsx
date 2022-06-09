@@ -1,14 +1,15 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
-import { IMLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
-import { Button, Input } from 'ui/components/elements';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 import {
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
 } from '../../../../../../bll/reducers';
 import { ID } from '../../../../../../common/constants';
 import { useAppDispatch, useThrottle } from '../../../../../../common/hooks';
+
+import { IMLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
+import { Button, Input } from 'ui/components/elements';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
 
 type TMLShopEditorProps = {
   order: number;
@@ -48,6 +49,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
             titles.map((title, index) => (index === +currentOrder ? e.currentTarget.value : title)),
           );
           block.cells[+currentOrder].title = e.currentTarget.value;
+          // @ts-ignore
           dispatchThrottled(setMLDraftBlockContent(block, order, 'shopSet'));
           break;
         case 'subtitle':
@@ -57,6 +59,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
             ),
           );
           block.cells[+currentOrder].subtitle = e.currentTarget.value;
+          // @ts-ignore
           dispatchThrottled(setMLDraftBlockContent(block, order, 'shopSet'));
           break;
         default:
