@@ -8,6 +8,7 @@ import { ProfileForm } from './ProfileForm';
 import { logout, requestSaveAvatar } from 'bll/reducers';
 import { useAppDispatch } from 'common/hooks';
 import { TImageFile, TUser } from 'common/types/instance';
+import { parseRawImage } from 'common/utils/ui';
 import { Button, Icon } from 'ui/components/elements';
 import { PageHeader } from 'ui/components/modules/headers/PageHeader';
 import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
@@ -84,7 +85,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
                   <DropZoneField
                     onChange={onImageZoneChange}
                     touched={false}
-                    initialImage={avatar ?? undefined}
+                    initialImage={parseRawImage(avatar) ?? undefined}
                   />
                 </div>
                 <div className="paper__button-container">

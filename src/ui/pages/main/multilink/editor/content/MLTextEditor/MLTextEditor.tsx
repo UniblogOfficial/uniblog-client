@@ -27,7 +27,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const dispatchThrottled = useThrottle(dispatch, 200);
   const [text, setText] = useState(block.text ?? '');
   const [isTextColorPickerVisible, setIsTextColorPickerVisible] = useState<boolean>(false);
-  const [isBgColorPickerVisible, setisBgColorPickerVisible] = useState(false);
+  const [isBgColorPickerVisible, setIsBgColorPickerVisible] = useState(false);
   const [isPaddingLeftRight, setIsPaddingLeftRight] = useState(false);
   const [isMarginLeftRight, setIsMarginLeftRight] = useState(false);
   const [isPaddingTopBottom, setIsPaddingTopBottom] = useState(false);
@@ -234,13 +234,13 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
           <input
             type="button"
             className={styles.circleGradient}
-            onClick={() => setisBgColorPickerVisible(true)}
+            onClick={() => setIsBgColorPickerVisible(true)}
           />
           {isBgColorPickerVisible && (
             <RgbaStringColorPicker
               color={block.background ?? '#ffff'}
               onChange={onBackgroundColorChange}
-              onBlur={() => setisBgColorPickerVisible(false)}
+              onBlur={() => setIsBgColorPickerVisible(false)}
             />
           )}
           <div style={{ marginTop: '15px' }}>Padding:</div>

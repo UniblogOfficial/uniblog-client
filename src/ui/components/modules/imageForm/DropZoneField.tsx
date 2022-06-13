@@ -11,7 +11,7 @@ import { TImageFile, TIncomingImage } from 'common/types/instance';
 
 type TDropZoneFieldProps = {
   onChange: (imageFile: TImageFile, id?: number) => void;
-  initialImage?: TIncomingImage;
+  initialImage?: string;
   // error?: string;
   touched?: boolean;
   id?: number;
@@ -48,7 +48,7 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
     <>
       <div className="dropbox">
         {image.length > 0 && <ImagePreview imageFiles={image} />}
-        {image.length === 0 && initialImage && <ImagePreview imageFiles={image} />}
+        {image.length === 0 && initialImage && <ImagePreview imageFiles={initialImage} />}
         <ImagePlaceholder isFilled={image.length > 0} onDrop={onDrop} />
       </div>
       {error && <p className="field__error">{error}</p>}
