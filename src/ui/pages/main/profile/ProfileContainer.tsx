@@ -39,6 +39,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
 
   const saveAvatar = useCallback(() => {
     if (imageFiles.length) {
+      console.log(imageFiles[0]);
       dispatch(requestSaveAvatar(imageFiles[0]));
     }
     closeEditAvatarModal();
@@ -85,6 +86,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
                     onChange={onImageZoneChange}
                     touched={false}
                     initialImage={avatar ?? undefined}
+                    avatarMode
                   />
                 </div>
                 <div className="paper__button-container">

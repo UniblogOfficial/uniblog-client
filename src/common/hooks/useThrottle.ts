@@ -25,6 +25,7 @@ export const useThrottle = <T extends (arg: V) => any, V>(callback: T, delay: nu
     }
   }, [callback, delay, throttled]);
 
+  // @ts-ignore
   useEffectOnce(() => () => clearTimeout(timeout.current));
 
   return setThrottled;

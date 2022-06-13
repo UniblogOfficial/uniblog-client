@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import { TImageFile, TIncomingImage } from '../../../../common/types/instance';
 import { parseRawImage } from '../../../../common/utils/ui';

@@ -1,10 +1,12 @@
 import React, { FC, DragEvent, useState, useCallback } from 'react';
 
-import DropZone, { DropEvent } from 'react-dropzone';
+import DropZone from 'react-dropzone';
 import { string } from 'yup';
 
 import { TImageFile, TIncomingImage } from '../../../../common/types/instance';
+import { Modal } from '../modals/Modal';
 
+import { CropperContainer } from './Cropper';
 import ShowError from './FormErrorRepresenter';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import ImagePreview from './ImagePreview';
@@ -15,6 +17,7 @@ type TDropZoneFieldProps = {
   // error?: string;
   touched?: boolean;
   id?: number;
+  avatarMode?: boolean;
 };
 
 export const DropZoneField: FC<TDropZoneFieldProps> = ({
@@ -23,9 +26,11 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
   // error,
   touched,
   id,
+  avatarMode,
 }) => {
   const [image, setImage] = useState<TImageFile[]>([]);
   const [error, setError] = useState<string>('');
+  const [openedModalCropper, setOpenedModalCropper] = useState(true);
 
   const onDrop = useCallback(
     (file: File[]) => {
@@ -40,14 +45,34 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
         fileData && onChange(fileData, id);
         setError('');
       } else setError('Файл больше 1 мб');
+      setOpenedModalCropper(true);
     },
     [onChange, id],
   );
 
+  const closeModalCropperContainer = () => {
+    setOpenedModalCropper(false);
+  };
   return (
     <>
       <div className="dropbox">
-        {image.length > 0 && <ImagePreview imageFiles={image} />}
+        {image.length > 0 && (
+          <>
+            <ImagePreview imageFiles={image} />
+            {openedModalCropper && (
+              <Modal close={closeModalCropperContainer}>
+                <CropperContainer
+                  img={image[0].previewUrl}
+                  setCropperMode={setOpenedModalCropper}
+                  setCroppedImage={setImage}
+                  onChangeImage={onChange}
+                  id={id}
+                  avatarMode={avatarMode}
+                />
+              </Modal>
+            )}
+          </>
+        )}
         {image.length === 0 && initialImage && <ImagePreview imageFiles={image} />}
         <ImagePlaceholder isFilled={image.length > 0} onDrop={onDrop} />
       </div>
