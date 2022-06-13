@@ -1,12 +1,20 @@
 import {
+  IMLDraftAudio,
+  IMLDraftButton,
+  IMLDraftCarousel,
+  IMLDraftDivider,
   IMLDraftImage,
   IMLDraftImageText,
   IMLDraftLink,
   IMLDraftLogo,
+  IMLDraftMap,
+  IMLDraftPost,
   IMLDraftShop,
   IMLDraftSocial,
   IMLDraftText,
   IMLDraftVideo,
+  IMLDraftVote,
+  IMLDraftWidget,
   Nullable,
   TIncomingImage,
 } from '.';
@@ -22,13 +30,25 @@ export type TMultilink = {
   contentMap: MLContentType[];
 
   textBlocks: IMLDraftText[];
-  linkBlocks: IMLDraftLink[];
   socialBlocks: IMLDraftSocial[];
+  videoBlocks: IMLDraftVideo[];
+  audioBlocks: IMLDraftAudio[];
+  widgetBlocks: IMLDraftWidget[];
+  voteBlocks: IMLDraftVote[];
+  mapBlocks: IMLDraftMap[];
+  postBlocks: IMLDraftPost[];
+  dividerBlocks: IMLDraftDivider[];
+  // gridBlocks: Nullable<IMLDraftGrid>[];
+  // accordeonBlocks: Nullable<IMLDraftAccordeon>[];
+
+  // images populated blocks
+  linkBlocks: IMLDraftLink[];
   logoBlocks: IMLDraftLogo[];
   imageBlocks: IMLDraftImage[];
   imageTextBlocks: IMLDraftImageText[];
-  videoBlocks: IMLDraftVideo[];
+  carouselBlocks: IMLDraftCarousel[];
   shopBlocks: IMLDraftShop[];
+  buttonBlocks: IMLDraftButton[];
 
   images: Array<{ id: number; order: number; suborder: number } & TIncomingImage>;
   // createdAt: string;

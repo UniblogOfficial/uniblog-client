@@ -83,7 +83,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                 return (
                   <li key={block.order} style={{ padding: px(block.padding) ?? '0' }}>
                     <ul className="ml-social">
-                      {block.linkTypes.map(icon => {
+                      {block.linkTypes.map((icon: string) => {
                         const data = socials.find(social => social.type === icon);
                         return (
                           <li key={icon}>
