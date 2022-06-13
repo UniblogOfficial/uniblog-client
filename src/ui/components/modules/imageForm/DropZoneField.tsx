@@ -3,12 +3,9 @@ import React, { FC, DragEvent, useState, useCallback } from 'react';
 import DropZone from 'react-dropzone';
 import { string } from 'yup';
 
-
-import { TImageFile, TIncomingImage } from '../../../../common/types/instance';
 import { Modal } from '../modals/Modal';
 
 import { CropperContainer } from './Cropper';
-
 import ShowError from './FormErrorRepresenter';
 import { ImagePlaceholder } from './ImagePlaceholder';
 import ImagePreview from './ImagePreview';
