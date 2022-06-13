@@ -10,6 +10,7 @@ import {
   IMLDraftImage,
   Nullable,
   TIncomingImage,
+  IMLDraftWidget,
 } from 'common/types/instance';
 import { parseRawImage } from 'common/utils/ui';
 
@@ -515,9 +516,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         order: 0,
         isFilled: !!avatar,
         logo: avatar ? parseRawImage(avatar) : '',
-        size: 143,
+        size: 175,
         type: MLContentType.LOGO,
-        margin: [56, 116, 56],
+        margin: [56, 100, 56],
       } as IMLDraftLogo,
       {
         order: 1,
@@ -534,11 +535,11 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
       {
         order: 2,
         isFilled: true,
-        type: MLContentType.VIDEO,
+        type: MLContentType.WIDGET,
         url: 'https://widget.qiwi.com/widgets/middle-widget-300x300?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsXMCEHsEfvcM9fWDrHZGpWKAFeZPjiJbFtPjyxAanWqYMcU9DSN7wMpc8VGAVjmd9yjdSQRA92xGdkxFbtNyRSzFPrYeoktJhC8rNxvbe',
         margin: [0, 0, 24],
         padding: [0, 24],
-      } as IMLDraftVideo,
+      } as IMLDraftWidget,
       {
         order: 3,
         isFilled: false,

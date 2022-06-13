@@ -23,6 +23,7 @@ import {
   MLText,
   MLVideo,
 } from 'ui/components/modules/mlBlocks';
+import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
 type TMultilinkEditorContainerProps = {
   userData: TUser;
@@ -94,35 +95,51 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
             let image;
             const callback = editable ? () => setBlockEditor({ type, order: i }) : undefined;
             switch (type) {
-              case MLContentType.LOGO:
-                block = blocks.logoBlocks[i];
-                // variable image is one or set of images of current block
-                image = images.blocks.logoBlocks[i];
-                return <MLLogo key={ID[i]} block={block} images={image} callback={callback} />;
               case MLContentType.TEXT:
-                block = blocks.textBlocks[i];
+                block = blocks[type][i];
                 return <MLText key={ID[i]} block={block} callback={callback} />;
-              case MLContentType.LINK:
-                block = blocks.linkBlocks[i];
-                return <MLLink key={ID[i]} block={block} callback={callback} />;
+
               case MLContentType.SOCIAL:
-                block = blocks.socialBlocks[i];
+                block = blocks[type][i];
                 return <MLSocial key={ID[i]} block={block} callback={callback} />;
-              case MLContentType.IMAGE:
-                block = blocks.imageBlocks[i];
-                image = images.blocks.imageBlocks[i];
-                return <MLImages key={ID[i]} block={block} images={image} callback={callback} />;
-              case MLContentType.IMAGETEXT:
-                block = blocks.imageTextBlocks[i];
-                image = images.blocks.imageTextBlocks[i];
-                return <MLImageText key={ID[i]} block={block} images={image} callback={callback} />;
+
+              case MLContentType.WIDGET:
+                block = blocks[type][i];
+                return block && <MLWidget key={ID[i]} block={block} callback={callback} />;
+
               case MLContentType.VIDEO:
-                block = blocks.videoBlocks[i];
+                block = blocks[type][i];
                 return <MLVideo key={ID[i]} block={block} callback={callback} />;
+
+              case MLContentType.AUDIO:
+                block = blocks[type][i];
+                return block && <>audio block</>;
+
+              case MLContentType.LOGO:
+                block = blocks[type][i];
+                // variable image is one or set of images of current block
+                image = images.blocks[type][i];
+                return <MLLogo key={ID[i]} block={block} images={image} callback={callback} />;
+
+              case MLContentType.LINK:
+                block = blocks[type][i];
+                return <MLLink key={ID[i]} block={block} callback={callback} />;
+
+              case MLContentType.IMAGE:
+                block = blocks[type][i];
+                image = images.blocks[type][i];
+                return <MLImages key={ID[i]} block={block} images={image} callback={callback} />;
+
+              case MLContentType.IMAGETEXT:
+                block = blocks[type][i];
+                image = images.blocks[type][i];
+                return <MLImageText key={ID[i]} block={block} images={image} callback={callback} />;
+
               case MLContentType.SHOP:
-                block = blocks.shopBlocks[i];
-                image = images.blocks.shopBlocks[i];
+                block = blocks[type][i];
+                image = images.blocks[type][i];
                 return <MLShop key={ID[i]} block={block} images={image} callback={callback} />;
+
               default:
                 return <li key={ID[i]} />;
             }

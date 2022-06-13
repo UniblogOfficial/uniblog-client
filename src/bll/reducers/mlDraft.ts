@@ -119,7 +119,7 @@ export const mlDraftReducer = (
           mapBlocks: template.map(block => null),
           postBlocks: template.map(block => null),
           voteBlocks: template.map(block => null),
-          widgetBlocks: template.map(block => null),
+          widgetBlocks: template.map(block => (block.type === MLContentType.WIDGET ? block : null)),
         },
         images: {
           background: null,

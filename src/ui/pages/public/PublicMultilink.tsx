@@ -12,6 +12,7 @@ import {
   MLVideo,
 } from 'ui/components/modules/mlBlocks';
 import { MLShop } from 'ui/components/modules/mlBlocks/mlShop/MLShop';
+import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
 type TMultilinkProps = {
   multilink: TMultilink;
@@ -43,6 +44,10 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 block = multilink.linkBlocks.find(el => el.order === i);
                 if (!block) return null;
                 return <MLLink key={ID[i]} block={block} />;
+              case MLContentType.WIDGET:
+                block = multilink.widgetBlocks.find(el => el.order === i);
+                if (!block) return null;
+                return <MLWidget key={ID[i]} block={block} />;
               case MLContentType.SOCIAL:
                 block = multilink.socialBlocks.find(el => el.order === i);
                 if (!block) return null;
