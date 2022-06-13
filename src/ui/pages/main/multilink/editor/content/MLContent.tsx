@@ -1,26 +1,21 @@
-import React, { useCallback, MouseEvent, useState } from 'react';
+import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { addMLDraftBlock } from '../../../../../../bll/reducers';
-import { MLContentType } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import {
-  Nullable,
-  TImageFile,
-  TMLDraftBlocks,
-  TMLDraftImages,
-} from '../../../../../../common/types/instance';
-import { Button } from '../../../../../components/elements';
-
 import { MLImageEditor } from './MLImageEditor';
-import { MLLinkForm } from './MLLinkForm';
+import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
 import { MLShopEditor } from './MLShopEditor';
-import { MLTextarea } from './MLTextarea/MLTextarea';
+import { MLTextEditor } from './MLTextEditor/MLTextEditor';
+
+import { addMLDraftBlock } from 'bll/reducers';
+import { MLContentType } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
+import { Nullable, TImageFile, TMLDraftBlocks, TMLDraftImages } from 'common/types/instance';
+import { Button } from 'ui/components/elements';
 
 type TMLContentProps = {
-  contentSet: MLContentType[];
+  contentMap: MLContentType[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
   blockEditorType: Nullable<MLContentType>;
@@ -30,38 +25,22 @@ type TMLContentProps = {
 
 export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
-  const { contentSet, blocks, images, blockEditorType, blockEditorOrder, setBlockEditor } = props;
+  const { contentMap, blocks, images, blockEditorType, blockEditorOrder, setBlockEditor } = props;
   const { t } = useTranslation(['pages', 'common']);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
 
-  const [contentBlocks, setContentBlocks] = useState<boolean[]>(
-    contentSet.map((block, i) => false),
-  );
-
-  const closeModal = useCallback(
-    (order: number) => {
-      setContentBlocks(contentBlocks.map((el, i) => (i === order ? false : el)));
-    },
-    [contentBlocks],
-  );
-
-  const onBlockClick = useCallback(
+  const onButtonEditorClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
-      const order = +e.currentTarget.dataset.value! as number;
-      setContentBlocks(contentBlocks.map((el, i) => (i === order ? true : el)));
+      if (e.currentTarget.dataset.value) {
+        setBlockEditor(null);
+        return;
+      }
+      dispatch(addMLDraftBlock(e.currentTarget.value as MLContentType));
+      setBlockEditor({ type: e.currentTarget.value as MLContentType, order: contentMap.length });
     },
-    [contentBlocks],
+    [contentMap.length, dispatch, setBlockEditor],
   );
-
-  const onButtonEditorClick = (e: MouseEvent<HTMLButtonElement>) => {
-    if (e.currentTarget.dataset.value) {
-      setBlockEditor(null);
-      return;
-    }
-    dispatch(addMLDraftBlock(e.currentTarget.value as MLContentType));
-    setBlockEditor({ type: e.currentTarget.value as MLContentType, order: contentSet.length });
-  };
 
   const actionButtons = (
     <>
@@ -114,8 +93,31 @@ export const MLContent = (props: TMLContentProps) => {
         </Button>
       </div>
       <div>
+        <Button
+          value={MLContentType.WIDGET}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add widget block
+        </Button>
+      </div>
+      <div>
         <Button disabled className="button _full _rounded">
-          Add icon-text block
+          Add vote block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add button block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add map block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add post block
         </Button>
       </div>
       <div>
@@ -149,46 +151,81 @@ export const MLContent = (props: TMLContentProps) => {
     </>
   );
 
+  const currentEditor = useMemo(() => {
+    switch (blockEditorType) {
+      case MLContentType.LOGO: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return (
+          currentBlock && (
+            <div className="ml-logo-editor">
+              <MLLogoEditor
+                order={blockEditorOrder}
+                block={currentBlock}
+                images={images.blocks[blockEditorType][blockEditorOrder]}
+              />
+            </div>
+          )
+        );
+      }
+      case MLContentType.TEXT: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return currentBlock && <MLTextEditor order={blockEditorOrder} block={currentBlock} />;
+      }
+      case MLContentType.IMAGETEXT: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return currentBlock && <>Not implemented</>;
+      }
+      case MLContentType.IMAGE: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return (
+          currentBlock && (
+            <div className="ml-image-editor">
+              <MLImageEditor
+                order={blockEditorOrder}
+                block={currentBlock}
+                images={images.blocks[blockEditorType][blockEditorOrder]}
+              />
+            </div>
+          )
+        );
+      }
+      case MLContentType.LINK: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return (
+          currentBlock && <MLLinkEditor order={blockEditorOrder} close={onButtonEditorClick} />
+        );
+      }
+      case MLContentType.SOCIAL: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return currentBlock && <>Not implemented</>;
+      }
+      case MLContentType.WIDGET: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return currentBlock && <>Not implemented</>;
+      }
+      case MLContentType.SHOP: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return (
+          currentBlock && (
+            <div className="ml-shop-editor">
+              <MLShopEditor
+                order={blockEditorOrder}
+                block={blocks[blockEditorType][blockEditorOrder]}
+                images={images.blocks[blockEditorType][blockEditorOrder]}
+              />
+            </div>
+          )
+        );
+      }
+      default:
+        return <>Not implemented</>;
+    }
+  }, [blockEditorOrder, blockEditorType, blocks, images.blocks, onButtonEditorClick]);
+
   return (
     <>
       {!blockEditorType && actionButtons}
-      {blockEditorType === MLContentType.TEXT && (
-        <>
-          <MLTextarea order={blockEditorOrder} block={blocks.textSet[blockEditorOrder]} />
-        </>
-      )}
-      {blockEditorType === MLContentType.LINK && (
-        <>
-          <MLLinkForm order={blockEditorOrder} close={onButtonEditorClick} />
-        </>
-      )}
-      {blockEditorType === MLContentType.LOGO && (
-        <div className="ml-logo-editor">
-          <MLLogoEditor
-            order={blockEditorOrder}
-            block={blocks.logoSet[blockEditorOrder]}
-            images={images.blocks.logoSet[blockEditorOrder]}
-          />
-        </div>
-      )}
-      {blockEditorType === MLContentType.IMAGE && (
-        <div className="ml-image-editor">
-          <MLImageEditor
-            order={blockEditorOrder}
-            block={blocks.imageSet[blockEditorOrder]}
-            images={images.blocks.imageSet[blockEditorOrder]}
-          />
-        </div>
-      )}
-      {blockEditorType === MLContentType.SHOP && (
-        <div className="ml-shop-editor">
-          <MLShopEditor
-            order={blockEditorOrder}
-            block={blocks.shopSet[blockEditorOrder]}
-            images={images.blocks.shopSet[blockEditorOrder]}
-          />
-        </div>
-      )}
+      {blockEditorType && currentEditor}
       {blockEditorType && blockEditorType !== MLContentType.LINK && (
         <div className="action-buttons">
           <Button

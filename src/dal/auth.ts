@@ -1,6 +1,6 @@
-import { TLoginDto, TRegisterDto } from '../common/types/request';
+import { api } from '.';
 
-import { api } from './api';
+import { TLoginDto, TRegisterDto } from 'common/types/request';
 
 export const authAPI = {
   login({ email, password }: TLoginDto) {

@@ -2,9 +2,9 @@ import React from 'react';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { SpritesMap } from './components/modules/iconSpritesMaps/SpritesMap';
-import { PurchaseContainer } from './pages/public/PurchaseContainer';
-import { Routes } from './Routes';
+import { SpritesMap } from 'ui/components/modules/iconSpritesMaps/SpritesMap';
+import { PurchaseContainer } from 'ui/pages/public/PurchaseContainer';
+import { Routes } from 'ui/Routes';
 
 export const App = () => {
   let a;

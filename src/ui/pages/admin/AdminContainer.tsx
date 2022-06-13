@@ -2,12 +2,12 @@ import React from 'react';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { TUserState } from '../../../bll/reducers';
-import { selectUserData } from '../../../bll/selectors';
-import { useAppSelector } from '../../../common/hooks';
-import { Role } from '../../../common/types/instance/user';
-
 import { TestPage } from './test/TestPage';
+
+import { TUserState } from 'bll/reducers';
+import { selectUserData } from 'bll/selectors';
+import { useAppSelector } from 'common/hooks';
+import { Role } from 'common/types/instance/user';
 
 type TAdminContainerProps = {};
 

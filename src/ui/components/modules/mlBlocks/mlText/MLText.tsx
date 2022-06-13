@@ -1,10 +1,10 @@
 import React, { MouseEvent } from 'react';
 
-import { IMLDraftContentText, Nullable } from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
+import { IMLDraftText, Nullable } from 'common/types/instance';
+import { px } from 'common/utils/ui';
 
 type TMLTextProps = {
-  block: Nullable<IMLDraftContentText>;
+  block: Nullable<IMLDraftText>;
   callback?: <T>(payload: T) => void;
 };
 
@@ -34,7 +34,8 @@ export const MLText = ({ block, callback }: TMLTextProps) => {
         {block &&
           block.text!.split('\n').map((line, i) =>
             line ? (
-              <p key={line} style={{ textAlign: align }}>
+              // eslint-disable-next-line react/no-array-index-key
+              <p key={i} style={{ textAlign: align }}>
                 {line.replaceAll('   ', '\u00a0 \u00a0').replaceAll('  ', '\u00a0 ')}
               </p>
             ) : (

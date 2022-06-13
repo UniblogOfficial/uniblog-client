@@ -1,16 +1,11 @@
 import React, { MouseEvent } from 'react';
 
-import {
-  IMLDraftContentShop,
-  Nullable,
-  TImageFile,
-  TMLImageContentShop,
-} from '../../../../../common/types/instance';
-import { parseRawImage, px } from '../../../../../common/utils/ui';
-import imgPlaceholder from '../../../../../img/img-placeholder.png';
+import { IMLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
+import { parseRawImage, px } from 'common/utils/ui';
+import imgPlaceholder from 'img/img-placeholder.png';
 
 type TMLShopProps = {
-  block: Nullable<IMLDraftContentShop>;
+  block: Nullable<IMLDraftShop>;
   images: Nullable<TMLImageContentShop<TImageFile>>;
   isPublic?: boolean;
   callback?: <T>(payload: T) => void;
@@ -59,19 +54,19 @@ export const MLShop = ({ block, images, isPublic, callback }: TMLShopProps) => {
               </div>
               <p
                 style={{
-                  textAlign: cell.align,
-                  fontSize: cell.fontSize ?? undefined,
-                  fontWeight: cell.fontWeight ?? undefined,
-                  color: cell.color,
+                  textAlign: block.align,
+                  fontSize: block.fontSize ?? undefined,
+                  fontWeight: block.fontWeight ?? undefined,
+                  color: block.color,
                 }}>
                 {cell.title}
               </p>
               <p
                 style={{
-                  textAlign: cell.subtitleAlign,
-                  fontSize: cell.subtitleFontSize ?? undefined,
-                  fontWeight: cell.subtitleFontWeight ?? undefined,
-                  color: cell.subtitleColor,
+                  textAlign: block.subtitleAlign,
+                  fontSize: block.subtitleFontSize ?? undefined,
+                  fontWeight: block.subtitleFontWeight ?? undefined,
+                  color: block.subtitleColor,
                 }}>
                 {cell.subtitle}
               </p>

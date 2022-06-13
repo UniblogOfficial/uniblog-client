@@ -2,6 +2,7 @@ export { handleServerNetworkError } from './errorHandler';
 export { pushMLDraftBlock, pushMLDraftBlockLogo, pushMLDraftBlockSocial } from './pushMLDraftBlock';
 // =======================================================================================================
 export const getKeys = Object.keys as <T extends Object>(obj: T) => Array<keyof T>;
+export const getValues = <T extends Object>(obj: T) => getKeys(obj).map(key => obj[key]);
 // =======================================================================================================
 export const convertObjToFlags = <T>(obj: T) =>
   getKeys(obj).reduce((flags, key) => {

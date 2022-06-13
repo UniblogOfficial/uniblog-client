@@ -3,14 +3,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 
-import { useAppSelector } from '../../../../common/hooks';
-import { Nullable, TUser } from '../../../../common/types/instance';
-import { Button } from '../../../components/elements/button/Button';
-import { Icon } from '../../../components/elements/icons/Icon';
-import { PageHeader } from '../../../components/modules/headers/PageHeader';
-
 import { MultilinkEditorContainer } from './editor/MultilinkEditorContainer';
 import { MultilinkListContainer } from './MultilinkListContainer';
+
+import { Nullable, TUser } from 'common/types/instance';
+import { Button, Icon } from 'ui/components/elements';
+import { PageHeader } from 'ui/components/modules/headers/PageHeader';
 
 type TMultilinkContainerProps = {
   userData: TUser;

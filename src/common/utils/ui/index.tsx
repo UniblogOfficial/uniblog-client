@@ -1,5 +1,6 @@
-import { Nullable } from '../../types/instance';
 import { isDefined } from '../state';
+
+import { Nullable } from 'common/types/instance';
 
 export const capitalizeFirst = (s: string) => (s && s[0].toUpperCase() + s.slice(1)) || '';
 

@@ -1,25 +1,35 @@
 export type Nullable<T> = T | null;
 export type Modify<T, R> = Omit<T, keyof R> & R; // exm: {a: number, b: string} as T => {b: string} as OmittedT & {a: Object } as R
 
-export type { TUser } from './user';
+export type { TUser, Role } from './user';
 export type { TImageFile, TIncomingImage } from './image';
 export type {
   TMultilinkDraft,
   TMLDraftBlocks,
   TMLDraftImages,
-  IMLDraftContentText,
-  IMLDraftContentLink,
-  IMLDraftContentLogo,
-  IMLDraftContentSocial,
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentVideo,
-  IMLDraftContentShop,
-  IMLDraftContentUnknown,
+  IMLDraftText,
+  IMLDraftLink,
+  IMLDraftLogo,
+  IMLDraftSocial,
+  IMLDraftImage,
+  IMLDraftImageText,
+  IMLDraftVideo,
+  IMLDraftShop,
+  IMLDraftAudio,
+  IMLDraftButton,
+  IMLDraftCarousel,
+  IMLDraftDivider,
+  IMLDraftMap,
+  IMLDraftPost,
+  IMLDraftVote,
+  IMLDraftWidget,
   TMLImageContentLogo,
   TMLImageContentImage,
   TMLImageContentImageText,
   TMLImageContentShop,
+  TMLImageContentButton,
+  TMLImageContentCarousel,
+  TMLImageContentLink,
 } from './mlDraft';
 export type { TMultilinkComplete } from './mlComplete';
 export type { TMultilink } from './mlPublic';

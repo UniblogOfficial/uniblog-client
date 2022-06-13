@@ -5,16 +5,16 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
-import { MLContentType, SocialNetwork } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import { Button, Input } from '../../../../../components/elements';
+import { MLContentType, SocialNetwork } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
+import { Button, Input } from 'ui/components/elements';
 
 type TLinkFormData = {
   title: string;
   link: string;
 };
 
-type TMLLinkFormProps = {
+type TMLLinkEditorProps = {
   order: number;
   close: (e: MouseEvent<HTMLButtonElement>) => void;
 };
@@ -36,7 +36,7 @@ const linkSchema = yup.object().shape({
     .required('Url is required'),
 });
 
-export const MLLinkForm = ({ order, close }: TMLLinkFormProps) => {
+export const MLLinkEditor = ({ order, close }: TMLLinkEditorProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const {

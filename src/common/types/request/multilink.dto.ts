@@ -1,51 +1,83 @@
-import { MLContentType, SocialNetwork } from '../../constants';
+import { MLContentType, SocialNetwork } from 'common/constants';
 import {
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentLink,
-  IMLDraftContentLogo,
-  IMLDraftContentShop,
-  IMLDraftContentSocial,
-  IMLDraftContentText,
-  IMLDraftContentUnknown,
-  IMLDraftContentVideo,
+  IMLDraftAudio,
+  IMLDraftButton,
+  IMLDraftCarousel,
+  IMLDraftDivider,
+  IMLDraftImage,
+  IMLDraftImageText,
+  IMLDraftLink,
+  IMLDraftLogo,
+  IMLDraftMap,
+  IMLDraftPost,
+  IMLDraftShop,
+  IMLDraftSocial,
+  IMLDraftText,
+  IMLDraftVideo,
+  IMLDraftVote,
+  IMLDraftWidget,
   TImageFile,
+  TMLImageContentButton,
+  TMLImageContentCarousel,
   TMLImageContentImage,
   TMLImageContentImageText,
+  TMLImageContentLink,
   TMLImageContentLogo,
   TMLImageContentShop,
-} from '../instance';
+} from 'common/types/instance';
 
 export type TCreateMLDto = {
   // exm. "VasyaRaper"
   name: string;
   // exm. "#fff"
   background: string;
+  maxWidth: number;
 
-  contentSet: MLContentType[];
-  textSet: IMLDraftContentTextDto[];
-  linkSet: IMLDraftContentLinkDto[];
-  socialSet: IMLDraftContentSocialDto[];
-  logoSet: IMLDraftContentLogoDto[];
-  imageSet: IMLDraftContentImageDto[];
-  imageTextSet: IMLDraftContentImageTextDto[];
-  videoSet: IMLDraftContentVideoDto[];
-  shopSet: IMLDraftContentShopDto[];
+  contentMap: MLContentType[];
+  textBlocks: IMLCreateTextDto[];
+  socialBlocks: IMLCreateSocialDto[];
+  videoBlocks: IMLCreateVideoDto[];
+  audioBlocks: IMLCreateAudioDto[];
+  widgetBlocks: IMLCreateWidgetDto[];
+  voteBlocks: IMLCreateVoteDto[];
+  mapBlocks: IMLCreateMapDto[];
+  postBlocks: IMLCreatePostDto[];
+  dividerBlocks: IMLCreateDividerDto[];
+
+  logoBlocks: IMLCreateLogoDto[];
+  linkBlocks: IMLCreateLinkDto[];
+  imageBlocks: IMLCreateImageDto[];
+  imageTextBlocks: IMLCreateImageTextDto[];
+  shopBlocks: IMLCreateShopDto[];
+  buttonBlocks: IMLCreateButtonDto[];
+  carouselBlocks: IMLCreateCarouselDto[];
 };
 
 export type TCreateMLImagesDto = {
   background?: TImageFile;
-  logoSet: TMLImageContentLogo<TImageFile>[];
-  imageSet: TMLImageContentImage<TImageFile>[];
-  imageTextSet: TMLImageContentImageText<TImageFile>[];
-  shopSet: TMLImageContentShop<TImageFile>[];
+
+  logoBlocks: TMLImageContentLogo<TImageFile>[];
+  imageBlocks: TMLImageContentImage<TImageFile>[];
+  imageTextBlocks: TMLImageContentImageText<TImageFile>[];
+  shopBlocks: TMLImageContentShop<TImageFile>[];
+  carouselBlocks: TMLImageContentCarousel<TImageFile>[];
+  buttonBlocks: TMLImageContentButton<TImageFile>[];
+  linkBlocks: TMLImageContentLink<TImageFile>[];
 };
 
-interface IMLDraftContentTextDto extends IMLDraftContentText {}
-interface IMLDraftContentLinkDto extends IMLDraftContentLink {}
-interface IMLDraftContentSocialDto extends IMLDraftContentSocial {}
-interface IMLDraftContentLogoDto extends IMLDraftContentLogo {}
-interface IMLDraftContentImageDto extends IMLDraftContentImage {}
-interface IMLDraftContentImageTextDto extends IMLDraftContentImageText {}
-interface IMLDraftContentVideoDto extends IMLDraftContentVideo {}
-interface IMLDraftContentShopDto extends IMLDraftContentShop {}
+interface IMLCreateTextDto extends IMLDraftText {}
+interface IMLCreateLinkDto extends IMLDraftLink {}
+interface IMLCreateSocialDto extends IMLDraftSocial {}
+interface IMLCreateLogoDto extends IMLDraftLogo {}
+interface IMLCreateImageDto extends IMLDraftImage {}
+interface IMLCreateImageTextDto extends IMLDraftImageText {}
+interface IMLCreateVideoDto extends IMLDraftVideo {}
+interface IMLCreateShopDto extends IMLDraftShop {}
+interface IMLCreateAudioDto extends IMLDraftAudio {}
+interface IMLCreateWidgetDto extends IMLDraftWidget {}
+interface IMLCreateCarouselDto extends IMLDraftCarousel {}
+interface IMLCreatePostDto extends IMLDraftPost {}
+interface IMLCreateDividerDto extends IMLDraftDivider {}
+interface IMLCreateButtonDto extends IMLDraftButton {}
+interface IMLCreateVoteDto extends IMLDraftVote {}
+interface IMLCreateMapDto extends IMLDraftMap {}
