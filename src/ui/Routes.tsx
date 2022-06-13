@@ -2,18 +2,18 @@ import React, { useEffect, useRef } from 'react';
 
 import { Route, Switch, useHistory } from 'react-router-dom';
 
-import { initialize } from '../bll/reducers';
-import { selectAppStatus } from '../bll/selectors';
-import { AppStatus } from '../common/constants';
-import { useAppDispatch, useAppSelector } from '../common/hooks';
-
-import { Preloader } from './components/elements/preloader/Preloader';
 import { AdminContainer } from './pages/admin/AdminContainer';
 import { LoginContainer } from './pages/auth/login/LoginContainer';
 import { SignupContainer } from './pages/auth/signup/SignupContainer';
 import { VerificationContainer } from './pages/auth/verification/VerificationContainer';
 import { MainContainer } from './pages/main/MainContainer';
 import { PublicMLContainer } from './pages/public/PublicMLContainer';
+
+import { initialize } from 'bll/reducers';
+import { selectAppStatus } from 'bll/selectors';
+import { AppStatus } from 'common/constants';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { Preloader } from 'ui/components/elements';
 
 export const Routes = (props: any) => {
   const dispatch = useAppDispatch();
@@ -41,11 +41,11 @@ export const Routes = (props: any) => {
 
   return (
     <>
-      {loadingStatus && (
+      {/* {loadingStatus && (
         <div className="loader">
           <Preloader />
         </div>
-      )}
+      )} */}
       <Switch>
         <Route path="/login" render={() => <LoginContainer />} />
         <Route path="/signup" render={() => <SignupContainer />} />

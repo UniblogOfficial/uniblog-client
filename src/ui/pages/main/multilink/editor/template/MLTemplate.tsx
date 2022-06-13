@@ -2,15 +2,15 @@ import React, { CSSProperties, FC, useCallback, useMemo, useState } from 'react'
 
 import { useTranslation } from 'react-i18next';
 
-import { setMLDraftTemplate } from '../../../../../../bll/reducers';
-import { ID, MLContentType } from '../../../../../../common/constants';
-import { useAppDispatch } from '../../../../../../common/hooks';
-import { TUser } from '../../../../../../common/types/instance';
-import { parseRawImage, px } from '../../../../../../common/utils/ui';
-import socials from '../../../../../../img';
-import { Carousel, Icon } from '../../../../../components/elements';
-
 import { getTemplates } from './templates';
+
+import { setMLDraftTemplate } from 'bll/reducers';
+import { ID, MLContentType } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
+import { TUser } from 'common/types/instance';
+import { parseRawImage, px } from 'common/utils/ui';
+import socials from 'img/socials';
+import { Carousel, Icon } from 'ui/components/elements';
 
 type TMLTemplateProps = {
   userData: TUser;
@@ -83,7 +83,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                 return (
                   <li key={block.order} style={{ padding: px(block.padding) ?? '0' }}>
                     <ul className="ml-social">
-                      {block.linkTypes.map(icon => {
+                      {block.linkTypes.map((icon: string) => {
                         const data = socials.find(social => social.type === icon);
                         return (
                           <li key={icon}>

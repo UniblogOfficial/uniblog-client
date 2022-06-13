@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { requestRegister } from '../../../../bll/reducers';
-import { useAppDispatch } from '../../../../common/hooks';
-import { TRegisterDto } from '../../../../common/types/request';
-import { SignupFormData, signupValidatorOptions } from '../../../../common/utils/ui/validators';
-import { Button, Icon, Input } from '../../../components/elements';
+import { requestRegister } from 'bll/reducers';
+import { useAppDispatch } from 'common/hooks';
+import { TRegisterDto } from 'common/types/request';
+import { SignupFormData, signupValidatorOptions } from 'common/utils/ui/validators';
+import { Button, Icon, Input } from 'ui/components/elements';
 
 type TSignupFormProps = {};
 

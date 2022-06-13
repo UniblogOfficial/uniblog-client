@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 
 import { Redirect } from 'react-router-dom';
 
-import { PublicPath } from '../../../common/constants';
-import { useAppSelector } from '../../../common/hooks';
-
 import { PublicMultilink } from './PublicMultilink';
+
+import { PublicPath } from 'common/constants';
+import { useAppSelector } from 'common/hooks';
 
 type TPublicMLContainerProps = {};
 

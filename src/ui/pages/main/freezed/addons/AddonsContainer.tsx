@@ -3,9 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { Breadcrumbs } from '../../../../components/elements/breadcrumbs/Breadcrumbs';
-import { Button } from '../../../../components/elements/button/Button';
-import { PageHeader } from '../../../../components/modules/headers/PageHeader';
+import { PageHeader } from 'ui/components/modules/headers/PageHeader';
 
 type TAddonsContainerProps = {};
 

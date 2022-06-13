@@ -1,17 +1,25 @@
-import { MLContentType, SocialNetwork } from '../../constants';
-
 import {
-  IMLDraftContentImage,
-  IMLDraftContentImageText,
-  IMLDraftContentLink,
-  IMLDraftContentLogo,
-  IMLDraftContentShop,
-  IMLDraftContentSocial,
-  IMLDraftContentText,
-  IMLDraftContentVideo,
+  IMLDraftAudio,
+  IMLDraftButton,
+  IMLDraftCarousel,
+  IMLDraftDivider,
+  IMLDraftImage,
+  IMLDraftImageText,
+  IMLDraftLink,
+  IMLDraftLogo,
+  IMLDraftMap,
+  IMLDraftPost,
+  IMLDraftShop,
+  IMLDraftSocial,
+  IMLDraftText,
+  IMLDraftVideo,
+  IMLDraftVote,
+  IMLDraftWidget,
   Nullable,
   TIncomingImage,
 } from '.';
+
+import { MLContentType, SocialNetwork } from 'common/constants';
 
 export type TMultilink = {
   // id: number;
@@ -19,16 +27,28 @@ export type TMultilink = {
   // name: string;
   background: string;
   // clickCount: number;
-  contentSet: MLContentType[];
+  contentMap: MLContentType[];
 
-  textSet: IMLDraftContentText[];
-  linkSet: IMLDraftContentLink[];
-  socialSet: IMLDraftContentSocial[];
-  logoSet: IMLDraftContentLogo[];
-  imageSet: IMLDraftContentImage[];
-  imageTextSet: IMLDraftContentImageText[];
-  videoSet: IMLDraftContentVideo[];
-  shopSet: IMLDraftContentShop[];
+  textBlocks: IMLDraftText[];
+  socialBlocks: IMLDraftSocial[];
+  videoBlocks: IMLDraftVideo[];
+  audioBlocks: IMLDraftAudio[];
+  widgetBlocks: IMLDraftWidget[];
+  voteBlocks: IMLDraftVote[];
+  mapBlocks: IMLDraftMap[];
+  postBlocks: IMLDraftPost[];
+  dividerBlocks: IMLDraftDivider[];
+  // gridBlocks: Nullable<IMLDraftGrid>[];
+  // accordeonBlocks: Nullable<IMLDraftAccordeon>[];
+
+  // images populated blocks
+  linkBlocks: IMLDraftLink[];
+  logoBlocks: IMLDraftLogo[];
+  imageBlocks: IMLDraftImage[];
+  imageTextBlocks: IMLDraftImageText[];
+  carouselBlocks: IMLDraftCarousel[];
+  shopBlocks: IMLDraftShop[];
+  buttonBlocks: IMLDraftButton[];
 
   images: Array<{ id: number; order: number; suborder: number } & TIncomingImage>;
   // createdAt: string;

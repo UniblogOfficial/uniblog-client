@@ -3,15 +3,16 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { logout, requestSaveAvatar } from '../../../../bll/reducers';
-import { useAppDispatch } from '../../../../common/hooks';
-import { TImageFile, TUser } from '../../../../common/types/instance';
-import { Button, Icon } from '../../../components/elements';
-import { PageHeader } from '../../../components/modules/headers/PageHeader';
-import { DropZoneField } from '../../../components/modules/imageForm/DropZoneField';
-import { Modal } from '../../../components/modules/modals/Modal';
-
 import { ProfileForm } from './ProfileForm';
+
+import { logout, requestSaveAvatar } from 'bll/reducers';
+import { useAppDispatch } from 'common/hooks';
+import { TImageFile, TUser } from 'common/types/instance';
+import { parseRawImage } from 'common/utils/ui';
+import { Button, Icon } from 'ui/components/elements';
+import { PageHeader } from 'ui/components/modules/headers/PageHeader';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
+import { Modal } from 'ui/components/modules/modals/Modal';
 
 type TProfileContainerProps = {
   userData: TUser;
@@ -85,8 +86,8 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
                   <DropZoneField
                     onChange={onImageZoneChange}
                     touched={false}
-                    initialImage={avatar ?? undefined}
                     avatarMode
+                    initialImage={parseRawImage(avatar) ?? undefined}
                   />
                 </div>
                 <div className="paper__button-container">

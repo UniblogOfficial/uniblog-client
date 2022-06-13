@@ -1,23 +1,23 @@
 import React, { CSSProperties } from 'react';
 
 import {
-  IMLDraftContentImageText,
+  IMLDraftImageText,
   Nullable,
   TImageFile,
   TMLImageContentImageText,
-} from '../../../../../common/types/instance';
-import { px } from '../../../../../common/utils/ui';
-import imgPlaceholder from '../../../../../img/img-placeholder.png';
+} from 'common/types/instance';
+import { px } from 'common/utils/ui';
+import imgPlaceholder from 'img/img-placeholder.png';
 
 type TMLImageTextProps = {
-  block: Nullable<IMLDraftContentImageText>;
+  block: Nullable<IMLDraftImageText>;
   images: Nullable<TMLImageContentImageText<TImageFile>>;
   callback?: <T>(payload: T) => void;
 };
 
 export const MLImageText = ({ block, images, callback }: TMLImageTextProps) => {
   if (!block) return null;
-  const imgMargin = (imageTextBlock: IMLDraftContentImageText) => {
+  const imgMargin = (imageTextBlock: IMLDraftImageText) => {
     switch (imageTextBlock.imgPosition) {
       case 'left':
         return '0 12px 12px 0';

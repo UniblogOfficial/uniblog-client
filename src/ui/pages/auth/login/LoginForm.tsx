@@ -3,16 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { NavLink, useHistory } from 'react-router-dom';
 
-import { requestLogin } from '../../../../bll/reducers';
-import { selectAppStatus } from '../../../../bll/selectors';
-import { AppStatus } from '../../../../common/constants';
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks';
-import { TLoginDto } from '../../../../common/types/request';
-import { LoginFormData, loginValidatorOptions } from '../../../../common/utils/ui/validators';
-import { Input } from '../../../components/elements';
-import { Button } from '../../../components/elements/button/Button';
-import { Icon } from '../../../components/elements/icons/Icon';
-import { ElementPreloader } from '../../../components/elements/preloader/ElementPreloader';
+import { requestLogin } from 'bll/reducers';
+import { selectAppStatus } from 'bll/selectors';
+import { AppStatus } from 'common/constants';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { TLoginDto } from 'common/types/request';
+import { LoginFormData, loginValidatorOptions } from 'common/utils/ui/validators';
+import { Button, ElementPreloader, Icon, Input } from 'ui/components/elements';
 
 type TLoginFormProps = {};
 

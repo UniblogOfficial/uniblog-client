@@ -1,16 +1,10 @@
 import React, { useMemo } from 'react';
 
-import {
-  IMLDraftContentLogo,
-  Nullable,
-  TImageFile,
-  TIncomingImage,
-  TMLImageContentLogo,
-} from '../../../../../common/types/instance';
-import { parseRawImage, px } from '../../../../../common/utils/ui';
+import { IMLDraftLogo, Nullable, TImageFile, TMLImageContentLogo } from 'common/types/instance';
+import { parseRawImage, px } from 'common/utils/ui';
 
 type TMLLogoProps = {
-  block: Nullable<IMLDraftContentLogo>;
+  block: Nullable<IMLDraftLogo>;
   images: Nullable<TMLImageContentLogo<TImageFile>>;
   callback?: <T>(payload: T) => void;
 };

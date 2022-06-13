@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
 
 type THeaderProps = {};
 
