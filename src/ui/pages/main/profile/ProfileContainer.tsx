@@ -40,6 +40,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
 
   const saveAvatar = useCallback(() => {
     if (imageFiles.length) {
+      console.log(imageFiles[0]);
       dispatch(requestSaveAvatar(imageFiles[0]));
     }
     closeEditAvatarModal();
@@ -85,6 +86,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
                   <DropZoneField
                     onChange={onImageZoneChange}
                     touched={false}
+                    avatarMode
                     initialImage={parseRawImage(avatar) ?? undefined}
                   />
                 </div>
