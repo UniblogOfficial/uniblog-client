@@ -35,9 +35,9 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
           logoBlocks.push({
             ...block,
             logo:
-              parseRawImage(images.find(image => image.order === i && image.suborder === 1)) ??
+              parseRawImage(images.find(image => image.order === i && image.suborder === 0)) ??
               null,
-            banner: parseRawImage(images.find(image => image.order === i && image.suborder === 2)),
+            banner: parseRawImage(images.find(image => image.order === i && image.suborder === 1)),
           });
         }
         break;

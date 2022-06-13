@@ -43,9 +43,8 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const [stage, setStage] = useState<EditorStage>(0);
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
   const [blockEditorOrder, setBlockEditorOrder] = useState(voidOrder);
-  const { name, background, contentMap, blocks, images } = useAppSelector<TMultilinkDraft>(
-    state => state.mlDraft,
-  );
+  const { name, background, maxWidth, contentMap, blocks, images } =
+    useAppSelector<TMultilinkDraft>(state => state.mlDraft);
 
   const stageTitles = useMemo(
     () => [
@@ -69,7 +68,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
   const onPublishButtonClick = () => {
     if (contentMap) {
-      dispatch(publishMultilink({ name, background, contentMap, blocks, images }));
+      dispatch(publishMultilink({ name, background, maxWidth, contentMap, blocks, images }));
     }
   };
 

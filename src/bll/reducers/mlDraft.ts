@@ -37,6 +37,7 @@ enum mlDraftAction {
 const initialState: TMLDraftState = {
   name: '',
   background: '#fff',
+  maxWidth: 480,
   contentMap: [],
   blocks: {
     textBlocks: [],
@@ -288,6 +289,7 @@ export const publishMultilink =
     const multilinkDto: TCreateMLDto = {
       name,
       background,
+      maxWidth: 480,
       contentMap,
       textBlocks: blocks.textBlocks.filter(notNull),
       socialBlocks: blocks.socialBlocks.filter(notNull),
@@ -325,6 +327,7 @@ export const publishMultilink =
 export type TMLDraftState = {
   name: string;
   background: string;
+  maxWidth: number;
   contentMap: MLContentType[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;

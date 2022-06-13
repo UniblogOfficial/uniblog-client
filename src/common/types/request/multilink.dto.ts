@@ -31,7 +31,7 @@ export type TCreateMLDto = {
   name: string;
   // exm. "#fff"
   background: string;
-  // maxWidth
+  maxWidth: number;
 
   contentMap: MLContentType[];
   textBlocks: IMLCreateTextDto[];
