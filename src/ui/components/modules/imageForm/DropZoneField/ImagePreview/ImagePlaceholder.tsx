@@ -10,10 +10,9 @@ import {
 } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 
-import { IconColor } from '../../../../common/constants';
-import { Icon } from '../../elements';
-
-import styles from './DropZone.module.scss';
+import { IconColor } from 'common/constants';
+import { Icon } from 'ui/components/elements';
+import styles from 'ui/components/modules/imageForm/DropZoneField/DropZone.module.scss';
 
 type TPlaceholderProps = {
   isFilled: boolean;
