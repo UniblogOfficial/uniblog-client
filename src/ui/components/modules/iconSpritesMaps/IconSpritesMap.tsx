@@ -40,6 +40,7 @@ const ids = [
   'text-align-left',
   'text-align-right',
   'text-bolt',
+  'text-italic',
   'trash-can',
   'trash-can-arrow-up',
   'trash-can-clock',

@@ -1,7 +1,14 @@
+// eslint-disable-next-line import/no-unresolved
+import { Property } from 'csstype';
+
 import { TImageFile, Nullable } from '.';
 
 import { MLContentType, SocialNetwork, SocialService } from 'common/constants';
+// eslint-disable-next-line import/order
 import { TIconName } from 'ui/components/modules/iconSpritesMaps/IconSpritesMap';
+
+// eslint-disable-next-line import/order
+import TextShadow = Property.TextShadow;
 
 export type TMultilinkDraft = {
   name: string;
@@ -72,6 +79,7 @@ interface IMLTextProperties {
   fontFamily?: string;
   letterSpacing?: number;
   textShadow?: [number, number, number, string][]; // 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  // textShadow?: string; // 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
   align?: 'right' | 'left' | 'center' | 'justify';
 }
 
