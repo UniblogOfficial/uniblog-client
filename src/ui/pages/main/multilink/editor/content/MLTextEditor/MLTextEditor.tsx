@@ -175,6 +175,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
     block.fontVariant = fontVariant;
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
+
   const onFontTextsChange = (font: string) => {
     block.fontFamily = font;
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
@@ -188,30 +189,36 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const onTextShadowChange = (e: ChangeEvent<HTMLInputElement>) => {
     const shadow = e.currentTarget.value;
     const shadowName = e.currentTarget.name;
-    if (shadowName === 'offset-x') {
-      shadowTextDefault[0][0] = +shadow;
-    } else if (shadowName === 'offset-y') {
-      shadowTextDefault[0][1] = +shadow;
-    } else if (shadowName === 'blur-radius') {
-      shadowTextDefault[0][2] = +shadow;
+    if (Array.isArray(block.textShadow)) {
+      if (shadowName === 'offset-x') {
+        block.textShadow[0][0] = +shadow;
+      } else if (shadowName === 'offset-y') {
+        block.textShadow[0][1] = +shadow;
+      } else if (shadowName === 'blur-radius') {
+        block.textShadow[0][2] = +shadow;
+      }
+    } else {
+      if (shadowName === 'offset-x') {
+        shadowTextDefault[0][0] = +shadow;
+      } else if (shadowName === 'offset-y') {
+        shadowTextDefault[0][1] = +shadow;
+      } else if (shadowName === 'blur-radius') {
+        shadowTextDefault[0][2] = +shadow;
+      }
+      block.textShadow = shadowTextDefault;
     }
-    block.textShadow = shadowTextDefault;
-    // block.textShadow = `${shadowTextDefault.map(m => `${m}px `).join('')} ${shadowDefaulColor}`;
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onBackgroundTextShadowChange = (backgroundColor: string) => {
     if (Array.isArray(block.textShadow)) {
-      // shadowTextDefault[0][3] = backgroundColor;
       block.textShadow[0][3] = backgroundColor;
     } else {
       shadowTextDefault[0][3] = backgroundColor;
       block.textShadow = shadowTextDefault;
     }
-    // block.textShadow = `${shadowTextDefault.map(m => `${m}px `).join('')} ${backgroundColor}`;
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
-  console.log('block.textShadow', block.textShadow);
 
   return (
     <>
