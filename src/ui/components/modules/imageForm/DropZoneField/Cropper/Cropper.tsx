@@ -61,17 +61,17 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
         style={{ minHeight: 500, width: '100%', position: 'relative', marginBottom: 50 }}
         zoomTo={0.5}
         initialAspectRatio={1}
+        aspectRatio={avatarMode ? 1 : NaN}
         preview=".img-preview"
         src={image}
         viewMode={1}
-        minCropBoxHeight={10}
-        minCropBoxWidth={10}
+        minCropBoxHeight={avatarMode ? 200 : 10}
+        minCropBoxWidth={avatarMode ? 200 : 10}
         background={false}
         responsive
-        cropBoxResizable={!avatarMode}
         dragMode={avatarMode ? 'move' : 'crop'}
         autoCropArea={0.8}
-        checkOrientation={false}
+        checkOrientation
         onInitialized={instance => {
           setCropper(instance);
         }}
