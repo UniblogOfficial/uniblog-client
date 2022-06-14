@@ -1,3 +1,5 @@
+
+
 h1 {
   @include stretch-it(font-size, 20.8, 52);
   font-weight: 700;
@@ -268,7 +270,9 @@ h4 {
 		--secondary: #000000;
 		width: 40px;
 		height: 40px;
+        cursor: pointer;
 	}
+
 }
 .loader {
   position: absolute;
