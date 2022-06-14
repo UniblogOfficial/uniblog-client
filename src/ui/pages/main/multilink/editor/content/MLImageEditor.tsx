@@ -5,7 +5,7 @@ import { ID } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftImage, Nullable, TImageFile, TMLImageContentImage } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
 
 type TMLImageEditorProps = {
   order: number;

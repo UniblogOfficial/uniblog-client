@@ -1,12 +1,12 @@
 import React, { useState, FC } from 'react';
 
 import Cropper from 'react-cropper';
-import './cropper.css';
 import { useTranslation } from 'react-i18next';
 
-import { TImageFile } from '../../../../common/types/instance';
-import { dataUrlToFile } from '../../../../common/utils/state/dataUrlToFile';
-import { Button } from '../../elements/button/Button';
+import 'ui/components/modules/imageForm/DropZoneField/Cropper/Cropper.scss';
+import { TImageFile } from 'common/types/instance';
+import { dataUrlToFile } from 'common/utils/state/dataUrlToFile';
+import { Button } from 'ui/components/elements/button/Button';
 
 type CropperContainerPropsType = {
   img: string | undefined;
@@ -43,17 +43,20 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
       previewUrl: url,
       size: file.size,
     };
-
     setCropperMode(false);
     setCroppedImage([fileData]);
-    console.log(fileData);
     onChangeImage(fileData, id);
+  };
+
+  const onBackHandler = () => {
+    setCropperMode(false);
+    setCroppedImage([]);
   };
 
   return (
     <div
       style={{ width: '80%', position: 'relative', zIndex: 10 }}
-      className={`paper containerCropper + ${avatarMode ? 'avatarMode' : ''}`}>
+      className={`paper containerCropper ${avatarMode ? 'avatarMode' : ''}`}>
       <Cropper
         style={{ minHeight: 500, width: '100%', position: 'relative', marginBottom: 50 }}
         zoomTo={0.5}
@@ -65,8 +68,9 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
         minCropBoxWidth={10}
         background={false}
         responsive
-        // cropBoxResizable={false}
-        autoCropArea={1}
+        cropBoxResizable={!avatarMode}
+        dragMode={avatarMode ? 'move' : 'crop'}
+        autoCropArea={0.8}
         checkOrientation={false}
         onInitialized={instance => {
           setCropper(instance);
@@ -76,7 +80,7 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
       <Button value="1" className="button button__right" onClick={getCropData}>
         {t('common:buttons.save')}
       </Button>
-      <Button value="1" className="button button__left" onClick={() => setCropperMode(false)}>
+      <Button value="1" className="button button__left" onClick={onBackHandler}>
         {t('common:buttons.back')}
       </Button>
     </div>

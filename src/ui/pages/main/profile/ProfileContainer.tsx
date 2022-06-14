@@ -11,7 +11,7 @@ import { TImageFile, TUser } from 'common/types/instance';
 import { parseRawImage } from 'common/utils/ui';
 import { Button, Icon } from 'ui/components/elements';
 import { PageHeader } from 'ui/components/modules/headers/PageHeader';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
 import { Modal } from 'ui/components/modules/modals/Modal';
 
 type TProfileContainerProps = {
@@ -21,6 +21,7 @@ type TProfileContainerProps = {
 export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
   const { name, avatar, email } = userData;
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
+  const [croppedImage, setCroppedImage] = useState<TImageFile[]>([]);
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -40,7 +41,6 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
 
   const saveAvatar = useCallback(() => {
     if (imageFiles.length) {
-      console.log(imageFiles[0]);
       dispatch(requestSaveAvatar(imageFiles[0]));
     }
     closeEditAvatarModal();
@@ -88,10 +88,15 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
                     touched={false}
                     avatarMode
                     initialImage={parseRawImage(avatar) ?? undefined}
+                    setCroppedImage={setCroppedImage}
                   />
                 </div>
                 <div className="paper__button-container">
-                  <Button value="1" className="button button__right" onClick={saveAvatar}>
+                  <Button
+                    value="1"
+                    className="button button__right"
+                    onClick={saveAvatar}
+                    disabled={!croppedImage.length}>
                     {t('common:buttons.save')}
                   </Button>
                   <Button value="1" className="button button__left" onClick={closeEditAvatarModal}>

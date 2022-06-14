@@ -10,7 +10,7 @@ import { ID } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { TImageFile } from 'common/types/instance';
 import { Button } from 'ui/components/elements';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
 
 type TMLBackgroundProps = {};
 

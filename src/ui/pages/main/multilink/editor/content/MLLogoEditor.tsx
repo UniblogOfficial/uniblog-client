@@ -4,7 +4,7 @@ import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducer
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftLogo, Nullable, TImageFile, TMLImageContentLogo } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
 
 type TMLLogoEditorProps = {
   order: number;
