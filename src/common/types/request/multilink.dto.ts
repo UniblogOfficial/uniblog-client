@@ -31,7 +31,7 @@ export type TCreateMLDto = {
   name: string;
   // exm. "#fff"
   background: string;
-  // maxWidth
+  maxWidth: number;
 
   contentMap: MLContentType[];
   textBlocks: IMLCreateTextDto[];
@@ -49,8 +49,8 @@ export type TCreateMLDto = {
   imageBlocks: IMLCreateImageDto[];
   imageTextBlocks: IMLCreateImageTextDto[];
   shopBlocks: IMLCreateShopDto[];
-  buttonBlock: IMLCreateButtonDto[];
-  carouselBlock: IMLCreateCarouselDto[];
+  buttonBlocks: IMLCreateButtonDto[];
+  carouselBlocks: IMLCreateCarouselDto[];
 };
 
 export type TCreateMLImagesDto = {

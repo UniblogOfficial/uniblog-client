@@ -13,7 +13,7 @@ import TextShadow = Property.TextShadow;
 export type TMultilinkDraft = {
   name: string;
   background: string;
-  // maxWidth
+  maxWidth: number;
   contentMap: MLContentType[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;

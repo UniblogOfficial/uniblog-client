@@ -93,8 +93,31 @@ export const MLContent = (props: TMLContentProps) => {
         </Button>
       </div>
       <div>
+        <Button
+          value={MLContentType.WIDGET}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
+          Add widget block
+        </Button>
+      </div>
+      <div>
         <Button disabled className="button _full _rounded">
-          Add icon-text block
+          Add vote block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add button block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add map block
+        </Button>
+      </div>
+      <div>
+        <Button disabled className="button _full _rounded">
+          Add post block
         </Button>
       </div>
       <div>
@@ -131,60 +154,64 @@ export const MLContent = (props: TMLContentProps) => {
   const currentEditor = useMemo(() => {
     switch (blockEditorType) {
       case MLContentType.LOGO: {
-        const currentBlock = blocks.logoBlocks[blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
           currentBlock && (
             <div className="ml-logo-editor">
               <MLLogoEditor
                 order={blockEditorOrder}
                 block={currentBlock}
-                images={images.blocks.logoBlocks[blockEditorOrder]}
+                images={images.blocks[blockEditorType][blockEditorOrder]}
               />
             </div>
           )
         );
       }
       case MLContentType.TEXT: {
-        const currentBlock = blocks.textBlocks[blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return currentBlock && <MLTextEditor order={blockEditorOrder} block={currentBlock} />;
       }
       case MLContentType.IMAGETEXT: {
-        const currentBlock = blocks.imageTextBlocks[blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return currentBlock && <>Not implemented</>;
       }
       case MLContentType.IMAGE: {
-        const currentBlock = blocks.imageBlocks[blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
           currentBlock && (
             <div className="ml-image-editor">
               <MLImageEditor
                 order={blockEditorOrder}
                 block={currentBlock}
-                images={images.blocks.imageBlocks[blockEditorOrder]}
+                images={images.blocks[blockEditorType][blockEditorOrder]}
               />
             </div>
           )
         );
       }
       case MLContentType.LINK: {
-        const currentBlock = blocks.linkBlocks[blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
           currentBlock && <MLLinkEditor order={blockEditorOrder} close={onButtonEditorClick} />
         );
       }
       case MLContentType.SOCIAL: {
-        const currentBlock = blocks.socialBlocks[blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return currentBlock && <>Not implemented</>;
+      }
+      case MLContentType.WIDGET: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return currentBlock && <>Not implemented</>;
       }
       case MLContentType.SHOP: {
-        const currentBlock = blocks.shopBlocks[blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
           currentBlock && (
             <div className="ml-shop-editor">
               <MLShopEditor
                 order={blockEditorOrder}
-                block={blocks.shopBlocks[blockEditorOrder]}
-                images={images.blocks.shopBlocks[blockEditorOrder]}
+                block={blocks[blockEditorType][blockEditorOrder]}
+                images={images.blocks[blockEditorType][blockEditorOrder]}
               />
             </div>
           )

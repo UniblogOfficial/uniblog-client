@@ -308,6 +308,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
             onClick={() => setIsBgColorPickerVisible(true)}
           />
           {isBgColorPickerVisible && (
+
             <>
               <RgbaStringColorPicker
                 color={block.background ?? '#ffff'}
@@ -317,6 +318,11 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
                 Ok
               </Button>
             </>
+            <RgbaStringColorPicker
+              color={block.background ?? '#ffff'}
+              onChange={onBackgroundColorChange}
+              onBlur={() => setIsBgColorPickerVisible(false)}
+            />
           )}
           <div>
             Padding:

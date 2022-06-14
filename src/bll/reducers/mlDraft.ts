@@ -37,6 +37,7 @@ enum mlDraftAction {
 const initialState: TMLDraftState = {
   name: '',
   background: '#fff',
+  maxWidth: 480,
   contentMap: [],
   blocks: {
     textBlocks: [],
@@ -118,7 +119,7 @@ export const mlDraftReducer = (
           mapBlocks: template.map(block => null),
           postBlocks: template.map(block => null),
           voteBlocks: template.map(block => null),
-          widgetBlocks: template.map(block => null),
+          widgetBlocks: template.map(block => (block.type === MLContentType.WIDGET ? block : null)),
         },
         images: {
           background: null,
@@ -288,6 +289,7 @@ export const publishMultilink =
     const multilinkDto: TCreateMLDto = {
       name,
       background,
+      maxWidth: 480,
       contentMap,
       textBlocks: blocks.textBlocks.filter(notNull),
       socialBlocks: blocks.socialBlocks.filter(notNull),
@@ -304,8 +306,8 @@ export const publishMultilink =
       imageBlocks: blocks.imageBlocks.filter(notNull),
       imageTextBlocks: blocks.imageTextBlocks.filter(notNull),
       shopBlocks: blocks.shopBlocks.filter(notNull),
-      carouselBlock: blocks.carouselBlocks.filter(notNull),
-      buttonBlock: blocks.buttonBlocks.filter(notNull),
+      carouselBlocks: blocks.carouselBlocks.filter(notNull),
+      buttonBlocks: blocks.buttonBlocks.filter(notNull),
     };
     const imagesDto: TCreateMLImagesDto = {
       background: images.background ?? undefined,
@@ -325,6 +327,7 @@ export const publishMultilink =
 export type TMLDraftState = {
   name: string;
   background: string;
+  maxWidth: number;
   contentMap: MLContentType[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;

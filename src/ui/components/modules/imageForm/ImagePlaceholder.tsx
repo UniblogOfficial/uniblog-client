@@ -1,6 +1,13 @@
 import React, { FC } from 'react';
 
-import { Accept, DropzoneInputProps, DropzoneRootProps, useDropzone } from 'react-dropzone';
+import {
+  Accept,
+  DropEvent,
+  DropzoneInputProps,
+  DropzoneRootProps,
+  FileRejection,
+  useDropzone,
+} from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 
 import { IconColor } from '../../../../common/constants';
@@ -40,7 +47,7 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) =>
 
   return (
     <>
-      <div {...getRootProps()}>
+      <div {...getRootProps({ isDragAccept, isFocused, isDragReject })}>
         {!isFilled && (
           <Icon name="image" size="reduced" primaryColor="#d4dee8" secondaryColor="#d4dee8" />
         )}

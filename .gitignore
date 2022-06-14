@@ -24,3 +24,5 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# lock file
+yarn.lock
