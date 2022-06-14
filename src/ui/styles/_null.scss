@@ -50,13 +50,19 @@ a:not([class]) {
 }
 
 a {
-  //text-decoration: none;
+  text-decoration: none;
 }
 
 /* Упрощаем работу с изображениями */
 img {
-  max-width: 100%;
   display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
 }
 
 /* Указываем понятную периодичность в потоке данных у article*/
@@ -74,12 +80,15 @@ select {
   border: none;
 }
 
-button, a, select, input {
-  cursor: pointer;
-}
-
 div, span {
   cursor: default;
+}
+
+button, a, select, input {
+  cursor: pointer;
+  * {
+    cursor: pointer;
+  }
 }
 
 textarea {

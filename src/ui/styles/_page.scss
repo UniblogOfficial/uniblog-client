@@ -23,7 +23,7 @@
     padding: 24px 24px 28px;
   }
   &__dash {
-    margin: auto -24px 0;
+    margin: auto -24px 28px;
     height: 1px;
     background-color: #f1f1f1;;
   }
@@ -111,13 +111,22 @@
   a {
     position: relative;
     display: block;
-    padding: 28px 24px 0;
+    padding: 0 24px;
     text-decoration: none;
     color: #4F5B67;
   }
   &__subtitle {
     font-size: 12px;
     line-height: 1.5;
+  }
+  // .profile-link__avatar
+  &__avatar {
+    position: absolute;
+    left: 24px;
+    overflow:hidden;
+    width:32px;
+    height:32px;
+    border-radius: 50%;
   }
   .icon-container {
     width: 32px;
@@ -128,13 +137,21 @@
 }
 
 .content {
+  position: relative;
   flex: 0 1 83.3333%;
+  background-color: $bg_primary;
+  z-index: 5;
   &__container {
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     max-width: 1200px;
     height: 100%;
     padding: 24px 36px;
+    .footer {
+      margin-top: 24px;
+    }
   }
 }
 

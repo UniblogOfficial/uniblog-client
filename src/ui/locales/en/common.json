@@ -3,6 +3,9 @@
     "addNewPost": "Add new post",
     "back": "Back",
     "cancel": "Cancel",
+    "clean": "Clean",
+    "download": "Download",
+    "logout": "Log out",
     "next": "Next",
     "no": "No",
     "ok": "OK",
@@ -14,6 +17,7 @@
     "change": "Change"
   },
   "placeholders": {
+    "clickToSelect": "Click to select file",
     "createNewPass": "Create new password",
     "createPass": "Create password",
     "enterName": "Enter your name",

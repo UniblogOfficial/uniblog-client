@@ -3,12 +3,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import socials from '../../../../img';
-import { Button } from '../../../components/elements/button/Button';
-import { Icon } from '../../../components/elements/icons/Icon';
-import { Radio } from '../../../components/elements/radio/Radio';
-import { PageHeader } from '../../../components/modules/headers/PageHeader';
-import { SocialCard } from '../../../components/modules/socialCard/SocialCard';
+import socials from 'img/socials';
+import { Button, Icon, Radio } from 'ui/components/elements';
+import { PageHeader } from 'ui/components/modules/headers/PageHeader';
+import { SocialCard } from 'ui/components/modules/socialCard/SocialCard';
 
 type TCrosspostingContainerProps = {};
 
@@ -17,7 +15,7 @@ export const CrosspostingContainer = () => {
   const [temp, setTemp] = useState('now');
   const images = socials.map((social: any) => (
     <li key={social.title}>
-      <SocialCard data={social} titleChange={t('common:links.change', { ns: 'common' })} />
+      <SocialCard data={social} actionTitle={t('common:links.change', { ns: 'common' })} />
     </li>
   ));
   const at =
@@ -75,7 +73,7 @@ export const CrosspostingContainer = () => {
             </Button>
           </section>
           <section className="planner">
-            <div className="paper">
+            <div className="paper _with-button-bottom">
               <Radio
                 options={['now', 'later']}
                 value={temp}
@@ -86,10 +84,12 @@ export const CrosspostingContainer = () => {
                 onChangeOption={setTemp}
                 className="planner__radio"
               />
+              <div className="paper__button-container">
+                <Button onClick={onNextButtonClick} className="button _paper">
+                  {t('common:buttons.next')}
+                </Button>
+              </div>
             </div>
-            <Button onClick={onNextButtonClick} className="button _rounded">
-              {t('common:buttons.next')}
-            </Button>
           </section>
         </div>
       </main>

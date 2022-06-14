@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "baseUrl": "src",
     "lib": [
       "dom",
       "dom.iterable",
@@ -9,7 +10,8 @@
     "allowJs": true,
     "types": [
       "node",
-      "webpack-env"
+      "webpack-env",
+      "jest"
     ],
     "skipLibCheck": true,
     "strict": true,
@@ -22,10 +24,10 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "next-env.d.ts",
+    "src",
     "**/*.ts",
     "**/*.tsx"
   ],

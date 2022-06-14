@@ -2,27 +2,28 @@ import React, { useLayoutEffect } from 'react';
 
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
-import { setUserData, TUserData } from '../../../bll/reducers';
-import { selectUserData } from '../../../bll/selectors';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import { Footer } from '../../components/modules/footer/Footer';
-import { SidebarContainer } from '../../components/modules/sidebar/SidebarContainer';
 import { NotFound } from '../404';
 
-import { AddonsContainer } from './addons/AddonsContainer';
-import { AnalyticsContainer } from './analytics/AnalyticsContainer';
-import { ChatContainer } from './chat/ChatContainer';
 import { CrosspostingContainer } from './crossposting/CrosspostingContainer';
+import { AddonsContainer } from './freezed/addons/AddonsContainer';
+import { AnalyticsContainer } from './freezed/analytics/AnalyticsContainer';
+import { ChatContainer } from './freezed/chat/ChatContainer';
+import { ShopContainer } from './freezed/shop/ShopContainer';
 import { HomeContainer } from './home/HomeContainer';
 import { MultilinkContainer } from './multilink/MultilinkContainer';
 import { PriceContainer } from './price/PriceContainer';
 import { ProfileContainer } from './profile/ProfileContainer';
-import { ShopContainer } from './shop/ShopContainer';
+
+import { TUserState } from 'bll/reducers';
+import { selectUserData } from 'bll/selectors';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { Footer } from 'ui/components/modules/footer/Footer';
+import { SidebarContainer } from 'ui/components/modules/sidebar/SidebarContainer';
 
 export const MainContainer = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const userData = useAppSelector<TUserData | null>(selectUserData);
+  const userData = useAppSelector<TUserState>(selectUserData);
 
   useLayoutEffect(() => {
     const papers: any = document.getElementsByClassName('r-paper');
@@ -32,14 +33,6 @@ export const MainContainer = () => {
   }, [history.location.pathname]);
 
   if (userData === null) {
-    dispatch(
-      setUserData({
-        name: 'David',
-        email: 'someemail@gmail.com',
-        id: '1',
-        accessLevel: 1,
-      }),
-    );
     return <Redirect to="/login" />;
   }
 
@@ -50,14 +43,14 @@ export const MainContainer = () => {
         <div className="content__container">
           <Switch>
             <Route path="/crossposting" render={() => <CrosspostingContainer />} />
-            <Route path="/multilink" render={() => <MultilinkContainer />} />
+            <Route path="/multilink" render={() => <MultilinkContainer userData={userData} />} />
             <Route path="/shop" render={() => <ShopContainer />} />
             <Route path="/analytics" render={() => <AnalyticsContainer />} />
             <Route path="/addons" render={() => <AddonsContainer />} />
             <Route path="/price" render={() => <PriceContainer />} />
             <Route path="/chat" render={() => <ChatContainer />} />
-            <Route path="/profile" render={() => <ProfileContainer />} />
-            <Route path="/" exact render={() => <HomeContainer />} />
+            <Route path="/profile" render={() => <ProfileContainer userData={userData} />} />
+            <Route path="/" exact render={() => <HomeContainer userData={userData} />} />
             <Route path="/404" render={() => <NotFound />} />
             <Redirect from="*" to="/404" />
           </Switch>

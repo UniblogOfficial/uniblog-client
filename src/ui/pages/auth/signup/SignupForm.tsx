@@ -1,38 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
-import * as yup from 'yup';
 
-import { useAppDispatch } from '../../../../common/hooks';
-import { Input } from '../../../components/elements';
-import { Button } from '../../../components/elements/button/Button';
-import { Icon } from '../../../components/elements/icons/Icon';
-
-export type SignupFormData = {
-  name: string;
-  email: string;
-  password: string;
-  passConfirmed: string;
-};
+import { requestRegister } from 'bll/reducers';
+import { useAppDispatch } from 'common/hooks';
+import { TRegisterDto } from 'common/types/request';
+import { SignupFormData, signupValidatorOptions } from 'common/utils/ui/validators';
+import { Button, Icon, Input } from 'ui/components/elements';
 
 type TSignupFormProps = {};
-
-const MIN_SYMBOLS = 8;
-
-const signupSchema = yup.object().shape({
-  name: yup.string().required('Name is required'),
-  email: yup
-    .string()
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Invalid email address')
-    .required('Email is required'),
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(MIN_SYMBOLS, `Password must be at least ${MIN_SYMBOLS} symbols`),
-  passConfirmed: yup.string().notRequired(),
-});
 
 export const SignupForm = () => {
   const dispatch = useAppDispatch();
@@ -43,11 +19,7 @@ export const SignupForm = () => {
     formState: { errors, dirtyFields },
     reset,
     clearErrors,
-  } = useForm<SignupFormData>({
-    mode: 'onChange', // important for dynamical tips
-    resolver: yupResolver(signupSchema, { abortEarly: false }),
-    criteriaMode: 'all', // important for dynamical tips
-  });
+  } = useForm<SignupFormData>(signupValidatorOptions);
   const initialHelperState = {
     name: true,
     email: true,
@@ -55,66 +27,29 @@ export const SignupForm = () => {
     passConfirmed: true,
   };
   const [helperState, setHelperState] = useState(initialHelperState); // errors blocked in
-  const [dashed, setDashed] = useState<keyof SignupFormData | null>(null);
   const [password, setPassword] = useState('');
   const [passConfirmed, setPassConfirmed] = useState('');
-  const [passOptionals, setPassOptionals] = useState<Array<string> | null>(null);
   const [passConfirmationMessage, setPassConfirmationMessage] = useState('');
-
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisibility = () => {
     setPasswordShown(!passwordShown);
   };
-  const history = useHistory();
 
-  const routeChange = () => {
-    const path = `/verification`;
-    history.push(path);
-  };
-  const onSubmit = () => {
-    routeChange();
-  };
-
-  /* const onSubmit: SubmitHandler<SignupFormData> = data => {
-    const signupData: TSignupData = {
+  const onSubmit: SubmitHandler<SignupFormData> = data => {
+    const signupData: TRegisterDto = {
+      name: data.name,
       email: data.email,
       password: data.password,
     };
-    const isPassConfirmed = data.password === data.passConfirmed; // Order is important!
-    // dispatch(setIsSignupPassConfirmed(data.password === data.passConfirmed)); // 1
-    dispatch(setSignupUserData(signupData)); // 2
-    if (isPassConfirmed) {
-      dispatch(signup());
-    } else {
-      revealModal('signupPassUnconfirmed');
-    }
-  }; */
+    dispatch(requestRegister(signupData));
+  };
   const changeFocusHandler = (name: keyof SignupFormData, focus: boolean) => {
     // for first field changing errors won't show
     !dirtyFields[name] && setHelperState(prev => ({ ...prev, [name]: !focus }));
     // since field touched after first blur, all errors will calculated onChange and always show
     dirtyFields[name] && setHelperState(initialHelperState);
-    // thick/thin ...might be color customized
-    setDashed(focus ? name : null);
-  };
-  const checkPassComplexity = (condition: string) => {
-    if (!errors.password && dirtyFields.password && passOptionals) {
-      return passOptionals.some(c => c === condition);
-    }
-    if (!passOptionals) {
-      return false;
-    }
-    return true;
   };
 
-  useEffect(() => {
-    const optionals: Array<string> = [];
-    !/[a-z]/.test(password) && optionals.push('lowercase');
-    !/[A-Z]/.test(password) && optionals.push('uppercase');
-    !/[0-9]/.test(password) && optionals.push('number');
-    !/[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/.test(password) && optionals.push('special');
-    setPassOptionals(optionals.length > 0 ? optionals : null);
-  }, [password]);
   useEffect(() => {
     const passwordValue = getValues('password');
     if (passwordValue) {
@@ -143,7 +78,6 @@ export const SignupForm = () => {
             name="name"
           />
         </div>
-        <div className={`field__dash ${dashed === 'name' && 'thick'}`} />
         <div className="field__error">
           {helperState.name && dirtyFields.name && errors.name && errors.name.message}
         </div>
@@ -159,7 +93,6 @@ export const SignupForm = () => {
             name="email"
           />
         </div>
-        <div className={`field__dash ${dashed === 'email' && 'thick'}`} />
         <div className="field__error">
           {helperState.email && dirtyFields.email && errors.email && errors.email.message}
         </div>
@@ -181,11 +114,8 @@ export const SignupForm = () => {
               name="eye"
               onClick={togglePasswordVisibility}
               side="right"
-              size="full"
               primaryColor="#242D35"
               secondaryColor="#242D35"
-              primaryOpacity="1"
-              secondaryOpacity="1"
               containerClassName="auth-eye"
             />
           ) : (
@@ -193,16 +123,12 @@ export const SignupForm = () => {
               name="eye-slash"
               onClick={togglePasswordVisibility}
               side="right"
-              size="full"
               primaryColor="#4F5B67"
               secondaryColor="#4F5B67"
-              primaryOpacity="1"
-              secondaryOpacity="1"
               containerClassName="auth-eye"
             />
           )}
         </div>
-        <div className={`field__dash ${dashed === 'password' && 'thick'}`} />
         <div className="field__error">
           {helperState.password &&
             dirtyFields.password &&
@@ -224,7 +150,6 @@ export const SignupForm = () => {
             }}
           />
         </div>
-        <div className={`field__dash ${dashed === 'passConfirmed' && 'thick'}`} />
         <div className="field__error">
           {helperState.passConfirmed &&
             dirtyFields.passConfirmed &&

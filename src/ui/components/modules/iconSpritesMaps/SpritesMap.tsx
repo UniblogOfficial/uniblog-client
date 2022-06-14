@@ -6,6 +6,7 @@ import { BrandSpritesMap } from './BrandSpritesMap';
 import { CommerceSpritesMap } from './CommerceSpritesMap';
 import { CommonUISpritesMap } from './CommonUISpritesMap';
 import { CRUDSpritesMap } from './CRUDSpritesMap';
+import { EditTextUISpritesMap } from './EditTextUISpritesMap';
 import { FeatureSpritesMap } from './FeatureSpritesMap';
 import { FilterSpritesMap } from './FilterSpritesMap';
 import { LayoutSpritesMap } from './LayoutSpritesMap';
@@ -16,6 +17,7 @@ export const SpritesMap = () => (
     <ArrowNavSpritesMap />
     <FilterSpritesMap />
     <CommonUISpritesMap />
+    <EditTextUISpritesMap />
     <AuthSpritesMap />
     <FeatureSpritesMap />
     <CommerceSpritesMap />

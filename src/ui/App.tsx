@@ -1,36 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { me } from '../bll/reducers';
-import { useAppDispatch, useAppSelector } from '../common/hooks';
-
-import { SpritesMap } from './components/modules/iconSpritesMaps/SpritesMap';
-import { Routes } from './Routes';
+import { SpritesMap } from 'ui/components/modules/iconSpritesMaps/SpritesMap';
+import { PurchaseContainer } from 'ui/pages/public/PurchaseContainer';
+import { Routes } from 'ui/Routes';
 
 export const App = () => {
-  const dispatch = useAppDispatch();
-
-  const { isInitialized } = useAppSelector(state => state.app);
-
-  useEffect(() => {
-    dispatch(me());
-  }, [dispatch]);
-
-  /* if (!isInitialized) {
-    return (
-      <div style={{ position: 'fixed', top: '50%', textAlign: 'center', width: '100%' }}>
-        preloader
-      </div>
-    );
-  } */
+  let a;
   return (
     <>
       <SpritesMap />
       <div className="wrapper">
         {/* {status === 'failed' && <ErrorSnackbar />} */}
         <BrowserRouter>
-          <Routes />
+          <Switch>
+            <Route path="/purchase" render={() => <PurchaseContainer />} />
+            <Route path="/" render={() => <Routes />} />
+          </Switch>
         </BrowserRouter>
       </div>
     </>

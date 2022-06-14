@@ -44,8 +44,6 @@ $c_optional: #5555ff;
 body {
   font-size: $fontSize;
   font-family: $fontFamily, sans-serif;
-  overflow-x: hidden;
-  overflow-y: inherit;
   color: $c_primary;
   background-color: $bg_primary;
   ._lock {
@@ -53,26 +51,32 @@ body {
     overflow: hidden;
   }
 }
+
 // </NULLIFICATION> ================================================================================================
 
 // <WRAPPER> =======================================================================================================
+div#root {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+}
+
+.wrapper {
+  height: 100%;
+  overflow-y: auto;
+}
+
 main {
   position: relative;
   display: flex;
   width: 100%;
-  //justify-content: center;
-  align-self: stretch;
+  min-height: 100%;
+  margin: 0 auto;
   &._loaded {
     animation: none;
   }
 }
-.wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  min-height: 100vh;
-}
+
 // </WRAPPER> ======================================================================================================
 
 // <MAIN GRID> =====================================================================================================
@@ -100,6 +104,7 @@ main {
 // <UI> ==============================================================================================================
 @import 'ui';
 @import 'icons';
+@import 'mlcommon';
 // </UI> =============================================================================================================
 
 // <FORMS> ===========================================================================================================
@@ -108,16 +113,17 @@ main {
 
 // <PAGE-SPECIFIC STYLES> ============================================================================================
 @import 'page';
-@import './pages/addons';
-@import './pages/analytics';
+@import './pages/freezed/addons';
+@import './pages/freezed/analytics';
 @import './pages/auth';
-@import './pages/chat';
+@import './pages/freezed/chat';
 @import './pages/crossposting';
 @import './pages/home';
 @import './pages/multilink';
 @import './pages/profile';
 @import './pages/price';
-@import './pages/shop';
+@import './pages/freezed/shop';
+@import './pages/public';
 // </PAGE-SPECIFIC STYLES> ===========================================================================================
 
 // <THEMES> ==========================================================================================================

@@ -42,6 +42,18 @@
     }
   },
   "multilink": {
+    "buttons": {
+      "create": "Create",
+      "published": "Published"
+    },
+    "creation": {
+      "stages": {
+        "background": "Choose a background",
+        "content": "Add mediacontent",
+        "preview": "Preview",
+        "template": "Choose a template"
+      }
+    },
     "title": "Multilink"
   },
   "navbar": {
