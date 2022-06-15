@@ -8,6 +8,7 @@ import { Routes } from 'ui/Routes';
 
 export const App = () => {
   let a;
+  let b;
   return (
     <>
       <SpritesMap />
