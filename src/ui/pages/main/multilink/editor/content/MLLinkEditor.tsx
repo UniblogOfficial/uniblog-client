@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
+import { IMLDraftLink, IMLDraftText } from '../../../../../../common/types/instance';
+
 import { MLContentType, SocialNetwork } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { Button, Input } from 'ui/components/elements';
@@ -17,6 +19,7 @@ type TLinkFormData = {
 type TMLLinkEditorProps = {
   order: number;
   close: (e: MouseEvent<HTMLButtonElement>) => void;
+  block?: IMLDraftLink;
 };
 
 const MAX_SYMBOLS_TITLE = 24;
