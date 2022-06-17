@@ -33,40 +33,30 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
     const padding = e.currentTarget.value;
     const title = e.currentTarget.name;
 
-    if (Array.isArray(block.padding)) {
-      if (block.padding.length < 4) {
-        block.padding = [...block.padding, ...block.padding];
-      }
-      if (title === 'top') {
-        if (isPaddingTopBottom) {
-          block.padding[0] = +padding;
-          block.padding[2] = +padding;
-        }
-        block.padding[0] = +padding;
-      }
-      if (title === 'right') {
-        if (isPaddingLeftRight) {
-          block.padding[1] = +padding;
-          block.padding[3] = +padding;
-        }
-        block.padding[1] = +padding;
-      }
-      if (title === 'bottom') {
-        if (isPaddingTopBottom) {
-          block.padding[0] = +padding;
-          block.padding[2] = +padding;
-        }
+    if (title === 'top') {
+      if (isPaddingTopBottom) {
         block.padding[2] = +padding;
       }
-      if (title === 'left') {
-        if (isPaddingLeftRight) {
-          block.padding[1] = +padding;
-          block.padding[3] = +padding;
-        }
+      block.padding[0] = +padding;
+    }
+    if (title === 'right') {
+      if (isPaddingLeftRight) {
         block.padding[3] = +padding;
       }
+      block.padding[1] = +padding;
     }
-
+    if (title === 'bottom') {
+      if (isPaddingTopBottom) {
+        block.padding[0] = +padding;
+      }
+      block.padding[2] = +padding;
+    }
+    if (title === 'left') {
+      if (isPaddingLeftRight) {
+        block.padding[1] = +padding;
+      }
+      block.padding[3] = +padding;
+    }
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
@@ -74,19 +64,14 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
     const margin = e.currentTarget.value;
     const title = e.currentTarget.name;
 
-    if (!Array.isArray(block.margin)) {
-      block.margin = marginArray;
-    }
     if (title === 'top') {
       if (isMarginTopBottom) {
-        block.margin[0] = +margin;
         block.margin[2] = +margin;
       }
       block.margin[0] = +margin;
     }
     if (title === 'right') {
       if (isMarginLeftRight) {
-        block.margin[1] = +margin;
         block.margin[3] = +margin;
       }
       block.margin[1] = +margin;
@@ -94,15 +79,12 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
     if (title === 'bottom') {
       if (isMarginTopBottom) {
         block.margin[0] = +margin;
-        block.margin[2] = +margin;
       }
       block.margin[2] = +margin;
-      console.log('margin', +margin);
     }
     if (title === 'left') {
       if (isMarginLeftRight) {
         block.margin[1] = +margin;
-        block.margin[3] = +margin;
       }
       block.margin[3] = +margin;
     }
