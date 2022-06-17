@@ -4,7 +4,6 @@ import { RgbaStringColorPicker } from 'react-colorful';
 
 import { setMLDraftBlockContent } from 'bll/reducers';
 import { useAppDispatch } from 'common/hooks';
-import { IMLDraftLink, IMLDraftText } from 'common/types/instance';
 import { Button } from 'ui/components/elements';
 
 type TMLBaseEditorProps = {
@@ -14,7 +13,6 @@ type TMLBaseEditorProps = {
 const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
 const paddings: string[] = ['top', 'right', 'bottom', 'left'];
 const margins: string[] = ['top', 'right', 'bottom', 'left'];
-const marginArray = [0, 0, 0, 0];
 
 export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
   const { block, order } = blockEditor.props;

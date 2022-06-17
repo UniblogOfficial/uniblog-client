@@ -92,23 +92,23 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   };
 
   const onTextShadowChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const shadow = e.currentTarget.value;
+    const shadow = +e.currentTarget.value;
     const shadowName = e.currentTarget.name;
     if (Array.isArray(block.textShadow)) {
       if (shadowName === 'offset-x') {
-        block.textShadow[0][0] = +shadow;
+        block.textShadow[0][0] = shadow;
       } else if (shadowName === 'offset-y') {
-        block.textShadow[0][1] = +shadow;
+        block.textShadow[0][1] = shadow;
       } else if (shadowName === 'blur-radius') {
-        block.textShadow[0][2] = +shadow;
+        block.textShadow[0][2] = shadow;
       }
     } else {
       if (shadowName === 'offset-x') {
-        shadowTextDefault[0][0] = +shadow;
+        shadowTextDefault[0][0] = shadow;
       } else if (shadowName === 'offset-y') {
-        shadowTextDefault[0][1] = +shadow;
+        shadowTextDefault[0][1] = shadow;
       } else if (shadowName === 'blur-radius') {
-        shadowTextDefault[0][2] = +shadow;
+        shadowTextDefault[0][2] = shadow;
       }
       block.textShadow = shadowTextDefault;
     }
