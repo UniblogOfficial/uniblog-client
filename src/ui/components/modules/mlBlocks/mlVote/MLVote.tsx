@@ -1,10 +1,12 @@
 import React, { MouseEvent } from 'react';
 
 import styles from './MLVote.module.scss';
+import { Rating } from './Rating';
 
 import { ID } from 'common/constants';
 import { IMLDraftVote, Nullable } from 'common/types/instance';
 import { px } from 'common/utils/ui';
+import { Button } from 'ui/components/elements';
 
 type TMLVoteProps = {
   block: Nullable<IMLDraftVote>;
@@ -46,6 +48,7 @@ export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
               />
             )}
             <p
+              className={styles['block__title']}
               style={{
                 textAlign: block.align,
                 fontSize: block.fontSize ?? undefined,
@@ -55,9 +58,25 @@ export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
               }}>
               {cell.title}
             </p>
+            <div className={styles['block__rating']}>
+              <Rating totalStars={5} precision={0.5} />
+            </div>
           </li>
         ))}
       </ul>
+      <Button
+        className={styles['block__button-submit']}
+        style={{
+          background: block.buttonBackground,
+          borderRadius: block.buttonBorderRadius,
+          color: block.buttonColor,
+          font: block.buttonFont,
+          letterSpacing: px(block.buttonLetterSpacing),
+          textShadow: block.buttonTextShadow?.flat().join('px '),
+          textAlign: block.buttonAlign,
+        }}>
+        Отправить
+      </Button>
     </section>
   );
 };
