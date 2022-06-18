@@ -23,6 +23,9 @@ export enum SocialService {
   DISCORD = 'discord',
   PATREON = 'patreon',
   TWITCH = 'twitch',
+  WASD = 'wasd',
+  DONATIONALERTS = 'donationalerts',
+  DZEN = 'dzen',
 }
 
 export enum MLContentType {
