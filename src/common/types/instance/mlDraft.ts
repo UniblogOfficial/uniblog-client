@@ -75,8 +75,8 @@ interface IMLTextProperties {
   lineHeight?: number;
   fontFamily?: string;
   letterSpacing?: number;
-  textShadow?: [number, number, number, string][]; // 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-  // textShadow?: string; // 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  // textShadow?: [number, number, number, string][]; // 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  textShadow?: string[]; // 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
   align?: 'right' | 'left' | 'center' | 'justify';
 }
 
@@ -188,7 +188,7 @@ export interface IMLDraftVote extends Omit<IMLDraftContent, 'borderRadius'>, IML
   buttonLineHeight?: number;
   buttonFontFamily?: string;
   buttonLetterSpacing?: number;
-  buttonTextShadow?: [number, number, number, string][];
+  buttonTextShadow?: string[];
   buttonAlign?: 'right' | 'left' | 'center' | 'justify';
 }
 
@@ -218,7 +218,7 @@ export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
   subtitleLineHeight?: number;
   subtitleFontFamily?: string;
   subtitleLetterSpacing?: number;
-  subtitleTextShadow?: [number, number, number, string][];
+  subtitleTextShadow?: string[];
   subtitleAlign?: 'right' | 'left' | 'center' | 'justify';
 
   descriptionColor?: string;
@@ -230,7 +230,7 @@ export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
   descriptionLineHeight?: number;
   descriptionFontFamily?: string;
   descriptionLetterSpacing?: number;
-  descriptionTextShadow?: [number, number, number, string][];
+  descriptionTextShadow?: string[];
   descriptionAlign?: 'right' | 'left' | 'center' | 'justify';
 
   priceColor?: string;
@@ -242,7 +242,7 @@ export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
   priceLineHeight?: number;
   priceFontFamily?: string;
   priceLetterSpacing?: number;
-  priceTextShadow?: [number, number, number, string][];
+  priceTextShadow?: string[];
   priceAlign?: 'right' | 'left' | 'center' | 'justify';
 
   buttonBackground?: string;
@@ -256,7 +256,7 @@ export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
   buttonLineHeight?: number;
   buttonFontFamily?: string;
   buttonLetterSpacing?: number;
-  buttonTextShadow?: [number, number, number, string][];
+  buttonTextShadow?: string[];
   buttonAlign?: 'right' | 'left' | 'center' | 'justify';
 }
 
