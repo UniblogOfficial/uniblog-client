@@ -3,12 +3,9 @@ import { Property } from 'csstype';
 
 import { TImageFile, Nullable } from '.';
 
-import { MLContentType, SocialNetwork, SocialService } from 'common/constants';
-// eslint-disable-next-line import/order
-import { TIconName } from 'ui/components/modules/iconSpritesMaps/IconSpritesMap';
-
-// eslint-disable-next-line import/order
 import TextShadow = Property.TextShadow;
+import { MLContentType, SocialNetwork, SocialService } from 'common/constants';
+import { TIconName } from 'ui/components/modules/iconSpritesMaps/IconSpritesMap';
 
 export type TMultilinkDraft = {
   name: string;
@@ -177,7 +174,7 @@ export interface IMLDraftVote extends Omit<IMLDraftContent, 'borderRadius'>, IML
   cells: {
     title: string;
     value: number;
-  };
+  }[];
   titleBackground?: string;
   titleBorderRadius?: number;
   buttonBackground?: string;

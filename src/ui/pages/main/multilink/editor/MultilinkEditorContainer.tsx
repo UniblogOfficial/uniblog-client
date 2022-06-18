@@ -119,7 +119,9 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                 block = blocks[type][i];
                 // variable image is one or set of images of current block
                 image = images.blocks[type][i];
-                return <MLLogo key={ID[i]} block={block} images={image} callback={callback} />;
+                return (
+                  block && <MLLogo key={ID[i]} block={block} images={image} callback={callback} />
+                );
 
               case MLContentType.LINK:
                 block = blocks[type][i];
