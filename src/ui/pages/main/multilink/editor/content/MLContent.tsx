@@ -2,6 +2,7 @@ import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { MLBaseEditor } from './MLBaseEditor';
 import { MLImageEditor } from './MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
@@ -169,7 +170,13 @@ export const MLContent = (props: TMLContentProps) => {
       }
       case MLContentType.TEXT: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
-        return currentBlock && <MLTextEditor order={blockEditorOrder} block={currentBlock} />;
+        return (
+          currentBlock && (
+            <MLBaseEditor
+              blockEditor={<MLTextEditor order={blockEditorOrder} block={currentBlock} />}
+            />
+          )
+        );
       }
       case MLContentType.IMAGETEXT: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
@@ -192,7 +199,17 @@ export const MLContent = (props: TMLContentProps) => {
       case MLContentType.LINK: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
-          currentBlock && <MLLinkEditor order={blockEditorOrder} close={onButtonEditorClick} />
+          currentBlock && (
+            <MLBaseEditor
+              blockEditor={
+                <MLLinkEditor
+                  order={blockEditorOrder}
+                  close={onButtonEditorClick}
+                  block={currentBlock}
+                />
+              }
+            />
+          )
         );
       }
       case MLContentType.SOCIAL: {
