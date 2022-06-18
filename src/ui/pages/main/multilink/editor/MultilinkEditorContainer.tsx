@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { Nullable, TImageFile, TMultilinkDraft, TUser } from 'common/types/instance';
 import { Button, Icon } from 'ui/components/elements';
 import {
+  MLButton,
   MLImages,
   MLImageText,
   MLLink,
@@ -22,6 +23,7 @@ import {
   MLSocial,
   MLText,
   MLVideo,
+  MLVote,
 } from 'ui/components/modules/mlBlocks';
 import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
@@ -115,6 +117,10 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                 block = blocks[type][i];
                 return block && <>audio block</>;
 
+              case MLContentType.VOTE:
+                block = blocks[type][i];
+                return block && <MLVote key={ID[i]} block={block} callback={callback} />;
+
               case MLContentType.LOGO:
                 block = blocks[type][i];
                 // variable image is one or set of images of current block
@@ -126,6 +132,10 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
               case MLContentType.LINK:
                 block = blocks[type][i];
                 return <MLLink key={ID[i]} block={block} callback={callback} />;
+
+              case MLContentType.BUTTON:
+                block = blocks[type][i];
+                return <MLButton key={ID[i]} block={block} callback={callback} />;
 
               case MLContentType.IMAGE:
                 block = blocks[type][i];

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { IMLDraftButton, Nullable } from 'common/types/instance';
 import { px } from 'common/utils/ui';
+import { Button } from 'ui/components/elements';
 
 type TMLButtonProps = {
   block: Nullable<IMLDraftButton>;
@@ -15,14 +16,25 @@ export const MLButton = ({ block, callback }: TMLButtonProps) => {
     <section
       className={className}
       style={{
-        padding: px(block.padding) ?? '0',
         margin: px(block.margin) ?? '0',
-        background: block.background ?? undefined,
       }}>
       {callback && (
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
       )}
-      <div style={{ fontSize: block.fontSize ?? undefined }}>{block.title}</div>
+      <Button
+        style={{
+          fontSize: block.fontSize,
+          background: block.background,
+          padding: px(block.padding) ?? '0',
+          borderRadius: block.borderRadius,
+          color: block.color,
+          font: block.font,
+          letterSpacing: px(block.letterSpacing),
+          textShadow: block.textShadow?.flat().join('px '),
+          textAlign: block.align,
+        }}>
+        {block.title}
+      </Button>
     </section>
   );
 };
