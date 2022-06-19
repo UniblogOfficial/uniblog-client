@@ -1,6 +1,5 @@
 import React, {
   ChangeEvent,
-  InputHTMLAttributes,
   DetailedHTMLProps,
   PropsWithChildren,
   SelectHTMLAttributes,
@@ -10,11 +9,11 @@ import { ID } from '../../../../common/constants';
 
 import styles from './Select.module.scss';
 
-type TDefaultRadioProps = DetailedHTMLProps<
+type TDefaultSelectProps = DetailedHTMLProps<
   SelectHTMLAttributes<HTMLSelectElement>,
   HTMLSelectElement
 >;
-type TRadioProps<T> = TDefaultRadioProps & {
+type TSelectProps<T> = TDefaultSelectProps & {
   options?: Array<T>;
   titles?: Array<string>;
   onChangeOption?: (option: T) => void;
@@ -29,7 +28,7 @@ export const Select = <TValue extends string>({
   onChangeOption,
   children,
   ...restProps
-}: PropsWithChildren<TRadioProps<TValue>>) => {
+}: PropsWithChildren<TSelectProps<TValue>>) => {
   const onChangeCallback = (e: ChangeEvent<HTMLSelectElement>) => {
     onChange && onChange(e);
     onChangeOption && onChangeOption(e.currentTarget.value as TValue);

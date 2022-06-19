@@ -1,16 +1,13 @@
-import React, { FC, DragEvent, useState, useCallback } from 'react';
+import React, { FC, DragEvent, useState, useCallback, useEffect } from 'react';
 
 import DropZone from 'react-dropzone';
 import { string } from 'yup';
 
-import { Modal } from '../modals/Modal';
-
-import { CropperContainer } from './Cropper';
-import ShowError from './FormErrorRepresenter';
-import { ImagePlaceholder } from './ImagePlaceholder';
-import ImagePreview from './ImagePreview';
-
 import { TImageFile, TIncomingImage } from 'common/types/instance';
+import { CropperContainer } from 'ui/components/modules/imageForm/DropZoneField/Cropper/Cropper';
+import { ImagePlaceholder } from 'ui/components/modules/imageForm/DropZoneField/ImagePreview/ImagePlaceholder';
+import ImagePreview from 'ui/components/modules/imageForm/DropZoneField/ImagePreview/ImagePreview';
+import { Modal } from 'ui/components/modules/modals/Modal';
 
 type TDropZoneFieldProps = {
   onChange: (imageFile: TImageFile, id?: number) => void;
@@ -19,6 +16,7 @@ type TDropZoneFieldProps = {
   touched?: boolean;
   id?: number;
   avatarMode?: boolean;
+  setCroppedImage?: (file: TImageFile[]) => void;
 };
 
 export const DropZoneField: FC<TDropZoneFieldProps> = ({
@@ -28,6 +26,7 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
   touched,
   id,
   avatarMode,
+  setCroppedImage,
 }) => {
   const [image, setImage] = useState<TImageFile[]>([]);
   const [error, setError] = useState<string>('');
@@ -54,6 +53,11 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
   const closeModalCropperContainer = () => {
     setOpenedModalCropper(false);
   };
+
+  useEffect(() => {
+    setCroppedImage && setCroppedImage(image);
+  }, [image, setCroppedImage]);
+
   return (
     <>
       <div className="dropbox">
@@ -74,7 +78,7 @@ export const DropZoneField: FC<TDropZoneFieldProps> = ({
             )}
           </>
         )}
-        {image.length === 0 && initialImage && <ImagePreview imageFiles={initialImage} />}
+        {image.length === 0 && initialImage && <ImagePreview imageFiles={image} />}
         <ImagePlaceholder isFilled={image.length > 0} onDrop={onDrop} />
       </div>
       {error && <p className="field__error">{error}</p>}

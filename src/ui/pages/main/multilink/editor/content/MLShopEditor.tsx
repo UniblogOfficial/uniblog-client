@@ -9,7 +9,7 @@ import { useAppDispatch, useThrottle } from '../../../../../../common/hooks';
 
 import { IMLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
 
 type TMLShopEditorProps = {
   order: number;
