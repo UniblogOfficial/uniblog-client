@@ -23,16 +23,17 @@ export const MLText = ({ block, callback }: TMLTextProps) => {
       style={{
         padding: px(block.padding) ?? '0',
         margin: px(block.margin) ?? '0',
-        background: block.background ?? undefined,
+        background: block.background,
         justifyContent: align,
-        fontSize: block.fontSize ?? undefined,
-        fontWeight: block.fontWeight ?? undefined,
-        fontStyle: block.fontStyle ?? undefined,
-        fontVariant: block.fontVariant ?? 'normal',
-        lineHeight: block.lineHeight ?? undefined,
-        fontFamily: block.fontFamily ?? undefined,
-        letterSpacing: block.letterSpacing ?? undefined,
-        textShadow: TextShadow ?? undefined,
+        fontSize: block.fontSize,
+        fontWeight: block.fontWeight,
+        fontStyle: block.fontStyle,
+        fontVariant: block.fontVariant,
+        lineHeight: block.lineHeight,
+        fontFamily: block.fontFamily,
+        font: block.font,
+        letterSpacing: block.letterSpacing,
+        textShadow: TextShadow,
       }}>
       {callback && (
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
