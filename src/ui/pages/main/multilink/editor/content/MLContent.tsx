@@ -7,6 +7,7 @@ import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
 import { MLShopEditor } from './MLShopEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
+import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
 
 import { addMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
@@ -201,7 +202,7 @@ export const MLContent = (props: TMLContentProps) => {
       }
       case MLContentType.WIDGET: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
-        return currentBlock && <>Not implemented</>;
+        return currentBlock && <MLWidgetEditor block={currentBlock} order={blockEditorOrder} />;
       }
       case MLContentType.SHOP: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
