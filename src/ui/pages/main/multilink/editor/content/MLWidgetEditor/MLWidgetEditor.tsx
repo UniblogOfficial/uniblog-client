@@ -8,58 +8,56 @@ import styles from './MLWidgetEditor.module.scss';
 
 import { Button, Textarea } from 'ui/components/elements';
 
-type MLWidgetEditorProps = {
+type TMLWidgetEditorProps = {
   order: number;
   block: IMLDraftWidget;
 };
 
-type ValueIframeType = {
+type TIFrameAttributes = {
   src: string;
   width: string;
   height: string;
 };
 
-export const MLWidgetEditor = ({ order, block }: MLWidgetEditorProps) => {
+export const MLWidgetEditor = ({ order, block }: TMLWidgetEditorProps) => {
   const dispatch = useAppDispatch();
-  const [valueTextarea, setValueTextarea] = useState('');
-  const [valueIframe, setValueIframe] = useState<ValueIframeType>({
+  const [rawValue, setRawValue] = useState('');
+  const [iFrameAttrs, setIFrameAttrs] = useState<TIFrameAttributes>({
     src: '',
     width: '0px',
     height: '0px',
   });
 
-  const onChangeCallback = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setValueTextarea(e.currentTarget.value);
+  const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setRawValue(e.currentTarget.value);
   };
 
-  const onClickHandler = () => {
-    const doc = new DOMParser().parseFromString(valueTextarea, 'text/html');
+  const onAddSourceButtonClick = () => {
+    const doc = new DOMParser().parseFromString(rawValue, 'text/html');
 
-    const { src } = doc.body.children[0] as IframeHTMLAttributes<HTMLIFrameElement>;
+    const iframe = doc.body.children[0] as IframeHTMLAttributes<HTMLIFrameElement> | undefined;
 
-    setValueIframe({
-      // @ts-ignore
-      src: doc.body.children[0].src,
-      // @ts-ignore
-      width: doc.body.children[0].width,
-      // @ts-ignore
-      height: doc.body.children[0].height,
-    });
+    if (iframe?.src && iframe.width && iframe.height) {
+      setIFrameAttrs({
+        src: iframe.src,
+        width: `${iframe.width}`,
+        height: `${iframe.height}`,
+      });
 
-    // @ts-ignore
-    block.url = src;
-    dispatch(setMLDraftBlockContent(block, order, 'widgetBlocks'));
+      block.url = iframe.src;
+      dispatch(setMLDraftBlockContent(block, order, 'widgetBlocks'));
+    }
   };
 
   return (
     <>
-      <Textarea className={styles.input} value={valueTextarea} onChange={onChangeCallback} />
-      <Button onClick={onClickHandler}>Add element</Button>
+      <Textarea className={styles.input} value={rawValue} onChange={onTextareaChange} />
+      <Button onClick={onAddSourceButtonClick}>Add element</Button>
       <iframe
         className={styles.iframe}
-        width={valueIframe.width}
-        height={valueIframe.height}
-        src={valueIframe.src}
+        width={iFrameAttrs.width}
+        height={iFrameAttrs.height}
+        src={iFrameAttrs.src}
         title="widget"
       />
     </>
