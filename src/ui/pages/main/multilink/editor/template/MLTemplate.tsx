@@ -11,6 +11,7 @@ import { TUser } from 'common/types/instance';
 import { parseRawImage, px } from 'common/utils/ui';
 import socials from 'img/socials';
 import { Carousel, Icon } from 'ui/components/elements';
+import { MLLogo } from 'ui/components/modules/mlBlocks';
 
 type TMLTemplateProps = {
   userData: TUser;
@@ -30,7 +31,13 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
     },
     [dispatch, templates],
   );
-
+  /* <li key={block.order}>
+                    <div
+                      className="ml-logo__logo"
+                      style={{ height: block.size ?? '100px', width: block.size ?? '100px' }}>
+                      <img src={block.logo!} alt="logo" />
+                    </div>
+                  </li> */
   const getTemplateLayouts = useCallback(
     () =>
       templates.map((template, i) => (
@@ -38,15 +45,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
           {template.map((block, j) => {
             switch (block.type) {
               case MLContentType.LOGO:
-                return (
-                  <li key={block.order}>
-                    <div
-                      className="ml-logo__logo"
-                      style={{ height: block.size ?? '100px', width: block.size ?? '100px' }}>
-                      <img src={block.logo!} alt="logo" />
-                    </div>
-                  </li>
-                );
+                return <MLLogo block={block} images={null} />;
               case MLContentType.TEXT:
                 return (
                   <li

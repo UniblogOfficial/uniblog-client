@@ -113,12 +113,12 @@ export const mlDraftReducer = (
           shopBlocks: template.map(block => (block.type === MLContentType.SHOP ? block : null)),
           // audioBlocks: template.map(block => (block.type === MLContentType.AUDIO ? block : null)),
           audioBlocks: template.map(block => null),
-          buttonBlocks: template.map(block => null),
+          buttonBlocks: template.map(block => (block.type === MLContentType.BUTTON ? block : null)),
           carouselBlocks: template.map(block => null),
           dividerBlocks: template.map(block => null),
           mapBlocks: template.map(block => null),
           postBlocks: template.map(block => null),
-          voteBlocks: template.map(block => null),
+          voteBlocks: template.map(block => (block.type === MLContentType.VOTE ? block : null)),
           widgetBlocks: template.map(block => (block.type === MLContentType.WIDGET ? block : null)),
         },
         images: {
@@ -140,7 +140,9 @@ export const mlDraftReducer = (
             ),
             buttonBlocks: template.map((block, i) => null),
             carouselBlocks: template.map((block, i) => null),
-            linkBlocks: template.map((block, i) => null),
+            linkBlocks: template.map((block, i) =>
+              block.type === MLContentType.LINK ? { order: i, image: null } : null,
+            ),
           },
         },
       };

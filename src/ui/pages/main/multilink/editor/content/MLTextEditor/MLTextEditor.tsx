@@ -25,11 +25,10 @@ const fontTexts = [
   'Snell Roundhand, cursive',
   'Trattatello, fantasy',
 ];
-const shadowTextDefault: [number, number, number, string][] = [[0, 0, 0, 'black']];
+const shadowTextDefault = ['0', '0', '0', '#000'];
 
 export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const dispatch = useAppDispatch();
-  const dispatchDebounced = useDebounce(dispatch, 200);
   const dispatchThrottled = useThrottle(dispatch, 200);
   const [text, setText] = useState(block.text ?? '');
   const [isTextColorPickerVisible, setIsTextColorPickerVisible] = useState<boolean>(false);
@@ -86,7 +85,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
-  const onLitterSpacingChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onLetterSpacingChange = (e: ChangeEvent<HTMLInputElement>) => {
     block.letterSpacing = +e.currentTarget.value;
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
@@ -94,34 +93,26 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const onTextShadowChange = (e: ChangeEvent<HTMLInputElement>) => {
     const shadow = e.currentTarget.value;
     const shadowName = e.currentTarget.name;
-    if (Array.isArray(block.textShadow)) {
-      if (shadowName === 'offset-x') {
-        block.textShadow[0][0] = +shadow;
-      } else if (shadowName === 'offset-y') {
-        block.textShadow[0][1] = +shadow;
-      } else if (shadowName === 'blur-radius') {
-        block.textShadow[0][2] = +shadow;
-      }
-    } else {
-      if (shadowName === 'offset-x') {
-        shadowTextDefault[0][0] = +shadow;
-      } else if (shadowName === 'offset-y') {
-        shadowTextDefault[0][1] = +shadow;
-      } else if (shadowName === 'blur-radius') {
-        shadowTextDefault[0][2] = +shadow;
-      }
-      block.textShadow = shadowTextDefault;
+    const currentShadow = block.textShadow?.length
+      ? block.textShadow[0].split(' ')
+      : shadowTextDefault;
+    if (shadowName === 'offset-x') {
+      currentShadow[0] = `${shadow}px`;
+    } else if (shadowName === 'offset-y') {
+      currentShadow[1] = `${shadow}px`;
+    } else if (shadowName === 'blur-radius') {
+      currentShadow[2] = `${shadow}px`;
     }
+    block.textShadow = [currentShadow.join(' ')];
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onBackgroundTextShadowChange = (backgroundColor: string) => {
-    if (Array.isArray(block.textShadow)) {
-      block.textShadow[0][3] = backgroundColor;
-    } else {
-      shadowTextDefault[0][3] = backgroundColor;
-      block.textShadow = shadowTextDefault;
-    }
+    const currentShadow = block.textShadow?.length
+      ? block.textShadow[0].split(' ')
+      : shadowTextDefault;
+    currentShadow[3] = backgroundColor;
+    block.textShadow = [currentShadow.join(' ')];
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
@@ -225,7 +216,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
               max={10}
               step={0.1}
               value={block.letterSpacing ?? 0.3}
-              onChange={onLitterSpacingChange}
+              onChange={onLetterSpacingChange}
             />
           </label>
           <label>
