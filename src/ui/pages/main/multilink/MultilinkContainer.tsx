@@ -6,7 +6,7 @@ import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 import { MultilinkEditorContainer } from './editor/MultilinkEditorContainer';
 import { MultilinkListContainer } from './MultilinkListContainer';
 
-import { Nullable, TUser } from 'common/types/instance';
+import { TUser } from 'common/types/instance';
 import { Button, Icon } from 'ui/components/elements';
 import { PageHeader } from 'ui/components/modules/headers/PageHeader';
 
@@ -16,7 +16,6 @@ type TMultilinkContainerProps = {
 
 export const MultilinkContainer = ({ userData }: TMultilinkContainerProps) => {
   const { t } = useTranslation(['pages', 'common']);
-
   return (
     <div className="multilink">
       <PageHeader pageTitle={t('pages:multilink.title')} />
