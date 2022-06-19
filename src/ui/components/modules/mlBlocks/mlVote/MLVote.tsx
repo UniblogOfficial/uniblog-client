@@ -16,7 +16,7 @@ type TMLVoteProps = {
 
 export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
   if (!block) return null;
-  const onVoteItemClick = (e: MouseEvent<HTMLInputElement>) => {
+  const onVoteItemClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (isPublic && e.currentTarget.dataset.value) {
       const newWindow = document.open(
         `${e.currentTarget.dataset.value}`,
@@ -39,14 +39,6 @@ export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
             style={{
               width: '100%',
             }}>
-            {isPublic && (
-              <input
-                value={cell.value}
-                className="interactive"
-                type="button"
-                onClick={onVoteItemClick}
-              />
-            )}
             <p
               className={styles['block__title']}
               style={{
@@ -72,9 +64,10 @@ export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
           color: block.buttonColor,
           font: block.buttonFont,
           letterSpacing: px(block.buttonLetterSpacing),
-          textShadow: block.buttonTextShadow?.flat().join('px '),
+          textShadow: block.buttonTextShadow?.join('px '),
           textAlign: block.buttonAlign,
-        }}>
+        }}
+        onClick={onVoteItemClick}>
         Отправить
       </Button>
     </section>
