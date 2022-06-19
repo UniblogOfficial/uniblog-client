@@ -43,8 +43,9 @@ export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
               className={styles['block__title']}
               style={{
                 textAlign: block.align,
-                fontSize: block.fontSize ?? undefined,
-                fontWeight: block.fontWeight ?? undefined,
+                fontSize: block.fontSize,
+                fontWeight: block.fontWeight,
+                font: block.font,
                 backgroundColor: block.titleBackground,
                 color: block.color,
               }}>

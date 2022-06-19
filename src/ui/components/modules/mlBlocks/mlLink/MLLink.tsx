@@ -26,6 +26,7 @@ export const MLLink = ({ block, isPublic, callback }: TMLLinkProps) => {
     background: block.background,
     letterSpacing: block.letterSpacing,
     textShadow: block.textShadow?.join('px '),
+    borderRadius: px(block.borderRadius),
   };
   return (
     <section
