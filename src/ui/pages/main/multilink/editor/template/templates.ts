@@ -63,7 +63,6 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) =>
         fontWeight: 400,
         margin: [0, 0, 24],
         padding: [0, 24],
-        textShadow: [[2, 2, 2, 'black']],
       } as IMLDraftText,
       {
         order: 4,

@@ -117,6 +117,7 @@
 	border-radius: 25px;
 	background-position: 50% 0% !important;
 	background-size: cover !important;
+	overflow: hidden;
 	& > * {
 		display: flex;
 		margin-bottom: 24px;
