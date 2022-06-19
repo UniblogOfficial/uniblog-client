@@ -16,7 +16,7 @@ export const MLText = ({ block, callback }: TMLTextProps) => {
   };
   const align = block.align ?? undefined;
   const className = callback ? 'interactive' : undefined;
-  const TextShadow = block.textShadow?.flat().join('px ');
+  const TextShadow = block.textShadow?.join('px ');
   return (
     <section
       className={className}

@@ -172,6 +172,7 @@ export interface IMLDraftPost extends Omit<IMLDraftContent, 'borderRadius'> {
 export interface IMLDraftVote extends Omit<IMLDraftContent, 'borderRadius'>, IMLTextProperties {
   type: MLContentType.VOTE;
   cells: {
+    order: number;
     title: string;
     value: number;
   }[];
