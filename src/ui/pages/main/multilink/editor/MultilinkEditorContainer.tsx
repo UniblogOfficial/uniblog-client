@@ -2,6 +2,8 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { MLButton } from '../../../../components/modules/mlBlocks/mlButton/MLButton';
+
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
@@ -46,7 +48,6 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const [blockEditorOrder, setBlockEditorOrder] = useState(voidOrder);
   const { name, background, maxWidth, contentMap, blocks, images } =
     useAppSelector<TMultilinkDraft>(state => state.mlDraft);
-
   const stageTitles = useMemo(
     () => [
       t('pages:multilink.creation.stages.template'),
@@ -124,6 +125,10 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
               case MLContentType.LINK:
                 block = blocks[type][i];
                 return <MLLink key={ID[i]} block={block} callback={callback} />;
+
+              case MLContentType.BUTTON:
+                block = blocks[type][i];
+                return <MLButton key={ID[i]} block={block} callback={callback} />;
 
               case MLContentType.IMAGE:
                 block = blocks[type][i];

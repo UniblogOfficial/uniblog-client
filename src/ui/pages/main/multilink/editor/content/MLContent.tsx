@@ -106,7 +106,10 @@ export const MLContent = (props: TMLContentProps) => {
         </Button>
       </div>
       <div>
-        <Button disabled className="button _full _rounded">
+        <Button
+          value={MLContentType.BUTTON}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
           Add button block
         </Button>
       </div>
