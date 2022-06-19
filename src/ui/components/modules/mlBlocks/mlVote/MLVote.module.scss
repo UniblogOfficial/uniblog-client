@@ -1,0 +1,21 @@
+.block {
+  display: flex;
+  flex-direction: column;
+
+  // .block__title
+  &__title {
+    padding: 20px 16px;
+  }
+
+  // .block__rating
+  &__rating {
+    padding: 20px 16px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  // .block__button-submit
+  &__button-submit {
+    padding: 20px 16px;
+  }
+}

@@ -31,7 +31,7 @@ export const MultilinkListContainer = () => {
 
   if (loadingStatus) {
     return (
-      <div className="loading">
+      <div className="grid__row">
         <Preloader />
       </div>
     );

@@ -11,6 +11,7 @@ import {
   IMLDraftShop,
   IMLDraftSocial,
   IMLDraftText,
+  IMLDraftWidget,
   Nullable,
   TIncomingImage,
   TMLDraftBlocks,
@@ -99,6 +100,22 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
               order,
               ...defaultShopBlockOptions,
             } as IMLDraftShop,
+          ];
+        } else {
+          newBlocks[key] = [...blocks[key], null];
+        }
+      });
+      break;
+
+    case MLContentType.WIDGET:
+      getKeys(blocks).forEach(key => {
+        if (key === 'widgetBlocks') {
+          newBlocks[key] = [
+            ...blocks.widgetBlocks,
+            {
+              order,
+              ...defaultWidgetBlockOptions,
+            } as IMLDraftWidget,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -257,4 +274,9 @@ const defaultShopBlockOptions: Omit<IMLDraftShop, 'order'> = {
   subtitleFontSize: 14,
   subtitleFontWeight: 700,
   subtitleAlign: 'center',
+};
+
+const defaultWidgetBlockOptions: Omit<IMLDraftWidget, 'order' | 'url'> = {
+  type: MLContentType.WIDGET,
+  isFilled: false,
 };

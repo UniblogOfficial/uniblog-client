@@ -1,6 +1,7 @@
 /* eslint-disable dot-notation */
 import React, { CSSProperties, FC, useCallback, useMemo, MouseEvent, useState } from 'react';
 
+import { RgbaStringColorPicker } from 'react-colorful';
 import { useTranslation } from 'react-i18next';
 
 import styles from './MLBackground.module.scss';
@@ -10,7 +11,7 @@ import { ID } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { TImageFile } from 'common/types/instance';
 import { Button } from 'ui/components/elements';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField';
+import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
 
 type TMLBackgroundProps = {};
 
@@ -18,6 +19,10 @@ export const MLBackground = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
+
+  const onBackgroundColorChange = (backgroundColor: string) => {
+    dispatch(setMLDraftBackground(backgroundColor));
+  };
 
   const onSnippetClick = useCallback(
     (e: MouseEvent<HTMLInputElement>) => {
@@ -47,6 +52,11 @@ export const MLBackground = () => {
 
   return (
     <>
+      <RgbaStringColorPicker
+        style={{ marginTop: '10px' }}
+        color="#ffffff"
+        onChange={onBackgroundColorChange}
+      />
       <ul className="grid bg-menu-grid">
         <li className={`${styles['dropbox']}`}>
           <DropZoneField onChange={onImageZoneChange} touched={false} />

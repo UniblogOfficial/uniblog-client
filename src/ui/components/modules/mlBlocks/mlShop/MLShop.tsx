@@ -55,8 +55,9 @@ export const MLShop = ({ block, images, isPublic, callback }: TMLShopProps) => {
               <p
                 style={{
                   textAlign: block.align,
-                  fontSize: block.fontSize ?? undefined,
-                  fontWeight: block.fontWeight ?? undefined,
+                  fontSize: block.fontSize,
+                  fontWeight: block.fontWeight,
+                  font: block.font,
                   color: block.color,
                 }}>
                 {cell.title}
@@ -66,6 +67,7 @@ export const MLShop = ({ block, images, isPublic, callback }: TMLShopProps) => {
                   textAlign: block.subtitleAlign,
                   fontSize: block.subtitleFontSize ?? undefined,
                   fontWeight: block.subtitleFontWeight ?? undefined,
+                  font: block.subtitleFont,
                   color: block.subtitleColor,
                 }}>
                 {cell.subtitle}

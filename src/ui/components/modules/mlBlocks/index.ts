@@ -1,4 +1,5 @@
-import { MLImages } from './mlImages/MLImages';
+import { MLButton } from './mlButton/MLButton';
+import { MLImage } from './mlImage/MLImage';
 import { MLImageText } from './mlImageText/MLImageText';
 import { MLLink } from './mlLink/MLLink';
 import { MLLogo } from './mlLogo/MLLogo';
@@ -6,5 +7,17 @@ import { MLShop } from './mlShop/MLShop';
 import { MLSocial } from './mlSocial/MLSocial';
 import { MLText } from './mlText/MLText';
 import { MLVideo } from './mlVideo/MLVideo';
+import { MLVote } from './mlVote/MLVote';
 
-export { MLImages, MLImageText, MLLink, MLSocial, MLVideo, MLLogo, MLText, MLShop };
+export {
+  MLImage as MLImages,
+  MLImageText,
+  MLLink,
+  MLSocial,
+  MLVideo,
+  MLLogo,
+  MLText,
+  MLShop,
+  MLVote,
+  MLButton,
+};

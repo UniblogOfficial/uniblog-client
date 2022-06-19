@@ -16,16 +16,24 @@ export const MLText = ({ block, callback }: TMLTextProps) => {
   };
   const align = block.align ?? undefined;
   const className = callback ? 'interactive' : undefined;
+  const TextShadow = block.textShadow?.join('px ');
   return (
     <section
       className={className}
       style={{
         padding: px(block.padding) ?? '0',
-        margin: px(block.margin),
-        background: block.background ?? undefined,
+        margin: px(block.margin) ?? '0',
+        background: block.background,
         justifyContent: align,
-        fontSize: block.fontSize ?? undefined,
-        fontWeight: block.fontWeight ?? undefined,
+        fontSize: block.fontSize,
+        fontWeight: block.fontWeight,
+        fontStyle: block.fontStyle,
+        fontVariant: block.fontVariant,
+        lineHeight: block.lineHeight,
+        fontFamily: block.fontFamily,
+        font: block.font,
+        letterSpacing: block.letterSpacing,
+        textShadow: TextShadow,
       }}>
       {callback && (
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />

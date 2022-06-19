@@ -1,9 +1,8 @@
 import React, { FC, useState } from 'react';
 
-import styles from './DropZone.module.scss';
-
 import { TImageFile, TIncomingImage } from 'common/types/instance';
 import { parseRawImage } from 'common/utils/ui';
+import styles from 'ui/components/modules/imageForm/DropZoneField/DropZone.module.scss';
 
 type TImagePreviewProps = {
   imageFiles: Array<TImageFile> | string;
