@@ -97,6 +97,9 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
     const currentShadow = block.textShadow?.length
       ? block.textShadow[0].split(' ')
       : shadowTextDefault;
+    if (block.textShadow?.length) {
+      console.log(block.textShadow);
+    }
     if (shadowName === 'offset-x') {
       currentShadow[0] = `${shadow}px`;
     } else if (shadowName === 'offset-y') {
@@ -241,7 +244,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
             min={-5}
             max={10}
             step={1}
-            value={Array.isArray(block?.textShadow) ? block.textShadow[0][0] : 0}
+            value={block?.textShadow?.length ? block.textShadow[1] : 0}
             onChange={onTextShadowChange}
           />
         </label>
@@ -253,7 +256,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
             min={-5}
             max={10}
             step={1}
-            value={Array.isArray(block?.textShadow) ? block.textShadow[0][1] : 0}
+            value={block?.textShadow?.length ? block.textShadow[1] : 0}
             onChange={onTextShadowChange}
           />
         </label>
@@ -265,7 +268,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
             min={0}
             max={10}
             step={1}
-            value={Array.isArray(block?.textShadow) ? block.textShadow[0][2] : 0}
+            value={block?.textShadow?.length ? block.textShadow[2] : 0}
             onChange={onTextShadowChange}
           />
         </label>
@@ -273,13 +276,13 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
       <div>
         <input
           type="button"
-          className={styles.circleGradient}
+          className="circleGradient"
           onClick={() => setIsBgColorFontTextVisible(true)}
         />
         {isBgColorFontTextVisible && (
           <>
             <HexColorPicker
-              color={Array.isArray(block?.textShadow) ? block.textShadow[0][3] : 'black'}
+              color={Array.isArray(block?.textShadow) ? block.textShadow[3] : 'black'}
               onChange={onBackgroundTextShadowChange}
             />
             <Button className={styles.button} onClick={() => setIsBgColorFontTextVisible(false)}>
