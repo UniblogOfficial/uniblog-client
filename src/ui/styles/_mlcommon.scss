@@ -42,7 +42,9 @@
 
 .ml-link {
   justify-content: center;
-  border-radius: 10px;
+  &>* {
+    flex: 0%;
+  }
 }
 
 .ml-audio {

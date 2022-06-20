@@ -3,6 +3,7 @@ import React from 'react';
 import { IMLDraftSocial, Nullable } from 'common/types/instance';
 import { px } from 'common/utils/ui';
 import socials from 'img/socials';
+import socialServices from 'img/socials/additional';
 
 type TMLSocialProps = {
   block: Nullable<IMLDraftSocial>;
@@ -20,7 +21,7 @@ export const MLSocial = ({ block, isPublic, callback }: TMLSocialProps) => {
       )}
       <ul className="ml-social">
         {block.linkTypes.map((icon, i) => {
-          const data = socials.find(social => social.type === icon);
+          const data = [...socials, ...socialServices].find(social => social.type === icon);
           return isPublic ? (
             <li
               key={icon}

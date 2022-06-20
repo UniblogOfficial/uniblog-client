@@ -30,7 +30,7 @@ export const MLButton = ({ block, callback }: TMLButtonProps) => {
           color: block.color,
           font: block.font,
           letterSpacing: px(block.letterSpacing),
-          textShadow: block.textShadow?.flat().join('px '),
+          textShadow: block.textShadow?.join('px '),
           textAlign: block.align,
         }}>
         {block.title}
