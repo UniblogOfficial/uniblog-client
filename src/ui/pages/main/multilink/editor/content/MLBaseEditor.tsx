@@ -4,7 +4,6 @@ import { RgbaStringColorPicker } from 'react-colorful';
 
 import { setMLDraftBlockContent } from 'bll/reducers';
 import { useAppDispatch } from 'common/hooks';
-import { IMLDraftLink, IMLDraftText } from 'common/types/instance';
 import { Button } from 'ui/components/elements';
 
 type TMLBaseEditorProps = {
@@ -14,7 +13,6 @@ type TMLBaseEditorProps = {
 const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
 const paddings: string[] = ['top', 'right', 'bottom', 'left'];
 const margins: string[] = ['top', 'right', 'bottom', 'left'];
-const marginArray = [0, 0, 0, 0];
 
 export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
   const { block, order } = blockEditor.props;
@@ -30,63 +28,63 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
   const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const padding = e.currentTarget.value;
+    const padding = +e.currentTarget.value;
     const title = e.currentTarget.name;
 
     if (title === 'top') {
       if (isPaddingTopBottom) {
-        block.padding[2] = +padding;
+        block.padding[2] = padding;
       }
-      block.padding[0] = +padding;
+      block.padding[0] = padding;
     }
     if (title === 'right') {
       if (isPaddingLeftRight) {
-        block.padding[3] = +padding;
+        block.padding[3] = padding;
       }
-      block.padding[1] = +padding;
+      block.padding[1] = padding;
     }
     if (title === 'bottom') {
       if (isPaddingTopBottom) {
-        block.padding[0] = +padding;
+        block.padding[0] = padding;
       }
-      block.padding[2] = +padding;
+      block.padding[2] = padding;
     }
     if (title === 'left') {
       if (isPaddingLeftRight) {
-        block.padding[1] = +padding;
+        block.padding[1] = padding;
       }
-      block.padding[3] = +padding;
+      block.padding[3] = padding;
     }
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onMarginChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const margin = e.currentTarget.value;
+    const margin = +e.currentTarget.value;
     const title = e.currentTarget.name;
 
     if (title === 'top') {
       if (isMarginTopBottom) {
-        block.margin[2] = +margin;
+        block.margin[2] = margin;
       }
-      block.margin[0] = +margin;
+      block.margin[0] = margin;
     }
     if (title === 'right') {
       if (isMarginLeftRight) {
-        block.margin[3] = +margin;
+        block.margin[3] = margin;
       }
-      block.margin[1] = +margin;
+      block.margin[1] = margin;
     }
     if (title === 'bottom') {
       if (isMarginTopBottom) {
-        block.margin[0] = +margin;
+        block.margin[0] = margin;
       }
-      block.margin[2] = +margin;
+      block.margin[2] = margin;
     }
     if (title === 'left') {
       if (isMarginLeftRight) {
-        block.margin[1] = +margin;
+        block.margin[1] = margin;
       }
-      block.margin[3] = +margin;
+      block.margin[3] = margin;
     }
 
     dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
