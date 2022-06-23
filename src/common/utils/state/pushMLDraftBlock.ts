@@ -11,6 +11,7 @@ import {
   IMLDraftImageText,
   IMLDraftLink,
   IMLDraftLogo,
+  IMLDraftMap,
   IMLDraftShop,
   IMLDraftSocial,
   IMLDraftText,
@@ -135,6 +136,22 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
               order,
               ...defaultWidgetBlockOptions,
             } as IMLDraftWidget,
+          ];
+        } else {
+          newBlocks[key] = [...blocks[key], null];
+        }
+      });
+      break;
+
+    case MLContentType.MAP:
+      getKeys(blocks).forEach(key => {
+        if (key === 'mapBlocks') {
+          newBlocks[key] = [
+            ...blocks.mapBlocks,
+            {
+              order,
+              ...defaultMapBlockOptions,
+            } as IMLDraftMap,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -312,4 +329,10 @@ const defaultShopBlockOptions: Omit<IMLDraftShop, 'order'> = {
 const defaultWidgetBlockOptions: Omit<IMLDraftWidget, 'order' | 'url'> = {
   type: MLContentType.WIDGET,
   isFilled: false,
+};
+
+const defaultMapBlockOptions: Omit<IMLDraftMap, 'order'> = {
+  type: MLContentType.MAP,
+  isFilled: false,
+  url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d561.3480661489472!2d37.6170760620669!3d55.75168773089625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54be25b7f7bfd%3A0xecb362b567f41622!2z0JrRgNCw0YHQvdCw0Y8g0L_Qu9C-0YnQsNC00Yw!5e0!3m2!1sru!2sru!4v1655983050433!5m2!1sru!2sru',
 };
