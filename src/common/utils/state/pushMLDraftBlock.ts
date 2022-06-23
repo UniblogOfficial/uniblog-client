@@ -1,9 +1,12 @@
+import { types } from 'sass';
+
 import { parseRawImage } from '../ui';
 
 import { getKeys } from '.';
 
-import { MLContentType, SocialNetwork } from 'common/constants';
+import { IconColor, MLContentType, SocialNetwork } from 'common/constants';
 import {
+  IMLDraftButton,
   IMLDraftImage,
   IMLDraftImageText,
   IMLDraftLink,
@@ -52,6 +55,22 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
               order,
               ...defaultLinkBlockOptions,
             } as IMLDraftLink,
+          ];
+        } else {
+          newBlocks[key] = [...blocks[key], null];
+        }
+      });
+      break;
+
+    case MLContentType.BUTTON:
+      getKeys(blocks).forEach(key => {
+        if (key === 'buttonBlocks') {
+          newBlocks[key] = [
+            ...blocks.buttonBlocks,
+            {
+              order,
+              ...defaultButtonBlockOptions,
+            } as IMLDraftButton,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -198,6 +217,20 @@ const defaultLinkBlockOptions: Omit<IMLDraftLink, 'order'> = {
   padding: [12, 24],
   margin: [0, 24, 12],
   background: `#f${Math.random().toString(16).substr(-4)}f40`,
+};
+
+const defaultButtonBlockOptions: Omit<IMLDraftButton, 'order'> = {
+  type: MLContentType.BUTTON,
+  isFilled: false,
+  href: '',
+  title: 'Кнопка',
+  fontSize: 20,
+  fontWeight: 500,
+  padding: [12, 24],
+  margin: [0, 24, 12],
+  color: 'white',
+  borderRadius: 5,
+  background: IconColor.INFO,
 };
 
 const defaultImageBlockOptions: Omit<IMLDraftImage, 'order'> = {

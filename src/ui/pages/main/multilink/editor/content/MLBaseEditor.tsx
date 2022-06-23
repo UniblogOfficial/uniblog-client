@@ -25,7 +25,7 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
 
   const onBackgroundColorChange = (backgroundColor: string) => {
     block.background = backgroundColor;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatch(setMLDraftBlockContent(block, order, block.type));
   };
   const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
     const padding = +e.currentTarget.value;
@@ -55,7 +55,7 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
       }
       block.padding[3] = padding;
     }
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatch(setMLDraftBlockContent(block, order, block.type));
   };
 
   const onMarginChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +87,7 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
       block.margin[3] = margin;
     }
 
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatch(setMLDraftBlockContent(block, order, block.type));
   };
 
   return (
