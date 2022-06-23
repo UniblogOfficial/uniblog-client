@@ -6,6 +6,7 @@ import { MLBaseEditor } from './MLBaseEditor';
 import { MLImageEditor } from './MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
+import { MLMapEditor } from './MLMapEditor';
 import { MLShopEditor } from './MLShopEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
@@ -113,7 +114,10 @@ export const MLContent = (props: TMLContentProps) => {
         </Button>
       </div>
       <div>
-        <Button disabled className="button _full _rounded">
+        <Button
+          value={MLContentType.MAP}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
           Add map block
         </Button>
       </div>
@@ -234,6 +238,10 @@ export const MLContent = (props: TMLContentProps) => {
             </div>
           )
         );
+      }
+      case MLContentType.MAP: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return currentBlock && <MLMapEditor block={currentBlock} order={blockEditorOrder} />;
       }
       default:
         return <>Not implemented</>;
