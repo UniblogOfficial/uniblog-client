@@ -52,7 +52,7 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
   if (!block) return <p>Error: Block not found</p>;
 
   return (
-    <>
+    <div className="ml-logo-editor">
       <div>
         <div style={{ position: 'relative', height: '150px' }}>
           <DropZoneField id={1} onChange={onDropZoneChange} />
@@ -69,6 +69,6 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
       <Button value={2} onClick={onDeleteButtonClick}>
         Delete banner
       </Button>
-    </>
+    </div>
   );
 };

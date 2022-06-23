@@ -66,6 +66,13 @@ export enum AppStatus {
   UNKNOWN_ERROR = 'UNKNOWN_ERROR',
 }
 
+export enum Direction {
+  TOP,
+  RIGHT,
+  BOTTOM,
+  LEFT,
+}
+
 export { PrivatePath, PublicPath } from './path';
 export { StatusCode } from './statusCode';
 

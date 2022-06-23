@@ -105,9 +105,9 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
   ));
 
   return (
-    <>
+    <div className="ml-shop-editor">
       <ul>{fields}</ul>
       <Button>Add element</Button>
-    </>
+    </div>
   );
 };
