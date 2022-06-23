@@ -147,7 +147,7 @@ export const mlDraftReducer = (
         },
       };
 
-    case mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK:
+    case mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK: // ПУШИМ БЛОК В КОНЕЦ
       let newBlocks = pushMLDraftBlock(action.payload.type, state.blocks, state.contentMap.length);
       return {
         ...state,

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
 import { TUser } from '../../../../common/types/instance';
-import { Button } from '../../elements/button/Button';
-import { Icon } from '../../elements/icons/Icon';
+import { Button, Icon } from '../../elements';
+import { ThemeSwitch } from '../../elements/themeSwitch/ThemeSwitch';
 import { TIconName } from '../iconSpritesMaps/IconSpritesMap';
 
 type TNavLinksDataItem = {
@@ -94,6 +94,7 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
         <nav className="nav">
           <ul className="nav__list">{mappedNavLinks}</ul>
         </nav>
+        <ThemeSwitch />
         <div className="lang-switch">
           <Button
             value="ru"
@@ -117,7 +118,7 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
           <NavLink to="/profile" className="iconized__L" exact>
             {avatarSrc ? (
               <div className="profile-link__avatar">
-                <img src={avatarSrc} alt="avatar" />
+                <img src={avatarSrc} className="invert" alt="avatar" />
               </div>
             ) : (
               <Icon name="user" size="full" />

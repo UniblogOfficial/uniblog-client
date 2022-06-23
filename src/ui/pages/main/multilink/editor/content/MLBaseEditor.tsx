@@ -36,7 +36,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
 
   const onBackgroundColorChange = (backgroundColor: string) => {
     block.background = backgroundColor;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatch(setMLDraftBlockContent(block, order, block.type));
   };
   const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
     const padding = +e.currentTarget.value;
@@ -70,6 +70,9 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
     }
 
     dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
+
+    dispatch(setMLDraftBlockContent(block, order, block.type));
+
   };
 
   const onMarginChange = (e: ChangeEvent<HTMLInputElement>) => {
