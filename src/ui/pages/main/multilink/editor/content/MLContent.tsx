@@ -3,7 +3,7 @@ import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MLBaseEditor } from './MLBaseEditor';
-import { MlButtonEditor } from './MLButtonEditor';
+import { MLButtonEditor } from './MLButtonEditor';
 import { MLImageEditor } from './MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
@@ -222,11 +222,11 @@ export const MLContent = (props: TMLContentProps) => {
       case MLContentType.BUTTON: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
-          currentBlock && (
-            <MLBaseEditor
-              blockEditor={<MlButtonEditor block={currentBlock} order={blockEditorOrder} />}
-            />
-          )
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+          })(MLButtonEditor)
         );
       }
       case MLContentType.SOCIAL: {

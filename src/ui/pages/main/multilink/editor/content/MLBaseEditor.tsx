@@ -7,7 +7,7 @@ import { RgbaStringColorPicker } from 'react-colorful';
 import { setMLDraftBlockContent } from 'bll/reducers';
 import { Direction } from 'common/constants';
 import { useAppDispatch, useThrottle } from 'common/hooks';
-import { IMLDraftContent } from 'common/types/instance/mlDraft';
+import { IMLDraftContent, TMLDraftBlocks } from 'common/types/instance/mlDraft';
 import { getKeys, getValues } from 'common/utils/state';
 import { capitalizeFirst } from 'common/utils/ui';
 import { Button } from 'ui/components/elements';
@@ -36,7 +36,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
 
   const onBackgroundColorChange = (backgroundColor: string) => {
     block.background = backgroundColor;
-    dispatch(setMLDraftBlockContent(block, order, block.type));
+    dispatch(setMLDraftBlockContent(block, order, block.type as unknown as keyof TMLDraftBlocks));
   };
   const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
     const padding = +e.currentTarget.value;
@@ -70,9 +70,6 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
     }
 
     dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
-
-    dispatch(setMLDraftBlockContent(block, order, block.type));
-
   };
 
   const onMarginChange = (e: ChangeEvent<HTMLInputElement>) => {
