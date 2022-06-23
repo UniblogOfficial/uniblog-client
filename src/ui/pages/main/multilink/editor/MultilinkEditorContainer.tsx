@@ -16,7 +16,6 @@ import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { Nullable, TImageFile, TMultilinkDraft, TUser } from 'common/types/instance';
 import { Button, Icon } from 'ui/components/elements';
 import {
-  MLButton,
   MLImages,
   MLImageText,
   MLLink,
