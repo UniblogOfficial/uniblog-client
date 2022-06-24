@@ -16,6 +16,8 @@ export enum SocialNetwork {
   TWITTER = 'twitter',
   FACEBOOK = 'facebook',
   PINTEREST = 'pinterest',
+  GMAIL = 'gmail',
+  WHATSAPP = 'whatsapp',
 }
 
 export enum SocialService {

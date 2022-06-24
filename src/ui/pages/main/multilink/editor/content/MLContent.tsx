@@ -213,7 +213,9 @@ export const MLContent = (props: TMLContentProps) => {
       }
       case MLContentType.LINK: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        const image = images.blocks[blockEditorType][blockEditorOrder];
         return (
+
           currentBlock &&
           withBaseEditor({
             order: blockEditorOrder,

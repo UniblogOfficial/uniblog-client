@@ -5,11 +5,13 @@ import React, { ChangeEvent, FC, PropsWithChildren, useEffect, useState } from '
 import { RgbaStringColorPicker } from 'react-colorful';
 
 import { setMLDraftBlockContent } from 'bll/reducers';
+
 import { Direction } from 'common/constants';
 import { useAppDispatch, useThrottle } from 'common/hooks';
 import { IMLDraftContent, TMLDraftBlocks } from 'common/types/instance/mlDraft';
 import { getKeys, getValues } from 'common/utils/state';
 import { capitalizeFirst } from 'common/utils/ui';
+
 import { Button } from 'ui/components/elements';
 
 export type TMLBaseEditorProps<T> = {
@@ -18,6 +20,7 @@ export type TMLBaseEditorProps<T> = {
 };
 
 const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
+
 const paddings = Object.entries(Direction).reduce(
   (acc, el, i, arr) => (i >= arr.length / 2 ? [...acc, el as [string, string]] : acc),
   [] as [string, string][],
@@ -40,6 +43,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
   };
   const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
     const padding = +e.currentTarget.value;
+
     const direction = +e.currentTarget.name;
 
     if (!block.padding) {
@@ -54,6 +58,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
 
     if (direction === Direction.TOP || direction === Direction.BOTTOM) {
       if (isPaddingTopBottom) {
+
         block.padding[Direction.TOP] = padding;
         block.padding[Direction.BOTTOM] = padding;
       } else {
@@ -117,12 +122,14 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
               key={color}
               type="button"
               className="circle"
+              value={undefined}
               style={{ backgroundColor: color }}
               onClick={() => onBackgroundColorChange(color)}
             />
           ))}
           <input
             type="button"
+            defaultValue={undefined}
             className="circleGradient"
             onClick={() => setIsBgColorPickerVisible(true)}
           />
@@ -165,9 +172,10 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
                 <label>{capitalizeFirst(padding[0])}:</label>
                 <input
                   type="range"
-                  name={padding[1]}
-                  min={0}
-                  max={60}
+                  name={padding}
+                  min={4}
+                  max={80}
+
                   step={4}
                   value={block.padding && block.padding[i] ? block.padding[i] : 0}
                   onChange={onPaddingChange}

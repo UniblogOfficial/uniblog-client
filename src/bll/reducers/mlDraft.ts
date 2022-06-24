@@ -1,7 +1,13 @@
 import { setAppStatus } from '.';
 
 import { AppThunk } from 'bll/store';
-import { AppStatus, MLConstructorStage, MLContentType, SocialNetwork } from 'common/constants';
+import {
+  AppStatus,
+  MLConstructorStage,
+  MLContentType,
+  SocialNetwork,
+  SocialService,
+} from 'common/constants';
 import {
   Nullable,
   TIncomingImage,
@@ -9,6 +15,7 @@ import {
   TMLDraftBlocks,
   TMLDraftImages,
   TMultilinkDraft,
+  IMLDraftLink,
 } from 'common/types/instance';
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request/multilink.dto';
 import {
@@ -70,6 +77,7 @@ const initialState: TMLDraftState = {
       linkBlocks: [],
     },
   },
+
   // in-app values
   currentStage: MLConstructorStage.TEMPLATE,
 };
