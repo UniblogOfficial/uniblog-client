@@ -79,7 +79,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                 return block && <MLLogo key={ID[i]} block={block} images={null} />;
 
               case MLContentType.LINK:
-                return <MLLink key={ID[i]} block={block} />;
+                return <MLLink key={ID[i]} block={block} image={null} />;
 
               case MLContentType.BUTTON:
                 return <MLButton key={ID[i]} block={block} />;

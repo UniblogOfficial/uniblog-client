@@ -25,7 +25,7 @@ export const MLText = ({ block, callback }: TMLTextProps) => {
         margin: px(block.margin) ?? '0',
         background: block.background,
         justifyContent: align,
-        fontSize: block.fontSize,
+        fontSize: px(block.fontSize) ?? '18',
         fontWeight: block.fontWeight,
         fontStyle: block.fontStyle,
         fontVariant: block.fontVariant,

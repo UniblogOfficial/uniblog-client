@@ -16,7 +16,7 @@ type TMLTextEditorProps = {
 
 type AlignTextType = 'right' | 'left' | 'center' | 'justify';
 const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
-const fontSizeTexts: string[] = ['12', '14', '16', '18', '20', '22'];
+const fontSizeTexts: string[] = ['12', '14', '16', '18', '20', '22', '24', '26', '28', '30'];
 const fontTexts = [
   'Arial, sans-serif',
   'Times, Times New Roman, serif',
@@ -97,9 +97,6 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
     const currentShadow = block.textShadow?.length
       ? block.textShadow[0].split(' ')
       : shadowTextDefault;
-    if (block.textShadow?.length) {
-      console.log(block.textShadow);
-    }
     if (shadowName === 'offset-x') {
       currentShadow[0] = `${shadow}px`;
     } else if (shadowName === 'offset-y') {

@@ -14,6 +14,7 @@ export type TMultilinkDraft = {
   contentMap: MLContentType[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
+  imageLink?: Nullable<string>;
 };
 
 export type TMLDraftBlocks = {
@@ -58,7 +59,7 @@ interface IMLDraftContent {
   padding?: number[];
   margin?: number[];
   background?: string;
-  borderRadius?: number;
+  borderRadius?: number | string;
 }
 
 interface IMLTextProperties {
@@ -94,6 +95,7 @@ export interface IMLDraftLink extends IMLDraftContent, IMLTextProperties {
   href: Nullable<string>;
   linkType: Nullable<(SocialNetwork | SocialService) | 'third-party'>;
   title: Nullable<string>;
+  image?: Nullable<string>;
 }
 
 export interface IMLDraftSocial extends Omit<IMLDraftContent, 'borderRadius'> {

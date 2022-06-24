@@ -79,6 +79,7 @@ export const MLTemplates = memo(({ userData }: TMLTemplatesProps) => {
                     key={ID[j]}
                     className="ml-link"
                     style={{
+                      position: 'relative',
                       padding: px(block.padding, 5),
                       margin: px(block.margin, 5),
                       background: block.background ?? undefined,

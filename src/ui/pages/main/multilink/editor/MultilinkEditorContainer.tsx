@@ -131,7 +131,8 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
               case MLContentType.LINK:
                 block = blocks[type][i];
-                return <MLLink key={ID[i]} block={block} callback={callback} />;
+                image = images.blocks[type][i];
+                return <MLLink key={ID[i]} block={block} image={image} callback={callback} />;
 
               case MLContentType.BUTTON:
                 block = blocks[type][i];
@@ -161,7 +162,6 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
     },
     [contentMap, blocks, background, images.blocks, images.background],
   );
-
   return (
     <>
       <div className="grid__row multilink-editor__nav paper">

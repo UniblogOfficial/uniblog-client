@@ -101,12 +101,14 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
               key={color}
               type="button"
               className="circle"
+              value={undefined}
               style={{ backgroundColor: color }}
               onClick={() => onBackgroundColorChange(color)}
             />
           ))}
           <input
             type="button"
+            defaultValue={undefined}
             className="circleGradient"
             onClick={() => setIsBgColorPickerVisible(true)}
           />
@@ -129,11 +131,19 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
             <div className="padding_margin">
               <label>
                 Left&Right
-                <input type="checkbox" onChange={() => setIsPaddingLeftRight(true)} />
+                <input
+                  type="checkbox"
+                  defaultValue={undefined}
+                  onChange={() => setIsPaddingLeftRight(true)}
+                />
               </label>
               <label>
                 Top&Bottom
-                <input type="checkbox" onChange={() => setIsPaddingTopBottom(true)} />
+                <input
+                  type="checkbox"
+                  defaultValue={undefined}
+                  onChange={() => setIsPaddingTopBottom(true)}
+                />
               </label>
             </div>
           </div>
@@ -145,7 +155,7 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
                   type="range"
                   name={padding}
                   min={4}
-                  max={60}
+                  max={80}
                   step={4}
                   defaultValue={i}
                   value={Array.isArray(block?.padding) ? block?.padding[i] : i}
@@ -159,11 +169,19 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
             <div className="padding_margin">
               <label>
                 Left&Right
-                <input type="checkbox" onChange={() => setIsMarginLeftRight(true)} />
+                <input
+                  type="checkbox"
+                  defaultValue={undefined}
+                  onChange={() => setIsMarginLeftRight(true)}
+                />
               </label>
               <label>
                 Top&Bottom
-                <input type="checkbox" onChange={() => setIsMarginTopBottom(true)} />
+                <input
+                  type="checkbox"
+                  defaultValue={undefined}
+                  onChange={() => setIsMarginTopBottom(true)}
+                />
               </label>
             </div>
           </div>
@@ -175,7 +193,7 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
                   type="range"
                   name={margin}
                   min={4}
-                  max={60}
+                  max={80}
                   step={4}
                   defaultValue={i}
                   value={Array.isArray(block?.margin) ? block?.margin[i] : i}
