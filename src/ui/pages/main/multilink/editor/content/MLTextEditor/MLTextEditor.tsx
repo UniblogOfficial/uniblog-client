@@ -49,153 +49,155 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
     setText(block.text ?? '');
   }, [block]);
 
+  const newBlock = { ...block };
+
   const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     setText(newText);
-    block.text = newText;
-    dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.text = newText;
+    dispatchThrottled(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onAlignChange = (align: AlignTextType) => {
-    block.align = align;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.align = align;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onColorChange = (color: string) => {
-    block.color = color;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.color = color;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onBackgroundColorChange = (backgroundColor: string) => {
-    block.background = backgroundColor;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.background = backgroundColor;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onTextSizeChange = (fontSize: string) => {
-    block.fontSize = +fontSize;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.fontSize = +fontSize;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onFontWeightChange = (fontWeight: number) => {
-    block.fontWeight = fontWeight;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.fontWeight = fontWeight;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onItalicTextChange = (fontStyle: string) => {
-    block.fontStyle = fontStyle;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.fontStyle = fontStyle;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
     const padding = e.currentTarget.value;
     const title = e.currentTarget.name;
 
-    if (Array.isArray(block.padding)) {
-      if (block.padding.length < 4) {
-        block.padding = [...block.padding, ...block.padding];
+    if (Array.isArray(newBlock.padding)) {
+      if (newBlock.padding.length < 4) {
+        newBlock.padding = [...newBlock.padding, ...newBlock.padding];
       }
       if (title === 'top') {
         if (isPaddingTopBottom) {
-          block.padding[0] = +padding;
-          block.padding[2] = +padding;
+          newBlock.padding[0] = +padding;
+          newBlock.padding[2] = +padding;
         }
-        block.padding[0] = +padding;
+        newBlock.padding[0] = +padding;
       }
       if (title === 'right') {
         if (isPaddingLeftRight) {
-          block.padding[1] = +padding;
-          block.padding[3] = +padding;
+          newBlock.padding[1] = +padding;
+          newBlock.padding[3] = +padding;
         }
-        block.padding[1] = +padding;
+        newBlock.padding[1] = +padding;
       }
       if (title === 'bottom') {
         if (isPaddingTopBottom) {
-          block.padding[0] = +padding;
-          block.padding[2] = +padding;
+          newBlock.padding[0] = +padding;
+          newBlock.padding[2] = +padding;
         }
-        block.padding[2] = +padding;
+        newBlock.padding[2] = +padding;
       }
       if (title === 'left') {
         if (isPaddingLeftRight) {
-          block.padding[1] = +padding;
-          block.padding[3] = +padding;
+          newBlock.padding[1] = +padding;
+          newBlock.padding[3] = +padding;
         }
-        block.padding[3] = +padding;
+        newBlock.padding[3] = +padding;
       }
     }
 
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatch(setMLDraftBlockContent({ content: block, order, field: 'textBlocks' }));
   };
 
   const onMarginChange = (e: ChangeEvent<HTMLInputElement>) => {
     const margin = e.currentTarget.value;
     const title = e.currentTarget.name;
 
-    block.margin = marginArray;
+    newBlock.margin = marginArray;
 
     if (title === 'top') {
       if (isMarginTopBottom) {
-        block.margin[0] = +margin;
-        block.margin[2] = +margin;
+        newBlock.margin[0] = +margin;
+        newBlock.margin[2] = +margin;
       }
-      block.margin[0] = +margin;
+      newBlock.margin[0] = +margin;
     }
     if (title === 'right') {
       if (isMarginLeftRight) {
-        block.margin[1] = +margin;
-        block.margin[3] = +margin;
+        newBlock.margin[1] = +margin;
+        newBlock.margin[3] = +margin;
       }
-      block.margin[1] = +margin;
+      newBlock.margin[1] = +margin;
     }
     if (title === 'bottom') {
       if (isMarginTopBottom) {
-        block.margin[0] = +margin;
-        block.margin[2] = +margin;
+        newBlock.margin[0] = +margin;
+        newBlock.margin[2] = +margin;
       }
-      block.margin[2] = +margin;
+      newBlock.margin[2] = +margin;
       console.log('margin', +margin);
     }
     if (title === 'left') {
       if (isMarginLeftRight) {
-        block.margin[1] = +margin;
-        block.margin[3] = +margin;
+        newBlock.margin[1] = +margin;
+        newBlock.margin[3] = +margin;
       }
-      block.margin[3] = +margin;
+      newBlock.margin[3] = +margin;
     }
 
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onLineHeightChange = (e: ChangeEvent<HTMLInputElement>) => {
-    block.lineHeight = +e.currentTarget.value;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.lineHeight = +e.currentTarget.value;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onFontVariantChange = (fontVariant: string) => {
-    block.fontVariant = fontVariant;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.fontVariant = fontVariant;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onFontTextsChange = (font: string) => {
-    block.fontFamily = font;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.fontFamily = font;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onLitterSpacingChange = (e: ChangeEvent<HTMLInputElement>) => {
-    block.letterSpacing = +e.currentTarget.value;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    newBlock.letterSpacing = +e.currentTarget.value;
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onTextShadowChange = (e: ChangeEvent<HTMLInputElement>) => {
     const shadow = e.currentTarget.value;
     const shadowName = e.currentTarget.name;
-    if (Array.isArray(block.textShadow)) {
+    if (Array.isArray(newBlock.textShadow)) {
       if (shadowName === 'offset-x') {
-        block.textShadow[0][0] = +shadow;
+        newBlock.textShadow[0][0] = +shadow;
       } else if (shadowName === 'offset-y') {
-        block.textShadow[0][1] = +shadow;
+        newBlock.textShadow[0][1] = +shadow;
       } else if (shadowName === 'blur-radius') {
-        block.textShadow[0][2] = +shadow;
+        newBlock.textShadow[0][2] = +shadow;
       }
     } else {
       if (shadowName === 'offset-x') {
@@ -205,19 +207,19 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
       } else if (shadowName === 'blur-radius') {
         shadowTextDefault[0][2] = +shadow;
       }
-      block.textShadow = shadowTextDefault;
+      newBlock.textShadow = shadowTextDefault;
     }
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   const onBackgroundTextShadowChange = (backgroundColor: string) => {
-    if (Array.isArray(block.textShadow)) {
-      block.textShadow[0][3] = backgroundColor;
+    if (Array.isArray(newBlock.textShadow)) {
+      newBlock.textShadow[0][3] = backgroundColor;
     } else {
       shadowTextDefault[0][3] = backgroundColor;
-      block.textShadow = shadowTextDefault;
+      newBlock.textShadow = shadowTextDefault;
     }
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
   };
 
   return (

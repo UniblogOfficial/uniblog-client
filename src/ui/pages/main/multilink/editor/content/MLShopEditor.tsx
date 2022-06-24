@@ -34,7 +34,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
     (imageFile: TImageFile, id?: number) => {
       if (images && id !== undefined) {
         images.cells[id] = imageFile;
-        dispatch(setMLDraftBlockContentImage(images, order, 'shopBlocks'));
+        dispatch(setMLDraftBlockContentImage({ images, order, field: 'shopBlocks' }));
       }
     },
     [dispatch, images, order],
@@ -50,7 +50,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
           );
           block.cells[+currentOrder].title = e.currentTarget.value;
           // @ts-ignore
-          dispatchThrottled(setMLDraftBlockContent(block, order, 'shopSet'));
+          dispatchThrottled(setMLDraftBlockContent({ content: block, order, field: 'shopSet' }));
           break;
         case 'subtitle':
           setSubTitles(

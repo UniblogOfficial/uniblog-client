@@ -25,7 +25,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
   const setCurrentTemplate = useCallback(
     (stage: number) => {
       if (templates.some((_t, i) => i === stage)) {
-        dispatch(setMLDraftTemplate(templates, stage));
+        dispatch(setMLDraftTemplate({ templates, index: stage }));
       }
     },
     [dispatch, templates],

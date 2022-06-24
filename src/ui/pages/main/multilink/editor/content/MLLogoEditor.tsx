@@ -29,7 +29,7 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
         if (id === ImageType.BANNER) {
           images.banner = imageFile;
         }
-        dispatch(setMLDraftBlockContentImage(images, order, 'logoBlocks'));
+        dispatch(setMLDraftBlockContentImage({ images, order, field: 'logoBlocks' }));
       }
     },
     [dispatch, images, order],
@@ -43,7 +43,7 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
         if (e.currentTarget.value === '2') {
           block.banner = null;
         }
-        dispatch(setMLDraftBlockContent(block, order, 'logoBlocks'));
+        dispatch(setMLDraftBlockContent({ content: block, order, field: 'logoBlocks' }));
       }
     },
     [block, dispatch, order],

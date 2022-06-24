@@ -1,3 +1,4 @@
+import { configureStore } from '@reduxjs/toolkit';
 import { compose, applyMiddleware, combineReducers, createStore } from 'redux';
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
@@ -41,7 +42,11 @@ const rootReducer = combineReducers({
   multilink: multilinkReducer,
 });
 
-export const store = createStore(rootReducer, enhancer);
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: [thunkMiddleware],
+});
+// export const store = createStore(rootReducer, enhancer);
 
 // types
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TState, unknown, TActions>;

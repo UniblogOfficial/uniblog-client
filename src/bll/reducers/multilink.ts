@@ -77,6 +77,8 @@ export const getAllMultilinks = (): AppThunk => async dispatch => {
     dispatch(setAppStatus(AppStatus.CONTENT_LOADING));
     const response = await multilinkAPI.getAll();
     if (response.data) {
+      // eslint-disable-next-line no-debugger
+      debugger;
       batch(() => {
         dispatch(
           setAllMultilinks(response.data.multilinks.map((ml: TMultilink) => normalizeMLPublic(ml))),

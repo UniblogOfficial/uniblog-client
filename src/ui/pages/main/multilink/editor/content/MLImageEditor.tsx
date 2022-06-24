@@ -19,7 +19,7 @@ export const MLImageEditor = ({ order, block, images }: TMLImageEditorProps) => 
     (imageFile: TImageFile, id?: number) => {
       if (images && id !== undefined) {
         images.images[id] = imageFile;
-        dispatch(setMLDraftBlockContentImage(images, order, 'imageBlocks'));
+        dispatch(setMLDraftBlockContentImage({ images, order, field: 'imageBlocks' }));
       }
     },
     [dispatch, images, order],
