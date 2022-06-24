@@ -215,11 +215,11 @@ export const MLContent = (props: TMLContentProps) => {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
         const image = images.blocks[blockEditorType][blockEditorOrder];
         return (
-
           currentBlock &&
           withBaseEditor({
             order: blockEditorOrder,
             block: currentBlock,
+            image: images.blocks[blockEditorType][blockEditorOrder],
             close: onButtonEditorClick,
           })(MLLinkEditor)
         );

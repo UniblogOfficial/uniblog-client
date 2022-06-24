@@ -5,14 +5,12 @@ import React, { ChangeEvent, FC, PropsWithChildren, useEffect, useState } from '
 import { RgbaStringColorPicker } from 'react-colorful';
 
 import { setMLDraftBlockContent } from 'bll/reducers';
-
 import { Direction } from 'common/constants';
 import { useAppDispatch, useThrottle } from 'common/hooks';
 import { IMLDraftContent, TMLDraftBlocks } from 'common/types/instance/mlDraft';
-import { getKeys, getValues } from 'common/utils/state';
 import { capitalizeFirst } from 'common/utils/ui';
-
 import { Button } from 'ui/components/elements';
+import { Checkbox } from 'ui/components/elements/checkbox/Checkbox';
 
 export type TMLBaseEditorProps<T> = {
   order: number;
@@ -41,6 +39,21 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
     block.background = backgroundColor;
     dispatch(setMLDraftBlockContent(block, order, block.type as unknown as keyof TMLDraftBlocks));
   };
+
+  const onBindDirectionsCheck = (checked: boolean, value: string) => {
+    switch (value) {
+      case 'padding-LR':
+        return setIsPaddingLeftRight(checked);
+      case 'padding-TB':
+        return setIsPaddingTopBottom(checked);
+      case 'margin-LR':
+        return setIsMarginLeftRight(checked);
+      case 'margin-TB':
+        return setIsMarginTopBottom(checked);
+      default:
+    }
+  };
+
   const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
     const padding = +e.currentTarget.value;
 
@@ -51,14 +64,13 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
     }
 
     if (isPaddingTopBottom && isPaddingLeftRight) {
-      block.padding.fill(padding);
+      block.padding = new Array(4).fill(padding);
       dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
       return;
     }
 
     if (direction === Direction.TOP || direction === Direction.BOTTOM) {
       if (isPaddingTopBottom) {
-
         block.padding[Direction.TOP] = padding;
         block.padding[Direction.BOTTOM] = padding;
       } else {
@@ -86,7 +98,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
     }
 
     if (isMarginTopBottom && isMarginLeftRight) {
-      block.margin.fill(margin);
+      block.margin = new Array(4).fill(margin);
       dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
       return;
     }
@@ -150,20 +162,20 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
           <div style={{ marginTop: '10px' }}>
             Padding:
             <div className="padding_margin">
-              <label>
+              <Checkbox
+                value="padding-LR"
+                name="padding-LR"
+                checked={isPaddingLeftRight}
+                onChangeChecked={onBindDirectionsCheck}>
                 Left&Right
-                <input
-                  type="checkbox"
-                  onChange={() => setIsPaddingLeftRight(!isPaddingLeftRight)}
-                />
-              </label>
-              <label>
+              </Checkbox>
+              <Checkbox
+                value="padding-TB"
+                name="padding-TB"
+                checked={isPaddingTopBottom}
+                onChangeChecked={onBindDirectionsCheck}>
                 Top&Bottom
-                <input
-                  type="checkbox"
-                  onChange={() => setIsPaddingTopBottom(!isPaddingTopBottom)}
-                />
-              </label>
+              </Checkbox>
             </div>
           </div>
           <div className="padding_margin">
@@ -172,10 +184,9 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
                 <label>{capitalizeFirst(padding[0])}:</label>
                 <input
                   type="range"
-                  name={padding}
-                  min={4}
+                  name={padding[1]}
+                  min={0}
                   max={80}
-
                   step={4}
                   value={block.padding && block.padding[i] ? block.padding[i] : 0}
                   onChange={onPaddingChange}
@@ -186,14 +197,20 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
           <div>
             Margin:
             <div className="padding_margin">
-              <label>
+              <Checkbox
+                value="margin-LR"
+                name="margin-LR"
+                checked={isMarginLeftRight}
+                onChangeChecked={onBindDirectionsCheck}>
                 Left&Right
-                <input type="checkbox" onChange={() => setIsMarginLeftRight(!isMarginLeftRight)} />
-              </label>
-              <label>
+              </Checkbox>
+              <Checkbox
+                value="margin-TB"
+                name="margin-TB"
+                checked={isMarginTopBottom}
+                onChangeChecked={onBindDirectionsCheck}>
                 Top&Bottom
-                <input type="checkbox" onChange={() => setIsMarginTopBottom(!isMarginTopBottom)} />
-              </label>
+              </Checkbox>
             </div>
           </div>
           <div className="padding_margin">
