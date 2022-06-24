@@ -2,6 +2,7 @@ import React from 'react';
 
 import { IMLDraftMap } from 'common/types/instance';
 import { px } from 'common/utils/ui';
+import { Map } from 'ui/components/modules/map/Map';
 
 type TMLMapProps = {
   block: IMLDraftMap;
@@ -23,14 +24,7 @@ export const MLMap = ({ block, callback }: TMLMapProps) => {
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
       )}
 
-      <iframe
-        style={{ border: '0', width: '100%', height: '100%' }}
-        allowFullScreen
-        loading="lazy"
-        title="Map"
-        referrerPolicy="no-referrer-when-downgrade"
-        src={block.url ?? ''}
-      />
+      <Map />
     </section>
   );
 };

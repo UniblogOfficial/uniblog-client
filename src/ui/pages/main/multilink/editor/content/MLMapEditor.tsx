@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { IMLDraftMap, Nullable } from 'common/types/instance';
+import { Map } from 'ui/components/modules/map/Map';
 
 type TMLMapEditorProps = {
   order: number;
@@ -12,16 +13,7 @@ export const MLMapEditor = ({ order, block }: TMLMapEditorProps) => {
 
   return (
     <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
-      {block.url && (
-        <iframe
-          style={{ border: '0', width: '400px', height: '300px' }}
-          allowFullScreen
-          loading="lazy"
-          title="Map"
-          referrerPolicy="no-referrer-when-downgrade"
-          src={block.url}
-        />
-      )}
+      {block.url && <Map />}
     </div>
   );
 };
