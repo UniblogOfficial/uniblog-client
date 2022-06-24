@@ -3,10 +3,11 @@ import React, { FC, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
-import { TUser } from '../../../../common/types/instance';
-import { Button, Icon } from '../../elements';
-import { ThemeSwitch } from '../../elements/themeSwitch/ThemeSwitch';
 import { TIconName } from '../iconSpritesMaps/IconSpritesMap';
+import { ThemeSwitch } from '../themeSwitch/ThemeSwitch';
+
+import { TUser } from 'common/types/instance';
+import { Button, Icon } from 'ui/components/elements';
 
 type TNavLinksDataItem = {
   id: number;
