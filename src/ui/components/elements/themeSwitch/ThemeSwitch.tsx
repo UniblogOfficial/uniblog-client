@@ -56,9 +56,9 @@ export const ThemeSwitch = ({ preserveRasters = true, storeKey = 'ThemeSwitch' }
     backgroundColor: '#4040f2',
     border: '1px solid #4040f2',
     borderRadius: '7px 7px 7px 7px',
-    marginBottom: '10px',
+    marginBottom: '1px',
     color: 'white',
-    padding: '13px 41px',
+    padding: '12px 15px',
     width: '100%',
   };
   return (
@@ -66,9 +66,9 @@ export const ThemeSwitch = ({ preserveRasters = true, storeKey = 'ThemeSwitch' }
       {supported.current && (
         <>
           <button type="button" aria-pressed={active} onClick={toggle}>
-            <span style={style} aria-hidden="true">
+            <div style={style} aria-hidden="true">
               {active ? 'Темная  тема' : 'Светлая тема'}
-            </span>
+            </div>
           </button>
           <style media={active ? 'screen' : 'none'}>{active ? css.trim() : css}</style>
         </>
