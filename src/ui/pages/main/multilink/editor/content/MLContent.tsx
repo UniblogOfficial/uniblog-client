@@ -3,12 +3,15 @@ import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MLBaseEditor } from './MLBaseEditor';
+import { MLButtonEditor } from './MLButtonEditor';
 import { MLImageEditor } from './MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
+import { MLMapEditor } from './MLMapEditor';
 import { MLShopEditor } from './MLShopEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
+import { withBaseEditor } from './tempHoc';
 
 import { addMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
@@ -24,6 +27,14 @@ type TMLContentProps = {
   blockEditorOrder: number;
   setBlockEditor: (payload: { type: MLContentType; order: number } | null) => void;
 };
+
+const actionButtonsData = [
+  {
+    value: MLContentType.TEXT,
+    title: 't()', // translation
+  },
+  // ...
+];
 
 export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
@@ -108,12 +119,18 @@ export const MLContent = (props: TMLContentProps) => {
         </Button>
       </div>
       <div>
-        <Button disabled className="button _full _rounded">
+        <Button
+          value={MLContentType.BUTTON}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
           Add button block
         </Button>
       </div>
       <div>
-        <Button disabled className="button _full _rounded">
+        <Button
+          value={MLContentType.MAP}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
           Add map block
         </Button>
       </div>
@@ -158,25 +175,22 @@ export const MLContent = (props: TMLContentProps) => {
       case MLContentType.LOGO: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
-          currentBlock && (
-            <div className="ml-logo-editor">
-              <MLLogoEditor
-                order={blockEditorOrder}
-                block={currentBlock}
-                images={images.blocks[blockEditorType][blockEditorOrder]}
-              />
-            </div>
-          )
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+            images: images.blocks[blockEditorType][blockEditorOrder],
+          })(MLLogoEditor)
         );
       }
       case MLContentType.TEXT: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
-          currentBlock && (
-            <MLBaseEditor
-              blockEditor={<MLTextEditor order={blockEditorOrder} block={currentBlock} />}
-            />
-          )
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+          })(MLTextEditor)
         );
       }
       case MLContentType.IMAGETEXT: {
@@ -187,13 +201,13 @@ export const MLContent = (props: TMLContentProps) => {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
           currentBlock && (
-            <div className="ml-image-editor">
+            <>
               <MLImageEditor
                 order={blockEditorOrder}
                 block={currentBlock}
                 images={images.blocks[blockEditorType][blockEditorOrder]}
               />
-            </div>
+            </>
           )
         );
       }
@@ -201,41 +215,60 @@ export const MLContent = (props: TMLContentProps) => {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
         const image = images.blocks[blockEditorType][blockEditorOrder];
         return (
-          currentBlock && (
-            <MLBaseEditor
-              blockEditor={
-                <MLLinkEditor
-                  order={blockEditorOrder}
-                  close={onButtonEditorClick}
-                  block={currentBlock}
-                  image={image}
-                />
-              }
-            />
-          )
+
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+            close: onButtonEditorClick,
+          })(MLLinkEditor)
+        );
+      }
+
+      case MLContentType.BUTTON: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return (
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+          })(MLButtonEditor)
         );
       }
       case MLContentType.SOCIAL: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
-        return currentBlock && <>Not implemented</>;
+        return (
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+          })(null)
+        );
       }
       case MLContentType.WIDGET: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
-        return currentBlock && <MLWidgetEditor block={currentBlock} order={blockEditorOrder} />;
+        return (
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+          })(MLWidgetEditor)
+        );
       }
       case MLContentType.SHOP: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
-          currentBlock && (
-            <div className="ml-shop-editor">
-              <MLShopEditor
-                order={blockEditorOrder}
-                block={blocks[blockEditorType][blockEditorOrder]}
-                images={images.blocks[blockEditorType][blockEditorOrder]}
-              />
-            </div>
-          )
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+            images: images.blocks[blockEditorType][blockEditorOrder],
+          })(MLShopEditor)
         );
+      }
+      case MLContentType.MAP: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return currentBlock && <MLMapEditor block={currentBlock} order={blockEditorOrder} />;
       }
       default:
         return <>Not implemented</>;

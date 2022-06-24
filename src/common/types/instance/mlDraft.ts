@@ -53,8 +53,9 @@ export type TMLDraftImages = {
   };
 };
 
-interface IMLDraftContent {
+export interface IMLDraftContent<TBlockType> {
   order: number;
+  type: TBlockType;
   isFilled: boolean;
   padding?: number[];
   margin?: number[];
@@ -81,8 +82,7 @@ interface IMLTextProperties {
   align?: 'right' | 'left' | 'center' | 'justify';
 }
 
-export interface IMLDraftText extends IMLDraftContent, IMLTextProperties {
-  type: MLContentType.TEXT;
+export interface IMLDraftText extends IMLDraftContent<MLContentType.TEXT>, IMLTextProperties {
   text: Nullable<string>;
   href?: string;
   icon?: TIconName;
@@ -90,29 +90,26 @@ export interface IMLDraftText extends IMLDraftContent, IMLTextProperties {
   iconSide?: 'right' | 'left';
 }
 
-export interface IMLDraftLink extends IMLDraftContent, IMLTextProperties {
-  type: MLContentType.LINK;
+export interface IMLDraftLink extends IMLDraftContent<MLContentType.LINK>, IMLTextProperties {
   href: Nullable<string>;
   linkType: Nullable<(SocialNetwork | SocialService) | 'third-party'>;
   title: Nullable<string>;
   image?: Nullable<string>;
 }
 
-export interface IMLDraftSocial extends Omit<IMLDraftContent, 'borderRadius'> {
-  type: MLContentType.SOCIAL;
+export interface IMLDraftSocial
+  extends Omit<IMLDraftContent<MLContentType.SOCIAL>, 'borderRadius'> {
   links: string[];
   linkTypes: (SocialNetwork | SocialService)[];
   size?: number;
 }
 
-export interface IMLDraftButton extends IMLDraftContent, IMLTextProperties {
-  type: MLContentType.BUTTON;
+export interface IMLDraftButton extends IMLDraftContent<MLContentType.BUTTON>, IMLTextProperties {
   href: Nullable<string>;
   title: Nullable<string>;
 }
 
-export interface IMLDraftLogo extends Omit<IMLDraftContent, 'borderRadius'> {
-  type: MLContentType.LOGO;
+export interface IMLDraftLogo extends Omit<IMLDraftContent<MLContentType.LOGO>, 'borderRadius'> {
   logo: Nullable<string>;
   banner?: Nullable<string>;
   size: Nullable<number>;
@@ -120,8 +117,7 @@ export interface IMLDraftLogo extends Omit<IMLDraftContent, 'borderRadius'> {
   vAlign: 'center' | 'bottom';
 }
 
-export interface IMLDraftImage extends IMLDraftContent, IMLTextProperties {
-  type: MLContentType.IMAGE;
+export interface IMLDraftImage extends IMLDraftContent<MLContentType.IMAGE>, IMLTextProperties {
   images: Nullable<string>[];
   grid?: '1fr' | '1fr 1fr' | '1fr 1fr 1fr';
   titles?: string[];
@@ -129,16 +125,17 @@ export interface IMLDraftImage extends IMLDraftContent, IMLTextProperties {
   textPosition: 'inside' | 'outside';
 }
 
-export interface IMLDraftCarousel extends Omit<IMLDraftContent, 'borderRadius'> {
-  type: MLContentType.CAROUSEL;
+export interface IMLDraftCarousel
+  extends Omit<IMLDraftContent<MLContentType.CAROUSEL>, 'borderRadius'> {
   images: Nullable<string>[];
   dots: boolean;
   arrows: boolean;
   interval: number;
 }
 
-export interface IMLDraftImageText extends IMLDraftContent, Omit<IMLTextProperties, 'align'> {
-  type: MLContentType.IMAGETEXT;
+export interface IMLDraftImageText
+  extends IMLDraftContent<MLContentType.IMAGETEXT>,
+    Omit<IMLTextProperties, 'align'> {
   image: Nullable<string>;
   imgPosition: 'right' | 'left';
   text: Nullable<string>;
@@ -146,33 +143,30 @@ export interface IMLDraftImageText extends IMLDraftContent, Omit<IMLTextProperti
   vAlign: 'top' | 'center' | 'bottom';
 }
 
-export interface IMLDraftVideo extends Omit<IMLDraftContent, 'borderRadius'> {
-  type: MLContentType.VIDEO;
+export interface IMLDraftVideo extends Omit<IMLDraftContent<MLContentType.VIDEO>, 'borderRadius'> {
   url: Nullable<string>;
 }
 
-export interface IMLDraftAudio extends Omit<IMLDraftContent, 'borderRadius'> {
-  type: MLContentType.AUDIO;
+export interface IMLDraftAudio extends Omit<IMLDraftContent<MLContentType.AUDIO>, 'borderRadius'> {
   url: Nullable<string>;
 }
 
-export interface IMLDraftWidget extends Omit<IMLDraftContent, 'borderRadius'> {
-  type: MLContentType.WIDGET;
+export interface IMLDraftWidget
+  extends Omit<IMLDraftContent<MLContentType.WIDGET>, 'borderRadius'> {
   url: Nullable<string>;
 }
 
-export interface IMLDraftMap extends Omit<IMLDraftContent, 'borderRadius'> {
-  type: MLContentType.MAP;
+export interface IMLDraftMap extends Omit<IMLDraftContent<MLContentType.MAP>, 'borderRadius'> {
   url: Nullable<string>;
 }
 
-export interface IMLDraftPost extends Omit<IMLDraftContent, 'borderRadius'> {
-  type: MLContentType.POST;
+export interface IMLDraftPost extends Omit<IMLDraftContent<MLContentType.POST>, 'borderRadius'> {
   url: Nullable<string>;
 }
 
-export interface IMLDraftVote extends Omit<IMLDraftContent, 'borderRadius'>, IMLTextProperties {
-  type: MLContentType.VOTE;
+export interface IMLDraftVote
+  extends Omit<IMLDraftContent<MLContentType.VOTE>, 'borderRadius'>,
+    IMLTextProperties {
   cells: {
     order: number;
     title: string;
@@ -195,8 +189,7 @@ export interface IMLDraftVote extends Omit<IMLDraftContent, 'borderRadius'>, IML
   buttonAlign?: 'right' | 'left' | 'center' | 'justify';
 }
 
-export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
-  type: MLContentType.SHOP;
+export interface IMLDraftShop extends IMLDraftContent<MLContentType.SHOP>, IMLTextProperties {
   grid: '1fr' | '1fr 1fr' | '1fr 1fr 1fr';
   gap?: number;
   cells: {
@@ -263,8 +256,8 @@ export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
   buttonAlign?: 'right' | 'left' | 'center' | 'justify';
 }
 
-export interface IMLDraftDivider extends Omit<IMLDraftContent, 'borderRadius'> {
-  type: MLContentType.DIVIDER;
+export interface IMLDraftDivider
+  extends Omit<IMLDraftContent<MLContentType.DIVIDER>, 'borderRadius'> {
   icon?: TIconName;
   primaryColor?: string;
   secondaryColor?: string;

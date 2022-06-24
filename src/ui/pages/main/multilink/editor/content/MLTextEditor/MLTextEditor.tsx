@@ -97,6 +97,9 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
     const currentShadow = block.textShadow?.length
       ? block.textShadow[0].split(' ')
       : shadowTextDefault;
+    if (block.textShadow?.length) {
+      console.log(block.textShadow);
+    }
     if (shadowName === 'offset-x') {
       currentShadow[0] = `${shadow}px`;
     } else if (shadowName === 'offset-y') {

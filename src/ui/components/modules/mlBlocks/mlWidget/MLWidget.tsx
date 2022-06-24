@@ -21,7 +21,6 @@ export const MLWidget = ({ block, callback }: TMLWidgetProps) => {
         width="300"
         height="300"
         title="widget"
-        allowTransparency
         scrolling="no"
         frameBorder="0"
       />

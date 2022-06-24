@@ -57,44 +57,45 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
           {template.map((block, j) => {
             switch (block.type) {
               case MLContentType.TEXT:
-                return <MLText key={ID[i]} block={block} />;
+                return <MLText key={ID[j]} block={block} />;
 
               case MLContentType.SOCIAL:
-                return <MLSocial key={ID[i]} block={block} />;
+                return <MLSocial key={ID[j]} block={block} />;
 
               case MLContentType.WIDGET:
-                return block && <MLWidget key={ID[i]} block={block} />;
+                return block && <MLWidget key={ID[j]} block={block} />;
 
               case MLContentType.VIDEO:
-                return <MLVideo key={ID[i]} block={block} />;
+                return <MLVideo key={ID[j]} block={block} />;
 
               /* case MLContentType.AUDIO:
                 return block && <>audio block</>; */
 
               case MLContentType.VOTE:
-                return block && <MLVote key={ID[i]} block={block} />;
+                return block && <MLVote key={ID[j]} block={block} />;
 
               case MLContentType.LOGO:
                 // variable image is one or set of images of current block
-                return block && <MLLogo key={ID[i]} block={block} images={null} />;
+                return block && <MLLogo key={ID[j]} block={block} images={null} />;
 
               case MLContentType.LINK:
+
                 return <MLLink key={ID[i]} block={block} image={null} />;
 
               case MLContentType.BUTTON:
-                return <MLButton key={ID[i]} block={block} />;
+                return <MLButton key={ID[j]} block={block} />;
 
               case MLContentType.IMAGE:
-                return <MLImages key={ID[i]} block={block} images={null} />;
+                return <MLImages key={ID[j]} block={block} images={null} />;
 
               case MLContentType.IMAGETEXT:
-                return <MLImageText key={ID[i]} block={block} images={null} />;
+                return <MLImageText key={ID[j]} block={block} images={null} />;
 
               case MLContentType.SHOP:
-                return <MLShop key={ID[i]} block={block} images={null} />;
+                return <MLShop key={ID[j]} block={block} images={null} />;
 
               default:
-                return <li key={ID[i]} />;
+                return <li key={ID[j]} />;
             }
           })}
         </ul>
