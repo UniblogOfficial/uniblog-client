@@ -11,6 +11,19 @@ import { TUser } from 'common/types/instance';
 import { parseRawImage, px } from 'common/utils/ui';
 import socials from 'img/socials';
 import { Carousel, Icon } from 'ui/components/elements';
+import {
+  MLButton,
+  MLImages,
+  MLImageText,
+  MLLink,
+  MLLogo,
+  MLShop,
+  MLSocial,
+  MLText,
+  MLVideo,
+  MLVote,
+} from 'ui/components/modules/mlBlocks';
+import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
 type TMLTemplateProps = {
   userData: TUser;
@@ -30,98 +43,58 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
     },
     [dispatch, templates],
   );
-
+  /* <li key={block.order}>
+                    <div
+                      className="ml-logo__logo"
+                      style={{ height: block.size ?? '100px', width: block.size ?? '100px' }}>
+                      <img src={block.logo!} alt="logo" />
+                    </div>
+                  </li> */
   const getTemplateLayouts = useCallback(
     () =>
       templates.map((template, i) => (
         <ul key={ID[i]} className="ml-template">
           {template.map((block, j) => {
             switch (block.type) {
-              case MLContentType.LOGO:
-                return (
-                  <li key={block.order}>
-                    <div
-                      className="ml-logo__logo"
-                      style={{ height: block.size ?? '100px', width: block.size ?? '100px' }}>
-                      <img src={block.logo!} alt="logo" />
-                    </div>
-                  </li>
-                );
               case MLContentType.TEXT:
-                return (
-                  <li
-                    key={block.order}
-                    style={{
-                      padding: px(block.padding) ?? '0',
-                      background: block.background ?? undefined,
-                      justifyContent: block.align ?? undefined,
-                    }}>
-                    <p
-                      style={{
-                        textAlign: block.align ?? undefined,
-                        fontSize: block.fontSize ?? undefined,
-                        fontWeight: block.fontWeight ?? undefined,
-                      }}>
-                      {block.text}
-                    </p>
-                  </li>
-                );
-              case MLContentType.LINK:
-                return (
-                  <li
-                    key={block.order}
-                    className="ml-link"
-                    style={{
-                      padding: px(block.padding) ?? '0',
-                      margin: px(block.margin) ?? '0',
-                      background: block.background ?? undefined,
-                    }}>
-                    <div style={{ fontSize: block.fontSize ?? undefined }}>{block.title}</div>
-                  </li>
-                );
+                return <MLText key={ID[j]} block={block} />;
+
               case MLContentType.SOCIAL:
-                return (
-                  <li key={block.order} style={{ padding: px(block.padding) ?? '0' }}>
-                    <ul className="ml-social">
-                      {block.linkTypes.map((icon: string) => {
-                        const data = socials.find(social => social.type === icon);
-                        return (
-                          <li key={icon}>
-                            <img src={data!.src} alt={data?.title} />
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </li>
-                );
+                return <MLSocial key={ID[j]} block={block} />;
+
+              case MLContentType.WIDGET:
+                return block && <MLWidget key={ID[j]} block={block} />;
+
+              case MLContentType.VIDEO:
+                return <MLVideo key={ID[j]} block={block} />;
+
+              /* case MLContentType.AUDIO:
+                return block && <>audio block</>; */
+
+              case MLContentType.VOTE:
+                return block && <MLVote key={ID[j]} block={block} />;
+
+              case MLContentType.LOGO:
+                // variable image is one or set of images of current block
+                return block && <MLLogo key={ID[j]} block={block} images={null} />;
+
+              case MLContentType.LINK:
+                return <MLLink key={ID[j]} block={block} />;
+
+              case MLContentType.BUTTON:
+                return <MLButton key={ID[j]} block={block} />;
+
+              case MLContentType.IMAGE:
+                return <MLImages key={ID[j]} block={block} images={null} />;
+
               case MLContentType.IMAGETEXT:
-                const imgMargin = () => {
-                  switch (block.imgPosition) {
-                    case 'left':
-                      return '0 12px 12px 0';
-                    case 'right':
-                      return '0 0 12px 12px';
-                    default:
-                      return '0';
-                  }
-                };
-                return (
-                  <li key={block.order} style={{ padding: px(block.padding) ?? '0' }}>
-                    <div className="ml-imagetext">
-                      <div
-                        className="ml-imagetext__image"
-                        style={{
-                          float: block.imgPosition as CSSProperties['float'],
-                          margin: imgMargin(),
-                        }}>
-                        <img src={block.image!} alt="" />
-                      </div>
-                      <p className="ml-imagetext__text">{block.text}</p>
-                    </div>
-                  </li>
-                );
+                return <MLImageText key={ID[j]} block={block} images={null} />;
+
+              case MLContentType.SHOP:
+                return <MLShop key={ID[j]} block={block} images={null} />;
+
               default:
-                return <li key={block.order} />;
+                return <li key={ID[j]} />;
             }
           })}
         </ul>

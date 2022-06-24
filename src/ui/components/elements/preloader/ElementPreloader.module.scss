@@ -11,8 +11,8 @@ $color: white;
 }
 .ballLoaderBall{
   will-change: transform;
-  height:($width / 3) - 10px;
-  width: ($width / 3) - 10px;
+  height: calc($width / 3) - 10px;
+  width: calc($width / 3) - 10px;
   border-radius: 50%;
   background-color: $color;
   position: absolute;

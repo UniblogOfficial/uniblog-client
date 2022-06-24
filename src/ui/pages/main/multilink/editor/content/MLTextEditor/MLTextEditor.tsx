@@ -2,8 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { HexColorPicker, RgbaStringColorPicker } from 'react-colorful';
 
-import { ID } from '../../../../../../../common/constants';
-
 import styles from './MLTextEditor.module.scss';
 
 import { setMLDraftBlockContent } from 'bll/reducers';
@@ -19,9 +17,6 @@ type TMLTextEditorProps = {
 type AlignTextType = 'right' | 'left' | 'center' | 'justify';
 const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
 const fontSizeTexts: string[] = ['12', '14', '16', '18', '20', '22'];
-const paddings: string[] = ['top', 'right', 'bottom', 'left'];
-const margins: string[] = ['top', 'right', 'bottom', 'left'];
-const marginArray = [0, 0, 0, 0];
 const fontTexts = [
   'Arial, sans-serif',
   'Times, Times New Roman, serif',
@@ -30,7 +25,7 @@ const fontTexts = [
   'Snell Roundhand, cursive',
   'Trattatello, fantasy',
 ];
-const shadowTextDefault: [number, number, number, string][] = [[0, 0, 0, 'black']];
+const shadowTextDefault = ['0', '0', '0', '#000'];
 
 export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const dispatch = useAppDispatch();
@@ -38,12 +33,7 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const dispatchThrottled = useThrottle(dispatch, 200);
   const [text, setText] = useState(block.text ?? '');
   const [isTextColorPickerVisible, setIsTextColorPickerVisible] = useState<boolean>(false);
-  const [isBgColorPickerVisible, setIsBgColorPickerVisible] = useState(false);
   const [isBgColorFontTextVisible, setIsBgColorFontTextVisible] = useState(false);
-  const [isPaddingLeftRight, setIsPaddingLeftRight] = useState(false);
-  const [isMarginLeftRight, setIsMarginLeftRight] = useState(false);
-  const [isPaddingTopBottom, setIsPaddingTopBottom] = useState(false);
-  const [isMarginTopBottom, setIsMarginTopBottom] = useState(false);
 
   useEffect(() => {
     setText(block.text ?? '');
@@ -169,57 +159,52 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   };
 
   const onLineHeightChange = (e: ChangeEvent<HTMLInputElement>) => {
-    newBlock.lineHeight = +e.currentTarget.value;
-    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
+    block.lineHeight = +e.currentTarget.value;
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onFontVariantChange = (fontVariant: string) => {
-    newBlock.fontVariant = fontVariant;
-    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
+    block.fontVariant = fontVariant;
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onFontTextsChange = (font: string) => {
-    newBlock.fontFamily = font;
-    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
+    block.fontFamily = font;
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
-  const onLitterSpacingChange = (e: ChangeEvent<HTMLInputElement>) => {
-    newBlock.letterSpacing = +e.currentTarget.value;
-    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
+  const onLetterSpacingChange = (e: ChangeEvent<HTMLInputElement>) => {
+    block.letterSpacing = +e.currentTarget.value;
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onTextShadowChange = (e: ChangeEvent<HTMLInputElement>) => {
     const shadow = e.currentTarget.value;
     const shadowName = e.currentTarget.name;
-    if (Array.isArray(newBlock.textShadow)) {
-      if (shadowName === 'offset-x') {
-        newBlock.textShadow[0][0] = +shadow;
-      } else if (shadowName === 'offset-y') {
-        newBlock.textShadow[0][1] = +shadow;
-      } else if (shadowName === 'blur-radius') {
-        newBlock.textShadow[0][2] = +shadow;
-      }
-    } else {
-      if (shadowName === 'offset-x') {
-        shadowTextDefault[0][0] = +shadow;
-      } else if (shadowName === 'offset-y') {
-        shadowTextDefault[0][1] = +shadow;
-      } else if (shadowName === 'blur-radius') {
-        shadowTextDefault[0][2] = +shadow;
-      }
-      newBlock.textShadow = shadowTextDefault;
+    const currentShadow = block.textShadow?.length
+      ? block.textShadow[0].split(' ')
+      : shadowTextDefault;
+    if (block.textShadow?.length) {
+      console.log(block.textShadow);
     }
-    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
+    if (shadowName === 'offset-x') {
+      currentShadow[0] = `${shadow}px`;
+    } else if (shadowName === 'offset-y') {
+      currentShadow[1] = `${shadow}px`;
+    } else if (shadowName === 'blur-radius') {
+      currentShadow[2] = `${shadow}px`;
+    }
+    block.textShadow = [currentShadow.join(' ')];
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   const onBackgroundTextShadowChange = (backgroundColor: string) => {
-    if (Array.isArray(newBlock.textShadow)) {
-      newBlock.textShadow[0][3] = backgroundColor;
-    } else {
-      shadowTextDefault[0][3] = backgroundColor;
-      newBlock.textShadow = shadowTextDefault;
-    }
-    dispatch(setMLDraftBlockContent({ content: newBlock, order, field: 'textBlocks' }));
+    const currentShadow = block.textShadow?.length
+      ? block.textShadow[0].split(' ')
+      : shadowTextDefault;
+    currentShadow[3] = backgroundColor;
+    block.textShadow = [currentShadow.join(' ')];
+    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
   };
 
   return (
@@ -281,14 +266,14 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
             <input
               key={color}
               type="button"
-              className={styles.circle}
+              className="circle"
               style={{ backgroundColor: color }}
               onClick={() => onColorChange(color)}
             />
           ))}
           <input
             type="button"
-            className={styles.circleGradient}
+            className="circleGradient"
             onClick={() => setIsTextColorPickerVisible(true)}
           />
           {isTextColorPickerVisible && (
@@ -300,213 +285,98 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
             </>
           )}
         </div>
-        <div style={{ paddingTop: '15px' }}>
-          Background:
-          {defaultColors.map((color, index) => (
-            <input
-              key={color}
-              type="button"
-              className={styles.circle}
-              style={{ backgroundColor: color }}
-              onClick={() => onBackgroundColorChange(color)}
-            />
-          ))}
-          <input
-            type="button"
-            className={styles.circleGradient}
-            onClick={() => setIsBgColorPickerVisible(true)}
-          />
-          {isBgColorPickerVisible && (
-            <>
-              <RgbaStringColorPicker
-                color={block.background ?? '#ffff'}
-                onChange={onBackgroundColorChange}
-              />
-              <Button className={styles.button} onClick={() => setIsBgColorPickerVisible(false)}>
-                Ok
-              </Button>
-            </>
-          )}
-          <div>
-            Padding:
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                marginTop: '15px',
-                justifyContent: 'space-around',
-              }}>
-              <label>
-                Left&Right
-                <input type="checkbox" onChange={() => setIsPaddingLeftRight(true)} />
-              </label>
-              <label>
-                Top&Bottom
-                <input type="checkbox" onChange={() => setIsPaddingTopBottom(true)} />
-              </label>
-            </div>
-          </div>
-          <div className={styles.flex__row3}>
-            {paddings.map((padding, i: number) => (
-              <div key={padding}>
-                <label>{padding}:</label>
-                <input
-                  type="range"
-                  name={padding}
-                  min={4}
-                  max={60}
-                  step={4}
-                  defaultValue={i}
-                  value={Array.isArray(block?.padding) ? block?.padding[i] : i}
-                  onChange={onPaddingChange}
-                />
-              </div>
-            ))}
-          </div>
-          <div>
-            {' '}
-            Margin:
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                marginTop: '15px',
-                justifyContent: 'space-around',
-              }}>
-              <label>
-                Left&Right
-                <input type="checkbox" onChange={() => setIsMarginLeftRight(true)} />
-              </label>
-              <label>
-                Top&Bottom
-                <input type="checkbox" onChange={() => setIsMarginTopBottom(true)} />
-              </label>
-            </div>
-          </div>
-          <div className={styles.flex__row3}>
-            {margins.map((margin, i: number) => (
-              <div key={margin}>
-                <label>{margin}:</label>
-                <input
-                  type="range"
-                  name={margin}
-                  min={4}
-                  max={60}
-                  step={4}
-                  defaultValue={i}
-                  value={Array.isArray(block?.margin) ? block?.margin[i] : i}
-                  onChange={onMarginChange}
-                />
-              </div>
-            ))}
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              marginTop: '15px',
-              justifyContent: 'space-around',
-            }}>
-            <label>
-              Line Height:
-              <input
-                type="range"
-                name="Line Height"
-                min={1}
-                max={2.5}
-                step={0.1}
-                value={block.lineHeight ?? 1}
-                onChange={onLineHeightChange}
-              />
-            </label>
-            <label>
-              Letter Spacing:
-              <input
-                type="range"
-                name="Letter Spacing"
-                min={-2}
-                max={10}
-                step={0.1}
-                value={block.letterSpacing ?? 0.3}
-                onChange={onLitterSpacingChange}
-              />
-            </label>
-            <label>
-              Variant
-              <input
-                type="checkbox"
-                onChange={() =>
-                  onFontVariantChange(block.fontVariant === 'small-caps' ? 'normal' : 'small-caps')
-                }
-              />
-            </label>
-          </div>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginTop: '15px',
-            width: '150px',
-            justifyContent: 'center',
-          }}>
-          Font Shadow:
-          <label style={{ marginTop: '5px' }}>
-            Left or Right
+        <div className={styles.flex_row2}>
+          <label>
+            Line Height:
             <input
               type="range"
-              name="offset-x"
-              min={-5}
-              max={10}
-              step={1}
-              value={Array.isArray(block?.textShadow) ? block.textShadow[0][0] : 0}
-              onChange={onTextShadowChange}
+              name="Line Height"
+              min={1}
+              max={2.5}
+              step={0.1}
+              value={block.lineHeight ?? 1}
+              onChange={onLineHeightChange}
             />
           </label>
           <label>
-            Top or Bottom
+            Letter Spacing:
             <input
               type="range"
-              name="offset-y"
-              min={-5}
+              name="Letter Spacing"
+              min={-2}
               max={10}
-              step={1}
-              value={Array.isArray(block?.textShadow) ? block.textShadow[0][1] : 0}
-              onChange={onTextShadowChange}
+              step={0.1}
+              value={block.letterSpacing ?? 0.3}
+              onChange={onLetterSpacingChange}
             />
           </label>
           <label>
-            Blur radius
+            Variant
             <input
-              type="range"
-              name="blur-radius"
-              min={0}
-              max={10}
-              step={1}
-              value={Array.isArray(block?.textShadow) ? block.textShadow[0][2] : 0}
-              onChange={onTextShadowChange}
+              type="checkbox"
+              onChange={() =>
+                onFontVariantChange(block.fontVariant === 'small-caps' ? 'normal' : 'small-caps')
+              }
             />
           </label>
         </div>
-        <div>
+      </div>
+      <div className={styles.font_shadow_select}>
+        Font Shadow:
+        <label style={{ marginTop: '5px' }}>
+          Left or Right
           <input
-            type="button"
-            className={styles.circleGradient}
-            onClick={() => setIsBgColorFontTextVisible(true)}
+            type="range"
+            name="offset-x"
+            min={-5}
+            max={10}
+            step={1}
+            value={block?.textShadow?.length ? block.textShadow[1] : 0}
+            onChange={onTextShadowChange}
           />
-
-          {isBgColorFontTextVisible && (
-            <>
-              <HexColorPicker
-                color={Array.isArray(block?.textShadow) ? block.textShadow[0][3] : 'black'}
-                onChange={onBackgroundTextShadowChange}
-              />
-              <Button className={styles.button} onClick={() => setIsBgColorFontTextVisible(false)}>
-                Ok
-              </Button>
-            </>
-          )}
-        </div>
+        </label>
+        <label>
+          Top or Bottom
+          <input
+            type="range"
+            name="offset-y"
+            min={-5}
+            max={10}
+            step={1}
+            value={block?.textShadow?.length ? block.textShadow[1] : 0}
+            onChange={onTextShadowChange}
+          />
+        </label>
+        <label>
+          Blur radius
+          <input
+            type="range"
+            name="blur-radius"
+            min={0}
+            max={10}
+            step={1}
+            value={block?.textShadow?.length ? block.textShadow[2] : 0}
+            onChange={onTextShadowChange}
+          />
+        </label>
+      </div>
+      <div>
+        <input
+          type="button"
+          className="circleGradient"
+          onClick={() => setIsBgColorFontTextVisible(true)}
+        />
+        {isBgColorFontTextVisible && (
+          <>
+            <HexColorPicker
+              color={Array.isArray(block?.textShadow) ? block.textShadow[3] : 'black'}
+              onChange={onBackgroundTextShadowChange}
+            />
+            <Button className={styles.button} onClick={() => setIsBgColorFontTextVisible(false)}>
+              Ok
+            </Button>
+          </>
+        )}
       </div>
     </>
   );

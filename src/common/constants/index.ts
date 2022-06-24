@@ -23,6 +23,9 @@ export enum SocialService {
   DISCORD = 'discord',
   PATREON = 'patreon',
   TWITCH = 'twitch',
+  WASD = 'wasd',
+  DONATIONALERTS = 'donationalerts',
+  DZEN = 'dzen',
 }
 
 export enum MLContentType {
@@ -61,6 +64,13 @@ export enum AppStatus {
   CONTENT_FAILED = 'CONTENT_FAILED',
   USERDATA_FAILED = 'USERDATA_FAILED',
   UNKNOWN_ERROR = 'UNKNOWN_ERROR',
+}
+
+export enum Direction {
+  TOP,
+  RIGHT,
+  BOTTOM,
+  LEFT,
 }
 
 export { PrivatePath, PublicPath } from './path';

@@ -2,6 +2,8 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { MLButton } from '../../../../components/modules/mlBlocks/mlButton/MLButton';
+
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
@@ -22,6 +24,7 @@ import {
   MLSocial,
   MLText,
   MLVideo,
+  MLVote,
 } from 'ui/components/modules/mlBlocks';
 import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
@@ -46,7 +49,6 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const [blockEditorOrder, setBlockEditorOrder] = useState(voidOrder);
   const { name, background, maxWidth, contentMap, blocks, images } =
     useAppSelector<TMultilinkDraft>(state => state.mlDraft);
-
   const stageTitles = useMemo(
     () => [
       t('pages:multilink.creation.stages.template'),
@@ -115,15 +117,25 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                 block = blocks[type][i];
                 return block && <>audio block</>;
 
+              case MLContentType.VOTE:
+                block = blocks[type][i];
+                return block && <MLVote key={ID[i]} block={block} callback={callback} />;
+
               case MLContentType.LOGO:
                 block = blocks[type][i];
                 // variable image is one or set of images of current block
                 image = images.blocks[type][i];
-                return <MLLogo key={ID[i]} block={block} images={image} callback={callback} />;
+                return (
+                  block && <MLLogo key={ID[i]} block={block} images={image} callback={callback} />
+                );
 
               case MLContentType.LINK:
                 block = blocks[type][i];
                 return <MLLink key={ID[i]} block={block} callback={callback} />;
+
+              case MLContentType.BUTTON:
+                block = blocks[type][i];
+                return <MLButton key={ID[i]} block={block} callback={callback} />;
 
               case MLContentType.IMAGE:
                 block = blocks[type][i];

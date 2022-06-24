@@ -35,9 +35,9 @@ export const MLImageEditor = ({ order, block, images }: TMLImageEditorProps) => 
       </li>
     ));
   return (
-    <>
+    <div className="ml-image-editor">
       <ul>{fields}</ul>
       <Button>Add element</Button>
-    </>
+    </div>
   );
 };

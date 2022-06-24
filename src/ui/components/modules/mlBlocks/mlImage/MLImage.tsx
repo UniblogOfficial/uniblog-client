@@ -5,13 +5,13 @@ import { IMLDraftImage, Nullable, TImageFile, TMLImageContentImage } from 'commo
 import { px } from 'common/utils/ui';
 import imgPlaceholder from 'img/img-placeholder.png';
 
-type TMLImagesProps = {
+type TMLImageProps = {
   block: Nullable<IMLDraftImage>;
   images: Nullable<TMLImageContentImage<TImageFile>>;
   callback?: <T>(payload: T) => void;
 };
 
-export const MLImages = ({ block, images, callback }: TMLImagesProps) => {
+export const MLImage = ({ block, images, callback }: TMLImageProps) => {
   if (!block) return null;
   const className = callback ? 'interactive' : undefined;
   return (

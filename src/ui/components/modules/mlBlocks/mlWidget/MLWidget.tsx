@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 import { IMLDraftWidget } from 'common/types/instance';
 import { px } from 'common/utils/ui';
@@ -21,7 +21,6 @@ export const MLWidget = ({ block, callback }: TMLWidgetProps) => {
         width="300"
         height="300"
         title="widget"
-        allowTransparency
         scrolling="no"
         frameBorder="0"
       />

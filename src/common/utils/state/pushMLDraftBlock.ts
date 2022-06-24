@@ -1,9 +1,12 @@
+import { types } from 'sass';
+
 import { parseRawImage } from '../ui';
 
 import { getKeys } from '.';
 
-import { MLContentType, SocialNetwork } from 'common/constants';
+import { IconColor, MLContentType, SocialNetwork } from 'common/constants';
 import {
+  IMLDraftButton,
   IMLDraftImage,
   IMLDraftImageText,
   IMLDraftLink,
@@ -11,6 +14,7 @@ import {
   IMLDraftShop,
   IMLDraftSocial,
   IMLDraftText,
+  IMLDraftWidget,
   Nullable,
   TIncomingImage,
   TMLDraftBlocks,
@@ -51,6 +55,22 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
               order,
               ...defaultLinkBlockOptions,
             } as IMLDraftLink,
+          ];
+        } else {
+          newBlocks[key] = [...blocks[key], null];
+        }
+      });
+      break;
+
+    case MLContentType.BUTTON:
+      getKeys(blocks).forEach(key => {
+        if (key === 'buttonBlocks') {
+          newBlocks[key] = [
+            ...blocks.buttonBlocks,
+            {
+              order,
+              ...defaultButtonBlockOptions,
+            } as IMLDraftButton,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -99,6 +119,22 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
               order,
               ...defaultShopBlockOptions,
             } as IMLDraftShop,
+          ];
+        } else {
+          newBlocks[key] = [...blocks[key], null];
+        }
+      });
+      break;
+
+    case MLContentType.WIDGET:
+      getKeys(blocks).forEach(key => {
+        if (key === 'widgetBlocks') {
+          newBlocks[key] = [
+            ...blocks.widgetBlocks,
+            {
+              order,
+              ...defaultWidgetBlockOptions,
+            } as IMLDraftWidget,
           ];
         } else {
           newBlocks[key] = [...blocks[key], null];
@@ -183,6 +219,20 @@ const defaultLinkBlockOptions: Omit<IMLDraftLink, 'order'> = {
   background: `#f${Math.random().toString(16).substr(-4)}f40`,
 };
 
+const defaultButtonBlockOptions: Omit<IMLDraftButton, 'order'> = {
+  type: MLContentType.BUTTON,
+  isFilled: false,
+  href: '',
+  title: 'Кнопка',
+  fontSize: 20,
+  fontWeight: 500,
+  padding: [12, 24],
+  margin: [0, 24, 12],
+  color: 'white',
+  borderRadius: 5,
+  background: IconColor.INFO,
+};
+
 const defaultImageBlockOptions: Omit<IMLDraftImage, 'order'> = {
   type: MLContentType.IMAGE,
   isFilled: false,
@@ -257,4 +307,9 @@ const defaultShopBlockOptions: Omit<IMLDraftShop, 'order'> = {
   subtitleFontSize: 14,
   subtitleFontWeight: 700,
   subtitleAlign: 'center',
+};
+
+const defaultWidgetBlockOptions: Omit<IMLDraftWidget, 'order' | 'url'> = {
+  type: MLContentType.WIDGET,
+  isFilled: false,
 };
