@@ -246,7 +246,7 @@ const defaultButtonBlockOptions: Omit<IMLDraftButton, 'order'> = {
   padding: [12, 24],
   margin: [0, 24, 12],
   color: 'white',
-  borderRadius: 5,
+  borderRadius: [5],
   background: IconColor.INFO,
 };
 
