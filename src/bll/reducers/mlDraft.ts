@@ -2,9 +2,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { setAppStatus } from '.';
 
-import { AppThunk, store } from 'bll/store';
-import { AppStatus, MLConstructorStage, MLContentType, SocialNetwork } from 'common/constants';
-import { AppThunk } from 'bll/store';
 import {
   AppStatus,
   MLConstructorStage,
@@ -22,14 +19,12 @@ import {
   IMLDraftLink,
 } from 'common/types/instance';
 import { IMLDraftContent } from 'common/types/instance/mlDraft';
-import { TLoginDto } from 'common/types/request';
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request/multilink.dto';
 import {
   pushMLDraftBlock,
   pushMLDraftBlockLogo,
   pushMLDraftBlockSocial,
   notNull,
-  handleServerNetworkError,
 } from 'common/utils/state';
 import { authAPI, multilinkAPI } from 'dal';
 import { getTemplates } from 'ui/pages/main/multilink/editor/template/templates';

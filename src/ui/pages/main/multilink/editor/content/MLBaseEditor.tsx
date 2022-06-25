@@ -70,7 +70,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
 
     if (isPaddingTopBottom && isPaddingLeftRight) {
       copyBlock.padding = new Array(4).fill(padding);
-      dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
+      dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
       return;
     }
 
@@ -104,7 +104,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
 
     if (isMarginTopBottom && isMarginLeftRight) {
       copyBlock.margin = new Array(4).fill(margin);
-      dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
+      dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
       return;
     }
 
