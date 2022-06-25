@@ -16,9 +16,10 @@ type TMLImageEditorProps = {
 export const MLImageEditor = ({ order, block, images }: TMLImageEditorProps) => {
   const dispatch = useAppDispatch();
   const copyBlock = { ...block };
-  const copyImages = images && { ...images };
+
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
+      const copyImages = images && { ...images };
       if (copyImages && id !== undefined) {
         copyImages.images[id] = imageFile;
         dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: 'imageBlocks' }));

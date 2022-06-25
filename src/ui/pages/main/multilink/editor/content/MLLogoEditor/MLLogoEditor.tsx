@@ -20,6 +20,7 @@ enum ImageType {
 
 export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
   const dispatch = useAppDispatch();
+
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
       const copyImages = { ...images };
