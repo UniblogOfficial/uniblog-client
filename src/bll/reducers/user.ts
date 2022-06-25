@@ -1,8 +1,10 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { setAppStatus } from '.';
 
 import { AppThunk } from 'bll/store';
 import { AppStatus } from 'common/constants';
-import { TImageFile, Nullable, Role, TUser } from 'common/types/instance';
+import { TImageFile, Nullable, Role, TUser, TIncomingImage } from 'common/types/instance';
 import { handleServerNetworkError } from 'common/utils/state';
 import { userAPI } from 'dal';
 
@@ -14,24 +16,37 @@ enum UserActionType {
 
 const initialState = null;
 
-export const userReducer = (state: TUserState = initialState, action: TUserActions): TUserState => {
-  switch (action.type) {
-    case UserActionType.SET_USER_DATA:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case UserActionType.REMOVE_USER_DATA:
-      return null;
-    default:
-      return state;
-  }
-};
+const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    removeUserData: () => null,
+    // @ts-ignore
+    setUserData: (_, action: PayloadAction<TUser>) => action.payload,
+  },
+});
+
+// export const userReducer = (state: TUserState = initialState, action: TUserActions): TUserState => {
+//   switch (action.type) {
+//     case UserActionType.SET_USER_DATA:
+//       return {
+//         ...state,
+//         ...action.payload,
+//       };
+//     case UserActionType.REMOVE_USER_DATA:
+//       return null;
+//     default:
+//       return state;
+//   }
+// };
 
 // actions
-export const setUserData = (userData: TUser) =>
-  ({ type: UserActionType.SET_USER_DATA, payload: { ...userData } } as const);
-export const removeUserData = () => ({ type: UserActionType.REMOVE_USER_DATA } as const);
+// export const setUserData = (userData: TUser) =>
+//   ({ type: UserActionType.SET_USER_DATA, payload: { ...userData } } as const);
+// export const removeUserData = () => ({ type: UserActionType.REMOVE_USER_DATA } as const);
+
+export const { removeUserData, setUserData } = userSlice.actions;
+export const userReducer = userSlice.reducer;
 
 // thunks
 export const requestSaveAvatar =

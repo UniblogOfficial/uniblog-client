@@ -35,6 +35,8 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const [isTextColorPickerVisible, setIsTextColorPickerVisible] = useState<boolean>(false);
   const [isBgColorFontTextVisible, setIsBgColorFontTextVisible] = useState(false);
 
+  const copyBlock = block && { ...block };
+
   useEffect(() => {
     setText(block.text ?? '');
   }, [block]);
@@ -42,63 +44,63 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
   const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     setText(newText);
-    block.text = newText;
-    dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.text = newText;
+    dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onAlignChange = (align: AlignTextType) => {
-    block.align = align;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.align = align;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onColorChange = (color: string) => {
-    block.color = color;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.color = color;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onTextSizeChange = (fontSize: string) => {
-    block.fontSize = +fontSize;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.fontSize = +fontSize;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onFontWeightChange = (fontWeight: number) => {
-    block.fontWeight = fontWeight;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.fontWeight = fontWeight;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onItalicTextChange = (fontStyle: string) => {
-    block.fontStyle = fontStyle;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.fontStyle = fontStyle;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onLineHeightChange = (e: ChangeEvent<HTMLInputElement>) => {
-    block.lineHeight = +e.currentTarget.value;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.lineHeight = +e.currentTarget.value;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onFontVariantChange = (fontVariant: string) => {
-    block.fontVariant = fontVariant;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.fontVariant = fontVariant;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onFontTextsChange = (font: string) => {
-    block.fontFamily = font;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.fontFamily = font;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onLetterSpacingChange = (e: ChangeEvent<HTMLInputElement>) => {
-    block.letterSpacing = +e.currentTarget.value;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.letterSpacing = +e.currentTarget.value;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onTextShadowChange = (e: ChangeEvent<HTMLInputElement>) => {
     const shadow = e.currentTarget.value;
     const shadowName = e.currentTarget.name;
-    const currentShadow = block.textShadow?.length
-      ? block.textShadow[0].split(' ')
+    const currentShadow = copyBlock.textShadow?.length
+      ? copyBlock.textShadow[0].split(' ')
       : shadowTextDefault;
-    if (block.textShadow?.length) {
-      console.log(block.textShadow);
+    if (copyBlock.textShadow?.length) {
+      console.log(copyBlock.textShadow);
     }
     if (shadowName === 'offset-x') {
       currentShadow[0] = `${shadow}px`;
@@ -107,17 +109,17 @@ export const MLTextEditor = ({ order, block }: TMLTextEditorProps) => {
     } else if (shadowName === 'blur-radius') {
       currentShadow[2] = `${shadow}px`;
     }
-    block.textShadow = [currentShadow.join(' ')];
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.textShadow = [currentShadow.join(' ')];
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onBackgroundTextShadowChange = (backgroundColor: string) => {
-    const currentShadow = block.textShadow?.length
-      ? block.textShadow[0].split(' ')
+    const currentShadow = copyBlock.textShadow?.length
+      ? copyBlock.textShadow[0].split(' ')
       : shadowTextDefault;
     currentShadow[3] = backgroundColor;
-    block.textShadow = [currentShadow.join(' ')];
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    copyBlock.textShadow = [currentShadow.join(' ')];
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   return (
