@@ -20,33 +20,35 @@ enum ImageType {
 
 export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
   const dispatch = useAppDispatch();
+  const copyBlock = block && { ...block };
+  const copyImages = { ...images };
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
-      if (images && id !== undefined) {
+      if (copyImages && id !== undefined) {
         if (id === ImageType.LOGO) {
-          images.logo = imageFile;
+          copyImages.logo = imageFile;
         }
         if (id === ImageType.BANNER) {
-          images.banner = imageFile;
+          copyImages.banner = imageFile;
         }
-        dispatch(setMLDraftBlockContentImage({ images, order, field: 'logoBlocks' }));
+        dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: 'logoBlocks' }));
       }
     },
     [dispatch, images, order],
   );
   const onDeleteButtonClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
-      if (block && e.currentTarget.value) {
+      if (copyBlock && e.currentTarget.value) {
         if (e.currentTarget.value === '1') {
           // block.image = null;
         }
         if (e.currentTarget.value === '2') {
-          block.banner = null;
+          copyBlock.banner = null;
         }
-        dispatch(setMLDraftBlockContent({ content: block, order, field: 'logoBlocks' }));
+        dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
       }
     },
-    [block, dispatch, order],
+    [copyBlock, dispatch, order],
   );
 
   if (!block) return <p>Error: Block not found</p>;

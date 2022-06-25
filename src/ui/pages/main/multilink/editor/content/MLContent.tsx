@@ -224,6 +224,7 @@ export const MLContent = (props: TMLContentProps) => {
         return (
           currentBlock && (
             <MLBaseEditor
+              // @ts-ignore
               blockEditor={<MlButtonEditor block={currentBlock} order={blockEditorOrder} />}
             />
           )

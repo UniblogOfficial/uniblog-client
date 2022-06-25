@@ -25,6 +25,9 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
   const [titles, setTitles] = useState(initialTitles ?? []);
   const [subtitles, setSubTitles] = useState(initialSubTitles ?? []);
 
+  const copyBlock = block && { ...block };
+  const copyImages = images && { ...images };
+
   useEffect(() => {
     setTitles(block?.cells.map(cell => cell.title) ?? []);
     setSubTitles(block?.cells.map(cell => cell.subtitle) ?? []);
@@ -32,9 +35,10 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
-      if (images && id !== undefined) {
-        images.cells[id] = imageFile;
-        dispatch(setMLDraftBlockContentImage({ images, order, field: 'shopBlocks' }));
+      if (copyImages && id !== undefined) {
+        copyImages.cells[id] = imageFile;
+        // @ts-ignore
+        dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: copyBlock.type }));
       }
     },
     [dispatch, images, order],
@@ -42,15 +46,14 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const currentOrder = e.currentTarget.dataset.value;
-    if (block && currentOrder) {
+    if (copyBlock && currentOrder) {
       switch (e.currentTarget.name) {
         case 'title':
           setTitles(
             titles.map((title, index) => (index === +currentOrder ? e.currentTarget.value : title)),
           );
-          block.cells[+currentOrder].title = e.currentTarget.value;
-          // @ts-ignore
-          dispatchThrottled(setMLDraftBlockContent({ content: block, order, field: 'shopSet' }));
+          copyBlock.cells[+currentOrder].title = e.currentTarget.value;
+          dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
           break;
         case 'subtitle':
           setSubTitles(
@@ -58,9 +61,8 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
               index === +currentOrder ? e.currentTarget.value : subtitle,
             ),
           );
-          block.cells[+currentOrder].subtitle = e.currentTarget.value;
-          // @ts-ignore
-          dispatchThrottled(setMLDraftBlockContent(block, order, 'shopSet'));
+          copyBlock.cells[+currentOrder].subtitle = e.currentTarget.value;
+          dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
           break;
         default:
           break;
@@ -68,8 +70,8 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
     }
   };
 
-  if (!block) return <p>Error: Block not found</p>;
-  const fields = block.cells.map((cell, i) => (
+  if (!copyBlock) return <p>Error: Block not found</p>;
+  const fields = copyBlock.cells.map((cell, i) => (
     <li key={ID[i]}>
       <div
         style={{

@@ -1,6 +1,6 @@
-import { setAppStatus } from '.';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { setAppStatus, setUserData } from '.';
+import { setAppStatus } from '.';
 
 import { AppThunk, store } from 'bll/store';
 import { AppStatus, MLConstructorStage, MLContentType, SocialNetwork } from 'common/constants';
@@ -12,6 +12,7 @@ import {
   TMLDraftImages,
   TMultilinkDraft,
 } from 'common/types/instance';
+import { IMLDraftContent } from 'common/types/instance/mlDraft';
 import { TLoginDto } from 'common/types/request';
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request/multilink.dto';
 import {
@@ -292,123 +293,182 @@ const mlDraftSlice = createSlice({
         state.contentMap.length,
         action.payload.socials,
       );
-      return {
-        ...state,
-        contentMap: [...state.contentMap, MLContentType.SOCIAL],
-        blocks: newBlocks,
-      };
-
-    case mlDraftAction.SET_MULTILINK_DRAFT_BLOCK_CONTENT:
-      return {
-        ...state,
+      state.contentMap = [...state.contentMap, MLContentType.SOCIAL];
+      state.blocks = newBlocks;
+    },
+    setMLDraftBlockContent<T extends IMLDraftContent<any>>(
+      state: TMLDraftState,
+      action: PayloadAction<{ content: T; order: number }>,
+    ) {
+      const field = action.payload.content.type as unknown as keyof TMLDraftBlocks;
+      state.blocks[field][action.payload.content.order] = action.payload.content;
+    },
+    setMLDraftBlockContentImage<T>(
+      state: TMLDraftState,
+      action: PayloadAction<{
+        images: T;
+        order: number;
+        field: keyof Pick<
+          TMLDraftBlocks,
+          | 'logoBlocks'
+          | 'imageBlocks'
+          | 'imageTextBlocks'
+          | 'shopBlocks'
+          | 'carouselBlocks'
+          | 'buttonBlocks'
+          | 'linkBlocks'
+        >;
+      }>,
+    ) {
+      state.images = {
+        ...state.images,
         blocks: {
-          ...state.blocks,
+          ...state.images.blocks,
           ...{
-            [`${action.payload.field}`]: state.blocks[action.payload.field].map((block, i) =>
-              i === action.payload.order ? action.payload.content : block,
+            [`${action.payload.field}`]: state.images.blocks[action.payload.field].map(
+              (block: any, i: number) =>
+                i === action.payload.order ? action.payload.images : block,
             ),
           },
         },
       };
+    },
+  },
+});
 
-    case mlDraftAction.SET_MULTILINK_DRAFT_BLOCK_CONTENT_IMAGE:
-      return {
-        ...state,
-        images: {
-          ...state.images,
-          blocks: {
-            ...state.images.blocks,
-            ...{
-              [`${action.payload.field}`]: state.images.blocks[action.payload.field].map(
-                (block, i) => (i === action.payload.order ? action.payload.images : block),
-              ),
-            },
-          },
-        },
-      };
-
-    default:
-      return state;
-  }
-};
+export const {
+  setMLDraftName,
+  setMLDraftTemplate,
+  setMLDraftLogoFromUserAvatar,
+  setMLDraftBackground,
+  setMLDraftBackgroundImage,
+  addMLDraftBlock,
+  addMLDraftBlockLogo,
+  addMLDraftBlockSocial,
+  setMLDraftBlockContent,
+  setMLDraftBlockContentImage,
+} = mlDraftSlice.actions;
+export const mlDraftReducer = mlDraftSlice.reducer;
 // actions
-export const setMLDraftName = (name: string) =>
-  ({
-    type: mlDraftAction.SET_MULTILINK_DRAFT_NAME,
-    payload: { name },
-  } as const);
+// export const setMLDraftName = (name: string) =>
+//   ({
+//     type: mlDraftAction.SET_MULTILINK_DRAFT_NAME,
+//     payload: { name },
+//   } as const);
 
-export const setMLDraftTemplate = (templates: ReturnType<typeof getTemplates>, index: number) =>
-  ({
-    type: mlDraftAction.SET_MULTILINK_DRAFT_TEMPLATE,
-    payload: { template: templates[index] },
-  } as const);
+// export const setMLDraftTemplate = (templates: ReturnType<typeof getTemplates>, index: number) =>
+//   ({
+//     type: mlDraftAction.SET_MULTILINK_DRAFT_TEMPLATE,
+//     payload: { template: templates[index] },
+//   } as const);
 
-export const setMLDraftLogoFromUserAvatar = (avatar: Nullable<TIncomingImage>) =>
-  ({
-    type: mlDraftAction.SET_MULTILINK_DRAFT_LOGO_FROM_USER_AVATAR,
-    payload: { avatar },
-  } as const);
+// export const setMLDraftLogoFromUserAvatar = (avatar: Nullable<TIncomingImage>) =>
+//   ({
+//     type: mlDraftAction.SET_MULTILINK_DRAFT_LOGO_FROM_USER_AVATAR,
+//     payload: { avatar },
+//   } as const);
 
-export const setMLDraftBackground = (background: string) =>
-  ({
-    type: mlDraftAction.SET_MULTILINK_DRAFT_BACKGROUND,
-    payload: { background },
-  } as const);
+// export const setMLDraftBackground = (background: string) =>
+//   ({
+//     type: mlDraftAction.SET_MULTILINK_DRAFT_BACKGROUND,
+//     payload: { background },
+//   } as const);
 
-export const setMLDraftBackgroundImage = (background: TImageFile) =>
-  ({
-    type: mlDraftAction.SET_MULTILINK_DRAFT_BACKGROUND_IMAGE,
-    payload: { background },
-  } as const);
+// export const setMLDraftBackgroundImage = (background: TImageFile) =>
+//   ({
+//     type: mlDraftAction.SET_MULTILINK_DRAFT_BACKGROUND_IMAGE,
+//     payload: { background },
+//   } as const);
 
-export const addMLDraftBlock = (type: MLContentType) =>
-  ({
-    type: mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK,
-    payload: { type },
-  } as const);
+// export const addMLDraftBlock = (type: MLContentType) =>
+//   ({
+//     type: mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK,
+//     payload: { type },
+//   } as const);
 
-export const addMLDraftBlockLogo = (logo: Nullable<TIncomingImage>) =>
-  ({
-    type: mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_LOGO,
-    payload: { logo },
-  } as const);
+// export const addMLDraftBlockLogo = (logo: Nullable<TIncomingImage>) =>
+//   ({
+//     type: mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_LOGO,
+//     payload: { logo },
+//   } as const);
 
-export const addMLDraftBlockSocial = (socials: { type: SocialNetwork; href: string }[]) =>
-  ({
-    type: mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL,
-    payload: { socials },
-  } as const);
+// export const addMLDraftBlockSocial = (socials: { type: SocialNetwork; href: string }[]) =>
+//   ({
+//     type: mlDraftAction.PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL,
+//     payload: { socials },
+//   } as const);
 
-export const setMLDraftBlockContent = <T>(content: T, order: number, field: keyof TMLDraftBlocks) =>
-  ({
-    type: mlDraftAction.SET_MULTILINK_DRAFT_BLOCK_CONTENT,
-    payload: { content, order, field },
-  } as const);
+// export const setMLDraftBlockContent = <T>(content: T, order: number, field: keyof TMLDraftBlocks) =>
+//   ({
+//     type: mlDraftAction.SET_MULTILINK_DRAFT_BLOCK_CONTENT,
+//     payload: { content, order, field },
+//   } as const);
 
-export const setMLDraftBlockContentImage = <T>(
-  images: T,
-  order: number,
-  field: keyof Pick<
-    TMLDraftBlocks,
-    | 'logoBlocks'
-    | 'imageBlocks'
-    | 'imageTextBlocks'
-    | 'shopBlocks'
-    | 'carouselBlocks'
-    | 'buttonBlocks'
-    | 'linkBlocks'
-  >,
-) =>
-  ({
-    type: mlDraftAction.SET_MULTILINK_DRAFT_BLOCK_CONTENT_IMAGE,
-    payload: { images, order, field },
-  } as const);
+// export const setMLDraftBlockContentImage = <T>(props: {
+//   images: T;
+//   order: number;
+//   field: keyof Pick<
+//     TMLDraftBlocks,
+//     | 'logoBlocks'
+//     | 'imageBlocks'
+//     | 'imageTextBlocks'
+//     | 'shopBlocks'
+//     | 'carouselBlocks'
+//     | 'buttonBlocks'
+//     | 'linkBlocks'
+//   >;
+// }) =>
+//   ({
+//     type: mlDraftAction.SET_MULTILINK_DRAFT_BLOCK_CONTENT_IMAGE,
+//     payload: props,
+//   } as const);
 
 // thunks
-export const publishMultilink =
-  (multilink: TMultilinkDraft): AppThunk =>
-  async dispatch => {
+// export const publishMultilink =
+//   (multilink: TMultilinkDraft): AppThunk =>
+//   async dispatch => {
+//     dispatch(setAppStatus(AppStatus.USERDATA_LOADING));
+//     const { name, background, contentMap, blocks, images } = multilink;
+//     const multilinkDto: TCreateMLDto = {
+//       name,
+//       background,
+//       maxWidth: 480,
+//       contentMap,
+//       textBlocks: blocks.textBlocks.filter(notNull),
+//       socialBlocks: blocks.socialBlocks.filter(notNull),
+//       videoBlocks: blocks.videoBlocks.filter(notNull),
+//       audioBlocks: blocks.audioBlocks.filter(notNull),
+//       dividerBlocks: blocks.dividerBlocks.filter(notNull),
+//       mapBlocks: blocks.mapBlocks.filter(notNull),
+//       postBlocks: blocks.postBlocks.filter(notNull),
+//       voteBlocks: blocks.voteBlocks.filter(notNull),
+//       widgetBlocks: blocks.widgetBlocks.filter(notNull),
+//
+//       logoBlocks: blocks.logoBlocks.filter(notNull).map(block => ({ ...block, logo: null })),
+//       linkBlocks: blocks.linkBlocks.filter(notNull),
+//       imageBlocks: blocks.imageBlocks.filter(notNull),
+//       imageTextBlocks: blocks.imageTextBlocks.filter(notNull),
+//       shopBlocks: blocks.shopBlocks.filter(notNull),
+//       carouselBlocks: blocks.carouselBlocks.filter(notNull),
+//       buttonBlocks: blocks.buttonBlocks.filter(notNull),
+//     };
+//     const imagesDto: TCreateMLImagesDto = {
+//       background: images.background ?? undefined,
+//
+//       logoBlocks: images.blocks.logoBlocks.filter(notNull),
+//       imageBlocks: images.blocks.imageBlocks.filter(notNull),
+//       imageTextBlocks: images.blocks.imageTextBlocks.filter(notNull),
+//       shopBlocks: images.blocks.shopBlocks.filter(notNull),
+//       buttonBlocks: images.blocks.buttonBlocks.filter(notNull),
+//       carouselBlocks: images.blocks.carouselBlocks.filter(notNull),
+//       linkBlocks: images.blocks.linkBlocks.filter(notNull),
+//     };
+//     const response = await multilinkAPI.create(multilinkDto, imagesDto);
+//   };
+
+export const publishMultilink = createAsyncThunk(
+  'mlDraft/publishMultilink',
+  async (multilink: TMultilinkDraft, { dispatch, rejectWithValue, getState }) => {
     dispatch(setAppStatus(AppStatus.USERDATA_LOADING));
     const { name, background, contentMap, blocks, images } = multilink;
     const multilinkDto: TCreateMLDto = {
@@ -446,7 +506,8 @@ export const publishMultilink =
       linkBlocks: images.blocks.linkBlocks.filter(notNull),
     };
     const response = await multilinkAPI.create(multilinkDto, imagesDto);
-  };
+  },
+);
 
 // types
 export type TMLDraftState = {

@@ -1,5 +1,3 @@
-import { Dirent } from 'fs';
-
 import React, { ChangeEvent, FC, PropsWithChildren, useEffect, useState } from 'react';
 
 import { RgbaStringColorPicker } from 'react-colorful';
@@ -7,8 +5,7 @@ import { RgbaStringColorPicker } from 'react-colorful';
 import { setMLDraftBlockContent } from 'bll/reducers';
 import { Direction } from 'common/constants';
 import { useAppDispatch, useThrottle } from 'common/hooks';
-import { IMLDraftContent } from 'common/types/instance/mlDraft';
-import { getKeys, getValues } from 'common/utils/state';
+import { IMLDraftContent, TMLDraftBlocks } from 'common/types/instance/mlDraft';
 import { capitalizeFirst } from 'common/utils/ui';
 import { Button } from 'ui/components/elements';
 
@@ -34,79 +31,85 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
   const [isPaddingTopBottom, setIsPaddingTopBottom] = useState(false);
   const [isMarginTopBottom, setIsMarginTopBottom] = useState(false);
 
+  const copyBlock = { ...block };
+
   const onBackgroundColorChange = (backgroundColor: string) => {
-    block.background = backgroundColor;
-    dispatch(setMLDraftBlockContent(block, order, block.type));
+    copyBlock.background = backgroundColor;
+    dispatch(
+      setMLDraftBlockContent({
+        content: copyBlock,
+        order,
+      }),
+    );
   };
   const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
     const padding = +e.currentTarget.value;
     const direction = +e.currentTarget.name;
 
-    if (!block.padding) {
-      block.padding = [0, 0, 0, 0];
+    if (!copyBlock.padding) {
+      copyBlock.padding = [0, 0, 0, 0];
     }
 
     if (isPaddingTopBottom && isPaddingLeftRight) {
-      block.padding.fill(padding);
-      dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
+      copyBlock.padding.fill(padding);
+      dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
       return;
     }
 
     if (direction === Direction.TOP || direction === Direction.BOTTOM) {
       if (isPaddingTopBottom) {
-        block.padding[Direction.TOP] = padding;
-        block.padding[Direction.BOTTOM] = padding;
+        copyBlock.padding[Direction.TOP] = padding;
+        copyBlock.padding[Direction.BOTTOM] = padding;
       } else {
-        block.padding[direction] = padding;
+        copyBlock.padding[direction] = padding;
       }
     }
     if (direction === Direction.RIGHT || direction === Direction.LEFT) {
       if (isPaddingLeftRight) {
-        block.padding[Direction.RIGHT] = padding;
-        block.padding[Direction.LEFT] = padding;
+        copyBlock.padding[Direction.RIGHT] = padding;
+        copyBlock.padding[Direction.LEFT] = padding;
       } else {
-        block.padding[direction] = padding;
+        copyBlock.padding[direction] = padding;
       }
     }
 
-    dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
 
-    dispatch(setMLDraftBlockContent(block, order, block.type));
-
+    dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   const onMarginChange = (e: ChangeEvent<HTMLInputElement>) => {
     const margin = +e.currentTarget.value;
     const direction = +e.currentTarget.name as Direction;
 
-    if (!block.margin) {
-      block.margin = [0, 0, 0, 0];
+    if (!copyBlock.margin) {
+      copyBlock.margin = [0, 0, 0, 0];
     }
 
     if (isMarginTopBottom && isMarginLeftRight) {
-      block.margin.fill(margin);
-      dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
+      copyBlock.margin.fill(margin);
+      dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
       return;
     }
 
     if (direction === Direction.TOP || direction === Direction.BOTTOM) {
       if (isMarginTopBottom) {
-        block.margin[Direction.TOP] = margin;
-        block.margin[Direction.BOTTOM] = margin;
+        copyBlock.margin[Direction.TOP] = margin;
+        copyBlock.margin[Direction.BOTTOM] = margin;
       } else {
-        block.margin[direction] = margin;
+        copyBlock.margin[direction] = margin;
       }
     }
     if (direction === Direction.RIGHT || direction === Direction.LEFT) {
       if (isMarginLeftRight) {
-        block.margin[Direction.RIGHT] = margin;
-        block.margin[Direction.LEFT] = margin;
+        copyBlock.margin[Direction.RIGHT] = margin;
+        copyBlock.margin[Direction.LEFT] = margin;
       } else {
-        block.margin[direction] = margin;
+        copyBlock.margin[direction] = margin;
       }
     }
 
-    dispatchThrottled(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
   };
 
   return (
