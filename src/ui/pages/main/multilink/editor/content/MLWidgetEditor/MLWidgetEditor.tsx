@@ -45,7 +45,7 @@ export const MLWidgetEditor = ({ order, block }: TMLWidgetEditorProps) => {
       });
 
       block.url = iframe.src;
-      dispatch(setMLDraftBlockContent(block, order, 'widgetBlocks'));
+      dispatch(setMLDraftBlockContent({ content: block, order }));
     }
   };
 

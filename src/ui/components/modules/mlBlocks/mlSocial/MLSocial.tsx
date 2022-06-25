@@ -29,14 +29,14 @@ export const MLSocial = ({ block, isPublic, callback }: TMLSocialProps) => {
               key={icon}
               style={{ height: block.size ?? undefined, width: block.size ?? undefined }}>
               <a href={block.links[i]}>
-                <img src={data!.src} alt={data?.title} />
+                <img src={data?.src} alt={data?.title} />
               </a>
             </li>
           ) : (
             <li
               key={icon}
               style={{ height: block.size ?? undefined, width: block.size ?? undefined }}>
-              <img src={data!.src} alt={data?.title} />
+              <img src={data?.src} alt={data?.title} />
             </li>
           );
         })}

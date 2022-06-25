@@ -20,30 +20,33 @@ enum ImageType {
 
 export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
   const dispatch = useAppDispatch();
+
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
-      if (images && id !== undefined) {
+      const copyImages = { ...images };
+      if (copyImages && id !== undefined) {
         if (id === ImageType.LOGO) {
-          images.logo = imageFile;
+          copyImages.logo = imageFile;
         }
         if (id === ImageType.BANNER) {
-          images.banner = imageFile;
+          copyImages.banner = imageFile;
         }
-        dispatch(setMLDraftBlockContentImage(images, order, 'logoBlocks'));
+        dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: 'logoBlocks' }));
       }
     },
     [dispatch, images, order],
   );
   const onDeleteButtonClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
+      const copyBlock = block && { ...block };
       if (e.currentTarget.value) {
         if (e.currentTarget.value === '1') {
           // block.image = null;
         }
         if (e.currentTarget.value === '2') {
-          block.banner = null;
+          copyBlock.banner = null;
         }
-        dispatch(setMLDraftBlockContent(block, order, 'logoBlocks'));
+        dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
       }
     },
     [block, dispatch, order],

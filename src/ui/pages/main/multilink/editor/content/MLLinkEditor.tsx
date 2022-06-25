@@ -92,9 +92,10 @@ export const MLLinkEditor = ({ order, close, image }: TMLLinkEditorProps) => {
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile) => {
-      if (image) {
-        image.image = imageFile;
-        dispatch(setMLDraftBlockContentImage(image, order, 'linkBlocks'));
+      const copyImage = image && { ...image };
+      if (copyImage) {
+        copyImage.image = imageFile;
+        dispatch(setMLDraftBlockContentImage({ images: copyImage, order, field: 'linkBlocks' }));
       }
     },
     [dispatch, image, order],

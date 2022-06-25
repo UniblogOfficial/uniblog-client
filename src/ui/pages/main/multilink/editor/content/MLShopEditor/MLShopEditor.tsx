@@ -25,6 +25,8 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
   const [titles, setTitles] = useState(initialTitles ?? []);
   const [subtitles, setSubTitles] = useState(initialSubTitles ?? []);
 
+  const copyBlock = block && { ...block };
+
   useEffect(() => {
     setTitles(block.cells.map(cell => cell.title) ?? []);
     setSubTitles(block.cells.map(cell => cell.subtitle) ?? []);
@@ -32,12 +34,14 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
-      if (images && id !== undefined) {
-        images.cells[id] = imageFile;
-        dispatch(setMLDraftBlockContentImage(images, order, 'shopBlocks'));
+      const copyImages = images && { ...images };
+      if (copyImages && id !== undefined) {
+        copyImages.cells[id] = imageFile;
+        // @ts-ignore
+        dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: copyBlock.type }));
       }
     },
-    [dispatch, images, order],
+    [copyBlock.type, dispatch, images, order],
   );
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,8 +52,8 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
           setTitles(
             titles.map((title, index) => (index === currentOrder ? e.currentTarget.value : title)),
           );
-          block.cells[currentOrder].title = e.currentTarget.value;
-          dispatchThrottled(setMLDraftBlockContent(block, order, 'shopBlocks'));
+          copyBlock.cells[+currentOrder].title = e.currentTarget.value;
+          dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
           break;
         case 'subtitle':
           setSubTitles(
@@ -57,8 +61,8 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
               index === currentOrder ? e.currentTarget.value : subtitle,
             ),
           );
-          block.cells[currentOrder].subtitle = e.currentTarget.value;
-          dispatchThrottled(setMLDraftBlockContent(block, order, 'shopBlocks'));
+          copyBlock.cells[+currentOrder].subtitle = e.currentTarget.value;
+          dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
           break;
         default:
           break;
@@ -66,7 +70,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
     }
   };
 
-  const fields = block.cells.map((cell, i) => (
+  const fields = copyBlock.cells.map((cell, i) => (
     <li key={ID[i]}>
       <div
         style={{
