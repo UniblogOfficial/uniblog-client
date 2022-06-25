@@ -24,7 +24,7 @@ import { MLContentType, SocialNetwork } from 'common/constants';
 export type TMultilink = {
   // id: number;
   // userId: number;
-  // name: string;
+  name: string;
   background: string;
   // clickCount: number;
   contentMap: MLContentType[];
