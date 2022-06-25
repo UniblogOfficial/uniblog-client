@@ -32,15 +32,18 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
-      if (images && id !== undefined) {
-        images.cells[id] = imageFile;
-        dispatch(setMLDraftBlockContentImage(images, order, 'shopBlocks'));
+      const copyImages = images && { ...images };
+      if (copyImages && id !== undefined) {
+        copyImages.cells[id] = imageFile;
+        // @ts-ignore
+        dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: block.type }));
       }
     },
-    [dispatch, images, order],
+    [block.type, dispatch, images, order],
   );
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const copyBlock = block && { ...block };
     if (e.currentTarget.dataset.value) {
       const currentOrder = +e.currentTarget.dataset.value;
       switch (e.currentTarget.name) {
@@ -48,8 +51,8 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
           setTitles(
             titles.map((title, index) => (index === currentOrder ? e.currentTarget.value : title)),
           );
-          block.cells[currentOrder].title = e.currentTarget.value;
-          dispatchThrottled(setMLDraftBlockContent(block, order, 'shopBlocks'));
+          copyBlock.cells[+currentOrder].title = e.currentTarget.value;
+          dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
           break;
         case 'subtitle':
           setSubTitles(
@@ -57,8 +60,8 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
               index === currentOrder ? e.currentTarget.value : subtitle,
             ),
           );
-          block.cells[currentOrder].subtitle = e.currentTarget.value;
-          dispatchThrottled(setMLDraftBlockContent(block, order, 'shopBlocks'));
+          copyBlock.cells[+currentOrder].subtitle = e.currentTarget.value;
+          dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
           break;
         default:
           break;
