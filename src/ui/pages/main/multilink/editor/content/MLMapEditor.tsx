@@ -4,7 +4,7 @@ import { IMLDraftMap, Nullable } from 'common/types/instance';
 
 type TMLMapEditorProps = {
   order: number;
-  block: Nullable<IMLDraftMap>;
+  block: IMLDraftMap;
 };
 
 export const MLMapEditor = ({ order, block }: TMLMapEditorProps) => {

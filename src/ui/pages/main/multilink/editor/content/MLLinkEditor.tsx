@@ -5,7 +5,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
-import { setMLDraftBlockContentImage } from '../../../../../../bll/reducers';
+import { setMLDraftBlockContentImage } from 'bll/reducers';
+import { MLContentType, SocialNetwork } from 'common/constants';
+import { useAppDispatch } from 'common/hooks';
 import {
   IMLDraftLink,
   IMLDraftText,
@@ -13,12 +15,9 @@ import {
   TImageFile,
   TMLImageContentImage,
   TMLImageContentLink,
-} from '../../../../../../common/types/instance';
-import { DropZoneField } from '../../../../../components/modules/imageForm/DropZoneField/DropZoneField';
-
-import { MLContentType, SocialNetwork } from 'common/constants';
-import { useAppDispatch } from 'common/hooks';
+} from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
+import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TLinkFormData = {
   title: string;
@@ -90,10 +89,10 @@ export const MLLinkEditor = ({ order, close, image }: TMLLinkEditorProps) => {
       }),
     ); */
   };
-  const copyImage = image && { ...image };
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile) => {
+      const copyImage = image && { ...image };
       if (copyImage) {
         copyImage.image = imageFile;
         dispatch(setMLDraftBlockContentImage({ images: copyImage, order, field: 'linkBlocks' }));
@@ -145,7 +144,7 @@ export const MLLinkEditor = ({ order, close, image }: TMLLinkEditorProps) => {
         </div>
       </section>
       <div style={{ position: 'relative', height: '150px' }}>
-        <DropZoneField onChange={onDropZoneChange} />
+        <ImageField onChange={onDropZoneChange} />
       </div>
       <div>
         <Button data-value="-1" type="submit" onClick={close} className="button _full _rounded">

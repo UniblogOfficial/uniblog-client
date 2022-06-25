@@ -33,8 +33,7 @@ export const MLLink = ({ block, isPublic, callback, image }: TMLLinkProps) => {
     background: block.background,
     letterSpacing: block.letterSpacing,
     textShadow: block.textShadow?.join('px '),
-    borderRadius:
-      typeof block.borderRadius === 'string' ? block.borderRadius : px(block.borderRadius),
+    borderRadius: px(block.borderRadius),
   };
   return (
     <section

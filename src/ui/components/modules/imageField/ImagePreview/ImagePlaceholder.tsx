@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import {
+import Dropzone, {
   Accept,
   DropEvent,
   DropzoneInputProps,
@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 import { IconColor } from 'common/constants';
 import { Icon } from 'ui/components/elements';
-import styles from 'ui/components/modules/imageForm/DropZoneField/DropZone.module.scss';
+import styles from 'ui/components/modules/imageField/ImageField.module.scss';
 
 type TPlaceholderProps = {
   isFilled: boolean;
@@ -46,25 +46,29 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) =>
 
   return (
     <>
-      <div {...getRootProps({ isDragAccept, isFocused, isDragReject })}>
-        {!isFilled && (
-          <Icon name="image" size="reduced" primaryColor="#d4dee8" secondaryColor="#d4dee8" />
+      <Dropzone {...getRootProps({ isDragAccept, isFocused, isDragReject })}>
+        {() => (
+          <>
+            {!isFilled && (
+              <Icon name="image" size="reduced" primaryColor="#d4dee8" secondaryColor="#d4dee8" />
+            )}
+            <input {...getInputProps()} />
+            <button type="button" className={styles['button']} onClick={open}>
+              {isFilled ? (
+                <Icon
+                  name="arrows-rotate"
+                  size="reduced"
+                  className={styles['button__icon']}
+                  primaryColor={IconColor.OK}
+                  secondaryColor={IconColor.INFO}
+                />
+              ) : (
+                t('common:placeholders.clickToSelect')
+              )}
+            </button>
+          </>
         )}
-        <input {...getInputProps()} />
-        <button type="button" className={styles['button']} onClick={open}>
-          {isFilled ? (
-            <Icon
-              name="arrows-rotate"
-              size="reduced"
-              className={styles['button__icon']}
-              primaryColor={IconColor.OK}
-              secondaryColor={IconColor.INFO}
-            />
-          ) : (
-            t('common:placeholders.clickToSelect')
-          )}
-        </button>
-      </div>
+      </Dropzone>
     </>
   );
 };

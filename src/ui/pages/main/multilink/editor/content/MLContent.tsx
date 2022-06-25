@@ -2,16 +2,15 @@ import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { MLBaseEditor } from './MLBaseEditor';
-import { MLButtonEditor } from './MLButtonEditor';
-import { MLImageEditor } from './MLImageEditor';
+import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
+import { MLImageEditor } from './MLImageEditor/MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
-import { MLLogoEditor } from './MLLogoEditor';
+import { MLLogoEditor } from './MLLogoEditor/MLLogoEditor';
 import { MLMapEditor } from './MLMapEditor';
-import { MLShopEditor } from './MLShopEditor';
+import { MLShopEditor } from './MLShopEditor/MLShopEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
-import { withBaseEditor } from './tempHoc';
+import { withBaseEditor } from './withBaseEditor';
 
 import { addMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';

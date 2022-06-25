@@ -60,7 +60,7 @@ export interface IMLDraftContent<TBlockType> {
   padding?: number[];
   margin?: number[];
   background?: string;
-  borderRadius?: number | string;
+  borderRadius?: number[];
 }
 
 interface IMLTextProperties {

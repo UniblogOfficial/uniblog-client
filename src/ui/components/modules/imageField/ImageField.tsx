@@ -1,12 +1,9 @@
 import React, { FC, DragEvent, useState, useCallback, useEffect } from 'react';
 
-import DropZone from 'react-dropzone';
-import { string } from 'yup';
-
 import { TImageFile, TIncomingImage } from 'common/types/instance';
-import { CropperContainer } from 'ui/components/modules/imageForm/DropZoneField/Cropper/Cropper';
-import { ImagePlaceholder } from 'ui/components/modules/imageForm/DropZoneField/ImagePreview/ImagePlaceholder';
-import ImagePreview from 'ui/components/modules/imageForm/DropZoneField/ImagePreview/ImagePreview';
+import { CropperContainer } from 'ui/components/modules/imageField/Cropper/Cropper';
+import { ImagePlaceholder } from 'ui/components/modules/imageField/ImagePreview/ImagePlaceholder';
+import ImagePreview from 'ui/components/modules/imageField/ImagePreview/ImagePreview';
 import { Modal } from 'ui/components/modules/modals/Modal';
 
 type TDropZoneFieldProps = {
@@ -19,7 +16,7 @@ type TDropZoneFieldProps = {
   setCroppedImage?: (file: TImageFile[]) => void;
 };
 
-export const DropZoneField: FC<TDropZoneFieldProps> = ({
+export const ImageField: FC<TDropZoneFieldProps> = ({
   initialImage,
   onChange,
   // error,

@@ -61,7 +61,7 @@ export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
         className={styles['block__button-submit']}
         style={{
           background: block.buttonBackground,
-          borderRadius: block.buttonBorderRadius,
+          borderRadius: px(block.buttonBorderRadius),
           color: block.buttonColor,
           font: block.buttonFont,
           letterSpacing: px(block.buttonLetterSpacing),
