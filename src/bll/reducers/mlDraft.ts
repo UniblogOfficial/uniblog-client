@@ -4,6 +4,14 @@ import { setAppStatus } from '.';
 
 import { AppThunk, store } from 'bll/store';
 import { AppStatus, MLConstructorStage, MLContentType, SocialNetwork } from 'common/constants';
+import { AppThunk } from 'bll/store';
+import {
+  AppStatus,
+  MLConstructorStage,
+  MLContentType,
+  SocialNetwork,
+  SocialService,
+} from 'common/constants';
 import {
   Nullable,
   TIncomingImage,
@@ -11,6 +19,7 @@ import {
   TMLDraftBlocks,
   TMLDraftImages,
   TMultilinkDraft,
+  IMLDraftLink,
 } from 'common/types/instance';
 import { IMLDraftContent } from 'common/types/instance/mlDraft';
 import { TLoginDto } from 'common/types/request';
@@ -75,6 +84,7 @@ const initialState: TMLDraftState = {
       linkBlocks: [],
     },
   },
+
   // in-app values
   currentStage: MLConstructorStage.TEMPLATE,
 };

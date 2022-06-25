@@ -15,7 +15,9 @@ export const MLSocial = ({ block, isPublic, callback }: TMLSocialProps) => {
   if (!block) return null;
   const className = callback ? 'interactive' : undefined;
   return (
-    <section className={className} style={{ padding: px(block.padding) ?? '0' }}>
+    <section
+      className={className}
+      style={{ padding: px(block.padding) ?? '0', margin: px(block.margin) ?? '0' }}>
       {callback && (
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
       )}

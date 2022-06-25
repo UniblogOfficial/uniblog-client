@@ -3,10 +3,11 @@ import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MLBaseEditor } from './MLBaseEditor';
-import { MlButtonEditor } from './MLButtonEditor';
+import { MLButtonEditor } from './MLButtonEditor';
 import { MLImageEditor } from './MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor';
+import { MLMapEditor } from './MLMapEditor';
 import { MLShopEditor } from './MLShopEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
@@ -126,7 +127,10 @@ export const MLContent = (props: TMLContentProps) => {
         </Button>
       </div>
       <div>
-        <Button disabled className="button _full _rounded">
+        <Button
+          value={MLContentType.MAP}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
           Add map block
         </Button>
       </div>
@@ -209,11 +213,13 @@ export const MLContent = (props: TMLContentProps) => {
       }
       case MLContentType.LINK: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        const image = images.blocks[blockEditorType][blockEditorOrder];
         return (
           currentBlock &&
           withBaseEditor({
             order: blockEditorOrder,
             block: currentBlock,
+            image: images.blocks[blockEditorType][blockEditorOrder],
             close: onButtonEditorClick,
           })(MLLinkEditor)
         );
@@ -222,12 +228,11 @@ export const MLContent = (props: TMLContentProps) => {
       case MLContentType.BUTTON: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
         return (
-          currentBlock && (
-            <MLBaseEditor
-              // @ts-ignore
-              blockEditor={<MlButtonEditor block={currentBlock} order={blockEditorOrder} />}
-            />
-          )
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+          })(MLButtonEditor)
         );
       }
       case MLContentType.SOCIAL: {
@@ -260,6 +265,10 @@ export const MLContent = (props: TMLContentProps) => {
             images: images.blocks[blockEditorType][blockEditorOrder],
           })(MLShopEditor)
         );
+      }
+      case MLContentType.MAP: {
+        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        return currentBlock && <MLMapEditor block={currentBlock} order={blockEditorOrder} />;
       }
       default:
         return <>Not implemented</>;

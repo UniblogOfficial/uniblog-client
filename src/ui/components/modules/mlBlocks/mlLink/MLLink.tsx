@@ -1,15 +1,22 @@
 import React from 'react';
 
-import { IMLDraftLink, Nullable } from 'common/types/instance';
+import {
+  IMLDraftLink,
+  Nullable,
+  TImageFile,
+  TMLImageContentImage,
+  TMLImageContentLink,
+} from 'common/types/instance';
 import { px } from 'common/utils/ui';
 
 type TMLLinkProps = {
   block: Nullable<IMLDraftLink>;
   isPublic?: boolean;
   callback?: <T>(payload: T) => void;
+  image: Nullable<TMLImageContentLink<TImageFile>>;
 };
 
-export const MLLink = ({ block, isPublic, callback }: TMLLinkProps) => {
+export const MLLink = ({ block, isPublic, callback, image }: TMLLinkProps) => {
   if (!block) return null;
   const className = callback ? 'ml-link interactive' : 'ml-link';
   const style = {
@@ -26,7 +33,8 @@ export const MLLink = ({ block, isPublic, callback }: TMLLinkProps) => {
     background: block.background,
     letterSpacing: block.letterSpacing,
     textShadow: block.textShadow?.join('px '),
-    borderRadius: px(block.borderRadius),
+    borderRadius:
+      typeof block.borderRadius === 'string' ? block.borderRadius : px(block.borderRadius),
   };
   return (
     <section
@@ -34,6 +42,7 @@ export const MLLink = ({ block, isPublic, callback }: TMLLinkProps) => {
       style={{
         margin: px(block.margin) ?? '0',
         justifyContent: block.align,
+        position: 'relative',
       }}>
       {callback && (
         <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
@@ -43,7 +52,14 @@ export const MLLink = ({ block, isPublic, callback }: TMLLinkProps) => {
           {block.title}
         </a>
       ) : (
-        <div style={style}>{block.title}</div>
+        <div style={style}>
+          <div>
+            {image?.image && (
+              <img src={image.image?.previewUrl} alt="link icon" style={{ marginLeft: '-123px' }} />
+            )}
+            {block.title}
+          </div>
+        </div>
       )}
     </section>
   );
