@@ -5,7 +5,7 @@ import { ID } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftImage, Nullable, TImageFile, TMLImageContentImage } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
+import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TMLImageEditorProps = {
   order: number;
@@ -30,7 +30,7 @@ export const MLImageEditor = ({ order, block, images }: TMLImageEditorProps) => 
     block.images.map((image, i) => (
       <li key={ID[i]}>
         <div style={{ position: 'relative', height: '150px' }}>
-          <DropZoneField id={i} onChange={onDropZoneChange} />
+          <ImageField id={i} onChange={onDropZoneChange} />
         </div>
       </li>
     ));

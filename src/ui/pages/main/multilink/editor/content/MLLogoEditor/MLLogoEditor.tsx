@@ -4,11 +4,11 @@ import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducer
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftLogo, Nullable, TImageFile, TMLImageContentLogo } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
+import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TMLLogoEditorProps = {
   order: number;
-  block: Nullable<IMLDraftLogo>;
+  block: IMLDraftLogo;
   images: Nullable<TMLImageContentLogo<TImageFile>>;
 };
 
@@ -36,7 +36,7 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
   );
   const onDeleteButtonClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
-      if (block && e.currentTarget.value) {
+      if (e.currentTarget.value) {
         if (e.currentTarget.value === '1') {
           // block.image = null;
         }
@@ -49,18 +49,16 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
     [block, dispatch, order],
   );
 
-  if (!block) return <p>Error: Block not found</p>;
-
   return (
     <div className="ml-logo-editor">
       <div>
         <div style={{ position: 'relative', height: '150px' }}>
-          <DropZoneField id={1} onChange={onDropZoneChange} />
+          <ImageField id={1} onChange={onDropZoneChange} />
         </div>
       </div>
       <div>
         <div style={{ position: 'relative', height: '150px' }}>
-          <DropZoneField id={2} onChange={onDropZoneChange} />
+          <ImageField id={2} onChange={onDropZoneChange} />
         </div>
       </div>
       <Button value={1} onClick={onDeleteButtonClick}>
