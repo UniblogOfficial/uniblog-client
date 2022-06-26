@@ -179,5 +179,5 @@ export const MLTemplates = memo(({ userData }: TMLTemplatesProps) => {
     [templates],
   );
 
-  return <div className="grid__row">{getTemplateLayouts}</div>;
+  return <div className="grid__row grid__row-template">{getTemplateLayouts}</div>;
 });

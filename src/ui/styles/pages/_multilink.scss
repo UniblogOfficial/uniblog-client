@@ -195,6 +195,8 @@
 	height: 156px;
 	border: 2px solid #000;
 	border-radius: 5px;
+	overflow: hidden;
+	margin: 0 20px 20px 0;
 	& > * {
 		display: flex;
 		margin-bottom: 5px;
