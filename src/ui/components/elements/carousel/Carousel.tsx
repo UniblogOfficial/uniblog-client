@@ -12,6 +12,7 @@ type TCarouselProps = {
   transitionTime?: number;
   className?: string;
   callback?: (stage: number) => void;
+  currentMLTemplate?: number;
 };
 
 export const Carousel: FC<TCarouselProps> = memo(
@@ -23,6 +24,7 @@ export const Carousel: FC<TCarouselProps> = memo(
     transitionTime = itemsPerView * 100,
     className,
     callback,
+    currentMLTemplate,
   }) => {
     const fullWidth = items.length / itemsPerView; // in parts exm 2.5
     const fullSlidesAmount = Math.floor(fullWidth); // exm. 2
@@ -279,6 +281,21 @@ export const Carousel: FC<TCarouselProps> = memo(
       // may fire stage that not exist in items
       callback && !isRolling && callback(stage);
     }, [callback, stage, isRolling]);
+
+    useEffect(() => {
+      currentMLTemplate && callback && callback(currentMLTemplate);
+      if (
+        stage === secondStageValue &&
+        controlDots &&
+        currentMLTemplate === +controlDots[secondToLastDotIndex].props.value
+      ) {
+        setStage(firstStageValue);
+      } else {
+        setStage(currentMLTemplate || 0);
+      }
+      setIsRolling(true);
+    }, [callback, currentMLTemplate]);
+
     return (
       <div className={className}>
         <div
