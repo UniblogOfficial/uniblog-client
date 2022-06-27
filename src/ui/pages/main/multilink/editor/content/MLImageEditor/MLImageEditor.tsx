@@ -20,23 +20,20 @@ export const MLImageEditor = ({ order, block, images }: TMLImageEditorProps) => 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
       const copyImages = images && { ...images };
-      if (copyImages && id !== undefined) {
-        copyImages.images[id] = imageFile;
+      if (copyImages) {
+        copyImages.images[0] = imageFile;
         dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: 'imageBlocks' }));
       }
     },
     [dispatch, images, order],
   );
   if (!copyBlock) return <p>Error: Block not found</p>;
-  const fields =
-    copyBlock.images &&
-    copyBlock.images.map((image, i) => (
-      <li key={ID[i]}>
-        <div style={{ position: 'relative', height: '150px' }}>
-          <ImageField id={i} onChange={onDropZoneChange} />
-        </div>
-      </li>
-    ));
+  const fields = copyBlock.image && (
+    <div style={{ position: 'relative', height: '150px' }}>
+      <ImageField onChange={onDropZoneChange} />
+    </div>
+  );
+
   return (
     <div className="ml-image-editor">
       <ul>{fields}</ul>
