@@ -35,6 +35,8 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
   const { t } = useTranslation(['pages', 'common']);
   const { name, avatar } = userData;
   const [templates, setTemplates] = useState(getTemplates(name, avatar));
+  const [dots, setDots] = useState(true);
+  const [arrows, setArrows] = useState(false);
 
   const setCurrentTemplate = useCallback(
     (stage: number) => {
@@ -125,7 +127,9 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
       <Carousel
         items={getTemplateLayouts()}
         itemsPerView={1}
-        arrows={carouselArrows}
+        dots={dots}
+        arrows={arrows}
+        arrowsIcons={carouselArrows}
         arrowStep={1}
         className="carousel"
         transitionTime={200}
