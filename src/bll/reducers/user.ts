@@ -8,12 +8,6 @@ import { TImageFile, Nullable, Role, TUser, TIncomingImage } from 'common/types/
 import { handleServerNetworkError } from 'common/utils/state';
 import { userAPI } from 'dal';
 
-// variables
-enum UserActionType {
-  SET_USER_DATA = 'SET_USER_DATA',
-  REMOVE_USER_DATA = 'REMOVE_USER_DATA',
-}
-
 const initialState = null;
 
 const userSlice = createSlice({
@@ -25,25 +19,6 @@ const userSlice = createSlice({
     setUserData: (_, action: PayloadAction<TUser>) => action.payload,
   },
 });
-
-// export const userReducer = (state: TUserState = initialState, action: TUserActions): TUserState => {
-//   switch (action.type) {
-//     case UserActionType.SET_USER_DATA:
-//       return {
-//         ...state,
-//         ...action.payload,
-//       };
-//     case UserActionType.REMOVE_USER_DATA:
-//       return null;
-//     default:
-//       return state;
-//   }
-// };
-
-// actions
-// export const setUserData = (userData: TUser) =>
-//   ({ type: UserActionType.SET_USER_DATA, payload: { ...userData } } as const);
-// export const removeUserData = () => ({ type: UserActionType.REMOVE_USER_DATA } as const);
 
 export const { removeUserData, setUserData } = userSlice.actions;
 export const userReducer = userSlice.reducer;
