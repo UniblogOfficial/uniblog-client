@@ -48,6 +48,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const [stage, setStage] = useState<EditorStage>(0);
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
   const [blockEditorOrder, setBlockEditorOrder] = useState(voidOrder);
+  const [currentMLTemplate, setCurrentMLTemplate] = useState(0);
   const { name, background, maxWidth, contentMap, blocks, images } =
     useAppSelector<TMultilinkDraft>(state => state.mlDraft);
   const stageTitles = useMemo(
@@ -132,7 +133,8 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
               case MLContentType.LINK:
                 block = blocks[type][i];
-                return <MLLink key={ID[i]} block={block} callback={callback} />;
+                image = images.blocks[type][i];
+                return <MLLink key={ID[i]} block={block} image={image} callback={callback} />;
 
               case MLContentType.BUTTON:
                 block = blocks[type][i];
@@ -166,7 +168,6 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
     },
     [contentMap, blocks, background, images.blocks, images.background],
   );
-
   return (
     <>
       <div className="grid__row multilink-editor__nav paper">
@@ -189,7 +190,9 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
         style={stage === EditorStage.PREVIEW ? { justifyContent: 'center' } : undefined}>
         <div className="multilink-editor">
           <section className="ml-creation-area">
-            {stage === EditorStage.TEMPLATE && <MLTemplate userData={userData} />}
+            {stage === EditorStage.TEMPLATE && (
+              <MLTemplate userData={userData} currentMLTemplate={currentMLTemplate} />
+            )}
             {stage === EditorStage.BACKGROUND && (
               <div className="multilink-editor__constructor">{getLayout(false, false)}</div>
             )}
@@ -202,7 +205,9 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
           </section>
           <section className="tools-area">
             <div className="tools-area__container">
-              {stage === EditorStage.TEMPLATE && <MLTemplates userData={userData} />}
+              {stage === EditorStage.TEMPLATE && (
+                <MLTemplates userData={userData} setCurrentMLTemplate={setCurrentMLTemplate} />
+              )}
               {stage === EditorStage.BACKGROUND && <MLBackground />}
               {stage === EditorStage.CONTENT && (
                 <MLContent

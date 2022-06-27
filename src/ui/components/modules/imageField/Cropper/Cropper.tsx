@@ -3,7 +3,7 @@ import React, { useState, FC } from 'react';
 import Cropper from 'react-cropper';
 import { useTranslation } from 'react-i18next';
 
-import 'ui/components/modules/imageForm/DropZoneField/Cropper/Cropper.scss';
+import 'ui/components/modules/imageField/Cropper/Cropper.scss';
 import { TImageFile } from 'common/types/instance';
 import { dataUrlToFile } from 'common/utils/state/dataUrlToFile';
 import { Button } from 'ui/components/elements/button/Button';

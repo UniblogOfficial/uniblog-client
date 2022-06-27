@@ -1,4 +1,6 @@
-import React, { CSSProperties, memo, useMemo, useState } from 'react';
+import React, { CSSProperties, memo, useCallback, useMemo, useState } from 'react';
+
+import { useAppDispatch } from '../../../../../../common/hooks';
 
 import { getTemplates } from './templates';
 
@@ -9,16 +11,19 @@ import socials from 'img/socials';
 
 type TMLTemplatesProps = {
   userData: TUser;
+  setCurrentMLTemplate: (currentMLTemplate: number) => void;
 };
 
-export const MLTemplates = memo(({ userData }: TMLTemplatesProps) => {
+export const MLTemplates = memo(({ userData, setCurrentMLTemplate }: TMLTemplatesProps) => {
+  const dispatch = useAppDispatch();
   const { name, avatar } = userData;
   const [templates, setTemplates] = useState(getTemplates(name, avatar));
 
   const getTemplateLayouts = useMemo(
     () =>
       templates.map((template, i) => (
-        <ul key={ID[i]} className="thumbnail">
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+        <ul key={ID[i]} className="thumbnail" onClick={() => setCurrentMLTemplate(ID[i] - 1)}>
           {template.map((block, j) => {
             switch (block.type) {
               case MLContentType.LOGO:
@@ -79,6 +84,7 @@ export const MLTemplates = memo(({ userData }: TMLTemplatesProps) => {
                     key={ID[j]}
                     className="ml-link"
                     style={{
+                      position: 'relative',
                       padding: px(block.padding, 5),
                       margin: px(block.margin, 5),
                       background: block.background ?? undefined,
@@ -178,5 +184,5 @@ export const MLTemplates = memo(({ userData }: TMLTemplatesProps) => {
     [templates],
   );
 
-  return <div className="grid__row">{getTemplateLayouts}</div>;
+  return <div className="grid__row grid__row-template">{getTemplateLayouts}</div>;
 });

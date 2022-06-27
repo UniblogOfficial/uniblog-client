@@ -11,7 +11,7 @@ import { ID } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { TImageFile } from 'common/types/instance';
 import { Button } from 'ui/components/elements';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
+import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TMLBackgroundProps = {};
 
@@ -59,7 +59,7 @@ export const MLBackground = () => {
       />
       <ul className="grid bg-menu-grid">
         <li className={`${styles['dropbox']}`}>
-          <DropZoneField onChange={onImageZoneChange} touched={false} />
+          <ImageField onChange={onImageZoneChange} touched={false} />
         </li>
         {snippets}
       </ul>

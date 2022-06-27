@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useCallback, useMemo, useState } from 'react';
+import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -27,9 +27,10 @@ import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
 type TMLTemplateProps = {
   userData: TUser;
+  currentMLTemplate: number;
 };
 
-export const MLTemplate = ({ userData }: TMLTemplateProps) => {
+export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const { name, avatar } = userData;
@@ -38,7 +39,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
   const setCurrentTemplate = useCallback(
     (stage: number) => {
       if (templates.some((_t, i) => i === stage)) {
-        dispatch(setMLDraftTemplate(templates, stage));
+        dispatch(setMLDraftTemplate({ templates, index: stage }));
       }
     },
     [dispatch, templates],
@@ -79,7 +80,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
                 return block && <MLLogo key={ID[j]} block={block} images={null} />;
 
               case MLContentType.LINK:
-                return <MLLink key={ID[j]} block={block} />;
+                return <MLLink key={ID[j]} block={block} image={null} />;
 
               case MLContentType.BUTTON:
                 return <MLButton key={ID[j]} block={block} />;
@@ -129,6 +130,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
         className="carousel"
         transitionTime={200}
         callback={setCurrentTemplate}
+        currentMLTemplate={currentMLTemplate}
       />
     </div>
   );

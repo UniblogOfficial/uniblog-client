@@ -3,7 +3,6 @@ import React, { useRef, useEffect, useState } from 'react';
 export const ThemeSwitch = ({ preserveRasters = true, storeKey = 'ThemeSwitch' }) => {
   const cssString = `
         html { filter: invert(85%); background: #fefefe; }
-        * { background-color: inherit }
       `;
   const rasterButtonCss = 'Button:not([src*=".svg"]), [style*="url("] { filter: invert(100%) }';
   const rasterDivMLCss =

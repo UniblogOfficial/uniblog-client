@@ -11,7 +11,7 @@ import { TImageFile, TUser } from 'common/types/instance';
 import { parseRawImage } from 'common/utils/ui';
 import { Button, Icon } from 'ui/components/elements';
 import { PageHeader } from 'ui/components/modules/headers/PageHeader';
-import { DropZoneField } from 'ui/components/modules/imageForm/DropZoneField/DropZoneField';
+import { ImageField } from 'ui/components/modules/imageField/ImageField';
 import { Modal } from 'ui/components/modules/modals/Modal';
 
 type TProfileContainerProps = {
@@ -83,7 +83,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
             <Modal close={closeEditAvatarModal}>
               <div className="paper">
                 <div className="profile__avatar">
-                  <DropZoneField
+                  <ImageField
                     onChange={onImageZoneChange}
                     touched={false}
                     avatarMode

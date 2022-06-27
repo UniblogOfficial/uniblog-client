@@ -9,7 +9,7 @@ import { Map } from 'ui/components/modules/map/Map';
 
 type TMLMapEditorProps = {
   order: number;
-  block: Nullable<IMLDraftMap>;
+  block: IMLDraftMap;
 };
 
 const CENTER_MAP: LatLngLiteral = { lat: 51.505, lng: -0.09 };

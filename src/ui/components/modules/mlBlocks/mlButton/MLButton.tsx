@@ -26,7 +26,7 @@ export const MLButton = ({ block, callback }: TMLButtonProps) => {
           fontSize: block.fontSize,
           background: block.background,
           padding: px(block.padding) ?? '0',
-          borderRadius: block.borderRadius,
+          borderRadius: px(block.borderRadius),
           color: block.color,
           font: block.font,
           letterSpacing: px(block.letterSpacing),

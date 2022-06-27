@@ -2,16 +2,15 @@ import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { MLBaseEditor } from './MLBaseEditor';
-import { MLButtonEditor } from './MLButtonEditor';
-import { MLImageEditor } from './MLImageEditor';
+import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
+import { MLImageEditor } from './MLImageEditor/MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
-import { MLLogoEditor } from './MLLogoEditor';
+import { MLLogoEditor } from './MLLogoEditor/MLLogoEditor';
 import { MLMapEditor } from './MLMapEditor';
-import { MLShopEditor } from './MLShopEditor';
+import { MLShopEditor } from './MLShopEditor/MLShopEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
-import { withBaseEditor } from './tempHoc';
+import { withBaseEditor } from './withBaseEditor';
 
 import { addMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
@@ -213,11 +212,13 @@ export const MLContent = (props: TMLContentProps) => {
       }
       case MLContentType.LINK: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        const image = images.blocks[blockEditorType][blockEditorOrder];
         return (
           currentBlock &&
           withBaseEditor({
             order: blockEditorOrder,
             block: currentBlock,
+            image: images.blocks[blockEditorType][blockEditorOrder],
             close: onButtonEditorClick,
           })(MLLinkEditor)
         );
