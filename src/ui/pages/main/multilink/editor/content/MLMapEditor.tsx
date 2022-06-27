@@ -2,9 +2,8 @@ import React from 'react';
 
 import { LatLngLiteral } from 'leaflet';
 
-import { setMLDraftBlockContent } from 'bll/reducers';
 import { useAppDispatch } from 'common/hooks';
-import { IMLDraftMap, Nullable } from 'common/types/instance';
+import { IMLDraftMap } from 'common/types/instance';
 import { Map } from 'ui/components/modules/map/Map';
 
 type TMLMapEditorProps = {
@@ -22,7 +21,7 @@ export const MLMapEditor = ({ order, block }: TMLMapEditorProps) => {
 
   const setPositionMark = (position: LatLngLiteral) => {
     block.latLng = position;
-    dispatch(setMLDraftBlockContent(block, order, 'mapBlocks'));
+    // dispatch(setMLDraftBlockContent(block, order));
   };
 
   return (
