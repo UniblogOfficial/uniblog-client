@@ -10,7 +10,7 @@ import { MLVideo } from './mlVideo/MLVideo';
 import { MLVote } from './mlVote/MLVote';
 
 export {
-  MLImage as MLImages,
+  MLImage,
   MLImageText,
   MLLink,
   MLSocial,
