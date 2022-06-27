@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useCallback, useMemo, useState } from 'react';
+import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -27,9 +27,10 @@ import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
 type TMLTemplateProps = {
   userData: TUser;
+  currentMLTemplate: number;
 };
 
-export const MLTemplate = ({ userData }: TMLTemplateProps) => {
+export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const { name, avatar } = userData;
@@ -129,6 +130,7 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
         className="carousel"
         transitionTime={200}
         callback={setCurrentTemplate}
+        currentMLTemplate={currentMLTemplate}
       />
     </div>
   );
