@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { Nullable, TImageFile, TMultilinkDraft, TUser } from 'common/types/instance';
 import { Button, Icon } from 'ui/components/elements';
 import {
+  MLMap,
   MLImages,
   MLImageText,
   MLLink,
@@ -153,6 +154,10 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                 block = blocks[type][i];
                 image = images.blocks[type][i];
                 return <MLShop key={ID[i]} block={block} images={image} callback={callback} />;
+
+              case MLContentType.MAP:
+                block = blocks[type][i];
+                return block && <MLMap key={ID[i]} block={block} callback={callback} />;
 
               default:
                 return <li key={ID[i]} />;
