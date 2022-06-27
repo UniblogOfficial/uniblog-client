@@ -46,10 +46,10 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
         if (e.currentTarget.value === '2') {
           copyBlock.banner = null;
         }
-        dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
+        // dispatch(setMLDraftBlockContent({ content: copyBlock, order }));
       }
     },
-    [block, dispatch, order],
+    [block],
   );
 
   return (
