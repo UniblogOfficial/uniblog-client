@@ -1,5 +1,6 @@
-import { types } from 'sass';
+import { v1 } from 'uuid';
 
+import { MLDraftText, MLDraftLink } from '../../types/instance/mlDraft';
 import { parseRawImage } from '../ui';
 
 import { getKeys } from '.';
@@ -24,46 +25,33 @@ import imgPlaceholder from 'img/img-placeholder.png';
 
 // at this moment function just push block at the END!!!
 // except logo and social!
-export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, order: number) => {
-  const newBlocks = {} as any;
+export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, id: string) => {
+  const newBlocks: TMLDraftBlocks = {};
+
   switch (type) {
     case MLContentType.TEXT:
-      // for every field of blocks obj do
+      /* // for every field of blocks obj do
       getKeys(blocks).forEach(key => {
         // if current field is target for adding chosen block
         if (key === 'textBlocks') {
           // push default block at the end of array
           newBlocks[key] = [
             ...blocks.textBlocks,
-            {
-              order,
-              ...defaultTextBlockOptions,
-            } as IMLDraftText,
+            new MLDraftText({ order, ...defaultTextBlockOptions }),
           ];
           // for other fields just push null at the end for data consistency
         } else {
           newBlocks[key] = [...blocks[key], null];
         }
-      });
+      }); */
+      blocks[`${type}_${id}`] = new MLDraftText(defaultTextBlockOptions);
       break;
 
     case MLContentType.LINK:
-      getKeys(blocks).forEach(key => {
-        if (key === 'linkBlocks') {
-          newBlocks[key] = [
-            ...blocks.linkBlocks,
-            {
-              order,
-              ...defaultLinkBlockOptions,
-            } as IMLDraftLink,
-          ];
-        } else {
-          newBlocks[key] = [...blocks[key], null];
-        }
-      });
+      blocks[`${type}_${id}`] = new MLDraftLink(defaultLinkBlockOptions);
       break;
 
-    case MLContentType.BUTTON:
+    /* case MLContentType.BUTTON:
       getKeys(blocks).forEach(key => {
         if (key === 'buttonBlocks') {
           newBlocks[key] = [
@@ -157,14 +145,10 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, or
           newBlocks[key] = [...blocks[key], null];
         }
       });
-      break;
+      break; */
 
     default:
-      getKeys(blocks).forEach(key => {
-        newBlocks[key] = [...blocks[key], null];
-      });
   }
-  return newBlocks as TMLDraftBlocks;
 };
 
 export const pushMLDraftBlockLogo = (
@@ -173,7 +157,7 @@ export const pushMLDraftBlockLogo = (
   logo: Nullable<TIncomingImage>,
 ) => {
   const newBlocks = {} as any;
-  getKeys(blocks).forEach(key => {
+  /* getKeys(blocks).forEach(key => {
     if (key === 'logoBlocks') {
       newBlocks[key] = [
         ...blocks.logoBlocks,
@@ -187,7 +171,7 @@ export const pushMLDraftBlockLogo = (
     } else {
       newBlocks[key] = [...blocks[key], null];
     }
-  });
+  }); */
   return newBlocks as TMLDraftBlocks;
 };
 
@@ -197,7 +181,7 @@ export const pushMLDraftBlockSocial = (
   socials: { type: SocialNetwork; href: string }[],
 ) => {
   const newBlocks = {} as any;
-  getKeys(blocks).forEach(key => {
+  /* getKeys(blocks).forEach(key => {
     if (key === 'socialBlocks') {
       newBlocks[key] = [
         ...blocks.socialBlocks,
@@ -211,20 +195,18 @@ export const pushMLDraftBlockSocial = (
     } else {
       newBlocks[key] = [...blocks[key], null];
     }
-  });
+  }); */
   return newBlocks as TMLDraftBlocks;
 };
 
-const defaultTextBlockOptions: Omit<IMLDraftText, 'order'> = {
-  type: MLContentType.TEXT,
+const defaultTextBlockOptions: IMLDraftText = {
   isFilled: false,
   text: '',
   fontSize: 18,
   padding: [0, 24],
 };
 
-const defaultLinkBlockOptions: Omit<IMLDraftLink, 'order'> = {
-  type: MLContentType.LINK,
+const defaultLinkBlockOptions: IMLDraftLink = {
   isFilled: false,
   href: '',
   linkType: 'third-party' as const,
@@ -236,8 +218,7 @@ const defaultLinkBlockOptions: Omit<IMLDraftLink, 'order'> = {
   background: `#f${Math.random().toString(16).substr(-4)}f40`,
 };
 
-const defaultButtonBlockOptions: Omit<IMLDraftButton, 'order'> = {
-  type: MLContentType.BUTTON,
+const defaultButtonBlockOptions: IMLDraftButton = {
   isFilled: false,
   href: '',
   title: 'Кнопка',
@@ -250,17 +231,15 @@ const defaultButtonBlockOptions: Omit<IMLDraftButton, 'order'> = {
   background: IconColor.INFO,
 };
 
-const defaultImageBlockOptions: Omit<IMLDraftImage, 'order'> = {
-  type: MLContentType.IMAGE,
+const defaultImageBlockOptions: IMLDraftImage = {
   isFilled: false,
-  images: [imgPlaceholder],
+  image: imgPlaceholder,
   imgPosition: 'bottom',
   textPosition: 'outside',
   padding: [0, 24],
 };
 
-const defaultImageTextBlockOptions: Omit<IMLDraftImageText, 'order'> = {
-  type: MLContentType.IMAGETEXT,
+const defaultImageTextBlockOptions: IMLDraftImageText = {
   isFilled: false,
   image: imgPlaceholder,
   text: '',
@@ -272,20 +251,17 @@ const defaultImageTextBlockOptions: Omit<IMLDraftImageText, 'order'> = {
   padding: [0, 24],
 };
 
-const defaultLogoBlockOptions: Omit<IMLDraftLogo, 'order' | 'isFilled' | 'logo'> = {
-  type: MLContentType.LOGO,
+const defaultLogoBlockOptions: Omit<IMLDraftLogo, 'isFilled' | 'logo'> = {
   size: 100,
   hAlign: 'center',
   vAlign: 'center',
 };
 
-const defaultSocialBlockOptions: Omit<IMLDraftSocial, 'order' | 'links' | 'linkTypes'> = {
-  type: MLContentType.SOCIAL,
+const defaultSocialBlockOptions: Omit<IMLDraftSocial, 'links' | 'linkTypes'> = {
   isFilled: false,
 };
 
-const defaultShopBlockOptions: Omit<IMLDraftShop, 'order'> = {
-  type: MLContentType.SHOP,
+const defaultShopBlockOptions: IMLDraftShop = {
   isFilled: false,
   grid: '1fr 1fr 1fr',
   gap: 10,
@@ -319,20 +295,18 @@ const defaultShopBlockOptions: Omit<IMLDraftShop, 'order'> = {
   color: '#000',
   fontSize: 14,
   fontWeight: 400,
-  align: 'left',
+  textAlign: 'left',
   subtitleColor: '#000',
   subtitleFontSize: 14,
   subtitleFontWeight: 700,
   subtitleAlign: 'center',
 };
 
-const defaultWidgetBlockOptions: Omit<IMLDraftWidget, 'order' | 'url'> = {
-  type: MLContentType.WIDGET,
+const defaultWidgetBlockOptions: Omit<IMLDraftWidget, 'url'> = {
   isFilled: false,
 };
 
-const defaultMapBlockOptions: Omit<IMLDraftMap, 'order'> = {
-  type: MLContentType.MAP,
+const defaultMapBlockOptions: IMLDraftMap = {
   isFilled: false,
   url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d561.3480661489472!2d37.6170760620669!3d55.75168773089625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54be25b7f7bfd%3A0xecb362b567f41622!2z0JrRgNCw0YHQvdCw0Y8g0L_Qu9C-0YnQsNC00Yw!5e0!3m2!1sru!2sru!4v1655983050433!5m2!1sru!2sru',
 };
