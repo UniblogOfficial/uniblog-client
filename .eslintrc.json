@@ -46,6 +46,7 @@
     "dot-location": ["warn", "property"],
     "dot-notation": ["off"],
     "eqeqeq": ["warn", "smart"],
+    "lines-between-class-members": "off",
     "new-parens": "warn",
     "no-shadow": "off",
     "no-alert": "error",
@@ -210,9 +211,8 @@
     "react/require-default-props": "off",
     "react/style-prop-object": "warn",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": ["warn", {
-      "additionalHooks": 
-        "useDispatch"
+    "react-hooks/exhaustive-deps": ["off", {
+      "additionalHooks": "useDispatch|useOtherHookWhichWillDefinitelyNotChange"
     }],
     "prettier/prettier": "error",
     "react/prop-types": 0,
