@@ -266,7 +266,13 @@ export const MLContent = (props: TMLContentProps) => {
       }
       case MLContentType.MAP: {
         const currentBlock = blocks[blockEditorType][blockEditorOrder];
-        return currentBlock && <MLMapEditor block={currentBlock} order={blockEditorOrder} />;
+        return (
+          currentBlock &&
+          withBaseEditor({
+            order: blockEditorOrder,
+            block: currentBlock,
+          })(MLMapEditor)
+        );
       }
       default:
         return <>Not implemented</>;

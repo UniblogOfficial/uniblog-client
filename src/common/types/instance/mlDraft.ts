@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { Property } from 'csstype';
+import { LatLngLiteral } from 'leaflet';
 
 import { TImageFile, Nullable } from '.';
 
@@ -156,6 +157,7 @@ export interface IMLDraftWidget
 
 export interface IMLDraftMap extends Omit<IMLDraftContent<MLContentType.MAP>, 'borderRadius'> {
   url: Nullable<string>;
+  latLng: Nullable<LatLngLiteral>;
 }
 
 export interface IMLDraftPost extends Omit<IMLDraftContent<MLContentType.POST>, 'borderRadius'> {

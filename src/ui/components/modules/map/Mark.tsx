@@ -1,31 +1,21 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 
 import { LatLngLiteral } from 'leaflet';
-import { Marker, useMapEvents } from 'react-leaflet';
+import { Marker, useMap } from 'react-leaflet';
 
 import { Nullable } from 'common/types/instance';
 
-export const Mark = (): Nullable<ReactElement> => {
-  const [mark, setMark] = useState<Nullable<LatLngLiteral>>(null);
+type MarkProps = {
+  position: Nullable<LatLngLiteral>;
+};
 
-  const map = useMapEvents({
-    click(e) {
-      setMark(e.latlng);
-    },
+export const Mark = ({ position }: MarkProps): Nullable<ReactElement> => {
+  const map = useMap();
 
-    locationfound(e) {
-      setMark(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
-    },
-  });
-
-  useEffect(() => {
-    map.locate();
-  }, []);
-
-  if (mark === null) {
+  if (position === null) {
     return null;
   }
+  map.flyTo(position, map.getZoom());
 
-  return <Marker position={mark} />;
+  return <Marker position={position} />;
 };
