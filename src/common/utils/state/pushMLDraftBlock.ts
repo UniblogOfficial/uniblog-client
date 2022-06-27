@@ -308,5 +308,8 @@ const defaultWidgetBlockOptions: Omit<IMLDraftWidget, 'url'> = {
 
 const defaultMapBlockOptions: IMLDraftMap = {
   isFilled: false,
-  url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d561.3480661489472!2d37.6170760620669!3d55.75168773089625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54be25b7f7bfd%3A0xecb362b567f41622!2z0JrRgNCw0YHQvdCw0Y8g0L_Qu9C-0YnQsNC00Yw!5e0!3m2!1sru!2sru!4v1655983050433!5m2!1sru!2sru',
+  padding: [12, 24],
+  margin: [0, 24, 12],
+  url: '',
+  latLng: null,
 };

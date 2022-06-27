@@ -1,7 +1,7 @@
 import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
+import { nanoid } from '@reduxjs/toolkit';
 import { useTranslation } from 'react-i18next';
-import { v1 } from 'uuid';
 
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
 import { MLImageEditor } from './MLImageEditor/MLImageEditor';
@@ -17,7 +17,12 @@ import { addMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { Nullable, TImageFile, TMLDraftBlocks, TMLDraftImages } from 'common/types/instance';
-import { MLDraftLink, MLDraftText } from 'common/types/instance/mlDraft';
+import {
+  MLDraftLink,
+  MLDraftMap,
+  MLDraftText,
+  TMLDraftBlocksUnion,
+} from 'common/types/instance/mlDraft';
 import { Button } from 'ui/components/elements';
 
 type TMLContentProps = {
@@ -50,7 +55,7 @@ export const MLContent = (props: TMLContentProps) => {
         setBlockEditor(null);
         return;
       }
-      const id = v1();
+      const id = nanoid();
       dispatch(addMLDraftBlock({ type: e.currentTarget.value as MLContentType, id }));
       setBlockEditor({ type: e.currentTarget.value as MLContentType, id });
     },
@@ -173,6 +178,7 @@ export const MLContent = (props: TMLContentProps) => {
   );
 
   const currentEditor = useMemo(() => {
+    const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`] as TMLDraftBlocksUnion;
     switch (blockEditorType) {
       /* case MLContentType.LOGO: {
         const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`];
@@ -186,7 +192,6 @@ export const MLContent = (props: TMLContentProps) => {
         );
       } */
       case MLContentType.TEXT: {
-        const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`];
         if (currentBlock instanceof MLDraftText) {
           return withBaseEditor({
             id: blockEditorId,
@@ -214,7 +219,6 @@ export const MLContent = (props: TMLContentProps) => {
         );
       } */
       case MLContentType.LINK: {
-        const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`];
         const image = images.blocks[blockEditorType][0];
 
         if (currentBlock instanceof MLDraftLink) {
@@ -268,11 +272,16 @@ export const MLContent = (props: TMLContentProps) => {
             images: images.blocks[blockEditorType][blockEditorId],
           })(MLShopEditor)
         );
-      }
-      case MLContentType.MAP: {
-        const currentBlock = blocks[blockEditorType][blockEditorId];
-        return currentBlock && <MLMapEditor block={currentBlock} order={blockEditorId} />;
       } */
+      case MLContentType.MAP: {
+        if (currentBlock instanceof MLDraftMap) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLMapEditor);
+        }
+        break;
+      }
       default:
         return <>Not implemented</>;
     }

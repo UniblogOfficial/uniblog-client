@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v1 } from 'uuid';
+import { createAsyncThunk, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
 import { TMLDraftBlocksUnion } from '../../common/types/instance/mlDraft';
 
@@ -22,6 +21,7 @@ import {
   IMLDraftLink,
 } from 'common/types/instance';
 import { MLDraftText } from 'common/types/instance/mlDraft';
+import { IMLDraftContent } from 'common/types/instance/mlDraft/abstract/mlBlock.class';
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request/multilink.dto';
 import {
   pushMLDraftBlock,
@@ -31,20 +31,6 @@ import {
 } from 'common/utils/state';
 import { authAPI, multilinkAPI } from 'dal';
 import { getTemplates } from 'ui/pages/main/multilink/editor/template/templates';
-
-enum mlDraftAction {
-  SET_MULTILINK_DRAFT_NAME = 'SET_MULTILINK_DRAFT_NAME',
-  SET_MULTILINK_DRAFT_LOGO_FROM_USER_AVATAR = 'SET_MULTILINK_DRAFT_LOGO_FROM_USER_AVATAR',
-  SET_MULTILINK_DRAFT_TEMPLATE = 'SET_MULTILINK_DRAFT_TEMPLATE',
-  SET_MULTILINK_DRAFT_BACKGROUND = 'SET_MULTILINK_DRAFT_BACKGROUND',
-  SET_MULTILINK_DRAFT_BACKGROUND_IMAGE = 'SET_MULTILINK_DRAFT_BACKGROUND_IMAGE',
-  PUSH_MULTILINK_DRAFT_BLOCK = 'PUSH_MULTILINK_DRAFT_BLOCK',
-  PUSH_MULTILINK_DRAFT_BLOCK_LOGO = 'PUSH_MULTILINK_DRAFT_BLOCK_LOGO',
-  PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL = 'PUSH_MULTILINK_DRAFT_BLOCK_SOCIAL',
-  SET_MULTILINK_DRAFT_BLOCK_CONTENT = 'SET_MULTILINK_DRAFT_BLOCK_CONTENT',
-  SET_MULTILINK_DRAFT_BLOCK_CONTENT_IMAGE = 'SET_MULTILINK_DRAFT_BLOCK_CONTENT_IMAGE',
-  DELETE_MULTILINK_DRAFT_BLOCK = 'DELETE_MULTILINK_DRAFT_BLOCK',
-}
 
 const initialState: TMLDraftState = {
   name: '',
@@ -84,7 +70,7 @@ const mlDraftSlice = createSlice({
     ) {
       const template = action.payload.templates[action.payload.index];
       state.contentMap = template.map((block, i) => {
-        const blockId = v1();
+        const blockId = nanoid();
         state.blocks[`${block.type}_${blockId}`] = template[i];
         return `${block.type}_${blockId}`;
       });
@@ -157,8 +143,7 @@ const mlDraftSlice = createSlice({
       Object.assign(block, content);
       state.blocks = { ...state.blocks };
     },
-
-    setMLDraftBlockContentImage<T>(
+    setMLDraftBlockContentImage<T extends Omit<IMLDraftContent, 'type' | 'isFilled'>>(
       state: TMLDraftState,
       action: PayloadAction<{
         images: T;
@@ -175,18 +160,8 @@ const mlDraftSlice = createSlice({
         >;
       }>,
     ) {
-      state.images = {
-        ...state.images,
-        blocks: {
-          ...state.images.blocks,
-          ...{
-            [`${action.payload.field}`]: state.images.blocks[action.payload.field].map(
-              (block: any, i: number) =>
-                i === action.payload.order ? action.payload.images : block,
-            ),
-          },
-        },
-      };
+      // @ts-ignore
+      state.blocks[action.payload.field][action.payload.images.order] = action.payload.images;
     },
   },
 });
@@ -204,6 +179,8 @@ export const {
   setMLDraftBlockContentImage,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
+
+// thunks
 
 export const publishMultilink = createAsyncThunk(
   'mlDraft/publishMultilink',
