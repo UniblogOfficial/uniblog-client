@@ -23,7 +23,7 @@ export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
-      const copyImages = { ...images };
+      const copyImages = images && { ...images };
       if (copyImages && id !== undefined) {
         if (id === ImageType.LOGO) {
           copyImages.logo = imageFile;
