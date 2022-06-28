@@ -7,18 +7,22 @@ import { Nullable } from 'common/types/instance';
 
 type EditableMarkProps = {
   setPositionMark: (position: LatLngLiteral) => void;
+  position: Nullable<LatLngLiteral>;
+  isSearchLocation?: boolean;
 };
 
-export const EditableMark = ({ setPositionMark }: EditableMarkProps): Nullable<ReactElement> => {
-  const [mark, setMark] = useState<Nullable<LatLngLiteral>>(null);
+export const EditableMark = ({
+  setPositionMark,
+  position,
+  isSearchLocation,
+}: EditableMarkProps): Nullable<ReactElement> => {
+  const [mark, setMark] = useState<Nullable<LatLngLiteral>>(position);
 
   const map = useMapEvents({
     click(e) {
       setMark(e.latlng);
-
       setPositionMark(e.latlng);
     },
-
     locationfound(e) {
       setMark(e.latlng);
       setPositionMark(e.latlng);
@@ -27,8 +31,10 @@ export const EditableMark = ({ setPositionMark }: EditableMarkProps): Nullable<R
   });
 
   useEffect(() => {
-    map.locate();
-  }, [map]);
+    if (isSearchLocation) {
+      map.locate();
+    }
+  }, []);
 
   if (mark === null) {
     return null;
