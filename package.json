@@ -11,6 +11,7 @@
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.0",
     "leaflet": "^1.8.0",
+    "nanoid": "^4.0.0",
     "react": "^17.0.2",
     "react-colorful": "^5.5.1",
     "react-cropper": "^2.1.8",
