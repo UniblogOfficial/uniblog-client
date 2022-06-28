@@ -2,8 +2,6 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { MLButton } from '../../../../components/modules/mlBlocks/mlButton/MLButton';
-
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
@@ -13,11 +11,30 @@ import { MLTemplates } from './template/MLTemplates';
 import { publishMultilink } from 'bll/reducers';
 import { ID, MLContentType } from 'common/constants';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { Nullable, TImageFile, TMultilinkDraft, TUser } from 'common/types/instance';
+import {
+  MLDraftAudio,
+  MLDraftButton,
+  MLDraftImage,
+  MLDraftImageText,
+  MLDraftLink,
+  MLDraftLogo,
+  MLDraftMap,
+  MLDraftShop,
+  MLDraftSocial,
+  MLDraftText,
+  MLDraftVideo,
+  MLDraftVote,
+  MLDraftWidget,
+  Nullable,
+  TImageFile,
+  TMLDraftBlocksUnion,
+  TMultilinkDraft,
+  TUser,
+} from 'common/types/instance';
 import { Button, Icon } from 'ui/components/elements';
 import {
-  MLMap,
-  MLImages,
+  MLButton,
+  MLImage,
   MLImageText,
   MLLink,
   MLLogo,
@@ -27,6 +44,7 @@ import {
   MLVideo,
   MLVote,
 } from 'ui/components/modules/mlBlocks';
+import { MLMap } from 'ui/components/modules/mlBlocks/mlMap/MLMap';
 import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
 type TMultilinkEditorContainerProps = {
@@ -40,14 +58,14 @@ enum EditorStage {
   PREVIEW = 3,
 }
 
-const voidOrder = -1;
+const voidOrder = '-1';
 
 export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ userData }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(0);
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
-  const [blockEditorOrder, setBlockEditorOrder] = useState(voidOrder);
+  const [blockEditorId, setBlockEditorId] = useState(voidOrder);
   const [currentMLTemplate, setCurrentMLTemplate] = useState(0);
   const { name, background, maxWidth, contentMap, blocks, images } =
     useAppSelector<TMultilinkDraft>(state => state.mlDraft);
@@ -61,13 +79,13 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
     [t],
   );
 
-  const setBlockEditor = (payload: { type: MLContentType; order: number } | null) => {
+  const setBlockEditor = (payload: { type: MLContentType; id: string } | null) => {
     if (payload) {
       setBlockEditorType(payload.type);
-      setBlockEditorOrder(payload.order);
+      setBlockEditorId(payload.id);
     } else {
       setBlockEditorType(null);
-      setBlockEditorOrder(voidOrder);
+      setBlockEditorId(voidOrder);
     }
   };
 
@@ -94,74 +112,60 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
         : background;
       return (
         <div className={templateClassName} style={{ background: templateBackground }}>
-          {contentMap.map((type, i) => {
-            let block;
+          {contentMap.map((contentId, i) => {
+            const [type, id] = contentId.split('_') as [MLContentType, string];
+            const block: TMLDraftBlocksUnion = blocks[contentId];
             let image;
-            const callback = editable ? () => setBlockEditor({ type, order: i }) : undefined;
-            switch (type) {
-              case MLContentType.TEXT:
-                block = blocks[type][i];
-                return <MLText key={ID[i]} block={block} callback={callback} />;
-
-              case MLContentType.SOCIAL:
-                block = blocks[type][i];
-                return <MLSocial key={ID[i]} block={block} callback={callback} />;
-
-              case MLContentType.WIDGET:
-                block = blocks[type][i];
-                return block && <MLWidget key={ID[i]} block={block} callback={callback} />;
-
-              case MLContentType.VIDEO:
-                block = blocks[type][i];
-                return <MLVideo key={ID[i]} block={block} callback={callback} />;
-
-              case MLContentType.AUDIO:
-                block = blocks[type][i];
-                return block && <>audio block</>;
-
-              case MLContentType.VOTE:
-                block = blocks[type][i];
-                return block && <MLVote key={ID[i]} block={block} callback={callback} />;
-
-              case MLContentType.LOGO:
-                block = blocks[type][i];
-                // variable image is one or set of images of current block
-                image = images.blocks[type][i];
-                return (
-                  block && <MLLogo key={ID[i]} block={block} images={image} callback={callback} />
-                );
-
-              case MLContentType.LINK:
-                block = blocks[type][i];
-                image = images.blocks[type][i];
-                return <MLLink key={ID[i]} block={block} image={image} callback={callback} />;
-
-              case MLContentType.BUTTON:
-                block = blocks[type][i];
-                return <MLButton key={ID[i]} block={block} callback={callback} />;
-
-              case MLContentType.IMAGE:
-                block = blocks[type][i];
-                image = images.blocks[type][i];
-                return <MLImages key={ID[i]} block={block} images={image} callback={callback} />;
-
-              case MLContentType.IMAGETEXT:
-                block = blocks[type][i];
-                image = images.blocks[type][i];
-                return <MLImageText key={ID[i]} block={block} images={image} callback={callback} />;
-
-              case MLContentType.SHOP:
-                block = blocks[type][i];
-                image = images.blocks[type][i];
-                return <MLShop key={ID[i]} block={block} images={image} callback={callback} />;
-
-              case MLContentType.MAP:
-                block = blocks[type][i];
-                return block && <MLMap key={ID[i]} block={block} callback={callback} />;
-
-              default:
-                return <li key={ID[i]} />;
+            const callback = editable ? () => setBlockEditor({ type, id }) : undefined;
+            if (block instanceof MLDraftText) {
+              return <MLText key={id} id={id} block={block} callback={callback} />;
             }
+            if (block instanceof MLDraftSocial) {
+              return <MLSocial key={id} id={id} block={block} callback={callback} />;
+            }
+            if (block instanceof MLDraftWidget) {
+              return <MLWidget key={id} id={id} block={block} callback={callback} />;
+            }
+            if (block instanceof MLDraftVideo) {
+              return <MLVideo key={id} id={id} block={block} callback={callback} />;
+            }
+            if (block instanceof MLDraftMap) {
+              return <MLMap key={id} id={id} block={block} callback={callback} />;
+            }
+            if (block instanceof MLDraftAudio) {
+              return <>audio block</>;
+            }
+            if (block instanceof MLDraftVote) {
+              return <MLVote key={id} id={id} block={block} callback={callback} />;
+            }
+            if (block instanceof MLDraftLogo) {
+              image = images.blocks[MLContentType.LOGO][i];
+              return <MLLogo key={id} id={id} block={block} images={image} callback={callback} />;
+            }
+            if (block instanceof MLDraftLink) {
+              image = images.blocks[MLContentType.LINK][i];
+              return <MLLink key={id} id={id} block={block} image={image} callback={callback} />;
+            }
+
+            if (block instanceof MLDraftButton) {
+              image = images.blocks[MLContentType.BUTTON][i];
+              return <MLButton key={id} id={id} block={block} callback={callback} />;
+            }
+            if (block instanceof MLDraftImage) {
+              image = images.blocks[MLContentType.IMAGE][i];
+              return <MLImage key={id} id={id} block={block} image={image} callback={callback} />;
+            }
+            if (block instanceof MLDraftImageText) {
+              image = images.blocks[MLContentType.IMAGETEXT][i];
+              return (
+                <MLImageText key={id} id={id} block={block} image={image} callback={callback} />
+              );
+            }
+            if (block instanceof MLDraftShop) {
+              image = images.blocks[MLContentType.SHOP][i];
+              return <MLShop key={id} id={id} block={block} images={image} callback={callback} />;
+            }
+            return <li key={ID[i]} />;
           })}
         </div>
       );
@@ -215,7 +219,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                   blocks={blocks}
                   images={images}
                   blockEditorType={blockEditorType}
-                  blockEditorOrder={blockEditorOrder}
+                  blockEditorId={blockEditorId}
                   setBlockEditor={setBlockEditor}
                 />
               )}

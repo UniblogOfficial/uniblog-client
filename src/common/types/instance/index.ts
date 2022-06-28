@@ -4,9 +4,6 @@ export type Modify<T, R> = Omit<T, keyof R> & R; // exm: {a: number, b: string} 
 export type { TUser, Role } from './user';
 export type { TImageFile, TIncomingImage } from './image';
 export type {
-  TMultilinkDraft,
-  TMLDraftBlocks,
-  TMLDraftImages,
   IMLDraftText,
   IMLDraftLink,
   IMLDraftLogo,
@@ -23,6 +20,7 @@ export type {
   IMLDraftPost,
   IMLDraftVote,
   IMLDraftWidget,
+  //
   TMLImageContentLogo,
   TMLImageContentImage,
   TMLImageContentImageText,
@@ -30,6 +28,30 @@ export type {
   TMLImageContentButton,
   TMLImageContentCarousel,
   TMLImageContentLink,
+  //
+  TMultilinkDraft,
+  TMLDraftBlocks,
+  TMLDraftImages,
+  TMLDraftBlocksUnion,
+} from './mlDraft';
+export {
+  MLDraftAudio,
+  MLDraftBlock,
+  MLDraftButton,
+  MLDraftCarousel,
+  MLDraftDivider,
+  MLDraftImage,
+  MLDraftImageText,
+  MLDraftLink,
+  MLDraftLogo,
+  MLDraftMap,
+  MLDraftPost,
+  MLDraftShop,
+  MLDraftSocial,
+  MLDraftText,
+  MLDraftVideo,
+  MLDraftVote,
+  MLDraftWidget,
 } from './mlDraft';
 export type { TMultilinkComplete } from './mlComplete';
 export type { TMultilink } from './mlPublic';
@@ -148,3 +170,34 @@ const cArr = [null, null, 'c', null]; // as (IC | null)[]
   [{}: TypeA: {} TypeKeyA],
   [{}: TypeB: {} TypeKeyB],
 ] */
+
+/* contentMap: ['textBlocks_nprwgwrnpv4343', 'imageBlocks_nwnrwvrwrb', 'logoBlocks_grteeenhtres']
+blocks: {
+  [grteeenhtres]: {logoBlockData} as instanceof class MLDraftLogo
+  [nprwgwrnpv4343]: {textBlockData} as instanceof class MLDraftText
+} as { [key: string]: IMLDraftLogo | IMLDraftText }
+
+pushBlock(payload) {
+  if (payload.type === 'text') {
+    block = new MLDraftText(payload);
+    blocks.addProperty(uuid(), block)
+    contentMap.push('textBlocks_' + id)
+  }
+}
+delete
+
+draw = (blocks) => {
+  contentMap.map(type => {
+    switch (type) {
+      case (type[0] === 'textBlocks'): {
+        if (blocks[type[1]] instanceof MLDraftText) {
+          let block: MLDraftText = blocks[type[1]
+          return <>{block.data}</>
+        }
+      }
+    }
+  })
+}
+if instanceof
+
+block[grteeenhtres].image */

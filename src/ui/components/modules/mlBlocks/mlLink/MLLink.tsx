@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   IMLDraftLink,
+  MLDraftLink,
   Nullable,
   TImageFile,
   TMLImageContentImage,
@@ -10,18 +11,19 @@ import {
 import { px } from 'common/utils/ui';
 
 type TMLLinkProps = {
-  block: Nullable<IMLDraftLink>;
+  id: string;
+  block: MLDraftLink;
   isPublic?: boolean;
   callback?: <T>(payload: T) => void;
   image: Nullable<TMLImageContentLink<TImageFile>>;
 };
 
-export const MLLink = ({ block, isPublic, callback, image }: TMLLinkProps) => {
+export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) => {
   if (!block) return null;
   const className = callback ? 'ml-link interactive' : 'ml-link';
   const style = {
     padding: px(block.padding) ?? '0',
-    textAlign: block.align,
+    textAlign: block.textAlign,
     fontSize: block.fontSize,
     fontWeight: block.fontWeight,
     fontStyle: block.fontStyle,
@@ -40,12 +42,10 @@ export const MLLink = ({ block, isPublic, callback, image }: TMLLinkProps) => {
       className={className}
       style={{
         margin: px(block.margin) ?? '0',
-        justifyContent: block.align,
+        justifyContent: block.textAlign,
         position: 'relative',
       }}>
-      {callback && (
-        <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
-      )}
+      {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       {isPublic ? (
         <a href={block.href ?? '#'} style={style}>
           {block.title}

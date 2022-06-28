@@ -4,17 +4,18 @@ import styles from './MLVote.module.scss';
 import { Rating } from './Rating';
 
 import { ID } from 'common/constants';
-import { IMLDraftVote, Nullable } from 'common/types/instance';
+import { IMLDraftVote, MLDraftVote, Nullable } from 'common/types/instance';
 import { px } from 'common/utils/ui';
 import { Button } from 'ui/components/elements';
 
 type TMLVoteProps = {
-  block: Nullable<IMLDraftVote>;
+  id: string;
+  block: MLDraftVote;
   isPublic?: boolean;
   callback?: <T>(payload: T) => void;
 };
 
-export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
+export const MLVote = ({ id, block, isPublic, callback }: TMLVoteProps) => {
   if (!block) return null;
   const onVoteItemClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (isPublic && e.currentTarget.dataset.value) {
@@ -28,9 +29,7 @@ export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
   const className = callback ? `${styles['block']} interactive` : styles['block'];
   return (
     <section className={className} style={{ padding: px(block.padding) ?? '0' }}>
-      {callback && (
-        <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
-      )}
+      {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <ul className="ml-vote__list">
         {block.cells.map((cell, i) => (
           <li
@@ -42,7 +41,7 @@ export const MLVote = ({ block, isPublic, callback }: TMLVoteProps) => {
             <p
               className={styles['block__title']}
               style={{
-                textAlign: block.align,
+                textAlign: block.textAlign,
                 fontSize: block.fontSize,
                 fontWeight: block.fontWeight,
                 font: block.font,

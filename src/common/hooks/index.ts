@@ -4,7 +4,6 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import { AppThunkDispatch, TState } from 'bll/store';
 
-// eslint-disable-next-line react-hooks/exhaustive-deps
 export const useAppDispatch = () => useDispatch<AppThunkDispatch>();
 export const useAppSelector: TypedUseSelectorHook<TState> = useSelector;
 

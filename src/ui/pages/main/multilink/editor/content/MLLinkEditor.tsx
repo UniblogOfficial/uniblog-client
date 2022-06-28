@@ -25,7 +25,7 @@ type TLinkFormData = {
 };
 
 type TMLLinkEditorProps = {
-  order: number;
+  id: string;
   close: (e: MouseEvent<HTMLButtonElement>) => void;
   block?: IMLDraftLink;
   image: Nullable<TMLImageContentLink<TImageFile>>;
@@ -48,7 +48,7 @@ const linkSchema = yup.object().shape({
     .required('Url is required'),
 });
 
-export const MLLinkEditor = ({ order, close, image }: TMLLinkEditorProps) => {
+export const MLLinkEditor = ({ id, close, image }: TMLLinkEditorProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const {
@@ -92,13 +92,11 @@ export const MLLinkEditor = ({ order, close, image }: TMLLinkEditorProps) => {
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile) => {
-      const copyImage = image && { ...image };
-      if (copyImage) {
-        copyImage.image = imageFile;
-        dispatch(setMLDraftBlockContentImage({ images: copyImage, order, field: 'linkBlocks' }));
-      }
+      dispatch(
+        setMLDraftBlockContentImage({ imageData: { image: imageFile }, id, field: 'linkBlocks' }),
+      );
     },
-    [dispatch, image, order],
+    [dispatch, image],
   );
 
   return (

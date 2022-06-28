@@ -46,7 +46,7 @@ export const MLTemplates = memo(({ userData, setCurrentMLTemplate }: TMLTemplate
                     style={{
                       padding: px(block.padding, 5),
                       background: block.background ?? undefined,
-                      justifyContent: block.align ?? undefined,
+                      justifyContent: block.textAlign ?? undefined,
                       overflow: 'hidden',
                       borderRadius: '5px',
                     }}>
@@ -102,7 +102,7 @@ export const MLTemplates = memo(({ userData, setCurrentMLTemplate }: TMLTemplate
                     </div>
                   </li>
                 );
-              case MLContentType.SOCIAL:
+              /* case MLContentType.SOCIAL:
                 return (
                   <li key={ID[j]} style={{ padding: px(block.padding, 5) }}>
                     <ul className="ml-social">
@@ -174,7 +174,7 @@ export const MLTemplates = memo(({ userData, setCurrentMLTemplate }: TMLTemplate
                       </p>
                     </div>
                   </li>
-                );
+                ); */
               default:
                 return <li key={ID[j]} />;
             }

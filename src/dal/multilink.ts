@@ -40,9 +40,7 @@ export const multilinkAPI = {
     });
 
     images.imageBlocks.forEach((block, i) => {
-      block.images.forEach((image, j) => {
-        image && formData.append('images', image.file, `${block.order}_image_${j}`);
-      });
+      block.image && formData.append('images', block.image.file, `${block.order}_image_0`);
     });
 
     images.imageTextBlocks.forEach((block, i) => {

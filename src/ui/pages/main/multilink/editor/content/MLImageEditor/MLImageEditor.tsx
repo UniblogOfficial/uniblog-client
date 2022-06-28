@@ -8,35 +8,34 @@ import { Button, Input } from 'ui/components/elements';
 import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TMLImageEditorProps = {
-  order: number;
+  id: string;
   block: Nullable<IMLDraftImage>;
   images: Nullable<TMLImageContentImage<TImageFile>>;
 };
 
-export const MLImageEditor = ({ order, block, images }: TMLImageEditorProps) => {
+export const MLImageEditor = ({ id, block, images }: TMLImageEditorProps) => {
   const dispatch = useAppDispatch();
   const copyBlock = { ...block };
 
   const onDropZoneChange = useCallback(
-    (imageFile: TImageFile, id?: number) => {
-      const copyImages = images && { ...images };
-      if (copyImages && id !== undefined) {
-        copyImages.images[id] = imageFile;
-        dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: 'imageBlocks' }));
-      }
+    (imageFile: TImageFile) => {
+      dispatch(
+        setMLDraftBlockContentImage({
+          imageData: { image: imageFile },
+          id,
+          field: 'imageBlocks',
+        }),
+      );
     },
-    [dispatch, images, order],
+    [dispatch, images],
   );
   if (!copyBlock) return <p>Error: Block not found</p>;
-  const fields =
-    copyBlock.images &&
-    copyBlock.images.map((image, i) => (
-      <li key={ID[i]}>
-        <div style={{ position: 'relative', height: '150px' }}>
-          <ImageField id={i} onChange={onDropZoneChange} />
-        </div>
-      </li>
-    ));
+  const fields = copyBlock.image && (
+    <div style={{ position: 'relative', height: '150px' }}>
+      <ImageField onChange={onDropZoneChange} />
+    </div>
+  );
+
   return (
     <div className="ml-image-editor">
       <ul>{fields}</ul>

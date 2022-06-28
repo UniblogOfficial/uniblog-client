@@ -1,27 +1,27 @@
 import React from 'react';
 
-import { LatLngLiteral } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 
+import { setMLDraftBlockContent } from 'bll/reducers';
 import { useAppDispatch } from 'common/hooks';
-import { IMLDraftMap } from 'common/types/instance';
+import { MLDraftMap } from 'common/types/instance';
 import { Map } from 'ui/components/modules/map/Map';
 
 type TMLMapEditorProps = {
-  order: number;
-  block: IMLDraftMap;
+  id: string;
+  block: MLDraftMap;
 };
 
-const CENTER_MAP: LatLngLiteral = { lat: 51.505, lng: -0.09 };
+const CENTER_MAP: LatLngTuple = [51.505, -0.09];
 const ZOOM_MAP = 13;
 
-export const MLMapEditor = ({ order, block }: TMLMapEditorProps) => {
+export const MLMapEditor = ({ id, block }: TMLMapEditorProps) => {
   const dispatch = useAppDispatch();
 
-  if (!block) return <p>Error: Block not found</p>;
+  const { type } = block;
 
-  const setPositionMark = (position: LatLngLiteral) => {
-    block.latLng = position;
-    // dispatch(setMLDraftBlockContent(block, order));
+  const setPositionMark = (latLng: LatLngTuple) => {
+    dispatch(setMLDraftBlockContent({ content: { latLng }, id, type }));
   };
 
   return (
