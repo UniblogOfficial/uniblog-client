@@ -7,17 +7,17 @@ import {
 import { ID } from '../../../../../../../common/constants';
 import { useAppDispatch, useThrottle } from '../../../../../../../common/hooks';
 
-import { IMLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
+import { MLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
 import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TMLShopEditorProps = {
-  order: number;
-  block: IMLDraftShop;
+  id: string;
+  block: MLDraftShop;
   images: Nullable<TMLImageContentShop<TImageFile>>;
 };
 
-export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
+export const MLShopEditor = ({ id, block, images }: TMLShopEditorProps) => {
   const dispatch = useAppDispatch();
   const dispatchThrottled = useThrottle(dispatch, 200);
   const initialTitles = block?.cells.map(cell => cell.title);
@@ -31,15 +31,15 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
   }, [block.cells]);
 
   const onDropZoneChange = useCallback(
-    (imageFile: TImageFile, id?: number) => {
+    (imageFile: TImageFile, _id?: number) => {
       const copyImages = images && { ...images };
-      if (copyImages && id !== undefined) {
-        copyImages.cells[id] = imageFile;
-        // @ts-ignore
-        dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: block.type }));
+      if (copyImages && _id !== undefined) {
+        // eslint-disable-next-line no-underscore-dangle
+        copyImages.cells[_id] = imageFile;
+        dispatch(setMLDraftBlockContentImage({ imageData: copyImages, id, field: block.type }));
       }
     },
-    [block.type, dispatch, images, order],
+    [block.type, dispatch, images],
   );
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +52,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
             titles.map((title, index) => (index === currentOrder ? e.currentTarget.value : title)),
           );
           copyBlock.cells[+currentOrder].title = e.currentTarget.value;
-          dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
+          // dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
           break;
         case 'subtitle':
           setSubTitles(
@@ -61,7 +61,7 @@ export const MLShopEditor = ({ order, block, images }: TMLShopEditorProps) => {
             ),
           );
           copyBlock.cells[+currentOrder].subtitle = e.currentTarget.value;
-          dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
+          // dispatchThrottled(setMLDraftBlockContent({ content: copyBlock, order }));
           break;
         default:
           break;

@@ -10,6 +10,10 @@ import {
   IMLDraftSocial,
   IMLDraftText,
   IMLDraftVideo,
+  MLDraftImage,
+  MLDraftImageText,
+  MLDraftLogo,
+  MLDraftShop,
   Nullable,
   TMultilink,
 } from 'common/types/instance';
@@ -17,10 +21,10 @@ import {
 export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
   const { contentMap, images } = multilink;
 
-  const logoBlocks: IMLDraftLogo[] = [];
-  const imageBlocks: IMLDraftImage[] = [];
-  const imageTextBlocks: IMLDraftImageText[] = [];
-  const shopBlocks: IMLDraftShop[] = [];
+  const logoBlocks: Array<MLDraftLogo & { order: number }> = [];
+  const imageBlocks: Array<MLDraftImage & { order: number }> = [];
+  const imageTextBlocks: Array<MLDraftImageText & { order: number }> = [];
+  const shopBlocks: Array<MLDraftShop & { order: number }> = [];
 
   let background = parseRawImage(images.find(image => image.order === 9999));
   if (background) {
@@ -46,10 +50,7 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
         if (block) {
           imageBlocks.push({
             ...block,
-            images: images
-              .filter(image => image.order === i)
-              .sort((a, b) => a.suborder - b.suborder)
-              .map(image => parseRawImage(image) ?? null),
+            image: parseRawImage(images.find(image => image.order === i)) ?? null,
           });
         }
         break;

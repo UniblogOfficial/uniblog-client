@@ -1,13 +1,13 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 
-import { LatLngLiteral } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 import { Marker, useMapEvents } from 'react-leaflet';
 
 import { Nullable } from 'common/types/instance';
 
 type EditableMarkProps = {
-  setPositionMark: (position: LatLngLiteral) => void;
-  position: Nullable<LatLngLiteral>;
+  position: Nullable<LatLngTuple>;
+  setPositionMark: (position: LatLngTuple) => void;
   isSearchLocation?: boolean;
 };
 
@@ -16,17 +16,18 @@ export const EditableMark = ({
   position,
   isSearchLocation,
 }: EditableMarkProps): Nullable<ReactElement> => {
-  const [mark, setMark] = useState<Nullable<LatLngLiteral>>(position);
+  const [mark, setMark] = useState<Nullable<LatLngTuple>>(position);
 
   const map = useMapEvents({
     click(e) {
-      setMark(e.latlng);
-      setPositionMark(e.latlng);
+      setMark([e.latlng.lat, e.latlng.lng]);
+      setPositionMark([e.latlng.lat, e.latlng.lng]);
     },
+
     locationfound(e) {
-      setMark(e.latlng);
-      setPositionMark(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
+      setMark([e.latlng.lat, e.latlng.lng]);
+      setPositionMark([e.latlng.lat, e.latlng.lng]);
+      map.flyTo([e.latlng.lat, e.latlng.lng], map.getZoom());
     },
   });
 

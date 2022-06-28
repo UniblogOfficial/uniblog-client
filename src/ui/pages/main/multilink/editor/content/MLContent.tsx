@@ -1,5 +1,6 @@
 import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
+import { nanoid } from '@reduxjs/toolkit';
 import { useTranslation } from 'react-i18next';
 
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
@@ -16,15 +17,22 @@ import { addMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { Nullable, TImageFile, TMLDraftBlocks, TMLDraftImages } from 'common/types/instance';
+import {
+  MLDraftLink,
+  MLDraftLogo,
+  MLDraftMap,
+  MLDraftText,
+  TMLDraftBlocksUnion,
+} from 'common/types/instance/mlDraft';
 import { Button } from 'ui/components/elements';
 
 type TMLContentProps = {
-  contentMap: MLContentType[];
+  contentMap: string[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
   blockEditorType: Nullable<MLContentType>;
-  blockEditorOrder: number;
-  setBlockEditor: (payload: { type: MLContentType; order: number } | null) => void;
+  blockEditorId: string;
+  setBlockEditor: (payload: { type: MLContentType; id: string } | null) => void;
 };
 
 const actionButtonsData = [
@@ -37,7 +45,7 @@ const actionButtonsData = [
 
 export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
-  const { contentMap, blocks, images, blockEditorType, blockEditorOrder, setBlockEditor } = props;
+  const { contentMap, blocks, images, blockEditorType, blockEditorId, setBlockEditor } = props;
   const { t } = useTranslation(['pages', 'common']);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
@@ -48,10 +56,11 @@ export const MLContent = (props: TMLContentProps) => {
         setBlockEditor(null);
         return;
       }
-      dispatch(addMLDraftBlock(e.currentTarget.value as MLContentType));
-      setBlockEditor({ type: e.currentTarget.value as MLContentType, order: contentMap.length });
+      const id = nanoid();
+      dispatch(addMLDraftBlock({ type: e.currentTarget.value as MLContentType, id }));
+      setBlockEditor({ type: e.currentTarget.value as MLContentType, id });
     },
-    [contentMap.length, dispatch, setBlockEditor],
+    [dispatch, setBlockEditor],
   );
 
   const actionButtons = (
@@ -170,115 +179,117 @@ export const MLContent = (props: TMLContentProps) => {
   );
 
   const currentEditor = useMemo(() => {
+    const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`] as TMLDraftBlocksUnion;
+    const order = contentMap.findIndex(el => el === `${blockEditorType}_${blockEditorId}`);
     switch (blockEditorType) {
       case MLContentType.LOGO: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
-        return (
-          currentBlock &&
-          withBaseEditor({
-            order: blockEditorOrder,
-            block: currentBlock,
-            images: images.blocks[blockEditorType][blockEditorOrder],
-          })(MLLogoEditor)
-        );
+        if (currentBlock instanceof MLDraftLogo) {
+          return (
+            currentBlock &&
+            withBaseEditor({
+              id: blockEditorId,
+              block: currentBlock,
+              images: images.blocks[blockEditorType][order],
+            })(MLLogoEditor)
+          );
+        }
+        break;
       }
       case MLContentType.TEXT: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
-        return (
-          currentBlock &&
-          withBaseEditor({
-            order: blockEditorOrder,
+        if (currentBlock instanceof MLDraftText) {
+          return withBaseEditor({
+            id: blockEditorId,
             block: currentBlock,
-          })(MLTextEditor)
-        );
+          })(MLTextEditor);
+        }
+        break;
       }
-      case MLContentType.IMAGETEXT: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+      /* case MLContentType.IMAGETEXT: {
+        const currentBlock = blocks[blockEditorType][blockEditorId];
         return currentBlock && <>Not implemented</>;
       }
       case MLContentType.IMAGE: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorId];
         return (
           currentBlock && (
             <>
               <MLImageEditor
-                order={blockEditorOrder}
+                order={blockEditorId}
                 block={currentBlock}
-                images={images.blocks[blockEditorType][blockEditorOrder]}
+                images={images.blocks[blockEditorType][blockEditorId]}
               />
             </>
           )
         );
-      }
+      } */
       case MLContentType.LINK: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
-        const image = images.blocks[blockEditorType][blockEditorOrder];
-        return (
-          currentBlock &&
-          withBaseEditor({
-            order: blockEditorOrder,
+        const image = images.blocks[blockEditorType][order];
+
+        if (currentBlock instanceof MLDraftLink) {
+          return withBaseEditor({
+            id: blockEditorId,
             block: currentBlock,
-            image: images.blocks[blockEditorType][blockEditorOrder],
+            image,
             close: onButtonEditorClick,
-          })(MLLinkEditor)
-        );
+          })(MLLinkEditor);
+        }
+        break;
       }
 
-      case MLContentType.BUTTON: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+      /* case MLContentType.BUTTON: {
+        const currentBlock = blocks[blockEditorType][blockEditorId];
         return (
           currentBlock &&
           withBaseEditor({
-            order: blockEditorOrder,
+            order: blockEditorId,
             block: currentBlock,
           })(MLButtonEditor)
         );
       }
       case MLContentType.SOCIAL: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorId];
         return (
           currentBlock &&
           withBaseEditor({
-            order: blockEditorOrder,
+            order: blockEditorId,
             block: currentBlock,
           })(null)
         );
       }
       case MLContentType.WIDGET: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorId];
         return (
           currentBlock &&
           withBaseEditor({
-            order: blockEditorOrder,
+            order: blockEditorId,
             block: currentBlock,
           })(MLWidgetEditor)
         );
       }
       case MLContentType.SHOP: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
+        const currentBlock = blocks[blockEditorType][blockEditorId];
         return (
           currentBlock &&
           withBaseEditor({
-            order: blockEditorOrder,
+            order: blockEditorId,
             block: currentBlock,
-            images: images.blocks[blockEditorType][blockEditorOrder],
+            images: images.blocks[blockEditorType][blockEditorId],
           })(MLShopEditor)
         );
-      }
+      } */
       case MLContentType.MAP: {
-        const currentBlock = blocks[blockEditorType][blockEditorOrder];
-        return (
-          currentBlock &&
-          withBaseEditor({
-            order: blockEditorOrder,
+        if (currentBlock instanceof MLDraftMap) {
+          return withBaseEditor({
+            id: blockEditorId,
             block: currentBlock,
-          })(MLMapEditor)
-        );
+          })(MLMapEditor);
+        }
+        break;
       }
       default:
         return <>Not implemented</>;
     }
-  }, [blockEditorOrder, blockEditorType, blocks, images.blocks, onButtonEditorClick]);
+  }, [blockEditorId, blockEditorType, blocks, images.blocks, onButtonEditorClick]);
 
   return (
     <>

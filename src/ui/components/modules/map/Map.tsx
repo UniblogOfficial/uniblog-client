@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import 'ui/components/modules/map/Map.scss';
-import { Icon, LatLngLiteral } from 'leaflet';
+import { Icon, LatLngTuple } from 'leaflet';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
 import { EditableMark } from './EditableMark';
@@ -11,11 +11,11 @@ import { Nullable } from 'common/types/instance';
 
 type MapProps = {
   zoom: number;
-  center: LatLngLiteral;
+  center: LatLngTuple;
   isEditor: boolean;
-  positionMark: Nullable<LatLngLiteral>;
+  positionMark: Nullable<LatLngTuple>;
   isSearchLocation?: boolean;
-  setPositionMark?: (position: LatLngLiteral) => void;
+  setPositionMark?: (position: LatLngTuple) => void;
 };
 
 Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.8.0/dist/images/';
@@ -46,3 +46,4 @@ export const Map = ({
     </MapContainer>
   </div>
 );
+

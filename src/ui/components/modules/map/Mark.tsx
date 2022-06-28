@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 
-import { LatLngLiteral } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 import { Marker, useMap } from 'react-leaflet';
 
 import { Nullable } from 'common/types/instance';
 
 type MarkProps = {
-  position: Nullable<LatLngLiteral>;
+  position: Nullable<LatLngTuple>;
 };
 
 export const Mark = ({ position }: MarkProps): Nullable<ReactElement> => {
