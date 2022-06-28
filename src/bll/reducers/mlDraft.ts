@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
 import { TMLDraftBlocksUnion } from '../../common/types/instance/mlDraft';
+import { normalizeMLDraft } from '../../common/utils/state/normalizeMLDraft';
 
 import { setAppStatus } from '.';
 
@@ -28,6 +29,7 @@ import {
   pushMLDraftBlockLogo,
   pushMLDraftBlockSocial,
   notNull,
+  handleServerNetworkError,
 } from 'common/utils/state';
 import { authAPI, multilinkAPI } from 'dal';
 import { getTemplates } from 'ui/pages/main/multilink/editor/template/templates';
@@ -190,43 +192,14 @@ export const mlDraftReducer = mlDraftSlice.reducer;
 export const publishMultilink = createAsyncThunk(
   'mlDraft/publishMultilink',
   async (multilink: TMultilinkDraft, { dispatch, rejectWithValue, getState }) => {
-    /* dispatch(setAppStatus(AppStatus.USERDATA_LOADING));
-    const { name, background, contentMap, blocks, images } = multilink;
-    const multilinkDto: TCreateMLDto = {
-      name,
-      background,
-      maxWidth: 480,
-      contentMap,
-      textBlocks: blocks.textBlocks.filter(notNull),
-      socialBlocks: blocks.socialBlocks.filter(notNull),
-      videoBlocks: blocks.videoBlocks.filter(notNull),
-      audioBlocks: blocks.audioBlocks.filter(notNull),
-      dividerBlocks: blocks.dividerBlocks.filter(notNull),
-      mapBlocks: blocks.mapBlocks.filter(notNull),
-      postBlocks: blocks.postBlocks.filter(notNull),
-      voteBlocks: blocks.voteBlocks.filter(notNull),
-      widgetBlocks: blocks.widgetBlocks.filter(notNull),
-
-      logoBlocks: blocks.logoBlocks.filter(notNull).map(block => ({ ...block, logo: null })),
-      linkBlocks: blocks.linkBlocks.filter(notNull),
-      imageBlocks: blocks.imageBlocks.filter(notNull),
-      imageTextBlocks: blocks.imageTextBlocks.filter(notNull),
-      shopBlocks: blocks.shopBlocks.filter(notNull),
-      carouselBlocks: blocks.carouselBlocks.filter(notNull),
-      buttonBlocks: blocks.buttonBlocks.filter(notNull),
-    };
-    const imagesDto: TCreateMLImagesDto = {
-      background: images.background ?? undefined,
-
-      logoBlocks: images.blocks.logoBlocks.filter(notNull),
-      imageBlocks: images.blocks.imageBlocks.filter(notNull),
-      imageTextBlocks: images.blocks.imageTextBlocks.filter(notNull),
-      shopBlocks: images.blocks.shopBlocks.filter(notNull),
-      buttonBlocks: images.blocks.buttonBlocks.filter(notNull),
-      carouselBlocks: images.blocks.carouselBlocks.filter(notNull),
-      linkBlocks: images.blocks.linkBlocks.filter(notNull),
-    };
-    const response = await multilinkAPI.create(multilinkDto, imagesDto); */
+    try {
+      dispatch(setAppStatus(AppStatus.USERDATA_LOADING));
+      const [multilinkDto, imagesDto] = normalizeMLDraft(multilink);
+      const response = await multilinkAPI.create(multilinkDto, imagesDto);
+      response && dispatch(setAppStatus(AppStatus.SUCCEEDED));
+    } catch (e) {
+      handleServerNetworkError(e, AppStatus.USERDATA_FAILED, dispatch);
+    }
   },
 );
 

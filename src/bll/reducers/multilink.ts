@@ -63,8 +63,7 @@ export const getAllMultilinks = createAsyncThunk(
       dispatch(setAppStatus(AppStatus.CONTENT_LOADING));
       const response = await multilinkAPI.getAll();
       if (response.data) {
-        // eslint-disable-next-line no-debugger
-        debugger;
+        console.log(response.data);
         batch(() => {
           dispatch(
             setAllMultilinks(
