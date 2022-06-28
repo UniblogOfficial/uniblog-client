@@ -15,7 +15,7 @@ type TMLImageProps = {
 export const MLImage = ({ id, block, image, callback }: TMLImageProps) => {
   if (!block) return null;
   const className = callback ? 'interactive' : undefined;
-  const imgSrc = image?.images[0] ? image.images[0]?.previewUrl : block.image ?? imgPlaceholder;
+  const imgSrc = image?.image ? image.image.previewUrl : block.image ?? imgPlaceholder;
   return (
     <section
       className={className}

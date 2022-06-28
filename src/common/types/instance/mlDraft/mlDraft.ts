@@ -10,7 +10,7 @@ export type TMLImageContentLogo<TImage> = {
 
 export type TMLImageContentImage<TImage> = {
   order: number;
-  images: Nullable<TImage>[];
+  image: Nullable<TImage>;
 };
 
 export type TMLImageContentCarousel<TImage> = {

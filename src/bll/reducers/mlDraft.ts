@@ -143,11 +143,11 @@ const mlDraftSlice = createSlice({
       Object.assign(block, content);
       state.blocks = { ...state.blocks };
     },
-    setMLDraftBlockContentImage<T extends Omit<IMLDraftContent, 'type' | 'isFilled'>>(
+    setMLDraftBlockContentImage<T>(
       state: TMLDraftState,
       action: PayloadAction<{
-        images: T;
-        order: number;
+        imageData: T;
+        id: string;
         field: keyof Pick<
           TMLDraftBlocks,
           | 'logoBlocks'
@@ -160,8 +160,13 @@ const mlDraftSlice = createSlice({
         >;
       }>,
     ) {
+      const { imageData, id, field } = action.payload;
+      const order = state.contentMap.findIndex(el => el === `${field}_${id}`);
       // @ts-ignore
-      state.blocks[action.payload.field][action.payload.images.order] = action.payload.images;
+      state.images.blocks[field][order] = {
+        ...state.images.blocks[field][order],
+        ...imageData,
+      };
     },
   },
 });

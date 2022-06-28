@@ -19,6 +19,7 @@ import { useAppDispatch } from 'common/hooks';
 import { Nullable, TImageFile, TMLDraftBlocks, TMLDraftImages } from 'common/types/instance';
 import {
   MLDraftLink,
+  MLDraftLogo,
   MLDraftMap,
   MLDraftText,
   TMLDraftBlocksUnion,
@@ -179,18 +180,21 @@ export const MLContent = (props: TMLContentProps) => {
 
   const currentEditor = useMemo(() => {
     const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`] as TMLDraftBlocksUnion;
+    const order = contentMap.findIndex(el => el === `${blockEditorType}_${blockEditorId}`);
     switch (blockEditorType) {
-      /* case MLContentType.LOGO: {
-        const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`];
-        return (
-          currentBlock &&
-          withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-            images: images.blocks[blockEditorType][blockEditorId],
-          })(MLLogoEditor)
-        );
-      } */
+      case MLContentType.LOGO: {
+        if (currentBlock instanceof MLDraftLogo) {
+          return (
+            currentBlock &&
+            withBaseEditor({
+              id: blockEditorId,
+              block: currentBlock,
+              images: images.blocks[blockEditorType][order],
+            })(MLLogoEditor)
+          );
+        }
+        break;
+      }
       case MLContentType.TEXT: {
         if (currentBlock instanceof MLDraftText) {
           return withBaseEditor({
@@ -219,7 +223,7 @@ export const MLContent = (props: TMLContentProps) => {
         );
       } */
       case MLContentType.LINK: {
-        const image = images.blocks[blockEditorType][0];
+        const image = images.blocks[blockEditorType][order];
 
         if (currentBlock instanceof MLDraftLink) {
           return withBaseEditor({

@@ -7,7 +7,7 @@ import { Button, Input } from 'ui/components/elements';
 import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TMLLogoEditorProps = {
-  order: number;
+  id: string;
   block: IMLDraftLogo;
   images: Nullable<TMLImageContentLogo<TImageFile>>;
 };
@@ -18,23 +18,23 @@ enum ImageType {
   BANNER = 2,
 }
 
-export const MLLogoEditor = ({ order, block, images }: TMLLogoEditorProps) => {
+export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
   const dispatch = useAppDispatch();
 
   const onDropZoneChange = useCallback(
-    (imageFile: TImageFile, id?: number) => {
-      const copyImages = images && { ...images };
-      if (copyImages && id !== undefined) {
-        if (id === ImageType.LOGO) {
-          copyImages.logo = imageFile;
+    (imageFile: TImageFile, _id?: number) => {
+      const imageData = {} as any;
+      if (_id !== undefined) {
+        if (_id === ImageType.LOGO) {
+          imageData.logo = imageFile;
         }
-        if (id === ImageType.BANNER) {
-          copyImages.banner = imageFile;
+        if (_id === ImageType.BANNER) {
+          imageData.banner = imageFile;
         }
-        dispatch(setMLDraftBlockContentImage({ images: copyImages, order, field: 'logoBlocks' }));
+        dispatch(setMLDraftBlockContentImage({ imageData, id, field: 'logoBlocks' }));
       }
     },
-    [dispatch, images, order],
+    [dispatch, images],
   );
   const onDeleteButtonClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
