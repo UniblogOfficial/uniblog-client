@@ -20,14 +20,16 @@ export const EditableMark = ({
 
   const map = useMapEvents({
     click(e) {
-      setMark([e.latlng.lat, e.latlng.lng]);
-      setPositionMark([e.latlng.lat, e.latlng.lng]);
+      const { lng, lat } = e.latlng;
+      setMark([lat, lng]);
+      setPositionMark([lat, lng]);
     },
 
     locationfound(e) {
-      setMark([e.latlng.lat, e.latlng.lng]);
-      setPositionMark([e.latlng.lat, e.latlng.lng]);
-      map.flyTo([e.latlng.lat, e.latlng.lng], map.getZoom());
+      const { lng, lat } = e.latlng;
+      setMark([lat, lng]);
+      setPositionMark([lat, lng]);
+      map.flyTo([lat, lng], map.getZoom());
     },
   });
 
