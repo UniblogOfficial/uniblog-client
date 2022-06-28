@@ -1,6 +1,3 @@
-import { v1 } from 'uuid';
-
-import { MLDraftText, MLDraftLink } from '../../types/instance/mlDraft';
 import { parseRawImage } from '../ui';
 
 import { getKeys } from '.';
@@ -17,6 +14,14 @@ import {
   IMLDraftSocial,
   IMLDraftText,
   IMLDraftWidget,
+  MLDraftButton,
+  MLDraftImage,
+  MLDraftImageText,
+  MLDraftLink,
+  MLDraftMap,
+  MLDraftShop,
+  MLDraftText,
+  MLDraftWidget,
   Nullable,
   TIncomingImage,
   TMLDraftBlocks,
@@ -51,101 +56,29 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, id
       blocks[`${type}_${id}`] = new MLDraftLink(defaultLinkBlockOptions);
       break;
 
-    /* case MLContentType.BUTTON:
-      getKeys(blocks).forEach(key => {
-        if (key === 'buttonBlocks') {
-          newBlocks[key] = [
-            ...blocks.buttonBlocks,
-            {
-              order,
-              ...defaultButtonBlockOptions,
-            } as IMLDraftButton,
-          ];
-        } else {
-          newBlocks[key] = [...blocks[key], null];
-        }
-      });
+    case MLContentType.BUTTON:
+      blocks[`${type}_${id}`] = new MLDraftButton(defaultButtonBlockOptions);
       break;
 
     case MLContentType.IMAGE:
-      getKeys(blocks).forEach(key => {
-        if (key === 'imageBlocks') {
-          newBlocks[key] = [
-            ...blocks.imageBlocks,
-            {
-              order,
-              ...defaultImageBlockOptions,
-            } as IMLDraftImage,
-          ];
-        } else {
-          newBlocks[key] = [...blocks[key], null];
-        }
-      });
+      blocks[`${type}_${id}`] = new MLDraftImage(defaultImageBlockOptions);
       break;
 
     case MLContentType.IMAGETEXT:
-      getKeys(blocks).forEach(key => {
-        if (key === 'imageTextBlocks') {
-          newBlocks[key] = [
-            ...blocks.imageTextBlocks,
-            {
-              order,
-              ...defaultImageTextBlockOptions,
-            } as IMLDraftImageText,
-          ];
-        } else {
-          newBlocks[key] = [...blocks[key], null];
-        }
-      });
+      blocks[`${type}_${id}`] = new MLDraftImageText(defaultImageTextBlockOptions);
       break;
 
     case MLContentType.SHOP:
-      getKeys(blocks).forEach(key => {
-        if (key === 'shopBlocks') {
-          newBlocks[key] = [
-            ...blocks.shopBlocks,
-            {
-              order,
-              ...defaultShopBlockOptions,
-            } as IMLDraftShop,
-          ];
-        } else {
-          newBlocks[key] = [...blocks[key], null];
-        }
-      });
+      blocks[`${type}_${id}`] = new MLDraftShop(defaultShopBlockOptions);
       break;
 
     case MLContentType.WIDGET:
-      getKeys(blocks).forEach(key => {
-        if (key === 'widgetBlocks') {
-          newBlocks[key] = [
-            ...blocks.widgetBlocks,
-            {
-              order,
-              ...defaultWidgetBlockOptions,
-            } as IMLDraftWidget,
-          ];
-        } else {
-          newBlocks[key] = [...blocks[key], null];
-        }
-      });
+      blocks[`${type}_${id}`] = new MLDraftWidget(defaultWidgetBlockOptions);
       break;
 
     case MLContentType.MAP:
-      getKeys(blocks).forEach(key => {
-        if (key === 'mapBlocks') {
-          newBlocks[key] = [
-            ...blocks.mapBlocks,
-            {
-              order,
-              ...defaultMapBlockOptions,
-            } as IMLDraftMap,
-          ];
-        } else {
-          newBlocks[key] = [...blocks[key], null];
-        }
-      });
-      break; */
+      blocks[`${type}_${id}`] = new MLDraftMap(defaultMapBlockOptions);
+      break;
 
     default:
   }
@@ -302,14 +235,15 @@ const defaultShopBlockOptions: IMLDraftShop = {
   subtitleAlign: 'center',
 };
 
-const defaultWidgetBlockOptions: Omit<IMLDraftWidget, 'url'> = {
+const defaultWidgetBlockOptions: IMLDraftWidget = {
   isFilled: false,
+  url: '',
 };
 
 const defaultMapBlockOptions: IMLDraftMap = {
   isFilled: false,
+  url: 'url',
+  latLng: null,
   padding: [12, 24],
   margin: [0, 24, 12],
-  url: '',
-  latLng: null,
 };
