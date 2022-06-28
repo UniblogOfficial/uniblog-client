@@ -7,7 +7,9 @@ import styles from './Carousel.module.scss';
 type TCarouselProps = {
   items: Array<ReactElement>;
   itemsPerView: number;
-  arrows?: Array<ReactElement>;
+  arrows?: boolean;
+  dots?: boolean;
+  arrowsIcons?: Array<ReactElement>;
   arrowStep?: number;
   transitionTime?: number;
   className?: string;
@@ -19,12 +21,14 @@ export const Carousel: FC<TCarouselProps> = memo(
   ({
     items,
     itemsPerView,
-    arrows,
     arrowStep = itemsPerView,
     transitionTime = itemsPerView * 100,
     className,
     callback,
     currentMLTemplate,
+    dots,
+    arrows,
+    arrowsIcons,
   }) => {
     const fullWidth = items.length / itemsPerView; // in parts exm 2.5
     const fullSlidesAmount = Math.floor(fullWidth); // exm. 2
@@ -40,7 +44,7 @@ export const Carousel: FC<TCarouselProps> = memo(
     const [isRolling, setIsRolling] = useState(false);
 
     const controlDots = useMemo(() => {
-      const dots = [];
+      const dotsElements = [];
       const onStageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (
           stage === secondStageValue &&
@@ -56,7 +60,7 @@ export const Carousel: FC<TCarouselProps> = memo(
       for (let i = 0; i < (isNoPartialSlide ? fullWidth : Math.ceil(fullWidth)); i++) {
         if (i === 0) {
           // FIRST VIEW CONTROL DOT
-          dots.push(
+          dotsElements.push(
             <li key={i} value={i}>
               <input
                 id={String(i)}
@@ -80,7 +84,7 @@ export const Carousel: FC<TCarouselProps> = memo(
         }
         if (i === (isNoPartialSlide ? fullWidth - 1 : Math.floor(fullWidth)) && i !== 0) {
           // LAST VIEW CONTROL DOT IF EXISTS
-          dots.push(
+          dotsElements.push(
             <li key={Math.floor(fullWidth)} value={fullWidth - 1}>
               <input
                 id={String(Math.floor(fullWidth))}
@@ -102,7 +106,7 @@ export const Carousel: FC<TCarouselProps> = memo(
         }
         if (i === Math.floor(fullWidth) - 1 && i !== 0 && fullWidth > 1) {
           // SECOND-TO-LAST VIEW CONTROL DOT IF EXISTS
-          dots.push(
+          dotsElements.push(
             <li key={i} value={i}>
               <input
                 id={String(i)}
@@ -121,7 +125,7 @@ export const Carousel: FC<TCarouselProps> = memo(
         }
         //
         // REST VIEW CONTROL DOTS IF EXIST
-        dots.push(
+        dotsElements.push(
           <li key={i} value={i}>
             <input
               id={String(i)}
@@ -138,7 +142,7 @@ export const Carousel: FC<TCarouselProps> = memo(
         );
       }
 
-      return dots.length > 1 ? dots : null;
+      return dotsElements.length > 1 ? dotsElements : null;
     }, [
       stage,
       secondStageValue,
@@ -299,7 +303,7 @@ export const Carousel: FC<TCarouselProps> = memo(
     return (
       <div className={className}>
         <div
-          style={{ padding: arrows && items.length > itemsPerView ? '0 1.5em' : '0' }}
+          style={{ padding: arrowsIcons && items.length > itemsPerView ? '0 1.5em' : '0' }}
           className={styles.container}>
           <ul
             style={{
@@ -319,17 +323,17 @@ export const Carousel: FC<TCarouselProps> = memo(
             <div className={styles.controls__arrows}>
               {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
               <div data-value="-1" onClick={onArrowClick}>
-                {arrows[0]}
+                {arrowsIcons && arrowsIcons[0]}
               </div>
               {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
               <div data-value="1" onClick={onArrowClick}>
-                {arrows[1]}
+                {arrowsIcons && arrowsIcons[1]}
               </div>
             </div>
           )}
         </div>
         <div className={styles.controls__dots}>
-          <ul>{controlDots}</ul>
+          <ul>{dots && controlDots}</ul>
         </div>
       </div>
     );
