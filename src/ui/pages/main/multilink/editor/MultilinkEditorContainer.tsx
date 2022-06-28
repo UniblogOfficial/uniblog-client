@@ -2,8 +2,6 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { MLButton } from '../../../../components/modules/mlBlocks/mlButton/MLButton';
-
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
@@ -13,7 +11,6 @@ import { MLTemplates } from './template/MLTemplates';
 import { publishMultilink } from 'bll/reducers';
 import { ID, MLContentType } from 'common/constants';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { Nullable, TImageFile, TMultilinkDraft, TUser } from 'common/types/instance';
 import {
   MLDraftAudio,
   MLDraftButton,
@@ -21,16 +18,22 @@ import {
   MLDraftImageText,
   MLDraftLink,
   MLDraftLogo,
+  MLDraftMap,
   MLDraftShop,
   MLDraftSocial,
   MLDraftText,
   MLDraftVideo,
   MLDraftVote,
   MLDraftWidget,
+  Nullable,
+  TImageFile,
   TMLDraftBlocksUnion,
-} from 'common/types/instance/mlDraft';
+  TMultilinkDraft,
+  TUser,
+} from 'common/types/instance';
 import { Button, Icon } from 'ui/components/elements';
 import {
+  MLButton,
   MLImage,
   MLImageText,
   MLLink,
@@ -41,6 +44,7 @@ import {
   MLVideo,
   MLVote,
 } from 'ui/components/modules/mlBlocks';
+import { MLMap } from 'ui/components/modules/mlBlocks/mlMap/MLMap';
 import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
 type TMultilinkEditorContainerProps = {
@@ -124,6 +128,9 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
             }
             if (block instanceof MLDraftVideo) {
               return <MLVideo key={id} id={id} block={block} callback={callback} />;
+            }
+            if (block instanceof MLDraftMap) {
+              return <MLMap key={id} id={id} block={block} callback={callback} />;
             }
             if (block instanceof MLDraftAudio) {
               return <>audio block</>;
