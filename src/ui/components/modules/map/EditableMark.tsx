@@ -1,28 +1,28 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 
-import { LatLngLiteral } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 import { Marker, useMapEvents } from 'react-leaflet';
 
 import { Nullable } from 'common/types/instance';
 
 type EditableMarkProps = {
-  setPositionMark: (position: LatLngLiteral) => void;
+  setPositionMark: (position: LatLngTuple) => void;
 };
 
 export const EditableMark = ({ setPositionMark }: EditableMarkProps): Nullable<ReactElement> => {
-  const [mark, setMark] = useState<Nullable<LatLngLiteral>>(null);
+  const [mark, setMark] = useState<Nullable<LatLngTuple>>(null);
 
   const map = useMapEvents({
     click(e) {
-      setMark(e.latlng);
+      setMark([e.latlng.lat, e.latlng.lng]);
 
-      setPositionMark(e.latlng);
+      setPositionMark([e.latlng.lat, e.latlng.lng]);
     },
 
     locationfound(e) {
-      setMark(e.latlng);
-      setPositionMark(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
+      setMark([e.latlng.lat, e.latlng.lng]);
+      setPositionMark([e.latlng.lat, e.latlng.lng]);
+      map.flyTo([e.latlng.lat, e.latlng.lng], map.getZoom());
     },
   });
 
