@@ -4,15 +4,17 @@ import 'ui/components/modules/map/Map.scss';
 import { Icon, LatLngTuple } from 'leaflet';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
+import { EditableMark } from './EditableMark';
+import { Mark } from './Mark';
+
 import { Nullable } from 'common/types/instance';
-import { EditableMark } from 'ui/components/modules/map/EditableMark';
-import { Mark } from 'ui/components/modules/map/Mark';
 
 type MapProps = {
-  center: LatLngTuple;
   zoom: number;
-  positionMark: Nullable<LatLngTuple>;
+  center: LatLngTuple;
   isEditor: boolean;
+  positionMark: Nullable<LatLngTuple>;
+  isSearchLocation?: boolean;
   setPositionMark?: (position: LatLngTuple) => void;
 };
 
@@ -24,6 +26,7 @@ export const Map = ({
   positionMark,
   isEditor,
   setPositionMark,
+  isSearchLocation,
 }: MapProps): ReactElement => (
   <div style={{ width: '100%', height: '100%' }}>
     <MapContainer center={center} zoom={zoom} scrollWheelZoom={false}>
@@ -32,10 +35,15 @@ export const Map = ({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {isEditor && setPositionMark ? (
-        <EditableMark setPositionMark={setPositionMark} />
+        <EditableMark
+          position={positionMark}
+          setPositionMark={setPositionMark}
+          isSearchLocation={isSearchLocation}
+        />
       ) : (
         <Mark position={positionMark} />
       )}
     </MapContainer>
   </div>
 );
+

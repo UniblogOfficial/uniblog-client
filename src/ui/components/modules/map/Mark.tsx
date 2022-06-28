@@ -15,6 +15,7 @@ export const Mark = ({ position }: MarkProps): Nullable<ReactElement> => {
   if (position === null) {
     return null;
   }
+
   map.flyTo(position, map.getZoom());
 
   return <Marker position={position} />;

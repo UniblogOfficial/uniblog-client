@@ -18,23 +18,24 @@ const ZOOM_MAP = 13;
 export const MLMapEditor = ({ id, block }: TMLMapEditorProps) => {
   const dispatch = useAppDispatch();
 
-  const { type } = block;
+  const { type, latLng } = block;
+  const centerMap = latLng || CENTER_MAP;
+  const isSearchLocation = latLng === null;
 
-  const setPositionMark = (latLng: LatLngTuple) => {
-    dispatch(setMLDraftBlockContent({ content: { latLng }, id, type }));
+  const setPositionMark = (position: LatLngTuple) => {
+    dispatch(setMLDraftBlockContent({ content: { latLng: position }, id, type }));
   };
 
   return (
     <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
-      {block.url && (
-        <Map
-          center={CENTER_MAP}
-          zoom={ZOOM_MAP}
-          positionMark={block.latLng}
-          setPositionMark={setPositionMark}
-          isEditor
-        />
-      )}
+      <Map
+        isEditor
+        zoom={ZOOM_MAP}
+        center={centerMap}
+        positionMark={latLng}
+        setPositionMark={setPositionMark}
+        isSearchLocation={isSearchLocation}
+      />
     </div>
   );
 };
