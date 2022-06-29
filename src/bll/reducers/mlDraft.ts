@@ -38,6 +38,7 @@ const initialState: TMLDraftState = {
   maxWidth: 480,
   contentMap: [],
   blocks: {},
+  isTouched: false,
 
   images: {
     background: null,
@@ -68,6 +69,7 @@ const mlDraftSlice = createSlice({
       state,
       action: PayloadAction<{ templates: ReturnType<typeof getTemplates>; index: number }>,
     ) {
+      state.isTouched = false;
       const template = action.payload.templates[action.payload.index];
       state.contentMap = template.map((block, i) => {
         const blockId = nanoid();
@@ -104,21 +106,26 @@ const mlDraftSlice = createSlice({
 
     setMLDraftBackground(state, action: PayloadAction<string>) {
       state.background = action.payload;
+      state.isTouched = true;
     },
 
     setMLDraftBackgroundImage(state, action: PayloadAction<TImageFile>) {
       state.images = { ...state.images, background: action.payload };
+      state.isTouched = true;
+      //  при отмене выбора картинки в модалке, нужно сделать false?
     },
 
     addMLDraftBlock(state, action: PayloadAction<{ type: MLContentType; id: string }>) {
       pushMLDraftBlock(action.payload.type, state.blocks, action.payload.id);
       state.contentMap = [...state.contentMap, `${action.payload.type}_${action.payload.id}`];
+      state.isTouched = true;
     },
 
     addMLDraftBlockLogo(state, action: PayloadAction<Nullable<TIncomingImage>>) {
       const newBlocks = pushMLDraftBlockLogo(state.blocks, state.contentMap.length, action.payload);
       state.contentMap = [...state.contentMap, MLContentType.LOGO];
       state.blocks = newBlocks;
+      state.isTouched = true;
     },
 
     addMLDraftBlockSocial(
@@ -132,6 +139,12 @@ const mlDraftSlice = createSlice({
       );
       state.contentMap = [...state.contentMap, MLContentType.SOCIAL];
       state.blocks = newBlocks;
+      state.isTouched = true;
+    },
+
+    setMLDraftResetInitialState(state) {
+      state.blocks = {};
+      return state;
     },
 
     setMLDraftBlockContent<T extends TMLDraftBlocksUnion>(
@@ -142,6 +155,8 @@ const mlDraftSlice = createSlice({
       const block = state.blocks[`${type}_${id}`];
       Object.assign(block, content);
       state.blocks = { ...state.blocks };
+      state.isTouched = true;
+      // При отмене сделать false
     },
     setMLDraftBlockContentImage<T>(
       state: TMLDraftState,
@@ -167,6 +182,9 @@ const mlDraftSlice = createSlice({
         ...state.images.blocks[field][order],
         ...imageData,
       };
+      if (action.payload.imageData) {
+        state.isTouched = true;
+      }
     },
   },
 });
@@ -182,6 +200,7 @@ export const {
   addMLDraftBlockSocial,
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
+  setMLDraftResetInitialState,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 
@@ -240,6 +259,7 @@ export type TMLDraftState = {
   images: TMLDraftImages;
   // in-app values
   currentStage: MLConstructorStage;
+  isTouched: boolean;
 };
 
 export type TMLDraftActions =
@@ -252,4 +272,5 @@ export type TMLDraftActions =
   | ReturnType<typeof addMLDraftBlockLogo>
   | ReturnType<typeof addMLDraftBlockSocial>
   | ReturnType<typeof setMLDraftBlockContent>
-  | ReturnType<typeof setMLDraftBlockContentImage>;
+  | ReturnType<typeof setMLDraftBlockContentImage>
+  | ReturnType<typeof setMLDraftResetInitialState>;
