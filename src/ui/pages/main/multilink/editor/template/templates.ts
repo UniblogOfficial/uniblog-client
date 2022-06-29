@@ -1,21 +1,17 @@
-import { MLContentType, SocialNetwork, SocialService } from 'common/constants';
+import { SocialNetwork, SocialService } from 'common/constants';
 import {
-  IMLDraftButton,
-  IMLDraftImage,
-  IMLDraftImageText,
-  IMLDraftLink,
-  IMLDraftLogo,
-  IMLDraftShop,
-  IMLDraftSocial,
-  IMLDraftText,
-  IMLDraftVideo,
-  IMLDraftVote,
-  IMLDraftWidget,
+  MLDraftButton,
+  MLDraftDivider,
+  MLDraftImage,
   MLDraftImageText,
   MLDraftLink,
   MLDraftLogo,
+  MLDraftShop,
   MLDraftSocial,
   MLDraftText,
+  MLDraftVideo,
+  MLDraftVote,
+  MLDraftWidget,
   Nullable,
   TIncomingImage,
 } from 'common/types/instance';
@@ -174,19 +170,15 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         padding: [12, 24],
       }),
     ],
-    /* [
-      {
-        order: 0,
+    [
+      new MLDraftLogo({
         isFilled: !!avatar,
         logo: '',
         size: 100,
         margin: [0, 0, 12],
-        type: MLContentType.LOGO,
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftText({
         isFilled: true,
-        type: MLContentType.TEXT,
         text: 'Привет, меня зовут Евгений, и я готовлю к ЕГЭ и ОГЭ по математике более 10 лет \n\nСдал ЕГЭ на 100 баллов:\nhttps://vk.com/wall-40691695_66680',
         color: '#fff',
         font: '400 14px Inter, sans-serif',
@@ -194,11 +186,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         margin: [0, 0, 24],
         padding: [24, 24],
         background: 'rgba(47, 58, 244, 0.73)',
-      } as IMLDraftText,
-      {
-        order: 2,
+      }),
+      new MLDraftText({
         isFilled: true,
-        type: MLContentType.TEXT,
         text: 'ТОП БЕСПЛАТНЫХ КУРСОВ',
         color: '#fff',
         font: '700 20px Inter, sans-serif',
@@ -206,19 +196,15 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         padding: [12, 24],
         margin: [0, 0, 12],
         background: 'rgba(47, 58, 244, 0.73)',
-      } as IMLDraftText,
-      {
-        order: 3,
+      }),
+      new MLDraftVideo({
         isFilled: true,
-        type: MLContentType.VIDEO,
         url: 'https://www.youtube.com/embed/hYu0d-4SX_Y',
         margin: [0, 0, 24],
         padding: [0, 24],
-      } as IMLDraftVideo,
-      {
-        order: 4,
+      }),
+      new MLDraftText({
         isFilled: true,
-        type: MLContentType.TEXT,
         text: 'ТОП КУРСОВ',
         color: '#fff',
         font: '700 20px Inter, sans-serif',
@@ -226,11 +212,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         padding: [12, 24],
         margin: [0, 0, 12],
         background: 'rgba(47, 58, 244, 0.73)',
-      } as IMLDraftText,
-      {
-        order: 5,
+      }),
+      new MLDraftShop({
         isFilled: true,
-        type: MLContentType.SHOP,
         grid: '1fr 1fr 1fr',
         gap: 5,
         cells: [
@@ -308,19 +292,17 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         subtitleAlign: 'center',
         margin: [0, 0, 24],
         padding: [12, 24],
-      } as IMLDraftShop,
-      {
-        order: 6,
+      }),
+      new MLDraftImage({
         isFilled: true,
-        type: MLContentType.IMAGE,
-        images: [null],
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'outside',
         margin: [0, 0, 24],
         padding: [12, 48],
-      } as IMLDraftImage,
-      {
-        order: 7,
+      }),
+      new MLDraftSocial({
         isFilled: true,
-        type: MLContentType.SOCIAL,
         links: [
           'https://vk.com/shkolapifagora',
           'https://www.youtube.com/channel/UC7Z3j8Cgsa2NnBmKAl7uOuQ',
@@ -330,11 +312,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 75,
         margin: [0, 0, 24],
         padding: [12, 24],
-      } as IMLDraftSocial,
-      {
-        order: 8,
+      }),
+      new MLDraftText({
         isFilled: true,
-        type: MLContentType.TEXT,
         text: 'ПОДДЕРЖКА',
         color: '#fff',
         font: '700 20px Inter, sans-serif',
@@ -342,11 +322,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         padding: [12, 24],
         margin: [0, 0, 12],
         background: 'rgba(47, 58, 244, 0.73)',
-      } as IMLDraftText,
-      {
-        order: 9,
+      }),
+      new MLDraftSocial({
         isFilled: true,
-        type: MLContentType.SOCIAL,
         links: [
           'https://boosty.com/shkolapifagora',
           'https://www.patreon.com/shkolapifagora',
@@ -356,11 +334,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 75,
         margin: [0, 0, 24],
         padding: [12, 24],
-      } as IMLDraftSocial,
-      {
-        order: 10,
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://linkii.ru',
         linkType: 'third-party' as const,
         title: 'Только наши каналы',
@@ -372,11 +348,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         borderRadius: [5],
         margin: [0, 12, 12],
         padding: [12, 24],
-      } as IMLDraftLink,
-      {
-        order: 11,
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://linkii.ru',
         linkType: 'third-party' as const,
         title: 'Группа ЕГЭ',
@@ -388,11 +362,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         borderRadius: [5],
         margin: [0, 12, 12],
         padding: [12, 24],
-      } as IMLDraftLink,
-      {
-        order: 12,
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://linkii.ru',
         linkType: 'third-party' as const,
         title: 'Группа ОГЭ',
@@ -404,21 +376,17 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         borderRadius: [5],
         margin: [0, 12, 12],
         padding: [12, 24],
-      } as IMLDraftLink,
+      }),
     ],
     [
-      {
-        order: 0,
-        isFilled: false,
-        logo: avatar ? parseRawImage(avatar) : '',
+      new MLDraftLogo({
+        isFilled: !!avatar,
+        logo,
         size: 143,
-        type: MLContentType.LOGO,
         margin: [56, 116, 36],
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Lex',
         font: '700 28px Inter, sans-serif',
         textShadow: ['2px 1px 2px #0009'],
@@ -426,11 +394,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0, 0, 24],
         padding: [0, 40],
-      } as IMLDraftText,
-      {
-        order: 2,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Болею за «Арсенал» уже больше 20 лет. Пишу про свои мысли про клуб, и не только. Веду паблик в вк, знаю о новостях «Арсенала» практически все. ',
         font: '700 20px Inter, sans-serif',
         textShadow: ['2px 1px 2px #0009'],
@@ -438,11 +404,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0, 0, 60],
         padding: [0, 40],
-      } as IMLDraftText,
-      {
-        order: 3,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: [
           'https://vk.com/arsscnews',
           'https://www.youtube.com/channel/UCBYo2XB0I9Q-EMdear8fD5w',
@@ -458,30 +422,26 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [0, 0, 60],
         padding: [12, 12],
-      } as IMLDraftSocial,
-      {
-        order: 4,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Поддержка через Donation:',
         font: '400 20px Inter, sans-serif',
         textAlign: 'center',
         color: '#fff',
         margin: [0, 0, 12],
         padding: [0, 24],
-      } as IMLDraftText,
-      {
-        order: 5,
+      }),
+      new MLDraftImage({
         isFilled: true,
-        type: MLContentType.IMAGE,
-        images: [null],
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'outside',
         margin: [0, 0, 6],
         padding: [0, 92],
-      } as IMLDraftImage,
-      {
-        order: 6,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Donation Alerts',
         fontSize: 18,
         fontWeight: 400,
@@ -489,21 +449,17 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0, 0, 24],
         padding: [0, 24],
-      } as IMLDraftText,
+      }),
     ],
     [
-      {
-        order: 0,
+      new MLDraftLogo({
         isFilled: !!avatar,
-        logo: avatar ? parseRawImage(avatar) : '',
+        logo,
         size: 175,
-        type: MLContentType.LOGO,
         padding: [56, 0, 40],
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Eвгений',
         font: '700 26px Inter, sans-serif',
         textAlign: 'center',
@@ -512,11 +468,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         background: 'rgba(47, 58, 244, 0.73)',
         margin: [0],
         padding: [12, 24, 0],
-      } as IMLDraftText,
-      {
-        order: 2,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Основатель сервиса',
         font: '400 18px Inter, sans-serif',
         textAlign: 'center',
@@ -524,11 +478,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         background: 'rgba(47, 58, 244, 0.73)',
         margin: [0, 0, 24],
         padding: [0, 24, 12],
-      } as IMLDraftText,
-      {
-        order: 3,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Материалы о проекте',
         font: '400 22px Inter, sans-serif',
         textAlign: 'center',
@@ -537,11 +489,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         background: 'rgba(47, 58, 244, 0.73)',
         margin: [0, 0, 24],
         padding: [12, 24],
-      } as IMLDraftText,
-      {
-        order: 4,
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://linkii.ru',
         linkType: 'third-party' as const,
         title: 'Наш классический сайт',
@@ -552,27 +502,23 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         background: 'rgba(47, 58, 244, 0.73)',
         margin: [0],
         padding: [12, 24],
-      } as IMLDraftLink,
-      {
-        order: 5,
+      }),
+      new MLDraftImage({
         isFilled: true,
-        type: MLContentType.IMAGE,
-        images: [null],
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'outside',
         margin: [0, 0, 6],
         padding: [0, 16],
-      } as IMLDraftImage,
-      {
-        order: 6,
+      }),
+      new MLDraftWidget({
         isFilled: true,
-        type: MLContentType.WIDGET,
         url: 'https://widget.qiwi.com/widgets/middle-widget-300x300?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsXMCEHsEfvcM9fWDrHZGpWKAFeZPjiJbFtPjyxAanWqYMcU9DSN7wMpc8VGAVjmd9yjdSQRA92xGdkxFbtNyRSzFPrYeoktJhC8rNxvbe',
         margin: [0, 0, 24],
         padding: [0, 24],
-      } as IMLDraftWidget,
-      {
-        order: 7,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: [
           'https://vk.com/kracko23',
           'https://discordapp.com/users/534986739513819138/',
@@ -588,21 +534,17 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [0, 0, 60],
         padding: [12, 12],
-      } as IMLDraftSocial,
+      }),
     ],
     [
-      {
-        order: 0,
+      new MLDraftLogo({
         isFilled: !!avatar,
-        logo: avatar ? parseRawImage(avatar) : '',
+        logo,
         size: 175,
-        type: MLContentType.LOGO,
         padding: [56, 0, 36],
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftButton({
         isFilled: false,
-        type: MLContentType.BUTTON,
         href: '',
         title: 'Забронировать столик',
         font: '24px Inter, sans-serif',
@@ -612,11 +554,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         padding: [18, 24],
         margin: [0, 0, 24],
         background: '#E8A23999',
-      } as IMLDraftButton,
-      {
-        order: 2,
+      }),
+      new MLDraftButton({
         isFilled: false,
-        type: MLContentType.BUTTON,
         href: '',
         title: 'Заказать доставку',
         font: '24px Inter, sans-serif',
@@ -626,11 +566,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         padding: [18, 24],
         margin: [0, 0, 24],
         background: '#E8A23999',
-      } as IMLDraftButton,
-      {
-        order: 3,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Контакты',
         font: '700 32px Inter, sans-serif',
         fontWeight: 700,
@@ -638,11 +576,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0],
         padding: [12, 24, 6],
-      } as IMLDraftText,
-      {
-        order: 4,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Адрес',
         font: '24px Inter, sans-serif',
         fontWeight: 400,
@@ -650,11 +586,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0],
         padding: [6, 24, 6],
-      } as IMLDraftText,
-      {
-        order: 5,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Советская ул., 74А, Тольятти',
         font: '16px Inter, sans-serif',
         fontWeight: 400,
@@ -662,11 +596,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0],
         padding: [6, 24, 6],
-      } as IMLDraftText,
-      {
-        order: 6,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Время работы:',
         font: '24px Inter, sans-serif',
         fontWeight: 400,
@@ -674,11 +606,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0],
         padding: [6, 24, 6],
-      } as IMLDraftText,
-      {
-        order: 7,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Вс-Чт: 11.30-24.00\n\nПт-Сб: 11.30-2.00',
         font: '16px Inter, sans-serif',
         fontWeight: 400,
@@ -686,11 +616,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0],
         padding: [6, 24, 6],
-      } as IMLDraftText,
-      {
-        order: 8,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Телефон',
         font: '24px Inter, sans-serif',
         fontWeight: 400,
@@ -698,11 +626,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0],
         padding: [6, 24, 6],
-      } as IMLDraftText,
-      {
-        order: 9,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: '+7 (848) 239-46-13',
         font: '16px Inter, sans-serif',
         fontWeight: 400,
@@ -710,11 +636,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         color: '#fff',
         margin: [0],
         padding: [6, 24, 12],
-      } as IMLDraftText,
-      {
-        order: 10,
+      }),
+      new MLDraftVote({
         isFilled: false,
-        type: MLContentType.VOTE,
         cells: [
           {
             order: 0,
@@ -739,11 +663,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         buttonAlign: 'center',
         margin: [0, 0, 60],
         padding: [18, 0],
-      } as IMLDraftVote,
-      {
-        order: 11,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: ['https://vk.com', 'https://youtube.com', 'https://t.me', 'https://instagram.com'],
         linkTypes: [
           SocialNetwork.VK,
@@ -754,45 +676,37 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [0, 0, 60],
         padding: [12, 12],
-      } as IMLDraftSocial,
+      }),
     ],
     [
-      {
-        order: 0,
+      new MLDraftLogo({
         isFilled: !!avatar,
-        logo: avatar ? parseRawImage(avatar) : '',
+        logo,
         size: 154,
-        type: MLContentType.LOGO,
         padding: [56, 0, 36],
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Руслан Утюг',
-        font: '700 28px/1.4 Inter, sans-serif',
+        font: '400 28px/1.4 Inter, sans-serif',
         color: '#fff',
         textAlign: 'center',
         margin: [0, 0, 0],
         padding: [12, 24],
         background: '#E839CC99',
-      } as IMLDraftText,
-      {
-        order: 2,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'новая песня на площадках',
-        font: '700 18px Inter, sans-serif',
+        font: '400 18px Inter, sans-serif',
         textAlign: 'center',
         color: '#fff',
         margin: [0, 0, 0],
         padding: [12, 24],
         background: '#E839CC99',
-      } as IMLDraftText,
-      {
-        order: 3,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: ['https://vk.com', 'https://youtube.com', 'https://t.me', 'https://instagram.com'],
         linkTypes: [
           SocialNetwork.VK,
@@ -803,11 +717,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [39, 0, 33],
         padding: [0, 17],
-      } as IMLDraftSocial,
-      {
-        order: 4,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: [
           'https://www.tiktok.com/',
           'https://www.twitch.tv/',
@@ -823,86 +735,77 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [0, 0, 0],
         padding: [0, 17],
-      } as IMLDraftSocial,
-      {
-        order: 5,
+      }),
+      new MLDraftImage({
         isFilled: true,
-        type: MLContentType.IMAGE,
-        images: [null],
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'inside',
+        margin: [20, 0, 0],
         padding: [0, 0],
-      } as IMLDraftImage,
-      {
-        order: 6,
+      }),
+      new MLDraftImage({
         isFilled: true,
-        type: MLContentType.IMAGE,
-        images: [null],
-        margin: [-20, 0, 0],
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'inside',
+        margin: [20, 0, 0],
         padding: [0, 0],
-      } as IMLDraftImage,
-      {
-        order: 7,
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://boom.ru/',
         linkType: 'third-party' as const,
         title: 'Слушай в ВООМ',
         textAlign: 'center',
-        font: '700 24px Inter, sans-serif',
+        font: '400 24px Inter, sans-serif',
         color: '#fff',
-        padding: [24, 24],
+        padding: [24, 24, 24, 74],
         margin: [0, 24, 12],
         borderRadius: [15],
-        background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftLink,
-      {
-        order: 8,
+        background: '#E839CC99',
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://vk.com/audio',
         linkType: 'third-party' as const,
         title: 'Слушай в VK',
         textAlign: 'center',
-        font: '700 24px Inter, sans-serif',
+        font: '400 24px Inter, sans-serif',
         color: '#fff',
-        padding: [24, 24],
+        padding: [24, 24, 24, 74],
         margin: [0, 24, 12],
         borderRadius: [15],
-        background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftLink,
-      {
-        order: 9,
+        background: '#E839CC99',
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://open.spotify.com/',
         linkType: 'third-party' as const,
         title: 'Слушай в Spotify',
         textAlign: 'center',
-        font: '700 24px Inter, sans-serif',
+        font: '400 24px Inter, sans-serif',
         color: '#fff',
-        padding: [24, 24],
+        padding: [24, 24, 24, 74],
         margin: [0, 24, 12],
         borderRadius: [15],
-        background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftLink,
-      {
-        order: 10,
+        background: '#E839CC99',
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://music.yandex.by/home',
         linkType: 'third-party' as const,
         title: 'Слушай в Яндекс',
         textAlign: 'center',
-        font: '700 24px Inter, sans-serif',
+        font: '400 24px Inter, sans-serif',
         color: '#FFFBFB',
-        padding: [24, 24],
+        padding: [24, 24, 24, 74],
         margin: [0, 24, 12],
         borderRadius: [50, 15, 15, 50],
-        background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftLink,
-      {
-        order: 11,
+        background: '#E839CC99',
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: [
           'https://vk.com',
           'https://youtube.com',
@@ -916,24 +819,20 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
           SocialNetwork.INSTAGRAM,
         ],
         size: 65,
-        margin: [85, 0, 0],
+        margin: [55, 0, 0],
         padding: [0, 17],
-      } as IMLDraftSocial,
+      }),
     ],
     [
       // LesaFS
-      {
-        order: 0,
+      new MLDraftLogo({
         isFilled: !!avatar,
-        logo: avatar ? parseRawImage(avatar) : '',
+        logo,
         size: 154,
-        type: MLContentType.LOGO,
         padding: [56, 0, 36],
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Lesa FS',
         font: '400 24px Inter, sans-serif',
         color: '#fff',
@@ -941,25 +840,23 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         margin: [0, 0, 0],
         padding: [38.5, 24],
         background: '#E839CC99',
-      } as IMLDraftText,
-      {
-        order: 2,
+      }),
+      new MLDraftImage({
         isFilled: true,
-        type: MLContentType.IMAGE,
-        images: [null],
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'outside',
         margin: [12, 24],
-      } as IMLDraftImage,
-      {
-        order: 3,
+      }),
+      new MLDraftImage({
         isFilled: true,
-        type: MLContentType.IMAGE,
-        images: [null],
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'outside',
         margin: [12, 55],
-      } as IMLDraftImage,
-      {
-        order: 4,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: [
           'https://vk.com/lesafs',
           'https://vk.com/lesa_fs',
@@ -975,22 +872,18 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [0, 0, 0],
         padding: [0, 17],
-      } as IMLDraftSocial,
+      }),
     ],
     [
       // CatsBackground
-      {
-        order: 0,
+      new MLDraftLogo({
         isFilled: !!avatar,
-        logo: avatar ? parseRawImage(avatar) : '',
+        logo,
         size: 154,
-        type: MLContentType.LOGO,
         padding: [5, 0, 0],
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftButton({
         isFilled: false,
-        type: MLContentType.BUTTON,
         href: '',
         title: 'Стрижка - 500р',
         font: '24px Inter, sans-serif',
@@ -1002,11 +895,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         borderRadius: [15],
         margin: [0, 0, 12],
         background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftButton,
-      {
-        order: 2,
+      }),
+      new MLDraftButton({
         isFilled: false,
-        type: MLContentType.BUTTON,
         href: '',
         title: 'Записаться на стрижку',
         font: '24px Inter, sans-serif',
@@ -1017,19 +908,15 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         borderRadius: [15],
         margin: [0, 0, 15],
         background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftButton,
-      {
-        order: 3,
+      }),
+      new MLDraftWidget({
         isFilled: true,
-        type: MLContentType.WIDGET,
         url: 'https://widget.qiwi.com/widgets/middle-widget-300x300?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsXMCEHsEfvcM9fWDrHZGpWKAFeZPjiJbFtPjyxAanWqYMcU9DSN7wMpc8VGAVjmd9yjdSQRA92xGdkxFbtNyRSzFPrYeoktJhC8rNxvbe',
         margin: [0, 0, 12],
         padding: [0, 12],
-      } as IMLDraftWidget,
-      {
-        order: 4,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: [
           'https://vk.com',
           'https://t.me',
@@ -1045,21 +932,17 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [0, 0, 0],
         padding: [0, 17],
-      } as IMLDraftSocial,
+      }),
     ],
     [
       // rescueFund
-      {
-        order: 0,
+      new MLDraftLogo({
         isFilled: !!avatar,
-        logo: avatar ? parseRawImage(avatar) : '',
+        logo,
         size: 154,
-        type: MLContentType.LOGO,
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'Фонд "Спасение"',
         font: '400 24px Inter, sans-serif',
         color: '#fff',
@@ -1067,11 +950,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         margin: [0, 0, 16],
         padding: [20, 24],
         background: 'rgba(57,95,232,0.6)',
-      } as IMLDraftText,
-      {
-        order: 2,
+      }),
+      new MLDraftButton({
         isFilled: false,
-        type: MLContentType.BUTTON,
         href: '',
         title: 'Оплатить',
         font: '24px Inter, sans-serif',
@@ -1082,19 +963,17 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         borderRadius: [51],
         margin: [0, 21, 15],
         background: 'rgb(49,255,0)',
-      } as IMLDraftButton,
-      {
-        order: 3,
+      }),
+      new MLDraftImage({
         isFilled: true,
-        type: MLContentType.IMAGE,
-        images: [null],
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'outside',
         margin: [12, 24],
         padding: [0, 16, 5],
-      } as IMLDraftImage,
-      {
-        order: 4,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: [
           'https://vk.com',
           'https://t.me',
@@ -1110,41 +989,35 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [0, 0, 0],
         padding: [0, 17],
-      } as IMLDraftSocial,
+      }),
     ],
     [
       // vikinG
-      {
-        order: 0,
+      new MLDraftLogo({
         isFilled: !!avatar,
-        logo: avatar ? parseRawImage(avatar) : '',
+        logo,
         size: 154,
-        type: MLContentType.LOGO,
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftText({
         isFilled: false,
-        type: MLContentType.TEXT,
         text: 'VikinG Обучение IТату в Тольятти',
         font: '400 24px Inter, sans-serif',
         color: '#fff',
         textAlign: 'center',
         margin: [0, 0, 16],
         padding: [20, 24],
-        background: 'rgba(232,57,78,0.6)',
-      } as IMLDraftText,
-      {
-        order: 2,
+        background: '#E8394E99',
+      }),
+      new MLDraftImage({
         isFilled: true,
-        type: MLContentType.IMAGE,
-        images: [null],
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'inside',
         margin: [12, 24],
         padding: [20, 16],
-      } as IMLDraftImage,
-      {
-        order: 3,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: ['https://vk.com', 'https://youtube.com', 'https://t.me', 'https://instagram.com'],
         linkTypes: [
           SocialNetwork.VK,
@@ -1155,22 +1028,18 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [0, 0, 0],
         padding: [0, 17],
-      } as IMLDraftSocial,
+      }),
     ],
     [
       // lesa
-      {
-        order: 0,
+      new MLDraftLogo({
         isFilled: !!avatar,
-        logo: avatar ? parseRawImage(avatar) : '',
+        logo,
         size: 154,
-        type: MLContentType.LOGO,
         padding: [56, 0, 36],
-      } as IMLDraftLogo,
-      {
-        order: 1,
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://boom.ru/',
         linkType: 'third-party' as const,
         title: 'Слушай в ВООМ',
@@ -1181,11 +1050,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         margin: [0, 24, 12],
         borderRadius: [15],
         background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftLink,
-      {
-        order: 2,
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://vk.com/audio',
         linkType: 'third-party' as const,
         title: 'Слушай в VK',
@@ -1196,11 +1063,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         margin: [0, 24, 12],
         borderRadius: [15],
         background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftLink,
-      {
-        order: 3,
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://open.spotify.com/',
         linkType: 'third-party' as const,
         title: 'Слушай в Spotify',
@@ -1211,11 +1076,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         margin: [0, 24, 12],
         borderRadius: [15],
         background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftLink,
-      {
-        order: 4,
+      }),
+      new MLDraftLink({
         isFilled: false,
-        type: MLContentType.LINK,
         href: 'https://music.yandex.by/home',
         linkType: 'third-party' as const,
         title: 'Слушай в Яндекс',
@@ -1226,11 +1089,9 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         margin: [0, 24, 12],
         borderRadius: [50, 15, 15, 50],
         background: 'rgba(232,57,204,0.6)',
-      } as IMLDraftLink,
-      {
-        order: 5,
+      }),
+      new MLDraftSocial({
         isFilled: false,
-        type: MLContentType.SOCIAL,
         links: [
           'https://vk.com',
           'https://youtube.com',
@@ -1246,7 +1107,297 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 67,
         margin: [35, 0, 0],
         padding: [0, 17],
-      } as IMLDraftSocial,
-    ], */
+      }),
+    ],
+    [
+      // andreyYurchenkov
+      new MLDraftLogo({
+        isFilled: !!avatar,
+        logo,
+        size: 154,
+        padding: [56, 0, 36],
+      }),
+      new MLDraftText({
+        isFilled: false,
+        text: 'Андрей Юрченков',
+        font: '400 24px Inter, sans-serif',
+        color: '#fff',
+        textAlign: 'center',
+        margin: [0, 0, 0],
+        padding: [12, 24],
+        background: '#E8394E99',
+      }),
+      new MLDraftText({
+        isFilled: false,
+        text: 'Основатель музыкальной онлайн школы "Путь Музыканта"',
+        font: '400 18px Inter, sans-serif',
+        textAlign: 'center',
+        color: '#fff',
+        margin: [0, 0, 0],
+        padding: [12, 24],
+        background: '#E8394E99',
+      }),
+      new MLDraftSocial({
+        isFilled: false,
+        links: ['https://vk.com', 'https://youtube.com', 'https://t.me', 'https://instagram.com'],
+        linkTypes: [
+          SocialNetwork.VK,
+          SocialNetwork.YOUTUBE,
+          SocialNetwork.TELEGRAM,
+          SocialNetwork.INSTAGRAM,
+        ],
+        size: 65,
+        margin: [39, 0, 33],
+        padding: [0, 17],
+      }),
+      new MLDraftSocial({
+        isFilled: false,
+        links: [
+          'https://www.tiktok.com/',
+          'https://www.twitch.tv/',
+          'https://boosty.to/',
+          'https://mail.google.com/mail/',
+        ],
+        linkTypes: [
+          SocialNetwork.TIKTOK,
+          SocialService.TWITCH,
+          SocialService.BOOSTY,
+          SocialNetwork.GMAIL,
+        ],
+        size: 65,
+        margin: [0, 0, 0],
+        padding: [0, 17],
+      }),
+      new MLDraftImage({
+        isFilled: true,
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'inside',
+        margin: [20, 0, 0],
+        padding: [0, 0],
+      }),
+      new MLDraftImage({
+        isFilled: true,
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'inside',
+        margin: [20, 0, 0],
+        padding: [0, 0],
+      }),
+      new MLDraftLink({
+        isFilled: false,
+        href: 'https://boom.ru/',
+        linkType: 'third-party' as const,
+        title: 'Слушай в ВООМ',
+        textAlign: 'center',
+        font: '400 24px Inter, sans-serif',
+        color: '#fff',
+        padding: [24, 24, 24, 74],
+        margin: [0, 24, 12],
+        borderRadius: [15],
+        background: '#E8394E99',
+      }),
+      new MLDraftLink({
+        isFilled: false,
+        href: 'https://vk.com/audio',
+        linkType: 'third-party' as const,
+        title: 'Слушай в VK',
+        textAlign: 'center',
+        font: '400 24px Inter, sans-serif',
+        color: '#fff',
+        padding: [24, 24, 24, 74],
+        margin: [0, 24, 12],
+        borderRadius: [15],
+        background: '#E8394E99',
+      }),
+      new MLDraftLink({
+        isFilled: false,
+        href: 'https://open.spotify.com/',
+        linkType: 'third-party' as const,
+        title: 'Слушай в Spotify',
+        textAlign: 'center',
+        font: '400 24px Inter, sans-serif',
+        color: '#fff',
+        padding: [24, 24, 24, 74],
+        margin: [0, 24, 12],
+        borderRadius: [15],
+        background: '#E8394E99',
+      }),
+      new MLDraftLink({
+        isFilled: false,
+        href: 'https://music.yandex.by/home',
+        linkType: 'third-party' as const,
+        title: 'Слушай в Яндекс',
+        textAlign: 'center',
+        font: '400 24px Inter, sans-serif',
+        color: '#FFFBFB',
+        padding: [24, 24, 24, 74],
+        margin: [0, 24, 12],
+        borderRadius: [50, 15, 15, 50],
+        background: '#E8394E99',
+      }),
+      new MLDraftSocial({
+        isFilled: false,
+        links: [
+          'https://vk.com',
+          'https://youtube.com',
+          'https://www.tiktok.com/',
+          'https://instagram.com',
+        ],
+        linkTypes: [
+          SocialNetwork.VK,
+          SocialNetwork.YOUTUBE,
+          SocialNetwork.TIKTOK,
+          SocialNetwork.INSTAGRAM,
+        ],
+        size: 65,
+        margin: [55, 0, 0],
+        padding: [0, 17],
+      }),
+    ],
+    [
+      // Ulyashchinkov
+      new MLDraftLogo({
+        isFilled: !!avatar,
+        logo,
+        size: 154,
+        padding: [56, 0, 36],
+      }),
+      new MLDraftText({
+        isFilled: false,
+        text: 'Ульященков Сергей',
+        font: '400 24px Inter, sans-serif',
+        color: '#fff',
+        textAlign: 'center',
+        margin: [0, 0, 0],
+        padding: [12, 24],
+        background: '#E8A23999',
+      }),
+      new MLDraftText({
+        isFilled: false,
+        text: 'Уже больше 20лет я помогаю компаниям и стартапам',
+        font: '400 16px Inter, sans-serif',
+        textAlign: 'center',
+        color: '#fff',
+        margin: [0, 0, 0],
+        padding: [12, 24],
+        background: '#E8A23999',
+      }),
+      new MLDraftImage({
+        isFilled: true,
+        image: null,
+        imgPosition: 'bottom',
+        textPosition: 'inside',
+        margin: [20, 0, 0],
+        padding: [0, 0],
+      }),
+      new MLDraftSocial({
+        isFilled: false,
+        links: ['https://zen.yandex.ru/', 'https://vk.com', 'https://t.me'],
+        linkTypes: [
+          SocialService.DZEN,
+          SocialNetwork.VK,
+          SocialService.ARTOFDIGITAL,
+          SocialNetwork.TELEGRAM,
+        ],
+        size: 65,
+        margin: [35, 0, 0],
+        padding: [0, 17],
+      }),
+    ],
+    [
+      // deadp47
+      new MLDraftLogo({
+        isFilled: !!avatar,
+        logo,
+        size: 154,
+        padding: [56, 0, 36],
+      }),
+      new MLDraftText({
+        isFilled: false,
+        text: 'DeadP47',
+        font: '400 22px Inter, sans-serif',
+        color: '#fff',
+        textAlign: 'center',
+        margin: [0, 0, 0],
+        padding: [12, 24],
+        background: 'rgba(232, 57, 204, 0.6)',
+      }),
+      new MLDraftText({
+        isFilled: false,
+        text: 'Пивные аниме стримы по пятницам',
+        font: '400 18px Inter, sans-serif',
+        textAlign: 'center',
+        color: '#fff',
+        margin: [0, 0, 0],
+        padding: [12, 24],
+        background: 'rgba(232, 57, 204, 0.6)',
+      }),
+      new MLDraftSocial({
+        isFilled: false,
+        links: ['https://vk.com', 'https://youtube.com', 'https://t.me', 'https://instagram.com'],
+        linkTypes: [
+          SocialNetwork.VK,
+          SocialNetwork.YOUTUBE,
+          SocialNetwork.TELEGRAM,
+          SocialNetwork.INSTAGRAM,
+        ],
+        size: 65,
+        margin: [39, 0, 33],
+        padding: [0, 17],
+      }),
+      new MLDraftSocial({
+        isFilled: false,
+        links: [
+          'https://www.tiktok.com/',
+          'https://wasd.tv/',
+          'https://discord.com/',
+          'https://www.twitch.tv/',
+        ],
+        linkTypes: [
+          SocialNetwork.TIKTOK,
+          SocialService.WASD,
+          SocialService.DISCORD,
+          SocialService.TWITCH,
+        ],
+        size: 65,
+        margin: [0, 0, 0],
+        padding: [0, 17],
+      }),
+      new MLDraftText({
+        isFilled: true,
+        text: '',
+        background: 'rgba(254, 21, 217, 0.85)',
+        margin: [38, 92, 0, 0],
+        padding: [0, 0],
+      }),
+      new MLDraftText({
+        isFilled: true,
+        text: '',
+        background: 'rgba(102, 82, 99, 0.6)',
+        margin: [-19, 0, 0, 0],
+        padding: [0, 0],
+      }),
+      new MLDraftText({
+        isFilled: true,
+        text: '0',
+        margin: [0, 0, 0, 0],
+        padding: [0, 0],
+      }),
+      new MLDraftText({
+        isFilled: true,
+        text: '200 000',
+        margin: [-19, 0, 0, 310],
+        padding: [0, 0],
+      }),
+      new MLDraftSocial({
+        isFilled: false,
+        links: ['https://boosty.to/', 'https://www.patreon.com/', 'https://www.twitch.tv/'],
+        linkTypes: [SocialService.BOOSTY, SocialService.PATREON, SocialService.DONATIONALERTS],
+        size: 65,
+        margin: [15, 0, 0],
+        padding: [0, 17],
+      }),
+    ],
   ] as const;
 };

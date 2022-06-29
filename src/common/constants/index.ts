@@ -28,6 +28,7 @@ export enum SocialService {
   WASD = 'wasd',
   DONATIONALERTS = 'donationalerts',
   DZEN = 'dzen',
+  ARTOFDIGITAL = 'artofdigital',
 }
 
 export enum MLContentType {
