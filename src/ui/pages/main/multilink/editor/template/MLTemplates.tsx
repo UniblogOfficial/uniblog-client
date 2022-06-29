@@ -1,5 +1,6 @@
 import React, { CSSProperties, memo, useCallback, useMemo, useState } from 'react';
 
+import { setMLDraftResetInitialState } from '../../../../../../bll/reducers';
 import { useAppDispatch } from '../../../../../../common/hooks';
 
 import { getTemplates } from './templates';
@@ -23,7 +24,13 @@ export const MLTemplates = memo(({ userData, setCurrentMLTemplate }: TMLTemplate
     () =>
       templates.map((template, i) => (
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-        <ul key={ID[i]} className="thumbnail" onClick={() => setCurrentMLTemplate(ID[i] - 1)}>
+        <ul
+          key={ID[i]}
+          className="thumbnail"
+          onClick={() => {
+            setCurrentMLTemplate(ID[i] - 1);
+            dispatch(setMLDraftResetInitialState());
+          }}>
           {template.map((block, j) => {
             switch (block.type) {
               case MLContentType.LOGO:

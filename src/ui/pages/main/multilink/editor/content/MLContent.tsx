@@ -1,7 +1,8 @@
 import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
-import { customAlphabet } from 'nanoid';
 import { useTranslation } from 'react-i18next';
+
+import { idGeneration } from '../../../../../../common/utils/ui/idGeneration/idGeneration';
 
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
 import { MLImageEditor } from './MLImageEditor/MLImageEditor';
@@ -67,12 +68,7 @@ export const MLContent = (props: TMLContentProps) => {
         setBlockEditor(null);
         return;
       }
-      const nanoid = customAlphabet(
-        '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
-        10,
-      );
-      const id = nanoid();
-      console.log(id);
+      const id = idGeneration();
       dispatch(addMLDraftBlock({ type: e.currentTarget.value as MLContentType, id }));
       setBlockEditor({ type: e.currentTarget.value as MLContentType, id });
     },

@@ -45,9 +45,9 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
     [dispatch, templates],
   );
 
-  useEffectOnce(() => {
-    dispatch(setMLDraftTemplate({ templates, index: 0 }));
-  });
+  // useEffectOnce(() => {
+  //   dispatch(setMLDraftTemplate({ templates, index: 0 }));
+  // });
 
   const getTemplateLayouts = useCallback(
     () =>
