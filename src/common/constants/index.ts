@@ -28,6 +28,7 @@ export enum SocialService {
   WASD = 'wasd',
   DONATIONALERTS = 'donationalerts',
   DZEN = 'dzen',
+  ARTOFDIGITAL = 'artofdigital',
 }
 
 export enum MLContentType {
@@ -62,9 +63,11 @@ export enum AppStatus {
   AUTH_LOADING = 'AUTH_LOADING',
   CONTENT_LOADING = 'CONTENT_LOADING',
   USERDATA_LOADING = 'USERDATA_LOADING',
+  DATA_SAVING = 'DATA_SAVING',
   AUTH_FAILED = 'AUTH_FAILED',
   CONTENT_FAILED = 'CONTENT_FAILED',
   USERDATA_FAILED = 'USERDATA_FAILED',
+  DATA_SAVING_FAILED = 'DATA_SAVING_FAILED',
   UNKNOWN_ERROR = 'UNKNOWN_ERROR',
 }
 
