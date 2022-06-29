@@ -14,6 +14,7 @@ type TMLImageProps = {
 
 export const MLImage = ({ id, block, image, callback }: TMLImageProps) => {
   if (!block) return null;
+
   const className = callback ? 'interactive' : undefined;
   const imgSrc = image?.image ? image.image.previewUrl : block.image ?? imgPlaceholder;
   return (
@@ -22,11 +23,9 @@ export const MLImage = ({ id, block, image, callback }: TMLImageProps) => {
       style={{ padding: px(block.padding) ?? '0', margin: px(block.padding) ?? '0' }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <div className="ml-images">
-        {block.image && (
-          <div className="ml-images__image">
-            <img src={imgSrc} alt="" />
-          </div>
-        )}
+        <div className="ml-images__image">
+          <img src={imgSrc} alt="" />
+        </div>
       </div>
     </section>
   );
