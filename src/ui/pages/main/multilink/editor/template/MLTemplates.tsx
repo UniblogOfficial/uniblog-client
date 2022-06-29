@@ -1,6 +1,5 @@
 import React, { CSSProperties, memo, useCallback, useMemo, useState } from 'react';
 
-import { setMLDraftResetInitialState } from '../../../../../../bll/reducers';
 import { useAppDispatch } from '../../../../../../common/hooks';
 
 import { getTemplates } from './templates';
@@ -16,7 +15,6 @@ type TMLTemplatesProps = {
 };
 
 export const MLTemplates = memo(({ userData, setCurrentMLTemplate }: TMLTemplatesProps) => {
-  const dispatch = useAppDispatch();
   const { name, avatar } = userData;
   const [templates, setTemplates] = useState(getTemplates(name, avatar));
 
@@ -29,7 +27,7 @@ export const MLTemplates = memo(({ userData, setCurrentMLTemplate }: TMLTemplate
           className="thumbnail"
           onClick={() => {
             setCurrentMLTemplate(ID[i] - 1);
-            dispatch(setMLDraftResetInitialState());
+            // dispatch(setMLDraftResetInitialState());
           }}>
           {template.map((block, j) => {
             switch (block.type) {

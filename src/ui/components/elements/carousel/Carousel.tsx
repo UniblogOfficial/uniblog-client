@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import React, { memo, FC, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { setMLDraftResetInitialState } from '../../../../bll/reducers';
 import { useAppDispatch } from '../../../../common/hooks';
 
 import styles from './Carousel.module.scss';
@@ -32,7 +31,6 @@ export const Carousel: FC<TCarouselProps> = memo(
     const fullWidth = items.length / itemsPerView; // in parts exm 2.5
     const fullSlidesAmount = Math.floor(fullWidth); // exm. 2
     const isNoPartialSlide = fullWidth === fullSlidesAmount;
-    const dispatch = useAppDispatch();
     // offset for second-to-last slide at begin of set, exm. -1.5
     const firstStageValue = fullSlidesAmount - fullWidth - 1;
     // offset for last slide at begin of set, exm. -0.5
@@ -56,7 +54,6 @@ export const Carousel: FC<TCarouselProps> = memo(
           setStage(+e.currentTarget.value);
         }
         setIsRolling(true);
-        dispatch(setMLDraftResetInitialState());
       };
       for (let i = 0; i < (isNoPartialSlide ? fullWidth : Math.ceil(fullWidth)); i++) {
         if (i === 0) {
@@ -202,7 +199,6 @@ export const Carousel: FC<TCarouselProps> = memo(
           if (+e.currentTarget.dataset.value === 1 && stage < 0) {
             setStage(0);
           }
-          dispatch(setMLDraftResetInitialState());
         }
       },
       [

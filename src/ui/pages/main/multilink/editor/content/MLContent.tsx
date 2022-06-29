@@ -2,8 +2,6 @@ import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { idGeneration } from '../../../../../../common/utils/ui/idGeneration/idGeneration';
-
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
 import { MLImageEditor } from './MLImageEditor/MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
@@ -36,6 +34,7 @@ import {
   MLDraftText,
   TMLDraftBlocksUnion,
 } from 'common/types/instance/mlDraft';
+import { nanoid } from 'common/utils/ui/idGeneration/nanoid';
 import { Button } from 'ui/components/elements';
 
 type TMLContentProps = {
@@ -59,8 +58,6 @@ export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
   const { contentMap, blocks, images, blockEditorType, blockEditorId, setBlockEditor } = props;
   const { t } = useTranslation(['pages', 'common']);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
 
   const onButtonEditorClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
@@ -68,7 +65,7 @@ export const MLContent = (props: TMLContentProps) => {
         setBlockEditor(null);
         return;
       }
-      const id = idGeneration();
+      const id = nanoid();
       dispatch(addMLDraftBlock({ type: e.currentTarget.value as MLContentType, id }));
       setBlockEditor({ type: e.currentTarget.value as MLContentType, id });
     },

@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TMLDraftBlocksUnion } from '../../common/types/instance/mlDraft';
+import { nanoid } from '../../common/utils/ui/idGeneration/nanoid';
 
 import { setAppStatus } from '.';
 
@@ -69,6 +70,7 @@ const mlDraftSlice = createSlice({
       state,
       action: PayloadAction<{ templates: ReturnType<typeof getTemplates>; index: number }>,
     ) {
+      state.blocks = {};
       state.isTouched = false;
       const template = action.payload.templates[action.payload.index];
       state.contentMap = template.map((block, i) => {
@@ -142,10 +144,10 @@ const mlDraftSlice = createSlice({
       state.isTouched = true;
     },
 
-    setMLDraftResetInitialState(state) {
-      state.blocks = {};
-      return state;
-    },
+    // setMLDraftResetInitialState(state) {
+    //   state.blocks = {};
+    //   return state;
+    // },
 
     setMLDraftBlockContent<T extends TMLDraftBlocksUnion>(
       state: TMLDraftState,
@@ -200,7 +202,7 @@ export const {
   addMLDraftBlockSocial,
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
-  setMLDraftResetInitialState,
+  // setMLDraftResetInitialState,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 
@@ -272,5 +274,5 @@ export type TMLDraftActions =
   | ReturnType<typeof addMLDraftBlockLogo>
   | ReturnType<typeof addMLDraftBlockSocial>
   | ReturnType<typeof setMLDraftBlockContent>
-  | ReturnType<typeof setMLDraftBlockContentImage>
-  | ReturnType<typeof setMLDraftResetInitialState>;
+  | ReturnType<typeof setMLDraftBlockContentImage>;
+// | ReturnType<typeof setMLDraftResetInitialState>;
