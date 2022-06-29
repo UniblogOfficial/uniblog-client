@@ -70,7 +70,9 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
           .forEach(img => {
             cellImages[img.suborder] = parseRawImage(img);
           });
-        block = multilink.shopBlocks.find(b => b.order === i);
+        block = multilink.shopBlocks.find(b => b.order === i) as MLDraftShop & {
+          order: number;
+        };
         if (block) {
           shopBlocks.push({
             ...block,
