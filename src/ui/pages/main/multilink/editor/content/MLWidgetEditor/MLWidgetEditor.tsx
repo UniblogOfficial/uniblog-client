@@ -9,7 +9,7 @@ import styles from './MLWidgetEditor.module.scss';
 import { Button, Textarea } from 'ui/components/elements';
 
 type TMLWidgetEditorProps = {
-  order: number;
+  id: string;
   block: IMLDraftWidget;
 };
 
@@ -19,7 +19,7 @@ type TIFrameAttributes = {
   height: string;
 };
 
-export const MLWidgetEditor = ({ order, block }: TMLWidgetEditorProps) => {
+export const MLWidgetEditor = ({ id, block }: TMLWidgetEditorProps) => {
   const dispatch = useAppDispatch();
   const [rawValue, setRawValue] = useState('');
   const [iFrameAttrs, setIFrameAttrs] = useState<TIFrameAttributes>({

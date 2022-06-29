@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import React, { memo, FC, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 
+import { useAppDispatch } from '../../../../common/hooks';
+
 import styles from './Carousel.module.scss';
 
 type TCarouselProps = {
