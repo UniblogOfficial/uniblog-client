@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TMLDraftBlocksUnion } from '../../common/types/instance/mlDraft';
-import { nanoid } from '../../common/utils/ui/idGeneration/nanoid';
 import { normalizeMLDraft } from '../../common/utils/state/normalizeMLDraft';
+import { nanoid } from '../../common/utils/ui/idGeneration/nanoid';
 
 import { setAppStatus } from '.';
 
