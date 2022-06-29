@@ -25,6 +25,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         isFilled: !!avatar,
         logo,
         size: 100,
+        margin: [0, 0, 24],
       }),
       new MLDraftText({
         isFilled: false,
@@ -100,6 +101,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         isFilled: !!avatar,
         logo,
         size: 100,
+        margin: [0, 0, 24],
       }),
       new MLDraftText({
         isFilled: false,
@@ -175,11 +177,11 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         isFilled: !!avatar,
         logo: '',
         size: 100,
-        margin: [0, 0, 12],
+        margin: [0],
       }),
       new MLDraftText({
         isFilled: true,
-        text: 'Привет, меня зовут Евгений, и я готовлю к ЕГЭ и ОГЭ по математике более 10 лет \n\nСдал ЕГЭ на 100 баллов:\nhttps://vk.com/wall-40691695_66680',
+        text: 'Привет, меня зовут Евгений, и я готовлю к ЕГЭ и ОГЭ по математике более 10 лет',
         color: '#fff',
         font: '400 14px Inter, sans-serif',
         textAlign: 'left',
