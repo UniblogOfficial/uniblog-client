@@ -19,7 +19,6 @@ type TMLLinkProps = {
 };
 
 export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) => {
-  if (!block) return null;
   const className = callback ? 'ml-link interactive' : 'ml-link';
   const style = {
     padding: px(block.padding) ?? '0',
@@ -37,6 +36,7 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
     textShadow: block.textShadow?.join('px '),
     borderRadius: px(block.borderRadius),
   };
+  const imgSrc = image?.image ? image.image.previewUrl : block.image ?? undefined;
   return (
     <section
       className={className}
@@ -48,14 +48,13 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       {isPublic ? (
         <a href={block.href ?? '#'} style={style}>
+          {imgSrc && <img src={imgSrc} alt="link icon" style={{ marginLeft: '-126px' }} />}
           {block.title}
         </a>
       ) : (
         <div style={style}>
           <div>
-            {image?.image && (
-              <img src={image.image?.previewUrl} alt="link icon" style={{ marginLeft: '-123px' }} />
-            )}
+            {imgSrc && <img src={imgSrc} alt="link icon" style={{ marginLeft: '-126px' }} />}
             {block.title}
           </div>
         </div>

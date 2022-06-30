@@ -74,7 +74,7 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 block = multilink[type].find(el => el.order === i);
                 image = null;
                 if (!block) return null;
-                return <MLImage key={ID[i]} id="" block={block} image={image} />;
+                return <MLImage key={ID[i]} id="" block={block} image={image} isPublic />;
               case MLContentType.IMAGETEXT:
                 block = multilink[type].find(el => el.order === i);
                 image = null;

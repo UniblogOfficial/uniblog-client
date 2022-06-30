@@ -232,12 +232,14 @@ const defaultShopBlockOptions: IMLDraftShop = {
   subtitleColor: '#000',
   subtitleFontSize: 14,
   subtitleFontWeight: 700,
-  subtitleAlign: 'center',
+  subtitleTextAlign: 'center',
 };
 
 const defaultWidgetBlockOptions: IMLDraftWidget = {
   isFilled: false,
   url: '',
+  width: 300,
+  height: 300,
 };
 
 const defaultMapBlockOptions: IMLDraftMap = {

@@ -32,6 +32,7 @@ import {
   MLDraftLogo,
   MLDraftMap,
   MLDraftText,
+  MLDraftVideo,
   TMLDraftBlocksUnion,
 } from 'common/types/instance/mlDraft';
 import { nanoid } from 'common/utils/ui/idGeneration/nanoid';
@@ -191,59 +192,12 @@ export const MLContent = (props: TMLContentProps) => {
     const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`] as TMLDraftBlocksUnion;
     const order = contentMap.findIndex(el => el === `${blockEditorType}_${blockEditorId}`);
     switch (blockEditorType) {
-      case MLContentType.LOGO: {
-        if (currentBlock instanceof MLDraftLogo) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-            images: images.blocks[blockEditorType][order],
-          })(MLLogoEditor);
-        }
-        break;
-      }
       case MLContentType.TEXT: {
         if (currentBlock instanceof MLDraftText) {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
           })(MLTextEditor);
-        }
-        break;
-      }
-      case MLContentType.IMAGETEXT: {
-        if (currentBlock instanceof MLDraftImageText) {
-          return <>Not implemented</>;
-        }
-        break;
-      }
-      case MLContentType.IMAGE: {
-        if (currentBlock instanceof MLDraftImage) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-            images: images.blocks[blockEditorType][order],
-          })(MLImageEditor);
-        }
-        break;
-      }
-      case MLContentType.LINK: {
-        if (currentBlock instanceof MLDraftLink) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-            image: images.blocks[blockEditorType][order],
-            close: onButtonEditorClick,
-          })(MLLinkEditor);
-        }
-        break;
-      }
-
-      case MLContentType.BUTTON: {
-        if (currentBlock instanceof MLDraftButton) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-          })(MLButtonEditor);
         }
         break;
       }
@@ -265,6 +219,74 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
+      case MLContentType.MAP: {
+        if (currentBlock instanceof MLDraftMap) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLMapEditor);
+        }
+        break;
+      }
+      case MLContentType.VIDEO: {
+        if (currentBlock instanceof MLDraftVideo) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(null);
+        }
+        break;
+      }
+
+      case MLContentType.LOGO: {
+        if (currentBlock instanceof MLDraftLogo) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+            images: images.blocks[blockEditorType][order],
+          })(MLLogoEditor);
+        }
+        break;
+      }
+      case MLContentType.IMAGETEXT: {
+        if (currentBlock instanceof MLDraftImageText) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(null);
+        }
+        break;
+      }
+      case MLContentType.IMAGE: {
+        if (currentBlock instanceof MLDraftImage) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+            image: images.blocks[blockEditorType][order],
+          })(MLImageEditor);
+        }
+        break;
+      }
+      case MLContentType.LINK: {
+        if (currentBlock instanceof MLDraftLink) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+            image: images.blocks[blockEditorType][order],
+            close: onButtonEditorClick,
+          })(MLLinkEditor);
+        }
+        break;
+      }
+      case MLContentType.BUTTON: {
+        if (currentBlock instanceof MLDraftButton) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLButtonEditor);
+        }
+        break;
+      }
       case MLContentType.SHOP: {
         if (currentBlock instanceof MLDraftShop) {
           return withBaseEditor({
@@ -275,15 +297,7 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
-      case MLContentType.MAP: {
-        if (currentBlock instanceof MLDraftMap) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-          })(MLMapEditor);
-        }
-        break;
-      }
+
       default:
         return <>Not implemented</>;
     }

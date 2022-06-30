@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TMLDraftBlocksUnion } from '../../common/types/instance/mlDraft';
-import { nanoid } from '../../common/utils/ui/idGeneration/nanoid';
 import { normalizeMLDraft } from '../../common/utils/state/normalizeMLDraft';
+import { nanoid } from '../../common/utils/ui/idGeneration/nanoid';
 
 import { setAppStatus } from '.';
 
@@ -82,11 +82,11 @@ const mlDraftSlice = createSlice({
       });
       state.images.background = null;
       state.images.blocks = {
-        /* logoBlocks: template.map((block, i) =>
+        logoBlocks: template.map((block, i) =>
           block.type === MLContentType.LOGO ? { order: i, logo: null } : null,
         ),
         imageBlocks: template.map((block, i) =>
-          block.type === MLContentType.IMAGE ? { order: i, images: [null] } : null,
+          block.type === MLContentType.IMAGE ? { order: i, image: null } : null,
         ),
         imageTextBlocks: template.map((block, i) =>
           block.type === MLContentType.IMAGETEXT ? { order: i, image: null } : null,
@@ -95,14 +95,16 @@ const mlDraftSlice = createSlice({
           block.type === MLContentType.SHOP
             ? { order: i, cells: block.cells.map(() => null) }
             : null,
-        ), */
-        logoBlocks: template.map((block, i) => null),
+        ),
+        /* logoBlocks: template.map((block, i) => null),
         imageBlocks: template.map((block, i) => null),
         imageTextBlocks: template.map((block, i) => null),
-        shopBlocks: template.map((block, i) => null),
+        shopBlocks: template.map((block, i) => null), */
         buttonBlocks: template.map((block, i) => null),
         carouselBlocks: template.map((block, i) => null),
-        linkBlocks: template.map((block, i) => null),
+        linkBlocks: template.map((block, i) =>
+          block.type === MLContentType.LINK ? { order: i, image: null } : null,
+        ),
       };
     },
 
