@@ -65,7 +65,7 @@ export const MLVote = ({ id, block, isPublic, callback }: TMLVoteProps) => {
           font: block.buttonFont,
           letterSpacing: px(block.buttonLetterSpacing),
           textShadow: block.buttonTextShadow?.join('px '),
-          textAlign: block.buttonAlign,
+          textAlign: block.buttonTextAlign,
         }}
         onClick={onVoteItemClick}>
         Отправить
