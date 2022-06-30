@@ -12,6 +12,9 @@
     overflow: hidden;
     img {
       position: relative;
+      top: 0;
+      left: 0;;
+      transform: none;
     }
   }
   &__imageLink {
