@@ -1,0 +1,96 @@
+.title {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  flex: 1 1 auto;
+}
+
+.input {
+  display: none;
+}
+
+.check {
+  cursor: pointer;
+  /*    width: 1.2em;
+    height: 1.2em;*/
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+
+.checkbox {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  
+  &:hover svg {
+    stroke: #202020;
+  }
+
+  .icon {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    margin-right: 0.5em;
+  }
+
+  svg {
+    min-height: 21.9px;
+    min-width: 21.9px;
+    margin: auto;
+    z-index: 10;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #000;
+    stroke-width: 1.5;
+    transform: translate3d(0, 0, 0);
+    transition: all 0.2s ease;
+  }
+
+  path {
+    stroke-dasharray: 60;
+    stroke-dashoffset: 0;
+  }
+
+  polyline {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 66;
+  }
+}
+
+.input:checked+label {
+  svg {
+    stroke: #000;
+  }
+
+  svg path {
+    stroke-dashoffset: 60;
+    transition: all 0.3s linear;
+  }
+
+  svg polyline {
+    stroke-dashoffset: 42;
+    transition: all 0.2s linear;
+    transition-delay: 0.15s;
+  }
+}
+
+.input:disabled+label {
+  svg {
+    stroke: #666;
+  }
+
+  .icon::after {
+    content: "×";
+    position: absolute;
+    margin: auto auto auto 0;
+    top: -10px;
+    left: 0;
+    width: 21.9px;
+    height: 21.9px;
+    font-size: 42px;
+    line-height: 42px;
+    color: #ddd;
+  }
+}

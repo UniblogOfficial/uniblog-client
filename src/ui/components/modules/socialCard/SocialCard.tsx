@@ -54,7 +54,7 @@ export const SocialCard: FC<TSocialCardProps> = ({
     <>
       <article className={finalClassName}>
         <div className={styles.imgContainer}>
-          <img src={data.src} alt={data.title} />
+          <img className="invert" src={data.src} alt={data.title} />
         </div>
         <div className={styles.title}>
           <h4>{data.title}</h4>

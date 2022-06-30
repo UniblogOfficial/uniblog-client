@@ -3,6 +3,7 @@ import { MLImage } from './mlImage/MLImage';
 import { MLImageText } from './mlImageText/MLImageText';
 import { MLLink } from './mlLink/MLLink';
 import { MLLogo } from './mlLogo/MLLogo';
+import { MLMap } from './mlMap/MLMap';
 import { MLShop } from './mlShop/MLShop';
 import { MLSocial } from './mlSocial/MLSocial';
 import { MLText } from './mlText/MLText';
@@ -10,7 +11,7 @@ import { MLVideo } from './mlVideo/MLVideo';
 import { MLVote } from './mlVote/MLVote';
 
 export {
-  MLImage as MLImages,
+  MLImage,
   MLImageText,
   MLLink,
   MLSocial,
@@ -20,4 +21,5 @@ export {
   MLShop,
   MLVote,
   MLButton,
+  MLMap,
 };

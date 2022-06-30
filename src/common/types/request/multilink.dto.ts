@@ -65,19 +65,51 @@ export type TCreateMLImagesDto = {
   linkBlocks: TMLImageContentLink<TImageFile>[];
 };
 
-interface IMLCreateTextDto extends IMLDraftText {}
-interface IMLCreateLinkDto extends IMLDraftLink {}
-interface IMLCreateSocialDto extends IMLDraftSocial {}
-interface IMLCreateLogoDto extends IMLDraftLogo {}
-interface IMLCreateImageDto extends IMLDraftImage {}
-interface IMLCreateImageTextDto extends IMLDraftImageText {}
-interface IMLCreateVideoDto extends IMLDraftVideo {}
-interface IMLCreateShopDto extends IMLDraftShop {}
-interface IMLCreateAudioDto extends IMLDraftAudio {}
-interface IMLCreateWidgetDto extends IMLDraftWidget {}
-interface IMLCreateCarouselDto extends IMLDraftCarousel {}
-interface IMLCreatePostDto extends IMLDraftPost {}
-interface IMLCreateDividerDto extends IMLDraftDivider {}
-interface IMLCreateButtonDto extends IMLDraftButton {}
-interface IMLCreateVoteDto extends IMLDraftVote {}
-interface IMLCreateMapDto extends IMLDraftMap {}
+interface IMLCreateTextDto extends IMLDraftText {
+  order: number;
+}
+interface IMLCreateLinkDto extends IMLDraftLink {
+  order: number;
+}
+interface IMLCreateSocialDto extends IMLDraftSocial {
+  order: number;
+}
+interface IMLCreateLogoDto extends IMLDraftLogo {
+  order: number;
+}
+interface IMLCreateImageDto extends IMLDraftImage {
+  order: number;
+}
+interface IMLCreateImageTextDto extends IMLDraftImageText {
+  order: number;
+}
+interface IMLCreateVideoDto extends IMLDraftVideo {
+  order: number;
+}
+interface IMLCreateShopDto extends IMLDraftShop {
+  order: number;
+}
+interface IMLCreateAudioDto extends IMLDraftAudio {
+  order: number;
+}
+interface IMLCreateWidgetDto extends IMLDraftWidget {
+  order: number;
+}
+interface IMLCreateCarouselDto extends IMLDraftCarousel {
+  order: number;
+}
+interface IMLCreatePostDto extends IMLDraftPost {
+  order: number;
+}
+interface IMLCreateDividerDto extends IMLDraftDivider {
+  order: number;
+}
+interface IMLCreateButtonDto extends IMLDraftButton {
+  order: number;
+}
+interface IMLCreateVoteDto extends IMLDraftVote {
+  order: number;
+}
+interface IMLCreateMapDto extends IMLDraftMap {
+  order: number;
+}
