@@ -1,17 +1,22 @@
 // variables
-enum xpostActionType {
-  SET_TEXT = 'SET_TEXT',
-}
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: TXpostState = {
   text: '',
 };
 
-export const xpostReducer = (state: TXpostState = initialState, action: any) => state;
+const xpostSlice = createSlice({
+  name: 'xpost',
+  initialState,
+  reducers: {
+    setXpostText(state, action: PayloadAction<string>) {
+      state.text = action.payload;
+    },
+  },
+});
 
-// actions
-export const setXpostText = (text: string) =>
-  ({ type: xpostActionType.SET_TEXT, payload: { text } } as const);
+export const { setXpostText } = xpostSlice.actions;
+export const xpostReducer = xpostSlice.reducer;
 
 // types
 export type TXpostState = {

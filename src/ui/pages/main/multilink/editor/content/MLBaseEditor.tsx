@@ -1,24 +1,32 @@
-import React, { ChangeEvent, PropsWithChildren, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, PropsWithChildren, useEffect, useState } from 'react';
 
 import { RgbaStringColorPicker } from 'react-colorful';
 
 import { setMLDraftBlockContent } from 'bll/reducers';
-import { useAppDispatch } from 'common/hooks';
-import { IMLDraftLink, IMLDraftText } from 'common/types/instance';
+import { Direction } from 'common/constants';
+import { useAppDispatch, useThrottle } from 'common/hooks';
+import { TMLDraftBlocksUnion } from 'common/types/instance/mlDraft';
+import { capitalizeFirst } from 'common/utils/ui';
 import { Button } from 'ui/components/elements';
+import { Checkbox } from 'ui/components/elements/checkbox/Checkbox';
 
-type TMLBaseEditorProps = {
-  blockEditor: React.ReactElement;
+export type TMLBaseEditorProps<T> = {
+  id: string;
+  block: TMLDraftBlocksUnion;
 };
 
 const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
-const paddings: string[] = ['top', 'right', 'bottom', 'left'];
-const margins: string[] = ['top', 'right', 'bottom', 'left'];
-const marginArray = [0, 0, 0, 0];
 
-export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
-  const { block, order } = blockEditor.props;
+const paddings = Object.entries(Direction).reduce(
+  (acc, el, i, arr) => (i >= arr.length / 2 ? [...acc, el as [string, string]] : acc),
+  [] as [string, string][],
+);
+const margins = paddings;
+
+export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEditorProps<T>>) => {
+  const { id, block, children } = props;
   const dispatch = useAppDispatch();
+  const dispatchThrottled = useThrottle(dispatch, 50);
   const [isBgColorPickerVisible, setIsBgColorPickerVisible] = useState(false);
   const [isPaddingLeftRight, setIsPaddingLeftRight] = useState(false);
   const [isMarginLeftRight, setIsMarginLeftRight] = useState(false);
@@ -27,75 +35,102 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
 
   const onBackgroundColorChange = (backgroundColor: string) => {
     block.background = backgroundColor;
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    dispatch(
+      setMLDraftBlockContent({
+        content: { background: backgroundColor },
+        id,
+        type: block.type,
+      }),
+    );
   };
-  const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const padding = e.currentTarget.value;
-    const title = e.currentTarget.name;
 
-    if (title === 'top') {
+  const onBindDirectionsCheck = (checked: boolean, value: string) => {
+    switch (value) {
+      case 'padding-LR':
+        return setIsPaddingLeftRight(checked);
+      case 'padding-TB':
+        return setIsPaddingTopBottom(checked);
+      case 'margin-LR':
+        return setIsMarginLeftRight(checked);
+      case 'margin-TB':
+        return setIsMarginTopBottom(checked);
+      default:
+    }
+  };
+
+  const onPaddingChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const paddingValue = +e.currentTarget.value;
+    let { padding } = block;
+    const direction = +e.currentTarget.name;
+
+    if (!padding) {
+      padding = [0, 0, 0, 0];
+    }
+
+    if (isPaddingTopBottom && isPaddingLeftRight) {
+      padding = new Array(4).fill(paddingValue);
+      dispatchThrottled(setMLDraftBlockContent({ content: { padding }, id, type: block.type }));
+      return;
+    }
+
+    if (direction === Direction.TOP || direction === Direction.BOTTOM) {
       if (isPaddingTopBottom) {
-        block.padding[2] = +padding;
+        padding[Direction.TOP] = paddingValue;
+        padding[Direction.BOTTOM] = paddingValue;
+      } else {
+        padding[direction] = paddingValue;
       }
-      block.padding[0] = +padding;
     }
-    if (title === 'right') {
+    if (direction === Direction.RIGHT || direction === Direction.LEFT) {
       if (isPaddingLeftRight) {
-        block.padding[3] = +padding;
+        padding[Direction.RIGHT] = paddingValue;
+        padding[Direction.LEFT] = paddingValue;
+      } else {
+        padding[direction] = paddingValue;
       }
-      block.padding[1] = +padding;
     }
-    if (title === 'bottom') {
-      if (isPaddingTopBottom) {
-        block.padding[0] = +padding;
-      }
-      block.padding[2] = +padding;
-    }
-    if (title === 'left') {
-      if (isPaddingLeftRight) {
-        block.padding[1] = +padding;
-      }
-      block.padding[3] = +padding;
-    }
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+
+    dispatchThrottled(setMLDraftBlockContent({ content: { padding }, id, type: block.type }));
   };
 
   const onMarginChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const margin = e.currentTarget.value;
-    const title = e.currentTarget.name;
-
-    if (title === 'top') {
-      if (isMarginTopBottom) {
-        block.margin[2] = +margin;
-      }
-      block.margin[0] = +margin;
-    }
-    if (title === 'right') {
-      if (isMarginLeftRight) {
-        block.margin[3] = +margin;
-      }
-      block.margin[1] = +margin;
-    }
-    if (title === 'bottom') {
-      if (isMarginTopBottom) {
-        block.margin[0] = +margin;
-      }
-      block.margin[2] = +margin;
-    }
-    if (title === 'left') {
-      if (isMarginLeftRight) {
-        block.margin[1] = +margin;
-      }
-      block.margin[3] = +margin;
+    const marginValue = +e.currentTarget.value;
+    const direction = +e.currentTarget.name as Direction;
+    let { margin } = block;
+    if (!margin) {
+      margin = [0, 0, 0, 0];
     }
 
-    dispatch(setMLDraftBlockContent(block, order, 'textBlocks'));
+    if (isMarginTopBottom && isMarginLeftRight) {
+      margin = new Array(4).fill(marginValue);
+      dispatchThrottled(setMLDraftBlockContent({ content: { margin }, id, type: block.type }));
+      return;
+    }
+
+    if (direction === Direction.TOP || direction === Direction.BOTTOM) {
+      if (isMarginTopBottom) {
+        margin[Direction.TOP] = marginValue;
+        margin[Direction.BOTTOM] = marginValue;
+      } else {
+        margin[direction] = marginValue;
+      }
+    }
+    if (direction === Direction.RIGHT || direction === Direction.LEFT) {
+      if (isMarginLeftRight) {
+        margin[Direction.RIGHT] = marginValue;
+        margin[Direction.LEFT] = marginValue;
+      } else {
+        margin[direction] = marginValue;
+      }
+    }
+
+    dispatchThrottled(setMLDraftBlockContent({ content: { margin }, id, type: block.type }));
   };
 
   return (
     <>
       <div>
-        {blockEditor}
+        {children}
         <div style={{ paddingTop: '15px' }}>
           Background:
           {defaultColors.map((color, index) => (
@@ -103,12 +138,14 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
               key={color}
               type="button"
               className="circle"
+              value={undefined}
               style={{ backgroundColor: color }}
               onClick={() => onBackgroundColorChange(color)}
             />
           ))}
           <input
             type="button"
+            defaultValue={undefined}
             className="circleGradient"
             onClick={() => setIsBgColorPickerVisible(true)}
           />
@@ -129,28 +166,33 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
           <div style={{ marginTop: '10px' }}>
             Padding:
             <div className="padding_margin">
-              <label>
+              <Checkbox
+                value="padding-LR"
+                name="padding-LR"
+                checked={isPaddingLeftRight}
+                onChangeChecked={onBindDirectionsCheck}>
                 Left&Right
-                <input type="checkbox" onChange={() => setIsPaddingLeftRight(true)} />
-              </label>
-              <label>
+              </Checkbox>
+              <Checkbox
+                value="padding-TB"
+                name="padding-TB"
+                checked={isPaddingTopBottom}
+                onChangeChecked={onBindDirectionsCheck}>
                 Top&Bottom
-                <input type="checkbox" onChange={() => setIsPaddingTopBottom(true)} />
-              </label>
+              </Checkbox>
             </div>
           </div>
           <div className="padding_margin">
-            {paddings.map((padding, i: number) => (
-              <div key={padding}>
-                <label>{padding}:</label>
+            {paddings.map((padding, i) => (
+              <div key={padding[0]}>
+                <label>{capitalizeFirst(padding[0])}:</label>
                 <input
                   type="range"
-                  name={padding}
-                  min={4}
-                  max={60}
+                  name={padding[1]}
+                  min={0}
+                  max={80}
                   step={4}
-                  defaultValue={i}
-                  value={Array.isArray(block?.padding) ? block?.padding[i] : i}
+                  value={block.padding && block.padding[i] ? block.padding[i] : 0}
                   onChange={onPaddingChange}
                 />
               </div>
@@ -159,28 +201,33 @@ export const MLBaseEditor = ({ blockEditor }: TMLBaseEditorProps) => {
           <div>
             Margin:
             <div className="padding_margin">
-              <label>
+              <Checkbox
+                value="margin-LR"
+                name="margin-LR"
+                checked={isMarginLeftRight}
+                onChangeChecked={onBindDirectionsCheck}>
                 Left&Right
-                <input type="checkbox" onChange={() => setIsMarginLeftRight(true)} />
-              </label>
-              <label>
+              </Checkbox>
+              <Checkbox
+                value="margin-TB"
+                name="margin-TB"
+                checked={isMarginTopBottom}
+                onChangeChecked={onBindDirectionsCheck}>
                 Top&Bottom
-                <input type="checkbox" onChange={() => setIsMarginTopBottom(true)} />
-              </label>
+              </Checkbox>
             </div>
           </div>
           <div className="padding_margin">
-            {margins.map((margin, i: number) => (
-              <div key={margin}>
-                <label>{margin}:</label>
+            {margins.map((margin, i) => (
+              <div key={margin[0]}>
+                <label>{capitalizeFirst(margin[0])}:</label>
                 <input
                   type="range"
-                  name={margin}
-                  min={4}
-                  max={60}
+                  name={margin[1]}
+                  min={0}
+                  max={100}
                   step={4}
-                  defaultValue={i}
-                  value={Array.isArray(block?.margin) ? block?.margin[i] : i}
+                  value={block.margin && block.margin[i] ? block.margin[i] : 0}
                   onChange={onMarginChange}
                 />
               </div>

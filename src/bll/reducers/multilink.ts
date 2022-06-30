@@ -1,57 +1,40 @@
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
 
-import { setAppStatus, setInitialized, setMultilinkMode, requestMe } from '.';
+import { setAppStatus, setInitialized, setMultilinkMode, requestMe, setUserData } from '.';
 
-import { AppThunk } from 'bll/store';
+import { AppThunk, store } from 'bll/store';
 import { AppStatus } from 'common/constants';
 import { Nullable, TMultilink } from 'common/types/instance';
 import { handleServerNetworkError } from 'common/utils/state/errorHandler';
 import { normalizeMLPublic } from 'common/utils/state/normalizeMLPublic';
 import { multilinkAPI } from 'dal';
 
-enum multilinkAction {
-  SET_MULTILINK = 'SET_MULTILINK',
-  SET_ALL_MULTILINKS = 'SET_ALL_MULTILINKS',
-}
-
 const initialState = {
-  multilink: null,
-  allMultilinks: null,
+  multilink: null as null | TMultilink,
+  allMultilinks: null as null | TMultilink[],
 };
 
-export const multilinkReducer = (
-  state: TMultilinkState = initialState,
-  action: TMultilinkActions,
-): TMultilinkState => {
-  switch (action.type) {
-    case multilinkAction.SET_MULTILINK:
-    case multilinkAction.SET_ALL_MULTILINKS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    default:
-      return state;
-  }
-};
-// actions
-// public multilink
-export const setMultilink = (multilink: TMultilink) =>
-  ({
-    type: multilinkAction.SET_MULTILINK,
-    payload: { multilink },
-  } as const);
+const multilinkSlice = createSlice({
+  name: 'multilink',
+  initialState,
+  reducers: {
+    setMultilink(state, action: PayloadAction<TMultilink>) {
+      state.multilink = action.payload;
+    },
+    setAllMultilinks(state, action: PayloadAction<TMultilink[]>) {
+      state.allMultilinks = action.payload;
+    },
+  },
+});
 
-export const setAllMultilinks = (allMultilinks: TMultilink[]) =>
-  ({
-    type: multilinkAction.SET_ALL_MULTILINKS,
-    payload: { allMultilinks },
-  } as const);
+export const { setMultilink, setAllMultilinks } = multilinkSlice.actions;
 
-// thunks
-export const getMultilink =
-  (name: string): AppThunk =>
-  async dispatch => {
+export const multilinkReducer = multilinkSlice.reducer;
+
+export const getMultilink = createAsyncThunk(
+  'multilink/getMultilink',
+  async (name: string, { dispatch, rejectWithValue, getState }) => {
     try {
       dispatch(setAppStatus(AppStatus.CONTENT_LOADING));
       const response = await multilinkAPI.get(name);
@@ -70,24 +53,31 @@ export const getMultilink =
       handleServerNetworkError(e, AppStatus.CONTENT_FAILED, dispatch);
       dispatch(requestMe());
     }
-  };
+  },
+);
 
-export const getAllMultilinks = (): AppThunk => async dispatch => {
-  try {
-    dispatch(setAppStatus(AppStatus.CONTENT_LOADING));
-    const response = await multilinkAPI.getAll();
-    if (response.data) {
-      batch(() => {
-        dispatch(
-          setAllMultilinks(response.data.multilinks.map((ml: TMultilink) => normalizeMLPublic(ml))),
-        );
-        dispatch(setAppStatus(AppStatus.SUCCEEDED));
-      });
+export const getAllMultilinks = createAsyncThunk(
+  'multilink/getAllMultilinks',
+  async (_, { dispatch, rejectWithValue, getState }) => {
+    try {
+      dispatch(setAppStatus(AppStatus.CONTENT_LOADING));
+      const response = await multilinkAPI.getAll();
+      if (response.data) {
+        console.log(response.data);
+        batch(() => {
+          dispatch(
+            setAllMultilinks(
+              response.data.multilinks.map((ml: TMultilink) => normalizeMLPublic(ml)),
+            ),
+          );
+          dispatch(setAppStatus(AppStatus.SUCCEEDED));
+        });
+      }
+    } catch (e) {
+      handleServerNetworkError(e, AppStatus.CONTENT_FAILED, dispatch);
     }
-  } catch (e) {
-    handleServerNetworkError(e, AppStatus.CONTENT_FAILED, dispatch);
-  }
-};
+  },
+);
 
 // types
 export type TMultilinkState = {

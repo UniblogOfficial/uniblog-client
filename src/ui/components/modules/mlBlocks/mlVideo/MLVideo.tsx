@@ -1,21 +1,20 @@
 import React from 'react';
 
-import { IMLDraftVideo, Nullable } from 'common/types/instance';
+import { MLDraftVideo } from 'common/types/instance';
 import { px } from 'common/utils/ui';
 
 type TMLVideoProps = {
-  block: Nullable<IMLDraftVideo>;
+  id: string;
+  block: MLDraftVideo;
   callback?: <T>(payload: T) => void;
 };
 
-export const MLVideo = ({ block, callback }: TMLVideoProps) => {
+export const MLVideo = ({ id, block, callback }: TMLVideoProps) => {
   if (!block) return null;
   const className = callback ? 'ml-video interactive' : 'ml-video';
   return (
     <section className={className} style={{ padding: px(block.padding) ?? '0' }}>
-      {callback && (
-        <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
-      )}
+      {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <div className="ml-video__container">
         <iframe
           src={block.url ?? ''}

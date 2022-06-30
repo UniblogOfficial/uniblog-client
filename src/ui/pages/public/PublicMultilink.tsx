@@ -7,7 +7,7 @@ import {
   MLText,
   MLLink,
   MLSocial,
-  MLImages,
+  MLImage,
   MLImageText,
   MLVideo,
   MLVote,
@@ -38,53 +38,53 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
               case MLContentType.TEXT:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
-                return <MLText key={ID[i]} block={block} />;
+                return <MLText key={ID[i]} id="" block={block} />;
               case MLContentType.SOCIAL:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
-                return <MLSocial key={ID[i]} block={block} isPublic />;
+                return <MLSocial key={ID[i]} id="" block={block} isPublic />;
               case MLContentType.VIDEO:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
-                return <MLVideo key={ID[i]} block={block} />;
+                return <MLVideo key={ID[i]} id="" block={block} />;
               case MLContentType.WIDGET:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
-                return <MLWidget key={ID[i]} block={block} />;
+                return <MLWidget key={ID[i]} id="" block={block} />;
               case MLContentType.VOTE:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
-                return <MLVote key={ID[i]} block={block} isPublic />;
+                return <MLVote key={ID[i]} id="" block={block} isPublic />;
 
               case MLContentType.BUTTON:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
-                return <MLButton key={ID[i]} block={block} />;
+                return <MLButton key={ID[i]} id="" block={block} />;
               case MLContentType.LOGO:
                 block = multilink[type].find(el => el.order === i);
                 // variable image is one or set of images of current block
                 image = null;
                 if (!block) return null;
-                return <MLLogo key={ID[i]} block={block} images={image} />;
+                return <MLLogo key={ID[i]} id="" block={block} images={image} />;
               case MLContentType.LINK:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
-                return <MLLink key={ID[i]} block={block} isPublic />;
+                return <MLLink key={ID[i]} id="" block={block} isPublic image={null} />;
               case MLContentType.IMAGE:
                 block = multilink[type].find(el => el.order === i);
                 image = null;
                 if (!block) return null;
-                return <MLImages key={ID[i]} block={block} images={image} />;
+                return <MLImage key={ID[i]} id="" block={block} image={image} isPublic />;
               case MLContentType.IMAGETEXT:
                 block = multilink[type].find(el => el.order === i);
                 image = null;
                 if (!block) return null;
-                return <MLImageText key={ID[i]} block={block} images={image} />;
+                return <MLImageText key={ID[i]} id="" block={block} image={image} />;
               case MLContentType.SHOP:
                 block = multilink[type].find(el => el.order === i);
                 image = null;
                 if (!block) return null;
-                return <MLShop key={ID[i]} block={block} images={image} isPublic />;
+                return <MLShop key={ID[i]} id="" block={block} images={image} isPublic />;
               default:
                 return <li key={ID[i]} />;
             }

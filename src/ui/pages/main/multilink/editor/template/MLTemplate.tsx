@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useCallback, useMemo, useState } from 'react';
+import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -6,14 +6,14 @@ import { getTemplates } from './templates';
 
 import { setMLDraftTemplate } from 'bll/reducers';
 import { ID, MLContentType } from 'common/constants';
-import { useAppDispatch } from 'common/hooks';
+import { useAppDispatch, useEffectOnce } from 'common/hooks';
 import { TUser } from 'common/types/instance';
 import { parseRawImage, px } from 'common/utils/ui';
 import socials from 'img/socials';
 import { Carousel, Icon } from 'ui/components/elements';
 import {
   MLButton,
-  MLImages,
+  MLImage,
   MLImageText,
   MLLink,
   MLLogo,
@@ -27,29 +27,30 @@ import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
 type TMLTemplateProps = {
   userData: TUser;
+  currentMLTemplate: number;
 };
 
-export const MLTemplate = ({ userData }: TMLTemplateProps) => {
+export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const { name, avatar } = userData;
   const [templates, setTemplates] = useState(getTemplates(name, avatar));
+  const [dots, setDots] = useState(true);
+  const [arrows, setArrows] = useState(false);
 
   const setCurrentTemplate = useCallback(
     (stage: number) => {
       if (templates.some((_t, i) => i === stage)) {
-        dispatch(setMLDraftTemplate(templates, stage));
+        dispatch(setMLDraftTemplate({ templates, index: stage }));
       }
     },
     [dispatch, templates],
   );
-  /* <li key={block.order}>
-                    <div
-                      className="ml-logo__logo"
-                      style={{ height: block.size ?? '100px', width: block.size ?? '100px' }}>
-                      <img src={block.logo!} alt="logo" />
-                    </div>
-                  </li> */
+
+  useEffectOnce(() => {
+    dispatch(setMLDraftTemplate({ templates, index: 0 }));
+  });
+
   const getTemplateLayouts = useCallback(
     () =>
       templates.map((template, i) => (
@@ -57,44 +58,44 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
           {template.map((block, j) => {
             switch (block.type) {
               case MLContentType.TEXT:
-                return <MLText key={ID[i]} block={block} />;
+                return <MLText key={ID[j]} id="" block={block} />;
 
               case MLContentType.SOCIAL:
-                return <MLSocial key={ID[i]} block={block} />;
+                return <MLSocial key={ID[j]} id="" block={block} />;
 
-              case MLContentType.WIDGET:
-                return block && <MLWidget key={ID[i]} block={block} />;
+              /* case MLContentType.WIDGET:
+                return block && <MLWidget key={ID[j]} block={block} />;
 
               case MLContentType.VIDEO:
-                return <MLVideo key={ID[i]} block={block} />;
+                return <MLVideo key={ID[j]} block={block} />; */
 
               /* case MLContentType.AUDIO:
                 return block && <>audio block</>; */
 
-              case MLContentType.VOTE:
-                return block && <MLVote key={ID[i]} block={block} />;
+              /* case MLContentType.VOTE:
+                return block && <MLVote key={ID[j]} block={block} />; */
 
               case MLContentType.LOGO:
                 // variable image is one or set of images of current block
-                return block && <MLLogo key={ID[i]} block={block} images={null} />;
+                return block && <MLLogo key={ID[j]} id="" block={block} images={null} />;
 
               case MLContentType.LINK:
-                return <MLLink key={ID[i]} block={block} />;
+                return <MLLink key={ID[j]} id="" block={block} image={null} />;
 
-              case MLContentType.BUTTON:
-                return <MLButton key={ID[i]} block={block} />;
+              /* case MLContentType.BUTTON:
+                return <MLButton key={ID[j]} block={block} />;
 
               case MLContentType.IMAGE:
-                return <MLImages key={ID[i]} block={block} images={null} />;
+                return <MLImages key={ID[j]} block={block} images={null} />; */
 
               case MLContentType.IMAGETEXT:
-                return <MLImageText key={ID[i]} block={block} images={null} />;
+                return <MLImageText key={ID[j]} id="" block={block} image={null} />;
 
-              case MLContentType.SHOP:
-                return <MLShop key={ID[i]} block={block} images={null} />;
+              /* case MLContentType.SHOP:
+                return <MLShop key={ID[j]} block={block} images={null} />; */
 
               default:
-                return <li key={ID[i]} />;
+                return <li key={ID[j]} />;
             }
           })}
         </ul>
@@ -124,11 +125,14 @@ export const MLTemplate = ({ userData }: TMLTemplateProps) => {
       <Carousel
         items={getTemplateLayouts()}
         itemsPerView={1}
-        arrows={carouselArrows}
+        dots={dots}
+        arrows={arrows}
+        arrowsIcons={carouselArrows}
         arrowStep={1}
         className="carousel"
         transitionTime={200}
         callback={setCurrentTemplate}
+        currentMLTemplate={currentMLTemplate}
       />
     </div>
   );

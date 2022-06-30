@@ -1,15 +1,23 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, useCallback } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
-import { IMLDraftLink, IMLDraftText } from '../../../../../../common/types/instance';
-
+import { setMLDraftBlockContentImage } from 'bll/reducers';
 import { MLContentType, SocialNetwork } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
+import {
+  IMLDraftLink,
+  IMLDraftText,
+  Nullable,
+  TImageFile,
+  TMLImageContentImage,
+  TMLImageContentLink,
+} from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
+import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TLinkFormData = {
   title: string;
@@ -17,9 +25,10 @@ type TLinkFormData = {
 };
 
 type TMLLinkEditorProps = {
-  order: number;
+  id: string;
   close: (e: MouseEvent<HTMLButtonElement>) => void;
   block?: IMLDraftLink;
+  image: Nullable<TMLImageContentLink<TImageFile>>;
 };
 
 const MAX_SYMBOLS_TITLE = 24;
@@ -39,7 +48,7 @@ const linkSchema = yup.object().shape({
     .required('Url is required'),
 });
 
-export const MLLinkEditor = ({ order, close }: TMLLinkEditorProps) => {
+export const MLLinkEditor = ({ id, close, image }: TMLLinkEditorProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const {
@@ -80,6 +89,15 @@ export const MLLinkEditor = ({ order, close }: TMLLinkEditorProps) => {
       }),
     ); */
   };
+
+  const onDropZoneChange = useCallback(
+    (imageFile: TImageFile) => {
+      dispatch(
+        setMLDraftBlockContentImage({ imageData: { image: imageFile }, id, field: 'linkBlocks' }),
+      );
+    },
+    [dispatch, image],
+  );
 
   return (
     <form className="template__ml-form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
@@ -123,6 +141,9 @@ export const MLLinkEditor = ({ order, close }: TMLLinkEditorProps) => {
             errors.link.message}
         </div>
       </section>
+      <div style={{ position: 'relative', height: '150px' }}>
+        <ImageField onChange={onDropZoneChange} />
+      </div>
       <div>
         <Button data-value="-1" type="submit" onClick={close} className="button _full _rounded">
           {t('common:buttons.ok')}

@@ -1,20 +1,20 @@
 import {
-  IMLDraftAudio,
-  IMLDraftButton,
-  IMLDraftCarousel,
-  IMLDraftDivider,
-  IMLDraftImage,
-  IMLDraftImageText,
-  IMLDraftLink,
-  IMLDraftLogo,
-  IMLDraftMap,
-  IMLDraftPost,
-  IMLDraftShop,
-  IMLDraftSocial,
-  IMLDraftText,
-  IMLDraftVideo,
-  IMLDraftVote,
-  IMLDraftWidget,
+  MLDraftAudio,
+  MLDraftButton,
+  MLDraftCarousel,
+  MLDraftDivider,
+  MLDraftImage,
+  MLDraftImageText,
+  MLDraftLink,
+  MLDraftLogo,
+  MLDraftMap,
+  MLDraftPost,
+  MLDraftShop,
+  MLDraftSocial,
+  MLDraftText,
+  MLDraftVideo,
+  MLDraftVote,
+  MLDraftWidget,
   Nullable,
   TIncomingImage,
 } from '.';
@@ -24,31 +24,31 @@ import { MLContentType, SocialNetwork } from 'common/constants';
 export type TMultilink = {
   // id: number;
   // userId: number;
-  // name: string;
+  name: string;
   background: string;
   // clickCount: number;
   contentMap: MLContentType[];
 
-  textBlocks: IMLDraftText[];
-  socialBlocks: IMLDraftSocial[];
-  videoBlocks: IMLDraftVideo[];
-  audioBlocks: IMLDraftAudio[];
-  widgetBlocks: IMLDraftWidget[];
-  voteBlocks: IMLDraftVote[];
-  mapBlocks: IMLDraftMap[];
-  postBlocks: IMLDraftPost[];
-  dividerBlocks: IMLDraftDivider[];
+  textBlocks: Array<MLDraftText & { order: number }>;
+  socialBlocks: Array<MLDraftSocial & { order: number }>;
+  videoBlocks: Array<MLDraftVideo & { order: number }>;
+  audioBlocks: Array<MLDraftAudio & { order: number }>;
+  widgetBlocks: Array<MLDraftWidget & { order: number }>;
+  voteBlocks: Array<MLDraftVote & { order: number }>;
+  mapBlocks: MLDraftMap[];
+  postBlocks: MLDraftPost[];
+  dividerBlocks: MLDraftDivider[];
   // gridBlocks: Nullable<IMLDraftGrid>[];
   // accordeonBlocks: Nullable<IMLDraftAccordeon>[];
 
   // images populated blocks
-  linkBlocks: IMLDraftLink[];
-  logoBlocks: IMLDraftLogo[];
-  imageBlocks: IMLDraftImage[];
-  imageTextBlocks: IMLDraftImageText[];
-  carouselBlocks: IMLDraftCarousel[];
-  shopBlocks: IMLDraftShop[];
-  buttonBlocks: IMLDraftButton[];
+  linkBlocks: Array<MLDraftLink & { order: number }>;
+  logoBlocks: Array<MLDraftLogo & { order: number }>;
+  imageBlocks: Array<MLDraftImage & { order: number }>;
+  imageTextBlocks: Array<MLDraftImageText & { order: number }>;
+  carouselBlocks: MLDraftCarousel[];
+  shopBlocks: Array<MLDraftShop & { order: number }>;
+  buttonBlocks: Array<MLDraftButton & { order: number }>;
 
   images: Array<{ id: number; order: number; suborder: number } & TIncomingImage>;
   // createdAt: string;

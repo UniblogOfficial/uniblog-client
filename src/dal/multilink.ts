@@ -40,9 +40,7 @@ export const multilinkAPI = {
     });
 
     images.imageBlocks.forEach((block, i) => {
-      block.images.forEach((image, j) => {
-        image && formData.append('images', image.file, `${block.order}_image_${j}`);
-      });
+      block.image && formData.append('images', block.image.file, `${block.order}_image_0`);
     });
 
     images.imageTextBlocks.forEach((block, i) => {
@@ -60,6 +58,14 @@ export const multilinkAPI = {
         cell && formData.append('images', cell.file, `${block.order}_shop_${j}`);
       });
     });
+
+    // @ts-ignore
+    /*     for (const pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    }
+    return new Promise(res => {
+      setTimeout(() => res(true), 4000);
+    }); */
 
     return api.post(`multilink`, formData, {
       headers: {

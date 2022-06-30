@@ -1,17 +1,18 @@
 import React, { MouseEvent } from 'react';
 
-import { IMLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
+import { MLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
 import { parseRawImage, px } from 'common/utils/ui';
 import imgPlaceholder from 'img/img-placeholder.png';
 
 type TMLShopProps = {
-  block: Nullable<IMLDraftShop>;
+  id: string;
+  block: MLDraftShop;
   images: Nullable<TMLImageContentShop<TImageFile>>;
   isPublic?: boolean;
   callback?: <T>(payload: T) => void;
 };
 
-export const MLShop = ({ block, images, isPublic, callback }: TMLShopProps) => {
+export const MLShop = ({ id, block, images, isPublic, callback }: TMLShopProps) => {
   if (!block) return null;
   const onShopItemClick = (e: MouseEvent<HTMLInputElement>) => {
     if (isPublic && e.currentTarget.dataset.value) {
@@ -25,9 +26,7 @@ export const MLShop = ({ block, images, isPublic, callback }: TMLShopProps) => {
   const className = callback ? 'ml-shop interactive' : 'ml-shop';
   return (
     <section className={className} style={{ padding: px(block.padding) ?? '0' }}>
-      {callback && (
-        <input type="button" data-type={block.type} data-order={block.order} onClick={callback} />
-      )}
+      {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <ul className="ml-shop__list" style={{ gridTemplateColumns: block.grid, gap: block.gap }}>
         {block.cells.map((cell, i) => {
           const imgSrc = images?.cells[i]
@@ -54,7 +53,7 @@ export const MLShop = ({ block, images, isPublic, callback }: TMLShopProps) => {
               </div>
               <p
                 style={{
-                  textAlign: block.align,
+                  textAlign: block.textAlign,
                   fontSize: block.fontSize,
                   fontWeight: block.fontWeight,
                   font: block.font,
@@ -64,7 +63,7 @@ export const MLShop = ({ block, images, isPublic, callback }: TMLShopProps) => {
               </p>
               <p
                 style={{
-                  textAlign: block.subtitleAlign,
+                  textAlign: block.subtitleTextAlign,
                   fontSize: block.subtitleFontSize ?? undefined,
                   fontWeight: block.subtitleFontWeight ?? undefined,
                   font: block.subtitleFont,
