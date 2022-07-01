@@ -1,0 +1,28 @@
+.block_handle {
+  position: absolute;
+  background: #273444;
+  width: 30px;
+  height: 100%;
+  left: -50px;
+  border-radius: 2px ;
+}
+
+.dragIcon {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 18px;
+  top: 40%;
+  left: 6px;
+}
+.spinner {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: relative;
+  height: 2px;
+  width: 100%;
+  background-color: #fff;
+  float: left;
+  margin-top: 3px;
+}
