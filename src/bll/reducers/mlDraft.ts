@@ -187,6 +187,15 @@ const mlDraftSlice = createSlice({
         state.isTouched = true;
       }
     },
+    setDragBlock(state, action: PayloadAction<{ destinationIndex: number; sourceIndex: number }>) {
+      const { destinationIndex, sourceIndex } = action.payload;
+      const newContentMap = state.contentMap;
+      const add = newContentMap[sourceIndex];
+      newContentMap.splice(sourceIndex, 1);
+
+      newContentMap.splice(destinationIndex, 0, add);
+      state.contentMap = newContentMap;
+    },
   },
 });
 
@@ -202,6 +211,7 @@ export const {
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
   // setMLDraftResetInitialState,
+  setDragBlock,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 
