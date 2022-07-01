@@ -24,7 +24,7 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
   const className = callback ? 'ml-link interactive' : 'ml-link';
   const imgSrc = image?.image ? image.image.previewUrl : block.image ?? undefined;
   const style = {
-    padding: imgSrc ? '24px 24px 24px 74px' : px(block.padding) ?? '0',
+    padding: px(block.padding) ?? '0',
     textAlign: block.textAlign,
     fontSize: block.fontSize,
     fontWeight: block.fontWeight,
