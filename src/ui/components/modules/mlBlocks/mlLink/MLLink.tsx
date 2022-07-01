@@ -1,5 +1,7 @@
 import React from 'react';
 
+import imgPlaceholder from '../../../../../img/img-placeholder.png';
+
 import {
   IMLDraftLink,
   MLDraftLink,
@@ -20,8 +22,9 @@ type TMLLinkProps = {
 
 export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) => {
   const className = callback ? 'ml-link interactive' : 'ml-link';
+  const imgSrc = image?.image ? image.image.previewUrl : block.image ?? undefined;
   const style = {
-    padding: px(block.padding) ?? '0',
+    padding: imgSrc ? '24px 24px 24px 74px' : px(block.padding) ?? '0',
     textAlign: block.textAlign,
     fontSize: block.fontSize,
     fontWeight: block.fontWeight,
@@ -36,14 +39,13 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
     textShadow: block.textShadow?.join('px '),
     borderRadius: px(block.borderRadius),
   };
-  const imgSrc = image?.image ? image.image.previewUrl : block.image ?? undefined;
+
   return (
     <section
       className={className}
       style={{
         margin: px(block.margin) ?? '0',
         justifyContent: block.textAlign,
-        position: 'relative',
       }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       {isPublic ? (
@@ -52,10 +54,14 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
           {block.title}
         </a>
       ) : (
-        <div style={style}>
-          <div>
+        <div>
+          <div
+            style={{
+              position: 'relative',
+              overflow: 'hidden',
+            }}>
             {imgSrc && <img src={imgSrc} alt="link icon" style={{ marginLeft: '-126px' }} />}
-            {block.title}
+            <div style={style}>{block.title}</div>
           </div>
         </div>
       )}
