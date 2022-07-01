@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 
-import { Draggable, DraggingStyle, NotDraggingStyle } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 
+import { getStyle } from 'common/utils/ui';
 import { DragButton } from 'ui/components/elements/DragButton/DragButton';
 
 type WrapperDragProps = {
@@ -9,20 +10,14 @@ type WrapperDragProps = {
   index: number;
 };
 
-const getStyle = (isDragging: boolean, style: DraggingStyle | NotDraggingStyle | undefined) => ({
-  ...style,
-  left: 0,
-  boxShadow: isDragging ? '0 0 20px black' : '',
-});
-
 export const WrapperDrag: FC<WrapperDragProps> = ({ id, index, children }) => (
   <Draggable draggableId={id} index={index}>
-    {(providedDraggable, snapshotDraggable) => (
+    {({ draggableProps, innerRef, dragHandleProps }, { isDragging }) => (
       <div
-        {...providedDraggable.draggableProps}
-        style={getStyle(snapshotDraggable.isDragging, providedDraggable.draggableProps.style)}
-        {...providedDraggable.dragHandleProps}
-        ref={providedDraggable.innerRef}>
+        ref={innerRef}
+        {...draggableProps}
+        {...dragHandleProps}
+        style={getStyle(isDragging, draggableProps.style)}>
         <div style={{ position: 'relative' }}>
           <DragButton />
           {children}

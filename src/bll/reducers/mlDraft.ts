@@ -210,8 +210,8 @@ export const {
   addMLDraftBlockSocial,
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
-  // setMLDraftResetInitialState,
   setDragBlock,
+  // setMLDraftResetInitialState,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 
