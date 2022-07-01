@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { compose, applyMiddleware, combineReducers, createStore } from 'redux';
+import { combineReducers } from 'redux';
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import {

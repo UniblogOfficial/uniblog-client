@@ -1,12 +1,8 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
-import {
-  setMLDraftBlockContent,
-  setMLDraftBlockContentImage,
-} from '../../../../../../../bll/reducers';
-import { ID } from '../../../../../../../common/constants';
-import { useAppDispatch, useThrottle } from '../../../../../../../common/hooks';
-
+import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { ID } from 'common/constants';
+import { useAppDispatch, useThrottle } from 'common/hooks';
 import { MLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
 import { ImageField } from 'ui/components/modules/imageField/ImageField';
@@ -31,11 +27,10 @@ export const MLShopEditor = ({ id, block, images }: TMLShopEditorProps) => {
   }, [block.cells]);
 
   const onDropZoneChange = useCallback(
-    (imageFile: TImageFile, _id?: number) => {
-      const copyImages = images && { ...images };
-      if (copyImages && _id !== undefined) {
-        // eslint-disable-next-line no-underscore-dangle
-        copyImages.cells[_id] = imageFile;
+    (imageFile: TImageFile, suborder?: number) => {
+      const copyImages = images && { ...images, cells: [...images.cells] };
+      if (copyImages && suborder !== undefined) {
+        copyImages.cells[suborder] = imageFile;
         dispatch(setMLDraftBlockContentImage({ imageData: copyImages, id, field: block.type }));
       }
     },

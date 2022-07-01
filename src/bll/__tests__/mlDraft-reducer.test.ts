@@ -1,3 +1,5 @@
+import { nanoid } from '@reduxjs/toolkit';
+
 /* eslint-disable prefer-template */
 /* eslint-disable no-undef */
 import { pushMLDraftBlock } from '../../common/utils/state/pushMLDraftBlock';
@@ -10,25 +12,9 @@ import { getKeys, getValues } from 'common/utils/state';
 const initialState: TMLDraftState = {
   name: '',
   background: '#fff',
+  maxWidth: 480,
   contentMap: [],
-  blocks: {
-    textBlocks: [],
-    linkBlocks: [],
-    socialBlocks: [],
-    logoBlocks: [],
-    imageBlocks: [],
-    imageTextBlocks: [],
-    videoBlocks: [],
-    shopBlocks: [],
-    audioBlocks: [],
-    buttonBlocks: [],
-    carouselBlocks: [],
-    dividerBlocks: [],
-    mapBlocks: [],
-    postBlocks: [],
-    voteBlocks: [],
-    widgetBlocks: [],
-  },
+  blocks: {},
 
   images: {
     background: null,
@@ -59,7 +45,7 @@ const blockTypesWithImageData = getKeys(initialState.images.blocks);
 describe('arrays consistency check', () => {
   describe.each(allBlockTypes.map(type => [type]))('all arrays must be incremented %#', type => {
     const blockType = type.replace('Blocks', '');
-    const action = addMLDraftBlock(type);
+    const action = addMLDraftBlock({ type, id: nanoid() });
     const endState = mlDraftReducer(initialState, action);
 
     getKeys(endState.blocks).forEach(key => {

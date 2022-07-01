@@ -90,7 +90,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
     }
   };
 
-  const onPublishButtonClick = () => {
+  const sendMultilink = () => {
     if (contentMap) {
       dispatch(publishMultilink({ name, background, maxWidth, contentMap, blocks, images }));
     }
@@ -297,13 +297,8 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                   setBlockEditor={setBlockEditor}
                 />
               )}
-              {stage === EditorStage.PREVIEW && <MLPreview name={name} username={userData.name} />}
               {stage === EditorStage.PREVIEW && (
-                <div className="action-buttons">
-                  <Button onClick={onPublishButtonClick} className="button _rounded">
-                    {t('common:buttons.ok')}
-                  </Button>
-                </div>
+                <MLPreview name={name} username={userData.name} publish={sendMultilink} />
               )}
             </div>
           </section>

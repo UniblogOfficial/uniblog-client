@@ -31,7 +31,7 @@ export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
   subtitleFontFamily?: string;
   subtitleLetterSpacing?: number;
   subtitleTextShadow?: string[];
-  subtitleAlign?: 'right' | 'left' | 'center' | 'justify';
+  subtitleTextAlign?: 'right' | 'left' | 'center' | 'justify';
 
   descriptionColor?: string;
   descriptionFont?: string;
@@ -43,7 +43,7 @@ export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
   descriptionFontFamily?: string;
   descriptionLetterSpacing?: number;
   descriptionTextShadow?: string[];
-  descriptionAlign?: 'right' | 'left' | 'center' | 'justify';
+  descriptionTextAlign?: 'right' | 'left' | 'center' | 'justify';
 
   priceColor?: string;
   priceFont?: string;
@@ -55,7 +55,7 @@ export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
   priceFontFamily?: string;
   priceLetterSpacing?: number;
   priceTextShadow?: string[];
-  priceAlign?: 'right' | 'left' | 'center' | 'justify';
+  priceTextAlign?: 'right' | 'left' | 'center' | 'justify';
 
   buttonBackground?: string;
   buttonBorderRadius?: number;
@@ -69,7 +69,7 @@ export interface IMLDraftShop extends IMLDraftContent, IMLTextProperties {
   buttonFontFamily?: string;
   buttonLetterSpacing?: number;
   buttonTextShadow?: string[];
-  buttonAlign?: 'right' | 'left' | 'center' | 'justify';
+  buttonTextAlign?: 'right' | 'left' | 'center' | 'justify';
 }
 
 export class MLDraftShop extends MLDraftAnyTextBlock<MLContentType.SHOP> implements IMLDraftShop {
@@ -99,7 +99,7 @@ export class MLDraftShop extends MLDraftAnyTextBlock<MLContentType.SHOP> impleme
   subtitleFontFamily?: string;
   subtitleLetterSpacing?: number;
   subtitleTextShadow?: string[];
-  subtitleAlign?: 'right' | 'left' | 'center' | 'justify';
+  subtitleTextAlign?: 'right' | 'left' | 'center' | 'justify';
 
   descriptionColor?: string;
   descriptionFont?: string;
@@ -111,7 +111,7 @@ export class MLDraftShop extends MLDraftAnyTextBlock<MLContentType.SHOP> impleme
   descriptionFontFamily?: string;
   descriptionLetterSpacing?: number;
   descriptionTextShadow?: string[];
-  descriptionAlign?: 'right' | 'left' | 'center' | 'justify';
+  descriptionTextAlign?: 'right' | 'left' | 'center' | 'justify';
 
   priceColor?: string;
   priceFont?: string;
@@ -123,7 +123,7 @@ export class MLDraftShop extends MLDraftAnyTextBlock<MLContentType.SHOP> impleme
   priceFontFamily?: string;
   priceLetterSpacing?: number;
   priceTextShadow?: string[];
-  priceAlign?: 'right' | 'left' | 'center' | 'justify';
+  priceTextAlign?: 'right' | 'left' | 'center' | 'justify';
 
   buttonBackground?: string;
   buttonBorderRadius?: number;
@@ -137,7 +137,7 @@ export class MLDraftShop extends MLDraftAnyTextBlock<MLContentType.SHOP> impleme
   buttonFontFamily?: string;
   buttonLetterSpacing?: number;
   buttonTextShadow?: string[];
-  buttonAlign?: 'right' | 'left' | 'center' | 'justify';
+  buttonTextAlign?: 'right' | 'left' | 'center' | 'justify';
 
   constructor(props: IMLDraftShop) {
     super(props);

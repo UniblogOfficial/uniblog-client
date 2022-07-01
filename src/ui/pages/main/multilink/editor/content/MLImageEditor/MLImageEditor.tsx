@@ -10,10 +10,10 @@ import { ImageField } from 'ui/components/modules/imageField/ImageField';
 type TMLImageEditorProps = {
   id: string;
   block: Nullable<IMLDraftImage>;
-  images: Nullable<TMLImageContentImage<TImageFile>>;
+  image: Nullable<TMLImageContentImage<TImageFile>>;
 };
 
-export const MLImageEditor = ({ id, block, images }: TMLImageEditorProps) => {
+export const MLImageEditor = ({ id, block, image }: TMLImageEditorProps) => {
   const dispatch = useAppDispatch();
   const copyBlock = { ...block };
 
@@ -27,10 +27,10 @@ export const MLImageEditor = ({ id, block, images }: TMLImageEditorProps) => {
         }),
       );
     },
-    [dispatch, images],
+    [dispatch, image],
   );
   if (!copyBlock) return <p>Error: Block not found</p>;
-  const fields = copyBlock.image && (
+  const field = image && (
     <div style={{ position: 'relative', height: '150px' }}>
       <ImageField onChange={onDropZoneChange} />
     </div>
@@ -38,7 +38,7 @@ export const MLImageEditor = ({ id, block, images }: TMLImageEditorProps) => {
 
   return (
     <div className="ml-image-editor">
-      <ul>{fields}</ul>
+      {field}
       <Button>Add element</Button>
     </div>
   );

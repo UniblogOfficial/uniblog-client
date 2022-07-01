@@ -3,8 +3,8 @@ import React from 'react';
 import { IMLDraftButton, IMLDraftText } from 'common/types/instance';
 
 type TMLButtonEditorProps = {
-  order: number;
+  id: string;
   block: IMLDraftButton;
 };
 
-export const MLButtonEditor = ({ order, block }: TMLButtonEditorProps) => <div>wolk</div>;
+export const MLButtonEditor = ({ id, block }: TMLButtonEditorProps) => <div>wolk</div>;

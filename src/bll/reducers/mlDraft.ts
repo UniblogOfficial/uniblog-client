@@ -1,6 +1,8 @@
-import { createAsyncThunk, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TMLDraftBlocksUnion } from '../../common/types/instance/mlDraft';
+import { normalizeMLDraft } from '../../common/utils/state/normalizeMLDraft';
+import { nanoid } from '../../common/utils/ui/idGeneration/nanoid';
 
 import { setAppStatus } from '.';
 
@@ -28,6 +30,7 @@ import {
   pushMLDraftBlockLogo,
   pushMLDraftBlockSocial,
   notNull,
+  handleServerNetworkError,
 } from 'common/utils/state';
 import { authAPI, multilinkAPI } from 'dal';
 import { getTemplates } from 'ui/pages/main/multilink/editor/template/templates';
@@ -38,6 +41,7 @@ const initialState: TMLDraftState = {
   maxWidth: 480,
   contentMap: [],
   blocks: {},
+  isTouched: false,
 
   images: {
     background: null,
@@ -68,6 +72,8 @@ const mlDraftSlice = createSlice({
       state,
       action: PayloadAction<{ templates: ReturnType<typeof getTemplates>; index: number }>,
     ) {
+      state.blocks = {};
+      state.isTouched = false;
       const template = action.payload.templates[action.payload.index];
       state.contentMap = template.map((block, i) => {
         const blockId = nanoid();
@@ -76,11 +82,11 @@ const mlDraftSlice = createSlice({
       });
       state.images.background = null;
       state.images.blocks = {
-        /* logoBlocks: template.map((block, i) =>
+        logoBlocks: template.map((block, i) =>
           block.type === MLContentType.LOGO ? { order: i, logo: null } : null,
         ),
         imageBlocks: template.map((block, i) =>
-          block.type === MLContentType.IMAGE ? { order: i, images: [null] } : null,
+          block.type === MLContentType.IMAGE ? { order: i, image: null } : null,
         ),
         imageTextBlocks: template.map((block, i) =>
           block.type === MLContentType.IMAGETEXT ? { order: i, image: null } : null,
@@ -89,14 +95,16 @@ const mlDraftSlice = createSlice({
           block.type === MLContentType.SHOP
             ? { order: i, cells: block.cells.map(() => null) }
             : null,
-        ), */
-        logoBlocks: template.map((block, i) => null),
+        ),
+        /* logoBlocks: template.map((block, i) => null),
         imageBlocks: template.map((block, i) => null),
         imageTextBlocks: template.map((block, i) => null),
-        shopBlocks: template.map((block, i) => null),
+        shopBlocks: template.map((block, i) => null), */
         buttonBlocks: template.map((block, i) => null),
         carouselBlocks: template.map((block, i) => null),
-        linkBlocks: template.map((block, i) => null),
+        linkBlocks: template.map((block, i) =>
+          block.type === MLContentType.LINK ? { order: i, image: null } : null,
+        ),
       };
     },
 
@@ -104,21 +112,26 @@ const mlDraftSlice = createSlice({
 
     setMLDraftBackground(state, action: PayloadAction<string>) {
       state.background = action.payload;
+      state.isTouched = true;
     },
 
     setMLDraftBackgroundImage(state, action: PayloadAction<TImageFile>) {
       state.images = { ...state.images, background: action.payload };
+      state.isTouched = true;
+      //  при отмене выбора картинки в модалке, нужно сделать false?
     },
 
     addMLDraftBlock(state, action: PayloadAction<{ type: MLContentType; id: string }>) {
       pushMLDraftBlock(action.payload.type, state.blocks, action.payload.id);
       state.contentMap = [...state.contentMap, `${action.payload.type}_${action.payload.id}`];
+      state.isTouched = true;
     },
 
     addMLDraftBlockLogo(state, action: PayloadAction<Nullable<TIncomingImage>>) {
       const newBlocks = pushMLDraftBlockLogo(state.blocks, state.contentMap.length, action.payload);
       state.contentMap = [...state.contentMap, MLContentType.LOGO];
       state.blocks = newBlocks;
+      state.isTouched = true;
     },
 
     addMLDraftBlockSocial(
@@ -132,6 +145,7 @@ const mlDraftSlice = createSlice({
       );
       state.contentMap = [...state.contentMap, MLContentType.SOCIAL];
       state.blocks = newBlocks;
+      state.isTouched = true;
     },
 
     setMLDraftBlockContent<T extends TMLDraftBlocksUnion>(
@@ -142,6 +156,8 @@ const mlDraftSlice = createSlice({
       const block = state.blocks[`${type}_${id}`];
       Object.assign(block, content);
       state.blocks = { ...state.blocks };
+      state.isTouched = true;
+      // При отмене сделать false
     },
     setMLDraftBlockContentImage<T>(
       state: TMLDraftState,
@@ -167,6 +183,9 @@ const mlDraftSlice = createSlice({
         ...state.images.blocks[field][order],
         ...imageData,
       };
+      if (action.payload.imageData) {
+        state.isTouched = true;
+      }
     },
     setDragBlock(state, action: PayloadAction<{ destinationIndex: number; sourceIndex: number }>) {
       const { destinationIndex, sourceIndex } = action.payload;
@@ -192,6 +211,7 @@ export const {
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
   setDragBlock,
+  // setMLDraftResetInitialState,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 
@@ -200,43 +220,14 @@ export const mlDraftReducer = mlDraftSlice.reducer;
 export const publishMultilink = createAsyncThunk(
   'mlDraft/publishMultilink',
   async (multilink: TMultilinkDraft, { dispatch, rejectWithValue, getState }) => {
-    /* dispatch(setAppStatus(AppStatus.USERDATA_LOADING));
-    const { name, background, contentMap, blocks, images } = multilink;
-    const multilinkDto: TCreateMLDto = {
-      name,
-      background,
-      maxWidth: 480,
-      contentMap,
-      textBlocks: blocks.textBlocks.filter(notNull),
-      socialBlocks: blocks.socialBlocks.filter(notNull),
-      videoBlocks: blocks.videoBlocks.filter(notNull),
-      audioBlocks: blocks.audioBlocks.filter(notNull),
-      dividerBlocks: blocks.dividerBlocks.filter(notNull),
-      mapBlocks: blocks.mapBlocks.filter(notNull),
-      postBlocks: blocks.postBlocks.filter(notNull),
-      voteBlocks: blocks.voteBlocks.filter(notNull),
-      widgetBlocks: blocks.widgetBlocks.filter(notNull),
-
-      logoBlocks: blocks.logoBlocks.filter(notNull).map(block => ({ ...block, logo: null })),
-      linkBlocks: blocks.linkBlocks.filter(notNull),
-      imageBlocks: blocks.imageBlocks.filter(notNull),
-      imageTextBlocks: blocks.imageTextBlocks.filter(notNull),
-      shopBlocks: blocks.shopBlocks.filter(notNull),
-      carouselBlocks: blocks.carouselBlocks.filter(notNull),
-      buttonBlocks: blocks.buttonBlocks.filter(notNull),
-    };
-    const imagesDto: TCreateMLImagesDto = {
-      background: images.background ?? undefined,
-
-      logoBlocks: images.blocks.logoBlocks.filter(notNull),
-      imageBlocks: images.blocks.imageBlocks.filter(notNull),
-      imageTextBlocks: images.blocks.imageTextBlocks.filter(notNull),
-      shopBlocks: images.blocks.shopBlocks.filter(notNull),
-      buttonBlocks: images.blocks.buttonBlocks.filter(notNull),
-      carouselBlocks: images.blocks.carouselBlocks.filter(notNull),
-      linkBlocks: images.blocks.linkBlocks.filter(notNull),
-    };
-    const response = await multilinkAPI.create(multilinkDto, imagesDto); */
+    try {
+      dispatch(setAppStatus(AppStatus.USERDATA_LOADING));
+      const [multilinkDto, imagesDto] = normalizeMLDraft(multilink);
+      const response = await multilinkAPI.create(multilinkDto, imagesDto);
+      response && dispatch(setAppStatus(AppStatus.SUCCEEDED));
+    } catch (e) {
+      handleServerNetworkError(e, AppStatus.USERDATA_FAILED, dispatch);
+    }
   },
 );
 
@@ -250,6 +241,7 @@ export type TMLDraftState = {
   images: TMLDraftImages;
   // in-app values
   currentStage: MLConstructorStage;
+  isTouched: boolean;
 };
 
 export type TMLDraftActions =

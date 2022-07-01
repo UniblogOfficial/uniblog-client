@@ -59,6 +59,14 @@ export const multilinkAPI = {
       });
     });
 
+    // @ts-ignore
+    /*     for (const pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    }
+    return new Promise(res => {
+      setTimeout(() => res(true), 4000);
+    }); */
+
     return api.post(`multilink`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
