@@ -1,5 +1,6 @@
 import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 
 import { MLBackground } from './background/MLBackground';
@@ -8,7 +9,7 @@ import { MLPreview } from './preview/MLPreview';
 import { MLTemplate } from './template/MLTemplate';
 import { MLTemplates } from './template/MLTemplates';
 
-import { publishMultilink } from 'bll/reducers';
+import { publishMultilink, setDragBlock } from 'bll/reducers';
 import { ID, MLContentType } from 'common/constants';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import {
@@ -26,12 +27,12 @@ import {
   MLDraftVote,
   MLDraftWidget,
   Nullable,
-  TImageFile,
   TMLDraftBlocksUnion,
   TMultilinkDraft,
   TUser,
 } from 'common/types/instance';
-import { Button, Icon } from 'ui/components/elements';
+import { Button } from 'ui/components/elements';
+import { WrapperDrag } from 'ui/components/modules/DragWrapper/DragWrapper';
 import {
   MLButton,
   MLImage,
@@ -110,64 +111,137 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
       const templateBackground = images.background
         ? `url(${images.background.previewUrl})`
         : background;
-      return (
-        <div className={templateClassName} style={{ background: templateBackground }}>
-          {contentMap.map((contentId, i) => {
-            const [type, id] = contentId.split('_') as [MLContentType, string];
-            const block: TMLDraftBlocksUnion = blocks[contentId];
-            let image;
-            const callback = editable ? () => setBlockEditor({ type, id }) : undefined;
-            if (block instanceof MLDraftText) {
-              return <MLText key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftSocial) {
-              return <MLSocial key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftWidget) {
-              return <MLWidget key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftVideo) {
-              return <MLVideo key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftMap) {
-              return <MLMap key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftAudio) {
-              return <>audio block</>;
-            }
-            if (block instanceof MLDraftVote) {
-              return <MLVote key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftLogo) {
-              image = images.blocks[MLContentType.LOGO][i];
-              return <MLLogo key={id} id={id} block={block} images={image} callback={callback} />;
-            }
-            if (block instanceof MLDraftLink) {
-              image = images.blocks[MLContentType.LINK][i];
-              return <MLLink key={id} id={id} block={block} image={image} callback={callback} />;
-            }
 
-            if (block instanceof MLDraftButton) {
-              image = images.blocks[MLContentType.BUTTON][i];
-              return <MLButton key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftImage) {
-              image = images.blocks[MLContentType.IMAGE][i];
-              return <MLImage key={id} id={id} block={block} image={image} callback={callback} />;
-            }
-            if (block instanceof MLDraftImageText) {
-              image = images.blocks[MLContentType.IMAGETEXT][i];
-              return (
-                <MLImageText key={id} id={id} block={block} image={image} callback={callback} />
-              );
-            }
-            if (block instanceof MLDraftShop) {
-              image = images.blocks[MLContentType.SHOP][i];
-              return <MLShop key={id} id={id} block={block} images={image} callback={callback} />;
-            }
-            return <li key={ID[i]} />;
-          })}
-        </div>
+      const onDragEnd = (result: DropResult) => {
+        const { destination, source } = result;
+
+        if (!destination) {
+          return;
+        }
+
+        dispatch(setDragBlock({ destinationIndex: destination.index, sourceIndex: source.index }));
+      };
+
+      return (
+        <DragDropContext enableDefaultSensors onDragEnd={onDragEnd}>
+          <Droppable droppableId="MLList">
+            {(provided, snapshot) => (
+              <div
+                className={`${snapshot.isDraggingOver ? 'dragactive' : ''} ${templateClassName}`}
+                style={{ background: templateBackground }}
+                ref={provided.innerRef}
+                {...provided.droppableProps}>
+                {contentMap.map((contentId, i) => {
+                  const [type, id] = contentId.split('_') as [MLContentType, string];
+                  const block: TMLDraftBlocksUnion = blocks[contentId];
+                  let image;
+                  const callback = editable
+                    ? () =>
+                        setBlockEditor({
+                          type,
+                          id,
+                        })
+                    : undefined;
+                  if (block instanceof MLDraftText) {
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLText id={id} block={block} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftSocial) {
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLSocial id={id} block={block} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftWidget) {
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLWidget id={id} block={block} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftVideo) {
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLVideo id={id} block={block} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftMap) {
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLMap id={id} block={block} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftAudio) {
+                    return <>audio block</>;
+                  }
+                  if (block instanceof MLDraftVote) {
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLVote id={id} block={block} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftLogo) {
+                    image = images.blocks[MLContentType.LOGO][i];
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLLogo id={id} block={block} images={image} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftLink) {
+                    image = images.blocks[MLContentType.LINK][i];
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLLink key={id} id={id} block={block} image={image} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+
+                  if (block instanceof MLDraftButton) {
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLButton id={id} block={block} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftImage) {
+                    image = images.blocks[MLContentType.IMAGE][i];
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLImage id={id} block={block} image={image} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftImageText) {
+                    image = images.blocks[MLContentType.IMAGETEXT][i];
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLImageText id={id} block={block} image={image} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftShop) {
+                    image = images.blocks[MLContentType.SHOP][i];
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLShop id={id} block={block} images={image} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  return <li key={ID[i]} />;
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       );
     },
     [contentMap, blocks, background, images.blocks, images.background],
