@@ -15,6 +15,7 @@ type TCarouselProps = {
   className?: string;
   callback?: (stage: number) => void;
   currentMLTemplate?: number;
+  interval?: number;
 };
 
 export const Carousel: FC<TCarouselProps> = memo(
@@ -29,6 +30,7 @@ export const Carousel: FC<TCarouselProps> = memo(
     dots,
     arrows,
     arrowsIcons,
+    interval,
   }) => {
     const fullWidth = items.length / itemsPerView; // in parts exm 2.5
     const fullSlidesAmount = Math.floor(fullWidth); // exm. 2
@@ -299,6 +301,29 @@ export const Carousel: FC<TCarouselProps> = memo(
       }
       setIsRolling(true);
     }, [callback, currentMLTemplate]);
+
+    useEffect(() => {
+      const slider = () => {
+        if (controlDots) {
+          setIsRolling(true);
+          if (controlDots[Math.ceil(stage + 1)]) {
+            setStage(+controlDots[Math.ceil(stage + 1)].props.value);
+          }
+          if (stage === fullWidth - 1) {
+            setStage(lastStageValue);
+          }
+          if (stage < 0) {
+            setStage(0);
+          }
+        }
+      };
+      // eslint-disable-next-line no-undef
+      let timerId: NodeJS.Timeout;
+      if (interval) {
+        timerId = setTimeout(slider, interval);
+      }
+      return () => clearTimeout(timerId);
+    }, [controlDots]);
 
     return (
       <div className={className}>
