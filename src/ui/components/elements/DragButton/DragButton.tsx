@@ -8,7 +8,6 @@ export const DragButton = (): ReactElement => (
       <div className={style.spinner} />
       <div className={style.spinner} />
       <div className={style.spinner} />
-      <div className={style.spinner} />
     </div>
   </div>
 );
