@@ -23,7 +23,7 @@ export interface IMLDraftVote extends Omit<IMLDraftContent, 'borderRadius'>, IML
   buttonFontFamily?: string;
   buttonLetterSpacing?: number;
   buttonTextShadow?: string[];
-  buttonAlign?: 'right' | 'left' | 'center' | 'justify';
+  buttonTextAlign?: 'right' | 'left' | 'center' | 'justify';
 }
 
 export class MLDraftVote extends MLDraftAnyTextBlock<MLContentType.VOTE> implements IMLDraftVote {
@@ -47,7 +47,7 @@ export class MLDraftVote extends MLDraftAnyTextBlock<MLContentType.VOTE> impleme
   buttonFontFamily?: string;
   buttonLetterSpacing?: number;
   buttonTextShadow?: string[];
-  buttonAlign?: 'right' | 'left' | 'center' | 'justify';
+  buttonTextAlign?: 'right' | 'left' | 'center' | 'justify';
   constructor(props: IMLDraftVote) {
     super(props);
     this.cells = props.cells;

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ID } from 'common/constants';
 import { MLDraftSocial } from 'common/types/instance';
 import { px } from 'common/utils/ui';
 import socials from 'img/socials';
@@ -25,7 +26,7 @@ export const MLSocial = ({ id, block, isPublic, callback }: TMLSocialProps) => {
           const data = [...socials, ...socialServices].find(social => social.type === icon);
           return isPublic ? (
             <li
-              key={icon}
+              key={ID[i]}
               style={{ height: block.size ?? undefined, width: block.size ?? undefined }}>
               <a href={block.links[i]}>
                 <img src={data?.src} alt={data?.title} />
@@ -33,7 +34,7 @@ export const MLSocial = ({ id, block, isPublic, callback }: TMLSocialProps) => {
             </li>
           ) : (
             <li
-              key={icon}
+              key={ID[i]}
               style={{ height: block.size ?? undefined, width: block.size ?? undefined }}>
               <img src={data?.src} alt={data?.title} />
             </li>

@@ -103,9 +103,11 @@ const mlDraftSlice = createSlice({
         shopBlocks: template.map((block, i) => null), */
         buttonBlocks: template.map((block, i) => null),
         carouselBlocks: template.map((block, i) => null),
-        audioBlocks: template.map((block, i) => null),
         linkBlocks: template.map((block, i) =>
           block.type === MLContentType.LINK ? { order: i, image: null } : null,
+        ),
+        audioBlocks: template.map((block, i) =>
+          block.type === MLContentType.AUDIO ? { order: i, image: null } : null,
         ),
       };
     },

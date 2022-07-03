@@ -19,7 +19,7 @@ export type TMLImageContentCarousel<TImage> = {
 };
 export type TMLImageContentAudio<TImage> = {
   order: number;
-  url: Nullable<TImage>;
+  image: Nullable<TImage>;
 };
 
 export type TMLImageContentImageText<TImage> = {

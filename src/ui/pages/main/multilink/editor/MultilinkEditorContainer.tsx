@@ -1,6 +1,9 @@
 import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
+
+import { WrapperDrag } from '../../../../components/modules/DragWrapper/DragWrapper';
 
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
@@ -8,7 +11,7 @@ import { MLPreview } from './preview/MLPreview';
 import { MLTemplate } from './template/MLTemplate';
 import { MLTemplates } from './template/MLTemplates';
 
-import { publishMultilink } from 'bll/reducers';
+import { publishMultilink, setDragBlock } from 'bll/reducers';
 import { ID, MLContentType } from 'common/constants';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import {
@@ -176,9 +179,6 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                       </WrapperDrag>
                     );
                   }
-                  if (block instanceof MLDraftAudio) {
-                    return <>audio block</>;
-                  }
                   if (block instanceof MLDraftVote) {
                     return (
                       <WrapperDrag key={id} id={id} index={i}>
@@ -202,41 +202,15 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                       </WrapperDrag>
                     );
                   }
-        <div className={templateClassName} style={{ background: templateBackground }}>
-          {contentMap.map((contentId, i) => {
-            const [type, id] = contentId.split('_') as [MLContentType, string];
-            const block: TMLDraftBlocksUnion = blocks[contentId];
-            let image;
-            const callback = editable ? () => setBlockEditor({ type, id }) : undefined;
-            if (block instanceof MLDraftText) {
-              return <MLText key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftSocial) {
-              return <MLSocial key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftWidget) {
-              return <MLWidget key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftVideo) {
-              return <MLVideo key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftMap) {
-              return <MLMap key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftAudio) {
-              return <MLAudio key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftVote) {
-              return <MLVote key={id} id={id} block={block} callback={callback} />;
-            }
-            if (block instanceof MLDraftLogo) {
-              image = images.blocks[MLContentType.LOGO][i];
-              return <MLLogo key={id} id={id} block={block} images={image} callback={callback} />;
-            }
-            if (block instanceof MLDraftLink) {
-              image = images.blocks[MLContentType.LINK][i];
-              return <MLLink key={id} id={id} block={block} image={image} callback={callback} />;
-            }
+
+                  if (block instanceof MLDraftAudio) {
+                    const url = images.blocks[MLContentType.AUDIO][i];
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLAudio id={id} block={block} callback={callback} image={url} />;
+                      </WrapperDrag>
+                    );
+                  }
 
                   if (block instanceof MLDraftButton) {
                     return (

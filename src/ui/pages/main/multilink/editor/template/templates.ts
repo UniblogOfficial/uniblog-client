@@ -1,5 +1,6 @@
 import { SocialNetwork, SocialService } from 'common/constants';
 import {
+  MLDraftAudio,
   MLDraftButton,
   MLDraftDivider,
   MLDraftImage,
@@ -1494,7 +1495,8 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
     [
       new MLDraftAudio({
         isFilled: false,
-        url: '',
+        url: 'https://dl6.ru-music.cc/mp3/56188.mp3',
+        margin: [0, 24, 12],
       }),
     ],
   ] as const;

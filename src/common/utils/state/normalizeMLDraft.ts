@@ -57,48 +57,48 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     order: i,
     type: typeId.split('_')[0] as MLContentType,
   }));
-  contentMap.forEach(contentId => {
+  contentMap.forEach((contentId, i) => {
     const block: TMLDraftBlocksUnion = blocks[contentId];
 
     if (block instanceof MLDraftText) {
-      return blocksDto.textBlocks.push({ ...block });
+      return blocksDto.textBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftSocial) {
-      return blocksDto.socialBlocks.push({ ...block });
+      return blocksDto.socialBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftWidget) {
-      return blocksDto.widgetBlocks.push({ ...block });
+      return blocksDto.widgetBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftVideo) {
-      return blocksDto.videoBlocks.push({ ...block });
+      return blocksDto.videoBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftMap) {
-      return blocksDto.mapBlocks.push({ ...block });
+      return blocksDto.mapBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftAudio) {
-      return blocksDto.audioBlocks.push({ ...block });
+      return blocksDto.audioBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftVote) {
-      return blocksDto.voteBlocks.push({ ...block });
+      return blocksDto.voteBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftLogo) {
-      return blocksDto.logoBlocks.push({ ...block, logo: null });
+      return blocksDto.logoBlocks.push({ ...block, logo: null, order: i });
     }
     if (block instanceof MLDraftLink) {
-      return blocksDto.linkBlocks.push({ ...block });
+      return blocksDto.linkBlocks.push({ ...block, order: i });
     }
 
     if (block instanceof MLDraftButton) {
-      return blocksDto.buttonBlocks.push({ ...block });
+      return blocksDto.buttonBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftImage) {
-      return blocksDto.imageBlocks.push({ ...block });
+      return blocksDto.imageBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftImageText) {
-      return blocksDto.imageTextBlocks.push({ ...block });
+      return blocksDto.imageTextBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftShop) {
-      return blocksDto.shopBlocks.push({ ...block });
+      return blocksDto.shopBlocks.push({ ...block, order: i });
     }
   });
   const multilinkDto: TCreateMLDto = {

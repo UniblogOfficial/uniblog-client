@@ -63,7 +63,7 @@ export const MLShop = ({ id, block, images, isPublic, callback }: TMLShopProps) 
               </p>
               <p
                 style={{
-                  textAlign: block.subtitleAlign,
+                  textAlign: block.subtitleTextAlign,
                   fontSize: block.subtitleFontSize ?? undefined,
                   fontWeight: block.subtitleFontWeight ?? undefined,
                   font: block.subtitleFont,

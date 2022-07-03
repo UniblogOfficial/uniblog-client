@@ -27,11 +27,9 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const openEditAvatarModal = () => {
-    console.log('open');
     setIsModalVisible(true);
   };
   const closeEditAvatarModal = () => {
-    console.log(`close`);
     setIsModalVisible(false);
   };
 

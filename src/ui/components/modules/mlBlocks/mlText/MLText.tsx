@@ -10,7 +10,6 @@ type TMLTextProps = {
 };
 
 export const MLText = ({ id, block, callback }: TMLTextProps) => {
-  if (!block) return null;
   const onBlockClick = (e: MouseEvent<HTMLInputElement>) => {
     callback && callback({ type: e.currentTarget.dataset.type, id: e.currentTarget.dataset.id! });
   };
@@ -37,8 +36,8 @@ export const MLText = ({ id, block, callback }: TMLTextProps) => {
       }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <div className="ml-text" style={{ color: block.color }}>
-        {block &&
-          block.text!.split('\n').map((line, i) =>
+        {block.text &&
+          block.text.split('\n').map((line, i) =>
             line ? (
               // eslint-disable-next-line react/no-array-index-key
               <p key={i} style={{ textAlign }}>

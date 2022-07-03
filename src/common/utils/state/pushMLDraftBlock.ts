@@ -171,7 +171,8 @@ const defaultButtonBlockOptions: IMLDraftButton = {
 
 const defaultAudioBlockOptions: IMLDraftAudio = {
   isFilled: false,
-  url: 'https://song.link/i/159457722',
+  url: '',
+  margin: [12, 24],
 };
 
 const defaultImageBlockOptions: IMLDraftImage = {
@@ -242,12 +243,14 @@ const defaultShopBlockOptions: IMLDraftShop = {
   subtitleColor: '#000',
   subtitleFontSize: 14,
   subtitleFontWeight: 700,
-  subtitleAlign: 'center',
+  subtitleTextAlign: 'center',
 };
 
 const defaultWidgetBlockOptions: IMLDraftWidget = {
   isFilled: false,
   url: '',
+  width: 300,
+  height: 300,
 };
 
 const defaultMapBlockOptions: IMLDraftMap = {

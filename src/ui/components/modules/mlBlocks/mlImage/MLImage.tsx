@@ -9,10 +9,11 @@ type TMLImageProps = {
   id: string;
   block: MLDraftImage;
   image: Nullable<TMLImageContentImage<TImageFile>>;
+  isPublic?: boolean;
   callback?: <T>(payload: T) => void;
 };
 
-export const MLImage = ({ id, block, image, callback }: TMLImageProps) => {
+export const MLImage = ({ id, block, image, isPublic, callback }: TMLImageProps) => {
   if (!block) return null;
 
   const className = callback ? 'interactive' : undefined;
@@ -23,9 +24,17 @@ export const MLImage = ({ id, block, image, callback }: TMLImageProps) => {
       style={{ padding: px(block.padding) ?? '0', margin: px(block.padding) ?? '0' }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <div className="ml-images">
-        <div className="ml-images__image">
-          <img src={imgSrc} alt="" />
-        </div>
+        {isPublic && block.href ? (
+          <a href={block.href ?? '#'}>
+            <div className="ml-images__image">
+              <img src={imgSrc} alt="" />
+            </div>
+          </a>
+        ) : (
+          <div className="ml-images__image">
+            <img src={imgSrc} alt="" />
+          </div>
+        )}
       </div>
     </section>
   );

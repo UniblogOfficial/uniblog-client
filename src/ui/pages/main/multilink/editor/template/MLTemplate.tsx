@@ -2,6 +2,8 @@ import React, { CSSProperties, FC, useCallback, useEffect, useMemo, useState } f
 
 import { useTranslation } from 'react-i18next';
 
+import styles from '../../../../../components/elements/carousel/Carousel.module.scss';
+
 import { getTemplates } from './templates';
 
 import { setMLDraftTemplate } from 'bll/reducers';
@@ -37,7 +39,7 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
   const { name, avatar } = userData;
   const [templates, setTemplates] = useState(getTemplates(name, avatar));
   const [dots, setDots] = useState(true);
-  const [arrows, setArrows] = useState(false);
+  const [arrows, setArrows] = useState(true);
 
   const setCurrentTemplate = useCallback(
     (stage: number) => {
@@ -131,6 +133,7 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
         arrowStep={1}
         className="carousel"
         transitionTime={200}
+        interval={2000}
         callback={setCurrentTemplate}
         currentMLTemplate={currentMLTemplate}
       />

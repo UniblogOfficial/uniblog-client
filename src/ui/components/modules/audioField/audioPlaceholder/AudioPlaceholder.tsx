@@ -1,13 +1,6 @@
 import React, { FC } from 'react';
 
-import Dropzone, {
-  Accept,
-  DropEvent,
-  DropzoneInputProps,
-  DropzoneRootProps,
-  FileRejection,
-  useDropzone,
-} from 'react-dropzone';
+import Dropzone, { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 
 import { IconColor } from 'common/constants';
@@ -21,15 +14,7 @@ type TPlaceholderProps = {
 
 export const AudioPlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) => {
   const { t } = useTranslation(['common']);
-  const {
-    getRootProps,
-    getInputProps,
-    acceptedFiles,
-    open,
-    isDragAccept,
-    isFocused,
-    isDragReject,
-  } = useDropzone({
+  const { getRootProps, getInputProps, open, isDragAccept, isFocused, isDragReject } = useDropzone({
     accept: {
       'audio/*': ['.mp3', '.flac', '.aac'],
     },
@@ -37,12 +22,6 @@ export const AudioPlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) =>
     noClick: true,
     noKeyboard: true,
   });
-
-  const lists = acceptedFiles.map(list => (
-    <li key={list.name}>
-      {list.name} - {list.size} bytes
-    </li>
-  ));
 
   return (
     <>

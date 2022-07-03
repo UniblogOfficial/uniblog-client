@@ -53,7 +53,7 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 block = multilink[type].find(el => el.order === i);
                 url = null;
                 if (!block) return null;
-                return <MLAudio key={ID[i]} id="" block={block} url={url} />;
+                return <MLAudio key={ID[i]} id="" block={block} image={url} />;
               case MLContentType.WIDGET:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
@@ -81,7 +81,7 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 block = multilink[type].find(el => el.order === i);
                 image = null;
                 if (!block) return null;
-                return <MLImage key={ID[i]} id="" block={block} image={image} />;
+                return <MLImage key={ID[i]} id="" block={block} image={image} isPublic />;
               case MLContentType.IMAGETEXT:
                 block = multilink[type].find(el => el.order === i);
                 image = null;

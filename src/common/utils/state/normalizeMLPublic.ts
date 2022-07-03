@@ -12,6 +12,7 @@ import {
   IMLDraftVideo,
   MLDraftImage,
   MLDraftImageText,
+  MLDraftLink,
   MLDraftLogo,
   MLDraftShop,
   Nullable,
@@ -22,6 +23,7 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
   const { contentMap, images } = multilink;
 
   const logoBlocks: Array<MLDraftLogo & { order: number }> = [];
+  const linkBlocks: Array<MLDraftLink & { order: number }> = [];
   const imageBlocks: Array<MLDraftImage & { order: number }> = [];
   const imageTextBlocks: Array<MLDraftImageText & { order: number }> = [];
   const shopBlocks: Array<MLDraftShop & { order: number }> = [];
@@ -54,6 +56,15 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
           });
         }
         break;
+      case MLContentType.LINK:
+        block = multilink.linkBlocks.find(b => b.order === i);
+        if (block) {
+          linkBlocks.push({
+            ...block,
+            image: parseRawImage(images.find(image => image.order === i)) ?? null,
+          });
+        }
+        break;
       case MLContentType.IMAGETEXT:
         block = multilink.imageTextBlocks.find(b => b.order === i);
         if (block) {
@@ -70,7 +81,9 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
           .forEach(img => {
             cellImages[img.suborder] = parseRawImage(img);
           });
-        block = multilink.shopBlocks.find(b => b.order === i);
+        block = multilink.shopBlocks.find(b => b.order === i) as MLDraftShop & {
+          order: number;
+        };
         if (block) {
           shopBlocks.push({
             ...block,
@@ -91,6 +104,7 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
     background: background ?? multilink.background,
     contentMap,
     logoBlocks,
+    linkBlocks,
     imageBlocks,
     imageTextBlocks,
     shopBlocks,

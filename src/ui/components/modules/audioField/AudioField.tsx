@@ -1,12 +1,8 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
 import { TAudioFile } from '../../../../common/types/instance/audio';
-import ImagePreview from '../imageField/ImagePreview/ImagePreview';
-import { Modal } from '../modals/Modal';
 
-import { CropperContainerAudio } from './Cropper/Cropper';
-import { AudioPlaceholder } from './ImagePreview/AudioPlaceholder';
-import AudioPreview from './ImagePreview/AudioPreview';
+import { AudioPlaceholder } from './audioPlaceholder/AudioPlaceholder';
 
 import { TImageFile } from 'common/types/instance';
 
@@ -20,15 +16,10 @@ type TDropZoneFieldProps = {
   setCroppedAudio?: (file: TAudioFile[]) => void;
 };
 
-export const AudioField: FC<TDropZoneFieldProps> = ({
-  onChange,
-  // error,
-  id,
-  setCroppedAudio,
-}) => {
+export const AudioField: FC<TDropZoneFieldProps> = ({ onChange, id }) => {
   const [audio, setAudio] = useState<TAudioFile[]>([]);
   const [error, setError] = useState<string>('');
-  const [openedModalCropper, setOpenedModalCropper] = useState(true);
+
   const onDrop = useCallback(
     (file: File[]) => {
       const fileData: TAudioFile = {
@@ -45,9 +36,6 @@ export const AudioField: FC<TDropZoneFieldProps> = ({
     },
     [onChange, id],
   );
-  useEffect(() => {
-    setCroppedAudio && setCroppedAudio(audio);
-  }, [audio, setCroppedAudio]);
   return (
     <>
       <div className="dropbox">

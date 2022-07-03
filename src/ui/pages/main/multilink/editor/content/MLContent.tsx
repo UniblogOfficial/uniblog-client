@@ -215,15 +215,6 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
-      case MLContentType.WIDGET: {
-        if (currentBlock instanceof MLDraftWidget) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-          })(MLWidgetEditor);
-        }
-        break;
-      }
       case MLContentType.MAP: {
         if (currentBlock instanceof MLDraftMap) {
           return withBaseEditor({
@@ -293,15 +284,6 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
-      case MLContentType.SOCIAL: {
-        if (currentBlock instanceof MLDraftSocial) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-          })(null);
-        }
-        break;
-      }
       case MLContentType.WIDGET: {
         if (currentBlock instanceof MLDraftWidget) {
           return withBaseEditor({
@@ -318,16 +300,6 @@ export const MLContent = (props: TMLContentProps) => {
             block: currentBlock,
             images: images.blocks[blockEditorType][order],
           })(MLShopEditor);
-        }
-        break;
-      }
-
-      case MLContentType.MAP: {
-        if (currentBlock instanceof MLDraftMap) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-          })(MLMapEditor);
         }
         break;
       }
