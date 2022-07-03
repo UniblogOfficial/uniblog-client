@@ -4,28 +4,29 @@ import Cropper from 'react-cropper';
 import { useTranslation } from 'react-i18next';
 
 import 'ui/components/modules/imageField/Cropper/Cropper.scss';
-import { TImageFile } from 'common/types/instance';
+import { TAudioFile } from '../../../../../common/types/instance/audio';
+
 import { dataUrlToFile } from 'common/utils/state/dataUrlToFile';
 import { Button } from 'ui/components/elements/button/Button';
 
 type CropperContainerPropsType = {
-  img: string | undefined;
+  audio: string | undefined;
   setCropperMode: (value: boolean) => void;
-  setCroppedImage: (file: TImageFile[]) => void;
-  onChangeImage: (imageFile: TImageFile, id?: number) => void;
+  setCroppedAudio: (file: TAudioFile[]) => void;
+  onChangeAudio: (imageFile: TAudioFile, id?: number) => void;
   id?: number;
   avatarMode?: boolean;
 };
 
-export const CropperContainer: FC<CropperContainerPropsType> = ({
-  img,
+export const CropperContainerAudio: FC<CropperContainerPropsType> = ({
+  audio,
   setCropperMode,
-  setCroppedImage,
-  onChangeImage,
+  setCroppedAudio,
+  onChangeAudio,
   id,
   avatarMode,
 }) => {
-  const [image, setImage] = useState(img);
+  const [audioUrl, setAudioUrl] = useState(audio);
   const [cropper, setCropper] = useState<any>();
   const { t } = useTranslation(['pages', 'common']);
 
@@ -36,23 +37,23 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
   };
 
   const handleUpload = async (url: string) => {
-    const file = await dataUrlToFile(url, 'output.png');
+    const file = await dataUrlToFile(url, 'output.mp3');
     // eslint-disable-next-line no-debugger
     debugger;
-    const fileData: TImageFile = {
+    const fileData: TAudioFile = {
       file,
       name: file.name,
       previewUrl: url,
       size: file.size,
     };
     setCropperMode(false);
-    setCroppedImage([fileData]);
-    onChangeImage(fileData, id);
+    setCroppedAudio([fileData]);
+    onChangeAudio(fileData, id);
   };
 
   const onBackHandler = () => {
     setCropperMode(false);
-    setCroppedImage([]);
+    setCroppedAudio([]);
   };
 
   return (
@@ -65,7 +66,7 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
         initialAspectRatio={1}
         aspectRatio={avatarMode ? 1 : NaN}
         preview=".img-preview"
-        src={image}
+        src={audioUrl}
         viewMode={1}
         minCropBoxHeight={avatarMode ? 200 : 10}
         minCropBoxWidth={avatarMode ? 200 : 10}

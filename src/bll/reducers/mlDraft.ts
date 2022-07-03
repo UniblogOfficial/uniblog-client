@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { TMLDraftBlocksUnion } from '../../common/types/instance/mlDraft';
-import { nanoid } from '../../common/utils/ui/idGeneration/nanoid';
 import { normalizeMLDraft } from '../../common/utils/state/normalizeMLDraft';
+import { nanoid } from '../../common/utils/ui/idGeneration/nanoid';
 
 import { setAppStatus } from '.';
 
@@ -53,6 +53,7 @@ const initialState: TMLDraftState = {
       buttonBlocks: [],
       carouselBlocks: [],
       linkBlocks: [],
+      audioBlocks: [],
     },
   },
 
@@ -103,6 +104,7 @@ const mlDraftSlice = createSlice({
         buttonBlocks: template.map((block, i) => null),
         carouselBlocks: template.map((block, i) => null),
         linkBlocks: template.map((block, i) => null),
+        audioBlocks: template.map((block, i) => null),M
       };
     },
 
@@ -171,6 +173,7 @@ const mlDraftSlice = createSlice({
           | 'carouselBlocks'
           | 'buttonBlocks'
           | 'linkBlocks'
+          | 'audioBlocks'
         >;
       }>,
     ) {
@@ -199,7 +202,6 @@ export const {
   addMLDraftBlockSocial,
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
-  // setMLDraftResetInitialState,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 

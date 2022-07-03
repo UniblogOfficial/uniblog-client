@@ -19,7 +19,7 @@ type TPlaceholderProps = {
   onDrop: (acceptedFiles: File[]) => void;
 };
 
-export const ImagePlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) => {
+export const AudioPlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) => {
   const { t } = useTranslation(['common']);
   const {
     getRootProps,
@@ -31,7 +31,7 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) =>
     isDragReject,
   } = useDropzone({
     accept: {
-      'image/*': ['.png', '.jpeg', '.jpg', '.gif', '.bmp'],
+      'audio/*': ['.mp3', '.flac', '.aac'],
     },
     onDrop,
     noClick: true,
@@ -50,7 +50,7 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) =>
         {() => (
           <>
             {!isFilled && (
-              <Icon name="image" size="reduced" primaryColor="#d4dee8" secondaryColor="#d4dee8" />
+              <Icon name="arrow" size="reduced" primaryColor="#d4dee8" secondaryColor="#d4dee8" />
             )}
             <input {...getInputProps()} />
             <button type="button" className={styles['button']} onClick={open}>

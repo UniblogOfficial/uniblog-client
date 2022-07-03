@@ -14,6 +14,7 @@ import {
   TMLImageContentShop,
   TMLImageContentButton,
   TMLImageContentCarousel,
+  TMLImageContentAudio,
 } from './mlDraft';
 import { IMLDraftImage, MLDraftImage } from './mlImage.class';
 import { IMLDraftImageText, MLDraftImageText } from './mlImageText.class';
@@ -69,6 +70,7 @@ export type TMLDraftImages = {
     shopBlocks: Nullable<TMLImageContentShop<TImageFile>>[];
     buttonBlocks: Nullable<TMLImageContentButton<TImageFile>>[];
     carouselBlocks: Nullable<TMLImageContentCarousel<TImageFile>>[];
+    audioBlocks: Nullable<TMLImageContentAudio<TImageFile>>[];
   };
 };
 

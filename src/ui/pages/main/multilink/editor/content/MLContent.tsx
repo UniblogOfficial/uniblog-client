@@ -1,7 +1,8 @@
-import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
+import React, { MouseEvent, useCallback, useMemo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { MLAudioEditor } from './MLAudioEditor/MLAudioEditor';
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
 import { MLImageEditor } from './MLImageEditor/MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
@@ -16,6 +17,7 @@ import { addMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import {
+  MLDraftAudio,
   MLDraftButton,
   MLDraftImage,
   MLDraftImageText,
@@ -23,7 +25,6 @@ import {
   MLDraftSocial,
   MLDraftWidget,
   Nullable,
-  TImageFile,
   TMLDraftBlocks,
   TMLDraftImages,
 } from 'common/types/instance';
@@ -167,7 +168,10 @@ export const MLContent = (props: TMLContentProps) => {
         </Button>
       </div>
       <div>
-        <Button disabled className="button _full _rounded">
+        <Button
+          value={MLContentType.AUDIO}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
           Add audio block
         </Button>
       </div>
@@ -281,6 +285,15 @@ export const MLContent = (props: TMLContentProps) => {
             id: blockEditorId,
             block: currentBlock,
           })(MLMapEditor);
+        }
+        break;
+      }
+      case MLContentType.AUDIO: {
+        if (currentBlock instanceof MLDraftAudio) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLAudioEditor);
         }
         break;
       }

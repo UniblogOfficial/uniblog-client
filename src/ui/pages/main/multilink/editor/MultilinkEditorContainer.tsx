@@ -43,6 +43,7 @@ import {
   MLText,
   MLVideo,
   MLVote,
+  MLAudio,
 } from 'ui/components/modules/mlBlocks';
 import { MLMap } from 'ui/components/modules/mlBlocks/mlMap/MLMap';
 import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
@@ -133,7 +134,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
               return <MLMap key={id} id={id} block={block} callback={callback} />;
             }
             if (block instanceof MLDraftAudio) {
-              return <>audio block</>;
+              return <MLAudio key={id} id={id} block={block} callback={callback} />;
             }
             if (block instanceof MLDraftVote) {
               return <MLVote key={id} id={id} block={block} callback={callback} />;
