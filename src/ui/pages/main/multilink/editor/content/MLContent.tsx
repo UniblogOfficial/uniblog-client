@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useMemo } from 'react';
+import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -25,6 +25,7 @@ import {
   MLDraftSocial,
   MLDraftWidget,
   Nullable,
+  TImageFile,
   TMLDraftBlocks,
   TMLDraftImages,
 } from 'common/types/instance';
@@ -33,6 +34,7 @@ import {
   MLDraftLogo,
   MLDraftMap,
   MLDraftText,
+  MLDraftVideo,
   TMLDraftBlocksUnion,
 } from 'common/types/instance/mlDraft';
 import { nanoid } from 'common/utils/ui/idGeneration/nanoid';
@@ -195,6 +197,52 @@ export const MLContent = (props: TMLContentProps) => {
     const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`] as TMLDraftBlocksUnion;
     const order = contentMap.findIndex(el => el === `${blockEditorType}_${blockEditorId}`);
     switch (blockEditorType) {
+      case MLContentType.TEXT: {
+        if (currentBlock instanceof MLDraftText) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLTextEditor);
+        }
+        break;
+      }
+      case MLContentType.SOCIAL: {
+        if (currentBlock instanceof MLDraftSocial) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(null);
+        }
+        break;
+      }
+      case MLContentType.WIDGET: {
+        if (currentBlock instanceof MLDraftWidget) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLWidgetEditor);
+        }
+        break;
+      }
+      case MLContentType.MAP: {
+        if (currentBlock instanceof MLDraftMap) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLMapEditor);
+        }
+        break;
+      }
+      case MLContentType.VIDEO: {
+        if (currentBlock instanceof MLDraftVideo) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(null);
+        }
+        break;
+      }
+
       case MLContentType.LOGO: {
         if (currentBlock instanceof MLDraftLogo) {
           return withBaseEditor({
@@ -205,18 +253,12 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
-      case MLContentType.TEXT: {
-        if (currentBlock instanceof MLDraftText) {
+      case MLContentType.IMAGETEXT: {
+        if (currentBlock instanceof MLDraftImageText) {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
-          })(MLTextEditor);
-        }
-        break;
-      }
-      case MLContentType.IMAGETEXT: {
-        if (currentBlock instanceof MLDraftImageText) {
-          return <>Not implemented</>;
+          })(null);
         }
         break;
       }
@@ -225,7 +267,7 @@ export const MLContent = (props: TMLContentProps) => {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
-            images: images.blocks[blockEditorType][order],
+            image: images.blocks[blockEditorType][order],
           })(MLImageEditor);
         }
         break;
@@ -279,6 +321,7 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
+
       case MLContentType.MAP: {
         if (currentBlock instanceof MLDraftMap) {
           return withBaseEditor({

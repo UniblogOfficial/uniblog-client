@@ -83,11 +83,11 @@ const mlDraftSlice = createSlice({
       });
       state.images.background = null;
       state.images.blocks = {
-        /* logoBlocks: template.map((block, i) =>
+        logoBlocks: template.map((block, i) =>
           block.type === MLContentType.LOGO ? { order: i, logo: null } : null,
         ),
         imageBlocks: template.map((block, i) =>
-          block.type === MLContentType.IMAGE ? { order: i, images: [null] } : null,
+          block.type === MLContentType.IMAGE ? { order: i, image: null } : null,
         ),
         imageTextBlocks: template.map((block, i) =>
           block.type === MLContentType.IMAGETEXT ? { order: i, image: null } : null,
@@ -96,15 +96,17 @@ const mlDraftSlice = createSlice({
           block.type === MLContentType.SHOP
             ? { order: i, cells: block.cells.map(() => null) }
             : null,
-        ), */
-        logoBlocks: template.map((block, i) => null),
+        ),
+        /* logoBlocks: template.map((block, i) => null),
         imageBlocks: template.map((block, i) => null),
         imageTextBlocks: template.map((block, i) => null),
-        shopBlocks: template.map((block, i) => null),
+        shopBlocks: template.map((block, i) => null), */
         buttonBlocks: template.map((block, i) => null),
         carouselBlocks: template.map((block, i) => null),
-        linkBlocks: template.map((block, i) => null),
-        audioBlocks: template.map((block, i) => null),M
+        audioBlocks: template.map((block, i) => null),
+        linkBlocks: template.map((block, i) =>
+          block.type === MLContentType.LINK ? { order: i, image: null } : null,
+        ),
       };
     },
 
@@ -188,6 +190,15 @@ const mlDraftSlice = createSlice({
         state.isTouched = true;
       }
     },
+    setDragBlock(state, action: PayloadAction<{ destinationIndex: number; sourceIndex: number }>) {
+      const { destinationIndex, sourceIndex } = action.payload;
+      const newContentMap = state.contentMap;
+      const add = newContentMap[sourceIndex];
+      newContentMap.splice(sourceIndex, 1);
+
+      newContentMap.splice(destinationIndex, 0, add);
+      state.contentMap = newContentMap;
+    },
   },
 });
 
@@ -202,6 +213,8 @@ export const {
   addMLDraftBlockSocial,
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
+  setDragBlock,
+  // setMLDraftResetInitialState,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 
