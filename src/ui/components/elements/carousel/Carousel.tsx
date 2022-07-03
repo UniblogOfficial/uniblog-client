@@ -5,6 +5,7 @@ import React, { memo, FC, ReactElement, useCallback, useEffect, useMemo, useStat
 import { useAppDispatch } from '../../../../common/hooks';
 
 import styles from './Carousel.module.scss';
+import { Dot } from './Dot';
 
 type TCarouselProps = {
   items: Array<ReactElement>;
@@ -65,84 +66,54 @@ export const Carousel: FC<TCarouselProps> = memo(
         if (i === 0) {
           // FIRST VIEW CONTROL DOT
           dotsElements.push(
-            <li key={i} value={i}>
-              <input
-                id={String(i)}
-                type="radio"
-                onChange={onStageChange}
-                value={i}
-                checked={
-                  stage === i ||
-                  (fullWidth >= 2
-                    ? stage === lastStageValue
-                    : stage === lastStageValue || stage === firstStageValue)
-                }
-                className={styles.controls__input}
-              />
-              <label htmlFor={String(i)}>
-                <div className={styles.controls__dot} />
-              </label>
-            </li>,
+            <Dot
+              key={i}
+              value={i}
+              id={i}
+              onStageChange={onStageChange}
+              checked={
+                stage === i ||
+                (fullWidth >= 2
+                  ? stage === lastStageValue
+                  : stage === lastStageValue || stage === firstStageValue)
+              }
+            />,
           );
           continue;
         }
         if (i === (isNoPartialSlide ? fullWidth - 1 : Math.floor(fullWidth)) && i !== 0) {
           // LAST VIEW CONTROL DOT IF EXISTS
           dotsElements.push(
-            <li key={Math.floor(fullWidth)} value={fullWidth - 1}>
-              <input
-                id={String(Math.floor(fullWidth))}
-                type="radio"
-                onChange={onStageChange}
-                value={fullWidth - 1}
-                checked={
-                  stage === fullWidth - 1 ||
-                  stage === (isNoPartialSlide ? firstStageValue : secondStageValue)
-                }
-                className={styles.controls__input}
-              />
-              <label htmlFor={String(Math.floor(fullWidth))}>
-                <div className={styles.controls__dot} />
-              </label>
-            </li>,
+            <Dot
+              key={Math.floor(fullWidth)}
+              value={fullWidth - 1}
+              id={fullWidth}
+              onStageChange={onStageChange}
+              checked={
+                stage === fullWidth - 1 ||
+                stage === (isNoPartialSlide ? firstStageValue : secondStageValue)
+              }
+            />,
           );
           continue;
         }
         if (i === Math.floor(fullWidth) - 1 && i !== 0 && fullWidth > 1) {
           // SECOND-TO-LAST VIEW CONTROL DOT IF EXISTS
           dotsElements.push(
-            <li key={i} value={i}>
-              <input
-                id={String(i)}
-                type="radio"
-                onChange={onStageChange}
-                value={i}
-                checked={stage === i || stage === firstStageValue}
-                className={styles.controls__input}
-              />
-              <label htmlFor={String(i)}>
-                <div className={styles.controls__dot} />
-              </label>
-            </li>,
+            <Dot
+              key={i}
+              value={i}
+              id={i}
+              onStageChange={onStageChange}
+              checked={stage === i || stage === firstStageValue}
+            />,
           );
           continue;
         }
         //
         // REST VIEW CONTROL DOTS IF EXIST
         dotsElements.push(
-          <li key={i} value={i}>
-            <input
-              id={String(i)}
-              type="radio"
-              onChange={onStageChange}
-              value={i}
-              checked={stage === i}
-              className={styles.controls__input}
-            />
-            <label htmlFor={String(i)}>
-              <div className={styles.controls__dot} />
-            </label>
-          </li>,
+          <Dot key={i} value={i} id={i} onStageChange={onStageChange} checked={stage === i} />,
         );
       }
 
