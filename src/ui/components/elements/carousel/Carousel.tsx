@@ -12,12 +12,13 @@ type TCarouselProps = {
   itemsPerView: number;
   arrows?: boolean;
   dots?: boolean;
+  swipe?: boolean;
   arrowsIcons?: Array<ReactElement>;
   arrowStep?: number;
   transitionTime?: number;
   className?: string;
   callback?: (stage: number) => void;
-  currentMLTemplate?: number;
+  currentStage?: number;
   interval?: number;
 };
 
@@ -29,7 +30,7 @@ export const Carousel: FC<TCarouselProps> = memo(
     transitionTime = itemsPerView * 100,
     className,
     callback,
-    currentMLTemplate,
+    currentStage,
     dots,
     arrows,
     arrowsIcons,
@@ -161,19 +162,21 @@ export const Carousel: FC<TCarouselProps> = memo(
       (e: React.MouseEvent<HTMLDivElement>) => {
         if (controlDots && e.currentTarget.dataset.value) {
           setIsRolling(true);
+          const toNextStage = +e.currentTarget.dataset.value === 1;
+          const toPrevStage = +e.currentTarget.dataset.value === -1;
           if (controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)]) {
             setStage(+controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)].props.value);
           }
-          if (+e.currentTarget.dataset.value === -1 && stage === 0) {
+          if (toPrevStage && stage === 0) {
             isNoPartialSlide ? setStage(firstStageValue) : setStage(secondStageValue);
           }
-          if (+e.currentTarget.dataset.value === -1 && stage < 0) {
+          if (toPrevStage && stage < 0) {
             setStage(firstStageValue);
           }
-          if (+e.currentTarget.dataset.value === 1 && stage === fullWidth - 1) {
+          if (toNextStage && stage === fullWidth - 1) {
             setStage(lastStageValue);
           }
-          if (+e.currentTarget.dataset.value === 1 && stage < 0) {
+          if (toNextStage && stage < 0) {
             setStage(0);
           }
         }
@@ -262,18 +265,18 @@ export const Carousel: FC<TCarouselProps> = memo(
     }, [callback, stage, isRolling]);
 
     useEffect(() => {
-      currentMLTemplate && callback && callback(currentMLTemplate);
+      currentStage && callback && callback(currentStage);
       if (
         stage === secondStageValue &&
         controlDots &&
-        currentMLTemplate === +controlDots[secondToLastDotIndex].props.value
+        currentStage === +controlDots[secondToLastDotIndex].props.value
       ) {
         setStage(firstStageValue);
       } else {
-        setStage(currentMLTemplate || 0);
+        setStage(currentStage || 0);
       }
       setIsRolling(true);
-    }, [callback, currentMLTemplate]);
+    }, [callback, currentStage]);
 
     useEffect(() => {
       const slider = () => {
