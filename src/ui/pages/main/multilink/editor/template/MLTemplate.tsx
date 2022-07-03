@@ -135,7 +135,6 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
         arrowStep={1}
         className="carousel"
         transitionTime={200}
-        interval={2000}
         callback={setCurrentTemplate}
         currentMLTemplate={currentMLTemplate}
       />
