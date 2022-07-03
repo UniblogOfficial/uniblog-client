@@ -1,13 +1,6 @@
 import React, { FC } from 'react';
 
-import Dropzone, {
-  Accept,
-  DropEvent,
-  DropzoneInputProps,
-  DropzoneRootProps,
-  FileRejection,
-  useDropzone,
-} from 'react-dropzone';
+import Dropzone, { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 
 import { IconColor } from 'common/constants';
@@ -19,30 +12,16 @@ type TPlaceholderProps = {
   onDrop: (acceptedFiles: File[]) => void;
 };
 
-export const ImagePlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) => {
+export const AudioPlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) => {
   const { t } = useTranslation(['common']);
-  const {
-    getRootProps,
-    getInputProps,
-    acceptedFiles,
-    open,
-    isDragAccept,
-    isFocused,
-    isDragReject,
-  } = useDropzone({
+  const { getRootProps, getInputProps, open, isDragAccept, isFocused, isDragReject } = useDropzone({
     accept: {
-      'image/*': ['.png', '.jpeg', '.jpg', '.gif', '.bmp'],
+      'audio/*': ['.mp3', '.flac', '.aac'],
     },
     onDrop,
     noClick: true,
     noKeyboard: true,
   });
-
-  const lists = acceptedFiles.map(list => (
-    <li key={list.name}>
-      {list.name} - {list.size} bytes
-    </li>
-  ));
 
   return (
     <>
@@ -50,7 +29,7 @@ export const ImagePlaceholder: FC<TPlaceholderProps> = ({ isFilled, onDrop }) =>
         {() => (
           <>
             {!isFilled && (
-              <Icon name="image" size="reduced" primaryColor="#d4dee8" secondaryColor="#d4dee8" />
+              <Icon name="arrow" size="reduced" primaryColor="#d4dee8" secondaryColor="#d4dee8" />
             )}
             <input {...getInputProps()} />
             <button type="button" className={styles['button']} onClick={open}>

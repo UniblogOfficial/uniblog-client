@@ -4,6 +4,7 @@ import { getKeys } from '.';
 
 import { IconColor, MLContentType, SocialNetwork } from 'common/constants';
 import {
+  IMLDraftAudio,
   IMLDraftButton,
   IMLDraftImage,
   IMLDraftImageText,
@@ -14,6 +15,7 @@ import {
   IMLDraftSocial,
   IMLDraftText,
   IMLDraftWidget,
+  MLDraftAudio,
   MLDraftButton,
   MLDraftImage,
   MLDraftImageText,
@@ -56,6 +58,9 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, id
       blocks[`${type}_${id}`] = new MLDraftLink(defaultLinkBlockOptions);
       break;
 
+    case MLContentType.AUDIO:
+      blocks[`${type}_${id}`] = new MLDraftAudio(defaultAudioBlockOptions);
+      break;
     case MLContentType.BUTTON:
       blocks[`${type}_${id}`] = new MLDraftButton(defaultButtonBlockOptions);
       break;
@@ -162,6 +167,12 @@ const defaultButtonBlockOptions: IMLDraftButton = {
   color: 'white',
   borderRadius: [5],
   background: IconColor.INFO,
+};
+
+const defaultAudioBlockOptions: IMLDraftAudio = {
+  isFilled: false,
+  url: '',
+  margin: [12, 24],
 };
 
 const defaultImageBlockOptions: IMLDraftImage = {

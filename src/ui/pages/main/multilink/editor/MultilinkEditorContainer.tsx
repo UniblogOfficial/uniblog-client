@@ -3,6 +3,8 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 
+import { WrapperDrag } from '../../../../components/modules/DragWrapper/DragWrapper';
+
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
@@ -31,8 +33,7 @@ import {
   TMultilinkDraft,
   TUser,
 } from 'common/types/instance';
-import { Button } from 'ui/components/elements';
-import { WrapperDrag } from 'ui/components/modules/DragWrapper/DragWrapper';
+import { Button, Icon } from 'ui/components/elements';
 import {
   MLButton,
   MLImage,
@@ -44,6 +45,7 @@ import {
   MLText,
   MLVideo,
   MLVote,
+  MLAudio,
 } from 'ui/components/modules/mlBlocks';
 import { MLMap } from 'ui/components/modules/mlBlocks/mlMap/MLMap';
 import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
@@ -177,9 +179,6 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                       </WrapperDrag>
                     );
                   }
-                  if (block instanceof MLDraftAudio) {
-                    return <>audio block</>;
-                  }
                   if (block instanceof MLDraftVote) {
                     return (
                       <WrapperDrag key={id} id={id} index={i}>
@@ -200,6 +199,15 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                     return (
                       <WrapperDrag key={id} id={id} index={i}>
                         <MLLink key={id} id={id} block={block} image={image} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+
+                  if (block instanceof MLDraftAudio) {
+                    const url = images.blocks[MLContentType.AUDIO][i];
+                    return (
+                      <WrapperDrag key={id} id={id} index={i}>
+                        <MLAudio id={id} block={block} callback={callback} image={url} />;
                       </WrapperDrag>
                     );
                   }

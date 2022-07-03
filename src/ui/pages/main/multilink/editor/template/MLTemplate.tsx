@@ -14,6 +14,7 @@ import { parseRawImage, px } from 'common/utils/ui';
 import socials from 'img/socials';
 import { Carousel, Icon } from 'ui/components/elements';
 import {
+  MLAudio,
   MLButton,
   MLImage,
   MLImageText,
@@ -64,7 +65,6 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
 
               case MLContentType.SOCIAL:
                 return <MLSocial key={ID[j]} id="" block={block} />;
-
               /* case MLContentType.WIDGET:
                 return block && <MLWidget key={ID[j]} block={block} />;
 
@@ -75,7 +75,7 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
                 return block && <>audio block</>; */
 
               /* case MLContentType.VOTE:
-                return block && <MLVote key={ID[j]} block={block} />; */
+                return block && <MLVote key={ID[j]} block={block} />;я
 
               case MLContentType.LOGO:
                 // variable image is one or set of images of current block
