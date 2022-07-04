@@ -321,7 +321,7 @@ export const MLContent = (props: TMLContentProps) => {
     <>
       {!blockEditorType && actionButtons}
       {blockEditorType && currentEditor}
-      {blockEditorType && blockEditorType !== MLContentType.LINK && (
+      {blockEditorType && (
         <div className="action-buttons">
           <Button
             value={blockEditorType}
