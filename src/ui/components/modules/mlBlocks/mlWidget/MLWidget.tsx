@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styles from './MLWidget.module.scss';
+
 import { MLDraftWidget } from 'common/types/instance';
 import { px } from 'common/utils/ui';
 
@@ -10,7 +12,7 @@ type TMLWidgetProps = {
 };
 
 export const MLWidget = ({ id, block, callback }: TMLWidgetProps) => {
-  const className = callback ? 'ml-widget interactive' : 'ml-widget';
+  const className = callback ? `${styles['block']} interactive` : styles['block'];
 
   return (
     <section className={className} style={{ padding: px(block.padding) ?? '0' }}>
