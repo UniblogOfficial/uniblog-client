@@ -121,9 +121,9 @@
 	background-position: 50% 0 !important;
 	background-size: cover !important;
 	//overflow: hidden;
-	& > div {
+	& div {
 		display: flex;
-		margin-bottom: 24px;
+		//margin-bottom: 24px;
 		word-wrap: break-word;
 		//overflow: hidden;
 		flex-direction: column;
