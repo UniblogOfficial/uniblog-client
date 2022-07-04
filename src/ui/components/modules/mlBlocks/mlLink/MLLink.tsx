@@ -49,7 +49,14 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
       }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       {isPublic ? (
-        <a href={block.href ?? '#'} style={style}>
+        <a
+          href={block.href ?? '#'}
+          style={{
+            ...{
+              position: 'relative',
+            },
+            ...style,
+          }}>
           {imgSrc && <img src={imgSrc} alt="link icon" style={{ marginLeft: '-126px' }} />}
           {block.title}
         </a>
