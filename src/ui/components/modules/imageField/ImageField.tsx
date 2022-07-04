@@ -46,7 +46,6 @@ export const ImageField: FC<TDropZoneFieldProps> = ({
     },
     [onChange, id],
   );
-
   const closeModalCropperContainer = () => {
     setOpenedModalCropper(false);
   };

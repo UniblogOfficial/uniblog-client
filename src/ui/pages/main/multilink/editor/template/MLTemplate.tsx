@@ -14,6 +14,7 @@ import { parseRawImage, px } from 'common/utils/ui';
 import socials from 'img/socials';
 import { Carousel, Icon } from 'ui/components/elements';
 import {
+  MLAudio,
   MLButton,
   MLImage,
   MLImageText,

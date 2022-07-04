@@ -1,3 +1,4 @@
+import { MLAudio } from './mlAudio/MLAudio';
 import { MLButton } from './mlButton/MLButton';
 import { MLImage } from './mlImage/MLImage';
 import { MLImageText } from './mlImageText/MLImageText';
@@ -22,4 +23,5 @@ export {
   MLVote,
   MLButton,
   MLMap,
+  MLAudio,
 };

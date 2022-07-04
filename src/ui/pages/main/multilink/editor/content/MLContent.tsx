@@ -2,6 +2,7 @@ import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { MLAudioEditor } from './MLAudioEditor/MLAudioEditor';
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
 import { MLImageEditor } from './MLImageEditor/MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
@@ -16,6 +17,7 @@ import { addMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import {
+  MLDraftAudio,
   MLDraftButton,
   MLDraftImage,
   MLDraftImageText,
@@ -168,7 +170,10 @@ export const MLContent = (props: TMLContentProps) => {
         </Button>
       </div>
       <div>
-        <Button disabled className="button _full _rounded">
+        <Button
+          value={MLContentType.AUDIO}
+          onClick={onButtonEditorClick}
+          className="button _full _rounded">
           Add audio block
         </Button>
       </div>
@@ -207,15 +212,6 @@ export const MLContent = (props: TMLContentProps) => {
             id: blockEditorId,
             block: currentBlock,
           })(null);
-        }
-        break;
-      }
-      case MLContentType.WIDGET: {
-        if (currentBlock instanceof MLDraftWidget) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-          })(MLWidgetEditor);
         }
         break;
       }
@@ -278,12 +274,22 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
+
       case MLContentType.BUTTON: {
         if (currentBlock instanceof MLDraftButton) {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
           })(MLButtonEditor);
+        }
+        break;
+      }
+      case MLContentType.WIDGET: {
+        if (currentBlock instanceof MLDraftWidget) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLWidgetEditor);
         }
         break;
       }
@@ -297,7 +303,15 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
-
+      case MLContentType.AUDIO: {
+        if (currentBlock instanceof MLDraftAudio) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLAudioEditor);
+        }
+        break;
+      }
       default:
         return <>Not implemented</>;
     }
@@ -307,7 +321,7 @@ export const MLContent = (props: TMLContentProps) => {
     <>
       {!blockEditorType && actionButtons}
       {blockEditorType && currentEditor}
-      {blockEditorType && blockEditorType !== MLContentType.LINK && (
+      {blockEditorType && (
         <div className="action-buttons">
           <Button
             value={blockEditorType}

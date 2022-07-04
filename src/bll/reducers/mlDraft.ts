@@ -53,6 +53,7 @@ const initialState: TMLDraftState = {
       buttonBlocks: [],
       carouselBlocks: [],
       linkBlocks: [],
+      audioBlocks: [],
     },
   },
 
@@ -104,6 +105,9 @@ const mlDraftSlice = createSlice({
         carouselBlocks: template.map((block, i) => null),
         linkBlocks: template.map((block, i) =>
           block.type === MLContentType.LINK ? { order: i, image: null } : null,
+        ),
+        audioBlocks: template.map((block, i) =>
+          block.type === MLContentType.AUDIO ? { order: i, image: null } : null,
         ),
       };
     },
@@ -173,6 +177,7 @@ const mlDraftSlice = createSlice({
           | 'carouselBlocks'
           | 'buttonBlocks'
           | 'linkBlocks'
+          | 'audioBlocks'
         >;
       }>,
     ) {

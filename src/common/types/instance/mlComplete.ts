@@ -20,4 +20,5 @@ export type TMultilinkComplete = {
   logoBlocks: Nullable<IMLDraftLogo>[];
   imageBlocks: Nullable<IMLDraftImage>[];
   imageTextBlocks: Nullable<IMLDraftImageText>[];
+  audioBlocks: Nullable<IMLDraftImageText>[];
 };

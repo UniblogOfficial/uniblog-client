@@ -60,7 +60,8 @@ export const LoginForm = () => {
       <section className="field field-auth">
         <div className="field__input">
           <Input
-            {...register('email', { value: 'awesome@email.yo' })}
+            {...register('email', { value: '' })}
+            /* {...register('email', { value: 'awesome@email.yo' })} */
             onChangeFocus={state => {
               changeFocusHandler('email', state);
             }}
@@ -75,7 +76,8 @@ export const LoginForm = () => {
       <section className="field field-auth">
         <div className="field__input">
           <Input
-            {...register('password', { value: 'qwerty123' })}
+            {...register('password', { value: '' })}
+            /* {...register('password', { value: 'qwerty123' })} */
             type={passwordShown ? 'text' : 'password'}
             name="password"
             placeholder="Пароль"

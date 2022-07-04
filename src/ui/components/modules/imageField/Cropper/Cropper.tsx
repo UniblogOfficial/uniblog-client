@@ -37,6 +37,8 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
 
   const handleUpload = async (url: string) => {
     const file = await dataUrlToFile(url, 'output.png');
+    // eslint-disable-next-line no-debugger
+    debugger;
     const fileData: TImageFile = {
       file,
       name: file.name,
