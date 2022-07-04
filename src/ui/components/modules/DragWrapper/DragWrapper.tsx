@@ -18,7 +18,7 @@ export const WrapperDrag: FC<WrapperDragProps> = ({ id, index, isVisible, childr
   return (
     <Draggable draggableId={id} index={index}>
       {({ draggableProps, innerRef, dragHandleProps }, { isDragging }) => (
-        <div
+        <section
           ref={innerRef}
           {...draggableProps}
           {...dragHandleProps}
@@ -27,7 +27,7 @@ export const WrapperDrag: FC<WrapperDragProps> = ({ id, index, isVisible, childr
             <DragButton />
             {children}
           </div>
-        </div>
+        </section>
       )}
     </Draggable>
   );
