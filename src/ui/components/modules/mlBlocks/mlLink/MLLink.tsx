@@ -24,7 +24,7 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
   const className = callback ? 'ml-link interactive' : 'ml-link';
   const imgSrc = image?.image ? image.image.previewUrl : block.image ?? undefined;
   const style = {
-    padding: imgSrc ? '24px 24px 24px 74px' : px(block.padding) ?? '0',
+    padding: px(block.padding) ?? '0',
     textAlign: block.textAlign,
     fontSize: block.fontSize,
     fontWeight: block.fontWeight,
@@ -49,7 +49,14 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
       }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       {isPublic ? (
-        <a href={block.href ?? '#'} style={style}>
+        <a
+          href={block.href ?? '#'}
+          style={{
+            ...{
+              position: 'relative',
+            },
+            ...style,
+          }}>
           {imgSrc && <img src={imgSrc} alt="link icon" style={{ marginLeft: '-126px' }} />}
           {block.title}
         </a>

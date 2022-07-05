@@ -1,17 +1,20 @@
 .block_handle {
+  cursor: grab;
   position: absolute;
   background: #273444;
   width: 30px;
   height: 80%;
   left: -50px;
-  border-radius: 2px ;
+  border-radius: 5px;
+  * {
+    cursor: grab;
+  }
 }
 
 .dragIcon {
   transition: all 0.3s;
   box-sizing: border-box;
   position: absolute;
-  height: 100%;
   width: 18px;
   top: calc(50% - 12px);
   left: 6px;

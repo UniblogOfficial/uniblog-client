@@ -26,7 +26,7 @@ export const MLTemplates = memo(({ userData, setCurrentMLTemplate }: TMLTemplate
           key={ID[i]}
           className="thumbnail"
           onClick={() => {
-            setCurrentMLTemplate(ID[i] - 1);
+            setCurrentMLTemplate(i);
             // dispatch(setMLDraftResetInitialState());
           }}>
           {template.map((block, j) => {

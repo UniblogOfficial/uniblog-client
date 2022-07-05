@@ -65,36 +65,36 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
 
               case MLContentType.SOCIAL:
                 return <MLSocial key={ID[j]} id="" block={block} />;
-              /* case MLContentType.WIDGET:
-                return block && <MLWidget key={ID[j]} block={block} />;
+
+              case MLContentType.WIDGET:
+                return block && <MLWidget key={ID[j]} id="" block={block} />;
 
               case MLContentType.VIDEO:
-                return <MLVideo key={ID[j]} block={block} />; */
+                return <MLVideo key={ID[j]} id="" block={block} />;
 
               /* case MLContentType.AUDIO:
                 return block && <>audio block</>; */
 
-              /* case MLContentType.VOTE:
-                return block && <MLVote key={ID[j]} block={block} />;я
+              case MLContentType.VOTE:
+                return block && <MLVote key={ID[j]} id="" block={block} />;
 
               case MLContentType.LOGO:
-                // variable image is one or set of images of current block
                 return block && <MLLogo key={ID[j]} id="" block={block} images={null} />;
 
               case MLContentType.LINK:
                 return <MLLink key={ID[j]} id="" block={block} image={null} />;
 
-              /* case MLContentType.BUTTON:
-                return <MLButton key={ID[j]} block={block} />;
+              case MLContentType.BUTTON:
+                return <MLButton key={ID[j]} id="" block={block} />;
 
               case MLContentType.IMAGE:
-                return <MLImages key={ID[j]} block={block} images={null} />; */
+                return <MLImage key={ID[j]} id="" block={block} image={null} />;
 
               case MLContentType.IMAGETEXT:
                 return <MLImageText key={ID[j]} id="" block={block} image={null} />;
 
-              /* case MLContentType.SHOP:
-                return <MLShop key={ID[j]} block={block} images={null} />; */
+              case MLContentType.SHOP:
+                return <MLShop key={ID[j]} id="" block={block} images={null} />;
 
               default:
                 return <li key={ID[j]} />;
@@ -132,9 +132,8 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
         arrowsIcons={carouselArrows}
         arrowStep={1}
         className="carousel"
-        transitionTime={200}
         callback={setCurrentTemplate}
-        currentMLTemplate={currentMLTemplate}
+        currentStage={currentMLTemplate}
       />
     </div>
   );
