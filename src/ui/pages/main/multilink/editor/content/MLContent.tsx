@@ -1,9 +1,12 @@
-import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
+import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { MLCarousel } from '../../../../../components/modules/mlBlocks';
+
 import { MLAudioEditor } from './MLAudioEditor/MLAudioEditor';
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
+import { MLCarouselEditor } from './MLCarouselEditor/MLCarouselEditor';
 import { MLImageEditor } from './MLImageEditor/MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor/MLLogoEditor';
@@ -19,6 +22,7 @@ import { useAppDispatch } from 'common/hooks';
 import {
   MLDraftAudio,
   MLDraftButton,
+  MLDraftCarousel,
   MLDraftImage,
   MLDraftImageText,
   MLDraftShop,
@@ -182,7 +186,10 @@ export const MLContent = (props: TMLContentProps) => {
         </Button>
       </div>
       <div>
-        <Button disabled className="button _full _rounded">
+        <Button
+          className="button _full _rounded"
+          value={MLContentType.CAROUSEL}
+          onClick={onButtonEditorClick}>
           Add image-carousel block
         </Button>
       </div>
@@ -326,6 +333,16 @@ export const MLContent = (props: TMLContentProps) => {
             id: blockEditorId,
             block: currentBlock,
           })(MLAudioEditor);
+        }
+        break;
+      }
+      case MLContentType.CAROUSEL: {
+        if (currentBlock instanceof MLDraftCarousel) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+            image: images.blocks[blockEditorType][order],
+          })(MLCarouselEditor);
         }
         break;
       }

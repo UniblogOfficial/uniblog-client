@@ -32,6 +32,7 @@ export const MLText = ({ id, block, callback }: TMLTextProps) => {
         fontFamily: block.fontFamily,
         font: block.font,
         letterSpacing: block.letterSpacing,
+        borderRadius: px(block.borderRadius),
         textShadow: TextShadow,
       }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}

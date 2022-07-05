@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 
+import { MLCarousel } from '../../components/modules/mlBlocks/mlCarousel/MLCarousel';
+
 import { MLContentType, ID } from 'common/constants';
 import { TMultilink } from 'common/types/instance';
 import {
