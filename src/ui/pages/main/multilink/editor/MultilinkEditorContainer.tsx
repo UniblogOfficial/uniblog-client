@@ -3,6 +3,8 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 
+import { MLCarousel } from '../../../../components/modules/mlBlocks/mlCarousel/MLCarousel';
+
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
@@ -15,6 +17,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks';
 import {
   MLDraftAudio,
   MLDraftButton,
+  MLDraftCarousel,
   MLDraftImage,
   MLDraftImageText,
   MLDraftLink,
@@ -198,6 +201,13 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
                         <MLLink key={id} id={id} block={block} image={image} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
+                  if (block instanceof MLDraftCarousel) {
+                    return (
+                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                        <MLCarousel key={id} id={id} callback={callback} block={block} />
                       </WrapperDrag>
                     );
                   }

@@ -1,11 +1,8 @@
-import { parseRawImage } from '../ui';
-
-import { getKeys } from '.';
-
 import { IconColor, MLContentType, SocialNetwork } from 'common/constants';
 import {
   IMLDraftAudio,
   IMLDraftButton,
+  IMLDraftCarousel,
   IMLDraftImage,
   IMLDraftImageText,
   IMLDraftLink,
@@ -17,6 +14,7 @@ import {
   IMLDraftWidget,
   MLDraftAudio,
   MLDraftButton,
+  MLDraftCarousel,
   MLDraftImage,
   MLDraftImageText,
   MLDraftLink,
@@ -60,6 +58,9 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, id
 
     case MLContentType.AUDIO:
       blocks[`${type}_${id}`] = new MLDraftAudio(defaultAudioBlockOptions);
+      break;
+    case MLContentType.CAROUSEL:
+      blocks[`${type}_${id}`] = new MLDraftCarousel(defaultCarouselBlockOptions);
       break;
     case MLContentType.BUTTON:
       blocks[`${type}_${id}`] = new MLDraftButton(defaultButtonBlockOptions);
@@ -172,6 +173,11 @@ const defaultButtonBlockOptions: IMLDraftButton = {
 const defaultAudioBlockOptions: IMLDraftAudio = {
   isFilled: false,
   url: '',
+  margin: [12, 24],
+};
+const defaultCarouselBlockOptions: IMLDraftCarousel = {
+  isFilled: false,
+  images: [],
   margin: [12, 24],
 };
 
