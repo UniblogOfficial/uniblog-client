@@ -13,7 +13,7 @@ import { MLTextEditor } from './MLTextEditor/MLTextEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
 import { withBaseEditor } from './withBaseEditor';
 
-import { addMLDraftBlock } from 'bll/reducers';
+import { addMLDraftBlock, deleteMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import {
@@ -25,7 +25,6 @@ import {
   MLDraftSocial,
   MLDraftWidget,
   Nullable,
-  TImageFile,
   TMLDraftBlocks,
   TMLDraftImages,
 } from 'common/types/instance';
@@ -39,6 +38,7 @@ import {
 } from 'common/types/instance/mlDraft';
 import { nanoid } from 'common/utils/ui/idGeneration/nanoid';
 import { Button } from 'ui/components/elements';
+import { ModalQuestion } from 'ui/components/modules/modals/ModalQuestion/ModalQuestion';
 
 type TMLContentProps = {
   contentMap: string[];
@@ -62,18 +62,35 @@ export const MLContent = (props: TMLContentProps) => {
   const { contentMap, blocks, images, blockEditorType, blockEditorId, setBlockEditor } = props;
   const { t } = useTranslation(['pages', 'common']);
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const onButtonEditorClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
-      if (e.currentTarget.dataset.value) {
+      if (e.currentTarget.dataset.value === 'ok') {
         setBlockEditor(null);
         return;
       }
+      if (e.currentTarget.dataset.value === 'delete') {
+        setIsOpenModal(true);
+        return;
+      }
+
       const id = nanoid();
       dispatch(addMLDraftBlock({ type: e.currentTarget.value as MLContentType, id }));
       setBlockEditor({ type: e.currentTarget.value as MLContentType, id });
     },
     [dispatch, setBlockEditor],
   );
+
+  const onModalButtonNoClick = useCallback(() => {
+    setIsOpenModal(false);
+  }, [setIsOpenModal]);
+
+  const onModalButtonYesClick = useCallback(() => {
+    setIsOpenModal(false);
+    setBlockEditor(null);
+    dispatch(deleteMLDraftBlock({ id: blockEditorId, type: blockEditorType as MLContentType }));
+  }, [setIsOpenModal, setBlockEditor, dispatch]);
 
   const actionButtons = (
     <>
@@ -321,19 +338,25 @@ export const MLContent = (props: TMLContentProps) => {
     <>
       {!blockEditorType && actionButtons}
       {blockEditorType && currentEditor}
+      <ModalQuestion
+        isOpen={isOpenModal}
+        setTrue={onModalButtonYesClick}
+        setFalse={onModalButtonNoClick}
+        description="Вы дествительно хотите удалить блок?"
+      />
       {blockEditorType && (
         <div className="action-buttons">
           <Button
             value={blockEditorType}
-            data-value="-1"
+            data-value="delete"
             variant="cancel"
             onClick={onButtonEditorClick}
             className="button _rounded">
-            {t('common:buttons.cancel')}
+            Delete
           </Button>
           <Button
             value={blockEditorType}
-            data-value="-1"
+            data-value="ok"
             onClick={onButtonEditorClick}
             className="button _rounded">
             {t('common:buttons.ok')}
