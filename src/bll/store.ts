@@ -23,6 +23,8 @@ import {
   TUserActions,
   TMLDraftActions,
   initializeAppWatcher,
+  requestLoginWatcher,
+  // requestLoginWatcher,
 
   // TLayoutActions,
 } from './reducers';
@@ -41,7 +43,7 @@ export const store = configureStore({
 });
 sagaMiddleware.run(rootWatcher);
 function* rootWatcher() {
-  yield all([initializeAppWatcher()]);
+  yield all([initializeAppWatcher(), requestLoginWatcher()]);
 }
 // types
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TState, unknown, TActions>;
