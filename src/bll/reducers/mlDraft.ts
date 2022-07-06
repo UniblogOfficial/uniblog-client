@@ -1,9 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { TMLDraftBlocksUnion } from '../../common/types/instance/mlDraft';
-import { normalizeMLDraft } from '../../common/utils/state/normalizeMLDraft';
-import { nanoid } from '../../common/utils/ui/idGeneration/nanoid';
-
 import { setAppStatus } from '.';
 
 import {
@@ -22,7 +18,7 @@ import {
   TMultilinkDraft,
   IMLDraftLink,
 } from 'common/types/instance';
-import { MLDraftText } from 'common/types/instance/mlDraft';
+import { TMLDraftBlocksUnion, MLDraftText } from 'common/types/instance/mlDraft';
 import { IMLDraftContent } from 'common/types/instance/mlDraft/abstract/mlBlock.class';
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request/multilink.dto';
 import {
@@ -32,6 +28,8 @@ import {
   notNull,
   handleServerNetworkError,
 } from 'common/utils/state';
+import { normalizeMLDraft } from 'common/utils/state/normalizeMLDraft';
+import { nanoid } from 'common/utils/ui/idGeneration/nanoid';
 import { authAPI, multilinkAPI } from 'dal';
 import { getTemplates } from 'ui/pages/main/multilink/editor/template/templates';
 
@@ -201,6 +199,16 @@ const mlDraftSlice = createSlice({
       newContentMap.splice(destinationIndex, 0, add);
       state.contentMap = newContentMap;
     },
+    deleteMLDraftBlock(state, action: PayloadAction<{ id: string; type: MLContentType }>) {
+      const { id, type } = action.payload;
+      const key = `${type}_${id}`;
+      const newContentMap = state.contentMap;
+      const index = newContentMap.findIndex(content => content === key);
+      newContentMap.splice(index, 1);
+      state.contentMap = newContentMap;
+
+      delete state.blocks[key];
+    },
   },
 });
 
@@ -216,6 +224,7 @@ export const {
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
   setDragBlock,
+  deleteMLDraftBlock,
   // setMLDraftResetInitialState,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;

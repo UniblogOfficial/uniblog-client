@@ -10,6 +10,7 @@ export interface IMLDraftContent {
 export abstract class MLDraftBlock<TBlockType> implements IMLDraftContent {
   abstract type: TBlockType;
   isFilled: boolean;
+  isTouched = false;
   padding?: number[];
   margin?: number[];
   background?: string;

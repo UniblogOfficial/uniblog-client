@@ -95,7 +95,6 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
 
               case MLContentType.SHOP:
                 return <MLShop key={ID[j]} id="" block={block} images={null} />;
-
               default:
                 return <li key={ID[j]} />;
             }

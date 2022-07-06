@@ -1,5 +1,6 @@
 import { MLAudio } from './mlAudio/MLAudio';
 import { MLButton } from './mlButton/MLButton';
+import { MLCarousel } from './mlCarousel/MLCarousel';
 import { MLImage } from './mlImage/MLImage';
 import { MLImageText } from './mlImageText/MLImageText';
 import { MLLink } from './mlLink/MLLink';
@@ -24,4 +25,5 @@ export {
   MLButton,
   MLMap,
   MLAudio,
+  MLCarousel,
 };
