@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { all } from 'redux-saga/effects';
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import {
@@ -20,6 +22,7 @@ import {
   TMultilinkActions,
   TUserActions,
   TMLDraftActions,
+  initializeAppWatcher,
 
   // TLayoutActions,
 } from './reducers';
@@ -31,12 +34,15 @@ const rootReducer = combineReducers({
   mlDraft: mlDraftReducer,
   multilink: multilinkReducer,
 });
-
+const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: [thunkMiddleware],
+  middleware: [thunkMiddleware, sagaMiddleware],
 });
-
+sagaMiddleware.run(rootWatcher);
+function* rootWatcher() {
+  yield all([initializeAppWatcher()]);
+}
 // types
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, TState, unknown, TActions>;
 export type AppThunkDispatch = ThunkDispatch<TState, void, TActions>;

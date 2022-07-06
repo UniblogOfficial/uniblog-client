@@ -9,7 +9,7 @@ import { VerificationContainer } from './pages/auth/verification/VerificationCon
 import { MainContainer } from './pages/main/MainContainer';
 import { PublicMLContainer } from './pages/public/PublicMLContainer';
 
-import { initialize } from 'bll/reducers';
+import { initializeApp } from 'bll/reducers';
 import { selectAppStatus } from 'bll/selectors';
 import { AppStatus } from 'common/constants';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
@@ -28,7 +28,8 @@ export const Routes = (props: any) => {
   const firstEnterUrl = useRef(history.location.pathname);
 
   useEffect(() => {
-    dispatch(initialize(firstEnterUrl.current));
+    // @ts-ignore
+    dispatch(initializeApp(firstEnterUrl.current));
   }, [dispatch, firstEnterUrl]);
 
   if (!isInitialized) {
