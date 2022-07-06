@@ -1580,6 +1580,8 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
       new MLDraftText({
         isFilled: false,
         text: 'ROMA FOBI',
+        font: '700 24px Inter, sans-serif',
+        textAlign: 'center',
         padding: [15, 24],
         borderRadius: [51],
         margin: [0, 21, 15],
