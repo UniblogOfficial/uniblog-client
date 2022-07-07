@@ -30,7 +30,6 @@ export const MLText = ({ id, block, callback }: TMLTextProps) => {
         fontVariant: block.fontVariant,
         lineHeight: block.lineHeight,
         fontFamily: block.fontFamily,
-        font: block.font,
         letterSpacing: block.letterSpacing,
         borderRadius: px(block.borderRadius),
         textShadow: TextShadow,

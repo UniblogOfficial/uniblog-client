@@ -24,7 +24,6 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
   const className = callback ? 'ml-link interactive' : 'ml-link';
   const imgSrc = image?.image ? image.image.previewUrl : block.image ?? undefined;
   const style = {
-    padding: px(block.padding) ?? '0',
     textAlign: block.textAlign,
     fontSize: block.fontSize,
     fontWeight: block.fontWeight,
@@ -32,7 +31,6 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
     fontVariant: block.fontVariant,
     lineHeight: block.lineHeight,
     fontFamily: block.fontFamily,
-    font: block.font,
     color: block.color,
     background: block.background,
     letterSpacing: block.letterSpacing,
@@ -66,9 +64,23 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
             style={{
               position: 'relative',
               overflow: 'hidden',
+              ...style,
             }}>
-            {imgSrc && <img src={imgSrc} alt="link icon" style={{ marginLeft: '-126px' }} />}
-            <div style={style}>{block.title}</div>
+            {imgSrc && (
+              <img
+                src={imgSrc}
+                alt="link icon"
+                style={{
+                  width: 'auto',
+                  maxWidth: '25%',
+                  top: 0,
+                  left: 0,
+                  transform: 'none',
+                  padding: px(block.imageMargin),
+                }}
+              />
+            )}
+            <div style={{ padding: px(block.padding) ?? '0', flex: '1 0 100%' }}>{block.title}</div>
           </div>
         </div>
       )}
