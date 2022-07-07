@@ -2,6 +2,7 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
@@ -10,8 +11,16 @@ import { MLTemplate } from './template/MLTemplate';
 import { MLTemplates } from './template/MLTemplates';
 
 import { publishMultilink, setDragBlock } from 'bll/reducers';
+import {
+  selectMlDraftBackground,
+  selectMlDraftBlocks,
+  selectMlDraftContentMap,
+  selectMlDraftImages,
+  selectMlDraftMaxWidth,
+  selectMlDraftName,
+} from 'bll/selectors/selectMlDraft';
 import { ID, MLContentType } from 'common/constants';
-import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { useAppDispatch } from 'common/hooks';
 import {
   MLDraftAudio,
   MLDraftButton,
@@ -29,7 +38,6 @@ import {
   MLDraftWidget,
   Nullable,
   TMLDraftBlocksUnion,
-  TMultilinkDraft,
   TUser,
 } from 'common/types/instance';
 import {
@@ -80,8 +88,14 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
   const [blockEditorId, setBlockEditorId] = useState(voidOrder);
   const [currentMLTemplate, setCurrentMLTemplate] = useState(0);
-  const { name, background, maxWidth, contentMap, blocks, images } =
-    useAppSelector<TMultilinkDraft>(state => state.mlDraft);
+
+  const name = useSelector(selectMlDraftName);
+  const blocks = useSelector(selectMlDraftBlocks);
+  const images = useSelector(selectMlDraftImages);
+  const maxWidth = useSelector(selectMlDraftMaxWidth);
+  const contentMap = useSelector(selectMlDraftContentMap);
+  const background = useSelector(selectMlDraftBackground);
+
   const stageTitles = useMemo(
     () => [
       t('pages:multilink.creation.stages.template'),
