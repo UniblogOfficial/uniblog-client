@@ -5,36 +5,22 @@ import { imageAPI } from '../../dal/image';
 
 import { setAppStatus } from '.';
 
-import {
-  AppStatus,
-  MLConstructorStage,
-  MLContentType,
-  SocialNetwork,
-  SocialService,
-} from 'common/constants';
+import { AppStatus, MLConstructorStage, MLContentType } from 'common/constants';
 import {
   Nullable,
-  TIncomingImage,
   TImageFile,
+  TIncomingImage,
   TMLDraftBlocks,
   TMLDraftImages,
   TMultilinkDraft,
-  IMLDraftLink,
 } from 'common/types/instance';
-import { TMLDraftBlocksUnion, MLDraftText } from 'common/types/instance/mlDraft';
-import { IMLDraftContent } from 'common/types/instance/mlDraft/abstract/mlBlock.class';
-import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request/multilink.dto';
-import {
-  pushMLDraftBlock,
-  pushMLDraftBlockLogo,
-  pushMLDraftBlockSocial,
-  notNull,
-  handleServerNetworkError,
-  getValues,
-} from 'common/utils/state';
+import { TMLDraftBlocksUnion } from 'common/types/instance/mlDraft';
+import { TMLDraftImagesBlocksUnion } from 'common/types/instance/mlDraft/mlImageContent';
+import { handleServerNetworkError, pushMLDraftBlock, getValues } from 'common/utils/state';
 import { normalizeMLDraft } from 'common/utils/state/normalizeMLDraft';
+import { pushMLDraftImageBlock } from 'common/utils/state/pushMLDraftImagesBlock';
 import { nanoid } from 'common/utils/ui/idGeneration/nanoid';
-import { authAPI, multilinkAPI } from 'dal';
+import { multilinkAPI } from 'dal';
 import { getTemplates } from 'ui/pages/main/multilink/editor/template/templates';
 
 const initialState: TMLDraftState = {
@@ -49,16 +35,7 @@ const initialState: TMLDraftState = {
   images: {
     background: null,
     outerBackground: null,
-    blocks: {
-      logoBlocks: [],
-      imageBlocks: [],
-      imageTextBlocks: [],
-      shopBlocks: [],
-      buttonBlocks: [],
-      carouselBlocks: [],
-      linkBlocks: [],
-      audioBlocks: [],
-    },
+    blocks: {},
   },
 
   // in-app values
@@ -78,42 +55,19 @@ const mlDraftSlice = createSlice({
       action: PayloadAction<{ templates: ReturnType<typeof getTemplates>; index: number }>,
     ) {
       state.blocks = {};
+      state.images.blocks = {};
       state.isTouched = false;
       const template = action.payload.templates[action.payload.index];
+
       state.contentMap = template.map((block, i) => {
         const blockId = nanoid();
         state.blocks[`${block.type}_${blockId}`] = template[i];
+
+        pushMLDraftImageBlock(block.type, state.images.blocks, blockId);
+
         return `${block.type}_${blockId}`;
       });
       state.images.background = null;
-      state.images.blocks = {
-        logoBlocks: template.map((block, i) =>
-          block.type === MLContentType.LOGO ? { order: i, logo: null } : null,
-        ),
-        imageBlocks: template.map((block, i) =>
-          block.type === MLContentType.IMAGE ? { order: i, image: null } : null,
-        ),
-        imageTextBlocks: template.map((block, i) =>
-          block.type === MLContentType.IMAGETEXT ? { order: i, image: null } : null,
-        ),
-        shopBlocks: template.map((block, i) =>
-          block.type === MLContentType.SHOP
-            ? { order: i, cells: block.cells.map(() => null) }
-            : null,
-        ),
-        /* logoBlocks: template.map((block, i) => null),
-        imageBlocks: template.map((block, i) => null),
-        imageTextBlocks: template.map((block, i) => null),
-        shopBlocks: template.map((block, i) => null), */
-        buttonBlocks: template.map((block, i) => null),
-        carouselBlocks: template.map((block, i) => null),
-        linkBlocks: template.map((block, i) =>
-          block.type === MLContentType.LINK ? { order: i, image: null } : null,
-        ),
-        audioBlocks: template.map((block, i) =>
-          block.type === MLContentType.AUDIO ? { order: i, image: null } : null,
-        ),
-      };
     },
 
     setMLDraftLogoFromUserAvatar(state, action: PayloadAction<Nullable<TIncomingImage>>) {},
@@ -134,28 +88,8 @@ const mlDraftSlice = createSlice({
 
     addMLDraftBlock(state, action: PayloadAction<{ type: MLContentType; id: string }>) {
       pushMLDraftBlock(action.payload.type, state.blocks, action.payload.id);
+      pushMLDraftImageBlock(action.payload.type, state.images.blocks, action.payload.id);
       state.contentMap = [...state.contentMap, `${action.payload.type}_${action.payload.id}`];
-      state.isTouched = true;
-    },
-
-    addMLDraftBlockLogo(state, action: PayloadAction<Nullable<TIncomingImage>>) {
-      const newBlocks = pushMLDraftBlockLogo(state.blocks, state.contentMap.length, action.payload);
-      state.contentMap = [...state.contentMap, MLContentType.LOGO];
-      state.blocks = newBlocks;
-      state.isTouched = true;
-    },
-
-    addMLDraftBlockSocial(
-      state,
-      action: PayloadAction<{ socials: { type: SocialNetwork; href: string }[] }>,
-    ) {
-      const newBlocks = pushMLDraftBlockSocial(
-        state.blocks,
-        state.contentMap.length,
-        action.payload.socials,
-      );
-      state.contentMap = [...state.contentMap, MLContentType.SOCIAL];
-      state.blocks = newBlocks;
       state.isTouched = true;
     },
 
@@ -170,10 +104,11 @@ const mlDraftSlice = createSlice({
       state.isTouched = true;
       // При отмене сделать false
     },
-    setMLDraftBlockContentImage<T>(
+
+    setMLDraftBlockContentImage<T extends TMLDraftImagesBlocksUnion>(
       state: TMLDraftState,
       action: PayloadAction<{
-        imageData: T;
+        imageData: Partial<T>;
         id: string;
         field: keyof Pick<
           TMLDraftBlocks,
@@ -189,16 +124,14 @@ const mlDraftSlice = createSlice({
       }>,
     ) {
       const { imageData, id, field } = action.payload;
-      const order = state.contentMap.findIndex(el => el === `${field}_${id}`);
-      // @ts-ignore
-      state.images.blocks[field][order] = {
-        ...state.images.blocks[field][order],
-        ...imageData,
-      };
-      if (action.payload.imageData) {
-        state.isTouched = true;
-      }
+
+      const block = state.images.blocks[`${field}_${id}`];
+      Object.assign(block, imageData);
+      state.images.blocks = { ...state.images.blocks };
+
+      state.isTouched = true;
     },
+
     setDragBlock(state, action: PayloadAction<{ destinationIndex: number; sourceIndex: number }>) {
       const { destinationIndex, sourceIndex } = action.payload;
       const newContentMap = state.contentMap;
@@ -228,13 +161,10 @@ export const {
   setMLDraftBackground,
   setMLDraftBackgroundImage,
   addMLDraftBlock,
-  addMLDraftBlockLogo,
-  addMLDraftBlockSocial,
   setMLDraftBlockContent,
   setMLDraftBlockContentImage,
   setDragBlock,
   deleteMLDraftBlock,
-  // setMLDraftResetInitialState,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 
@@ -317,7 +247,5 @@ export type TMLDraftActions =
   | ReturnType<typeof setMLDraftBackground>
   | ReturnType<typeof setMLDraftBackgroundImage>
   | ReturnType<typeof addMLDraftBlock>
-  | ReturnType<typeof addMLDraftBlockLogo>
-  | ReturnType<typeof addMLDraftBlockSocial>
   | ReturnType<typeof setMLDraftBlockContent>
   | ReturnType<typeof setMLDraftBlockContentImage>;

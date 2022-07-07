@@ -28,6 +28,7 @@ export type {
   TMLImageContentButton,
   TMLImageContentCarousel,
   TMLImageContentLink,
+  TMLImageContentAudio,
   //
   TMultilinkDraft,
   TMLDraftBlocks,

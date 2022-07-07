@@ -1,4 +1,4 @@
-import { MLContentType, SocialNetwork } from 'common/constants';
+import { MLContentType } from 'common/constants';
 import {
   IMLDraftAudio,
   IMLDraftButton,
@@ -17,14 +17,8 @@ import {
   IMLDraftVote,
   IMLDraftWidget,
   TImageFile,
-  TMLImageContentButton,
-  TMLImageContentCarousel,
-  TMLImageContentImage,
-  TMLImageContentImageText,
-  TMLImageContentLink,
-  TMLImageContentLogo,
-  TMLImageContentShop,
 } from 'common/types/instance';
+import { TMLDraftImagesBlocks } from 'common/types/instance/mlDraft/mlImageContent';
 
 export type TCreateMLDto = {
   // exm. "VasyaRaper"
@@ -58,14 +52,7 @@ export type TCreateMLDto = {
 
 export type TCreateMLImagesDto = {
   background?: TImageFile;
-
-  logoBlocks: TMLImageContentLogo<TImageFile>[];
-  imageBlocks: TMLImageContentImage<TImageFile>[];
-  imageTextBlocks: TMLImageContentImageText<TImageFile>[];
-  shopBlocks: TMLImageContentShop<TImageFile>[];
-  carouselBlocks: TMLImageContentCarousel<TImageFile>[];
-  buttonBlocks: TMLImageContentButton<TImageFile>[];
-  linkBlocks: TMLImageContentLink<TImageFile>[];
+  blocks: TMLDraftImagesBlocks;
 };
 
 interface IMLCreateTextDto extends IMLDraftText {

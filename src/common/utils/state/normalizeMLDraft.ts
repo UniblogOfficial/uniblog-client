@@ -1,5 +1,3 @@
-import { notNull } from '.';
-
 import { MLContentType } from 'common/constants';
 import {
   MLDraftAudio,
@@ -19,17 +17,6 @@ import {
   TMultilinkDraft,
 } from 'common/types/instance';
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request';
-import {
-  MLText,
-  MLSocial,
-  MLVideo,
-  MLVote,
-  MLLogo,
-  MLLink,
-  MLButton,
-  MLImage,
-  MLImageText,
-} from 'ui/components/modules/mlBlocks';
 
 export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCreateMLImagesDto] => {
   const { name, background, outerBackground, maxWidth, contentMap, blocks, images } = mlDraft;
@@ -117,13 +104,7 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
   const imagesDto: TCreateMLImagesDto = {
     background: images.background ?? undefined,
 
-    logoBlocks: images.blocks.logoBlocks.filter(notNull),
-    imageBlocks: images.blocks.imageBlocks.filter(notNull),
-    imageTextBlocks: images.blocks.imageTextBlocks.filter(notNull),
-    shopBlocks: images.blocks.shopBlocks.filter(notNull),
-    buttonBlocks: images.blocks.buttonBlocks.filter(notNull),
-    carouselBlocks: images.blocks.carouselBlocks.filter(notNull),
-    linkBlocks: images.blocks.linkBlocks.filter(notNull),
+    blocks: {},
   };
   return [multilinkDto, imagesDto];
 };

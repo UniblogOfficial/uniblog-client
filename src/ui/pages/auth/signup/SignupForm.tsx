@@ -41,6 +41,7 @@ export const SignupForm = () => {
       email: data.email,
       password: data.password,
     };
+    // @ts-ignore
     dispatch(requestRegister(signupData));
   };
   const changeFocusHandler = (name: keyof SignupFormData, focus: boolean) => {
