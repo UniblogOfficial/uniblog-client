@@ -119,6 +119,7 @@ const mlDraftSlice = createSlice({
 
       const block = state.images.blocks[`${field}_${id}`];
       Object.assign(block, imageData);
+      state.images.blocks = { ...state.images.blocks };
 
       state.isTouched = true;
     },
