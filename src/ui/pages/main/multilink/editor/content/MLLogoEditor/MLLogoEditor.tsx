@@ -1,6 +1,7 @@
 import React, { useCallback, MouseEvent } from 'react';
 
-import { setMLDraftBlockContentImage } from 'bll/reducers';
+import { saveImage, setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftLogo, Nullable, TImageFile, TMLImageContentLogo } from 'common/types/instance';
 import { Button } from 'ui/components/elements';
@@ -25,22 +26,12 @@ export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
     (imageFile: TImageFile, _id?: number) => {
       if (_id !== undefined) {
         if (_id === ImageType.LOGO) {
-          dispatch(
-            setMLDraftBlockContentImage({
-              imageData: { logo: imageFile },
-              id,
-              field: 'logoBlocks',
-            }),
-          );
+          imageFile.name = 'logo-0-1';
+          dispatch(saveImage({ imageData: { logo: imageFile }, id, type: MLContentType.LOGO }));
         }
         if (_id === ImageType.BANNER) {
-          dispatch(
-            setMLDraftBlockContentImage({
-              imageData: { banner: imageFile },
-              id,
-              field: 'logoBlocks',
-            }),
-          );
+          imageFile.name = 'logo-0-2';
+          dispatch(saveImage({ imageData: { banner: imageFile }, id, type: MLContentType.LOGO }));
         }
       }
     },

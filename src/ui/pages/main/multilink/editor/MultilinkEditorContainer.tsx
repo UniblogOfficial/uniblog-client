@@ -20,7 +20,7 @@ import {
   selectMlDraftName,
 } from 'bll/selectors/selectMlDraft';
 import { ID, MLContentType } from 'common/constants';
-import { useAppDispatch } from 'common/hooks';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
 import {
   MLDraftAudio,
   MLDraftButton,
@@ -88,7 +88,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
   const [blockEditorId, setBlockEditorId] = useState(voidOrder);
   const [currentMLTemplate, setCurrentMLTemplate] = useState(0);
-
+  const outerBackground = useAppSelector<string>(state => state.mlDraft.outerBackground);
   const name = useSelector(selectMlDraftName);
   const blocks = useSelector(selectMlDraftBlocks);
   const images = useSelector(selectMlDraftImages);
@@ -118,7 +118,17 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
   const sendMultilink = () => {
     if (contentMap) {
-      dispatch(publishMultilink({ name, background, maxWidth, contentMap, blocks, images }));
+      dispatch(
+        publishMultilink({
+          name,
+          background,
+          outerBackground,
+          maxWidth,
+          contentMap,
+          blocks,
+          images,
+        }),
+      );
     }
   };
 

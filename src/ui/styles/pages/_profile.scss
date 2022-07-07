@@ -26,6 +26,7 @@
     position: relative;
     height: 200px;
     width: 200px;
+    margin-bottom: 16px;
     border: 1px solid #EAECEE;
     border-radius: 8px;
     overflow: hidden;
@@ -44,7 +45,6 @@
   }
     // .profile__form
     &__form {
-      padding-top: 16px;
     }
   }
 

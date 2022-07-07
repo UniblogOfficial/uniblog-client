@@ -10,6 +10,8 @@ export interface IMLDraftLink extends IMLDraftContent, IMLTextProperties {
   linkType: Nullable<(SocialNetwork | SocialService) | 'third-party'>;
   title: Nullable<string>;
   image?: Nullable<string>;
+  imageMargin?: number[];
+  mode?: string;
 }
 
 export class MLDraftLink extends MLDraftAnyTextBlock<MLContentType.LINK> implements IMLDraftLink {
@@ -18,11 +20,15 @@ export class MLDraftLink extends MLDraftAnyTextBlock<MLContentType.LINK> impleme
   linkType: Nullable<(SocialNetwork | SocialService) | 'third-party'>;
   title: Nullable<string>;
   image?: Nullable<string>;
+  imageMargin?: number[];
+  mode?: string;
   constructor(props: IMLDraftLink) {
     super(props);
     this.href = props.href;
     this.linkType = props.linkType;
     this.title = props.title;
     this.image = props.image;
+    this.imageMargin = props.imageMargin;
+    this.mode = props.mode;
   }
 }

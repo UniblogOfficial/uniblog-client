@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
-import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
-import { ID } from 'common/constants';
+import { saveImage, setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { ID, MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftImage, Nullable, TImageFile, TMLImageContentImage } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
@@ -19,6 +19,8 @@ export const MLImageEditor = ({ id, block, image }: TMLImageEditorProps) => {
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile) => {
+      imageFile.name = 'image-0-0';
+      dispatch(saveImage({ imageData: { image: imageFile }, id, type: MLContentType.IMAGE }));
       dispatch(
         setMLDraftBlockContentImage({
           imageData: { image: imageFile },

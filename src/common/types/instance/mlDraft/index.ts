@@ -34,6 +34,7 @@ import { TMLDraftImagesBlocks } from 'common/types/instance/mlDraft/mlImageConte
 export type TMultilinkDraft = {
   name: string;
   background: string;
+  outerBackground: string;
   maxWidth: number;
   contentMap: string[];
   blocks: TMLDraftBlocks;
@@ -64,6 +65,7 @@ export type TMLDraftBlocksUnion =
 
 export type TMLDraftImages = {
   background: Nullable<TImageFile>;
+  outerBackground: Nullable<TImageFile>;
   blocks: TMLDraftImagesBlocks;
 };
 

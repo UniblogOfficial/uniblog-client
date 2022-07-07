@@ -21,7 +21,7 @@ export const MLImage = ({ id, block, image, isPublic, callback }: TMLImageProps)
   return (
     <section
       className={className}
-      style={{ padding: px(block.padding) ?? '0', margin: px(block.padding) ?? '0' }}>
+      style={{ padding: px(block.padding) ?? '0', margin: px(block.margin) ?? '0' }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <div className="ml-images">
         {isPublic && block.href ? (
