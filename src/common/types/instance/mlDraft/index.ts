@@ -32,6 +32,7 @@ import { IMLDraftWidget, MLDraftWidget } from './mlWidget.class';
 export type TMultilinkDraft = {
   name: string;
   background: string;
+  outerBackground: string;
   maxWidth: number;
   contentMap: string[];
   blocks: TMLDraftBlocks;
@@ -62,6 +63,7 @@ export type TMLDraftBlocksUnion =
 
 export type TMLDraftImages = {
   background: Nullable<TImageFile>;
+  outerBackground: Nullable<TImageFile>;
   blocks: {
     logoBlocks: Nullable<TMLImageContentLogo<TImageFile>>[];
     linkBlocks: Nullable<TMLImageContentLink<TImageFile>>[];

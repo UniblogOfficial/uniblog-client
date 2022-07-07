@@ -22,9 +22,9 @@ export const multilinkAPI = {
       formData.append(key, JSON.stringify(multilink[key]));
     });
 
-    if (images.background) {
+    /*     if (images.background) {
       formData.append('images', images.background.file, 'backgroundImage');
-    }
+    } */
 
     images.logoBlocks.forEach((block, i) => {
       block.logo && formData.append('images', block.logo.file, `${block.order}_logo_0`);
