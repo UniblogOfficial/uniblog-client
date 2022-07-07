@@ -31,6 +31,14 @@ import {
   TMultilinkDraft,
   TUser,
 } from 'common/types/instance';
+import {
+  MLImageContentAudio,
+  MLImageContentImage,
+  MLImageContentLink,
+  MLImageContentLogo,
+  MLImageContentShop,
+  TMLDraftImagesBlocksUnion,
+} from 'common/types/instance/mlDraft/mlImageContent';
 import { Button } from 'ui/components/elements';
 import { WrapperDrag } from 'ui/components/modules/DragWrapper';
 import {
@@ -64,6 +72,7 @@ const voidOrder = '-1';
 
 export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ userData }) => {
   const dispatch = useAppDispatch();
+
   const { t } = useTranslation(['pages', 'common']);
   const [stage, setStage] = useState<EditorStage>(0);
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
@@ -126,16 +135,16 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
       return (
         <DragDropContext enableDefaultSensors onDragEnd={onDragEnd}>
           <Droppable droppableId="MLList">
-            {(provided, snapshot) => (
+            {provided => (
               <div
-                className={`${snapshot.isDraggingOver ? 'dragactive' : ''} ${templateClassName}`}
+                className={templateClassName}
                 style={{ background: templateBackground }}
                 ref={provided.innerRef}
                 {...provided.droppableProps}>
                 {contentMap.map((contentId, i) => {
                   const [type, id] = contentId.split('_') as [MLContentType, string];
                   const block: TMLDraftBlocksUnion = blocks[contentId];
-                  let image;
+                  const image: TMLDraftImagesBlocksUnion = images.blocks[contentId];
                   const callback = editable
                     ? () =>
                         setBlockEditor({
@@ -185,16 +194,14 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                       </WrapperDrag>
                     );
                   }
-                  if (block instanceof MLDraftLogo) {
-                    image = images.blocks[MLContentType.LOGO][i];
+                  if (block instanceof MLDraftLogo && image instanceof MLImageContentLogo) {
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
                         <MLLogo id={id} block={block} images={image} callback={callback} />
                       </WrapperDrag>
                     );
                   }
-                  if (block instanceof MLDraftLink) {
-                    image = images.blocks[MLContentType.LINK][i];
+                  if (block instanceof MLDraftLink && image instanceof MLImageContentLink) {
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
                         <MLLink key={id} id={id} block={block} image={image} callback={callback} />
@@ -202,11 +209,10 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                     );
                   }
 
-                  if (block instanceof MLDraftAudio) {
-                    const url = images.blocks[MLContentType.AUDIO][i];
+                  if (block instanceof MLDraftAudio && image instanceof MLImageContentAudio) {
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
-                        <MLAudio id={id} block={block} callback={callback} image={url} />;
+                        <MLAudio id={id} block={block} callback={callback} image={image} />;
                       </WrapperDrag>
                     );
                   }
@@ -218,24 +224,21 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                       </WrapperDrag>
                     );
                   }
-                  if (block instanceof MLDraftImage) {
-                    image = images.blocks[MLContentType.IMAGE][i];
+                  if (block instanceof MLDraftImage && image instanceof MLImageContentImage) {
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
                         <MLImage id={id} block={block} image={image} callback={callback} />
                       </WrapperDrag>
                     );
                   }
-                  if (block instanceof MLDraftImageText) {
-                    image = images.blocks[MLContentType.IMAGETEXT][i];
+                  if (block instanceof MLDraftImageText && image instanceof MLImageContentLink) {
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
                         <MLImageText id={id} block={block} image={image} callback={callback} />
                       </WrapperDrag>
                     );
                   }
-                  if (block instanceof MLDraftShop) {
-                    image = images.blocks[MLContentType.SHOP][i];
+                  if (block instanceof MLDraftShop && image instanceof MLImageContentShop) {
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
                         <MLShop id={id} block={block} images={image} callback={callback} />

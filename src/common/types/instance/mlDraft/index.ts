@@ -1,7 +1,7 @@
 import { Nullable } from '..';
 import { TImageFile } from '../image';
 
-import { IMLDraftContent, MLDraftBlock } from './abstract/mlBlock.class';
+import { MLDraftBlock } from './abstract/mlBlock.class';
 import { IMLDraftAudio, MLDraftAudio } from './mlAudio.class';
 import { IMLDraftButton, MLDraftButton } from './mlButton.class';
 import { IMLDraftCarousel, MLDraftCarousel } from './mlCarousel.class';
@@ -28,6 +28,8 @@ import { IMLDraftText, MLDraftText } from './mlText.class';
 import { IMLDraftVideo, MLDraftVideo } from './mlVideo.class';
 import { IMLDraftVote, MLDraftVote } from './mlVote.class';
 import { IMLDraftWidget, MLDraftWidget } from './mlWidget.class';
+
+import { TMLDraftImagesBlocks } from 'common/types/instance/mlDraft/mlImageContent';
 
 export type TMultilinkDraft = {
   name: string;
@@ -62,16 +64,7 @@ export type TMLDraftBlocksUnion =
 
 export type TMLDraftImages = {
   background: Nullable<TImageFile>;
-  blocks: {
-    logoBlocks: Nullable<TMLImageContentLogo<TImageFile>>[];
-    linkBlocks: Nullable<TMLImageContentLink<TImageFile>>[];
-    imageBlocks: Nullable<TMLImageContentImage<TImageFile>>[];
-    imageTextBlocks: Nullable<TMLImageContentImageText<TImageFile>>[];
-    shopBlocks: Nullable<TMLImageContentShop<TImageFile>>[];
-    buttonBlocks: Nullable<TMLImageContentButton<TImageFile>>[];
-    carouselBlocks: Nullable<TMLImageContentCarousel<TImageFile>>[];
-    audioBlocks: Nullable<TMLImageContentAudio<TImageFile>>[];
-  };
+  blocks: TMLDraftImagesBlocks;
 };
 
 export type {
@@ -98,6 +91,7 @@ export type {
   TMLImageContentShop,
   TMLImageContentButton,
   TMLImageContentCarousel,
+  TMLImageContentAudio,
 };
 export {
   MLDraftAudio,

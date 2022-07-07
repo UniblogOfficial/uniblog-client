@@ -1,9 +1,9 @@
-import React, { useCallback, useState, MouseEvent } from 'react';
+import React, { useCallback, MouseEvent } from 'react';
 
-import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { setMLDraftBlockContentImage } from 'bll/reducers';
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftLogo, Nullable, TImageFile, TMLImageContentLogo } from 'common/types/instance';
-import { Button, Input } from 'ui/components/elements';
+import { Button } from 'ui/components/elements';
 import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TMLLogoEditorProps = {
@@ -23,15 +23,25 @@ export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, _id?: number) => {
-      const imageData = {} as any;
       if (_id !== undefined) {
         if (_id === ImageType.LOGO) {
-          imageData.logo = imageFile;
+          dispatch(
+            setMLDraftBlockContentImage({
+              imageData: { logo: imageFile },
+              id,
+              field: 'logoBlocks',
+            }),
+          );
         }
         if (_id === ImageType.BANNER) {
-          imageData.banner = imageFile;
+          dispatch(
+            setMLDraftBlockContentImage({
+              imageData: { banner: imageFile },
+              id,
+              field: 'logoBlocks',
+            }),
+          );
         }
-        dispatch(setMLDraftBlockContentImage({ imageData, id, field: 'logoBlocks' }));
       }
     },
     [dispatch, images],
