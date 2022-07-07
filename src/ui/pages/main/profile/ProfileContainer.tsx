@@ -34,6 +34,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
   };
 
   const onLogoutButtonClick = () => {
+    // @ts-ignore
     dispatch(logout());
   };
 

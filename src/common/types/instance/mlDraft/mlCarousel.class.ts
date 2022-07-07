@@ -10,6 +10,7 @@ export interface IMLDraftCarousel extends Omit<IMLDraftContent, 'borderRadius'> 
   swipe?: boolean;
   arrows?: boolean;
   interval?: number;
+  itemsPerView?: number;
 }
 
 export class MLDraftCarousel

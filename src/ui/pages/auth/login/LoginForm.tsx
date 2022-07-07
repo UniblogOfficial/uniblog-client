@@ -43,6 +43,7 @@ export const LoginForm = () => {
       email: data.email,
       password: data.password,
     };
+    // @ts-ignore
     dispatch(requestLogin(loginData)); // 2
   };
 
