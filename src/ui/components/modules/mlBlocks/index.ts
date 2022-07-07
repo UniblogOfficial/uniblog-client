@@ -11,6 +11,7 @@ import { MLSocial } from './mlSocial/MLSocial';
 import { MLText } from './mlText/MLText';
 import { MLVideo } from './mlVideo/MLVideo';
 import { MLVote } from './mlVote/MLVote';
+import { MLWidget } from './mlWidget/MLWidget';
 
 export {
   MLImage,
@@ -26,4 +27,5 @@ export {
   MLMap,
   MLAudio,
   MLCarousel,
+  MLWidget,
 };

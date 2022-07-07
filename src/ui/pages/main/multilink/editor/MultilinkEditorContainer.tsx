@@ -3,8 +3,6 @@ import React, { useMemo, useState, MouseEvent, useCallback, FC } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 
-import { MLCarousel } from '../../../../components/modules/mlBlocks/mlCarousel/MLCarousel';
-
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
@@ -56,9 +54,10 @@ import {
   MLVideo,
   MLVote,
   MLAudio,
+  MLMap,
+  MLCarousel,
+  MLWidget,
 } from 'ui/components/modules/mlBlocks';
-import { MLMap } from 'ui/components/modules/mlBlocks/mlMap/MLMap';
-import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
 
 type TMultilinkEditorContainerProps = {
   userData: TUser;

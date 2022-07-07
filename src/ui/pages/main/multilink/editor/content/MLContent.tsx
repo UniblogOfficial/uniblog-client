@@ -2,8 +2,6 @@ import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { MLCarousel } from '../../../../../components/modules/mlBlocks';
-
 import { MLAudioEditor } from './MLAudioEditor/MLAudioEditor';
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
 import { MLCarouselEditor } from './MLCarouselEditor/MLCarouselEditor';
@@ -41,6 +39,7 @@ import {
   TMLDraftBlocksUnion,
 } from 'common/types/instance/mlDraft';
 import {
+  MLImageContentCarousel,
   MLImageContentImage,
   MLImageContentLink,
   MLImageContentLogo,
@@ -62,6 +61,7 @@ type TMLContentProps = {
 
 export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
+
   const { blocks, images, blockEditorType, blockEditorId, setBlockEditor } = props;
   const { t } = useTranslation(['pages', 'common']);
 
@@ -351,11 +351,14 @@ export const MLContent = (props: TMLContentProps) => {
         break;
       }
       case MLContentType.CAROUSEL: {
-        if (currentBlock instanceof MLDraftCarousel) {
+        if (
+          currentBlock instanceof MLDraftCarousel &&
+          currentBlockImages instanceof MLImageContentCarousel
+        ) {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
-            image: images.blocks[blockEditorType][order],
+            image: currentBlockImages,
           })(MLCarouselEditor);
         }
         break;
