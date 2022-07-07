@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { MLBackgroundType } from '../../common/constants/index';
+import { imageAPI } from '../../dal/image';
+
 import { setAppStatus } from '.';
 
 import {
@@ -27,6 +30,7 @@ import {
   pushMLDraftBlockSocial,
   notNull,
   handleServerNetworkError,
+  getValues,
 } from 'common/utils/state';
 import { normalizeMLDraft } from 'common/utils/state/normalizeMLDraft';
 import { nanoid } from 'common/utils/ui/idGeneration/nanoid';
@@ -36,6 +40,7 @@ import { getTemplates } from 'ui/pages/main/multilink/editor/template/templates'
 const initialState: TMLDraftState = {
   name: '',
   background: '#fff',
+  outerBackground: '#0000',
   maxWidth: 480,
   contentMap: [],
   blocks: {},
@@ -43,6 +48,7 @@ const initialState: TMLDraftState = {
 
   images: {
     background: null,
+    outerBackground: null,
     blocks: {
       logoBlocks: [],
       imageBlocks: [],
@@ -112,8 +118,11 @@ const mlDraftSlice = createSlice({
 
     setMLDraftLogoFromUserAvatar(state, action: PayloadAction<Nullable<TIncomingImage>>) {},
 
-    setMLDraftBackground(state, action: PayloadAction<string>) {
-      state.background = action.payload;
+    setMLDraftBackground(
+      state,
+      action: PayloadAction<{ background: Partial<Record<MLBackgroundType, string>> }>,
+    ) {
+      Object.assign(state, action.payload.background);
       state.isTouched = true;
     },
 
@@ -245,10 +254,53 @@ export const publishMultilink = createAsyncThunk(
   },
 );
 
+export const saveImage = createAsyncThunk(
+  'mlDraft/saveImage',
+  async (
+    {
+      imageData,
+      id,
+      type,
+    }: {
+      imageData: Record<string, TImageFile>;
+      id: string;
+      type: MLContentType | MLBackgroundType;
+    },
+    { dispatch },
+  ) => {
+    try {
+      dispatch(setAppStatus(AppStatus.DATA_SAVING));
+      const response = await imageAPI.save(getValues(imageData)[0]);
+      if (response) {
+        const [key, value] = Object.entries(imageData)[0];
+        const url = response.data.image.url as string;
+
+        if (Object.values(MLBackgroundType).includes(type as MLBackgroundType)) {
+          dispatch(
+            setMLDraftBackground({
+              background: { [`${type}`]: `url(${url})` } as Record<MLBackgroundType, string>,
+            }),
+          );
+        }
+
+        if (Object.values(MLContentType).includes(type as MLContentType)) {
+          dispatch(setMLDraftBlockContent({ content: imageData, id, type: type as MLContentType }));
+        }
+
+        dispatch(setAppStatus(AppStatus.SUCCEEDED));
+        console.log(response.data);
+      }
+    } catch (e) {
+      handleServerNetworkError(e, AppStatus.DATA_SAVING_FAILED, dispatch);
+    }
+  },
+);
+
 // types
 export type TMLDraftState = {
   name: string;
   background: string;
+  outerBackground: string;
   maxWidth: number;
   contentMap: string[];
   blocks: TMLDraftBlocks;
