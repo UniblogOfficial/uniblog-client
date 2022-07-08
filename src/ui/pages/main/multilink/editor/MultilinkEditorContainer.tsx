@@ -111,7 +111,11 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
         ? `url(${images.background.previewUrl})`
         : background;
       return (
-        <div className={templateClassName} style={{ background: templateBackground }}>
+        <div
+          className={templateClassName}
+          style={{
+            background: templateBackground,
+          }}>
           {contentMap.map((contentId, i) => {
             const [type, id] = contentId.split('_') as [MLContentType, string];
             const block: TMLDraftBlocksUnion = blocks[contentId];
