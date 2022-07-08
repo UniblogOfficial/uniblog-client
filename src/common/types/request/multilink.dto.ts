@@ -25,6 +25,7 @@ export type TCreateMLDto = {
   name: string;
   // exm. "#fff"
   background: string;
+  outerBackground: string;
   maxWidth: number;
 
   contentMap: MLContentType[];
@@ -36,6 +37,7 @@ export type TCreateMLDto = {
   voteBlocks: IMLCreateVoteDto[];
   mapBlocks: IMLCreateMapDto[];
   postBlocks: IMLCreatePostDto[];
+  feedbackBlocks: [];
   dividerBlocks: IMLCreateDividerDto[];
 
   logoBlocks: IMLCreateLogoDto[];
@@ -44,6 +46,7 @@ export type TCreateMLDto = {
   imageTextBlocks: IMLCreateImageTextDto[];
   shopBlocks: IMLCreateShopDto[];
   buttonBlocks: IMLCreateButtonDto[];
+  timerBlocks: [];
   carouselBlocks: IMLCreateCarouselDto[];
 };
 

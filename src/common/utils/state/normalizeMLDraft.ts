@@ -2,6 +2,7 @@ import { MLContentType } from 'common/constants';
 import {
   MLDraftAudio,
   MLDraftButton,
+  MLDraftCarousel,
   MLDraftImage,
   MLDraftImageText,
   MLDraftLink,
@@ -19,8 +20,11 @@ import {
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request';
 
 export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCreateMLImagesDto] => {
-  const { name, background, maxWidth, contentMap, blocks, images } = mlDraft;
-  const blocksDto: Omit<TCreateMLDto, 'name' | 'background' | 'maxWidth' | 'contentMap'> = {
+  const { name, background, outerBackground, maxWidth, contentMap, blocks, images } = mlDraft;
+  const blocksDto: Omit<
+    TCreateMLDto,
+    'name' | 'outerBackground' | 'background' | 'maxWidth' | 'contentMap'
+  > = {
     textBlocks: [],
     socialBlocks: [],
     videoBlocks: [],
@@ -29,6 +33,7 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     mapBlocks: [],
     postBlocks: [],
     voteBlocks: [],
+    feedbackBlocks: [],
     widgetBlocks: [],
 
     logoBlocks: [],
@@ -37,6 +42,7 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     imageTextBlocks: [],
     shopBlocks: [],
     carouselBlocks: [],
+    timerBlocks: [],
     buttonBlocks: [],
   };
   const splittedContentMap = contentMap.map((typeId, i) => ({
@@ -84,6 +90,9 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     if (block instanceof MLDraftImageText) {
       return blocksDto.imageTextBlocks.push({ ...block, order: i });
     }
+    if (block instanceof MLDraftCarousel) {
+      return blocksDto.carouselBlocks.push({ ...block, order: i });
+    }
     if (block instanceof MLDraftShop) {
       return blocksDto.shopBlocks.push({ ...block, order: i });
     }
@@ -91,6 +100,7 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
   const multilinkDto: TCreateMLDto = {
     name,
     background,
+    outerBackground,
     maxWidth,
     contentMap: contentMap.map(typeId => typeId.split('_')[0] as MLContentType),
     ...blocksDto,

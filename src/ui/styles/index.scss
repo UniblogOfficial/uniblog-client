@@ -42,7 +42,7 @@ $c_optional: #5555ff;
 // <NULLIFICATION> =================================================================================================
 @import "null";
 body {
-  font-size: $fontSize;
+  @include stretch-it(font-size, 14, 16);
   font-family: $fontFamily, sans-serif;
   color: $c_primary;
   background-color: $bg_primary;

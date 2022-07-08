@@ -1,12 +1,11 @@
 import React, { FC, useState } from 'react';
 import 'react-h5-audio-player/lib/styles.css';
 
-import { TMLImageContentCarousel } from '../../../../../common/types/instance/mlDraft/mlDraft';
-import { Carousel } from '../../../elements';
-
-import s from './MLCarousel.module.scss';
+import styles from './MLCarousel.module.scss';
 
 import { MLDraftCarousel, Nullable, TImageFile } from 'common/types/instance';
+import { TMLImageContentCarousel } from 'common/types/instance/mlDraft/mlDraft';
+import { Carousel } from 'ui/components/elements';
 
 type TMLCarouselProps = {
   id: string;
@@ -18,14 +17,13 @@ type TMLCarouselProps = {
 export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback }) => {
   const className = callback ? 'interactive' : undefined;
   const audioSrc = image?.images ? image.images : block.images ?? '';
-  console.log(audioSrc);
   if (!block) return null;
   return (
-    <div className={s.cont}>
+    <div className={styles.cont}>
       <Carousel
         /* eslint-disable-next-line react/jsx-key */
         items={audioSrc.map((m, index) => (
-          <div className={s.container} key={index.toString() + m}>
+          <div className={styles.container} key={index.toString() + m}>
             <img src={m as string} alt="#" />
           </div>
         ))}
@@ -33,7 +31,7 @@ export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback })
         dots={block.dots}
         arrows={block.arrows}
         arrowStep={1}
-        className={s.cont}
+        className={styles.cont}
         interval={block.interval}
       />
     </div>

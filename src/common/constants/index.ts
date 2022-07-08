@@ -54,6 +54,11 @@ export enum MLContentType {
   DIVIDER = 'dividerBlocks',
 }
 
+export enum MLBackgroundType {
+  INNER = 'background',
+  OUTER = 'outerBackground',
+}
+
 export enum MLConstructorStage {
   TEMPLATE = 0,
   BACKGROUND = 1,

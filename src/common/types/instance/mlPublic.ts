@@ -46,7 +46,7 @@ export type TMultilink = {
   logoBlocks: Array<MLDraftLogo & { order: number }>;
   imageBlocks: Array<MLDraftImage & { order: number }>;
   imageTextBlocks: Array<MLDraftImageText & { order: number }>;
-  carouselBlocks: MLDraftCarousel[];
+  carouselBlocks: Array<MLDraftCarousel & { order: number }>;
   shopBlocks: Array<MLDraftShop & { order: number }>;
   buttonBlocks: Array<MLDraftButton & { order: number }>;
 

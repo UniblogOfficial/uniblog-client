@@ -46,10 +46,10 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
   }, [dispatch, imageFiles]);
 
   const onImageZoneChange = useCallback((imageFile: TImageFile, id?: number) => {
-    if (imageFile.size <= 1024 * 1024) {
+    if (imageFile.size <= 1024 * 1024 * 5) {
       console.log('Файл подходит');
       setImageFiles([imageFile]);
-    } else console.log('Файл больше 1 мб');
+    } else console.log('Файл больше 5 мб');
   }, []);
   const avatarSrc = avatar
     ? `data:${avatar.imageType};base64, ${Buffer.from(avatar.imageData!).toString('base64')}`
@@ -90,16 +90,19 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
                     setCroppedImage={setCroppedImage}
                   />
                 </div>
-                <div className="paper__button-container">
+                <div className="paper__button-container action-buttons">
                   <Button
                     value="1"
-                    className="button button__right"
+                    className="button _rounded _shadowed"
+                    onClick={closeEditAvatarModal}>
+                    {t('common:buttons.back')}
+                  </Button>
+                  <Button
+                    value="1"
+                    className="button _rounded _shadowed"
                     onClick={saveAvatar}
                     disabled={!croppedImage.length}>
                     {t('common:buttons.save')}
-                  </Button>
-                  <Button value="1" className="button button__left" onClick={closeEditAvatarModal}>
-                    {t('common:buttons.back')}
                   </Button>
                 </div>
               </div>

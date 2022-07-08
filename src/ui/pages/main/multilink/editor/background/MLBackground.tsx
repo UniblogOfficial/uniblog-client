@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './MLBackground.module.scss';
 
-import { setMLDraftBackground, setMLDraftBackgroundImage } from 'bll/reducers';
-import { ID } from 'common/constants';
+import { saveImage, setMLDraftBackground, setMLDraftBackgroundImage } from 'bll/reducers';
+import { ID, MLBackgroundType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { TImageFile } from 'common/types/instance';
 import { Button } from 'ui/components/elements';
@@ -21,18 +21,26 @@ export const MLBackground = () => {
   const [imageFiles, setImageFiles] = useState<Array<TImageFile>>([]);
 
   const onBackgroundColorChange = (backgroundColor: string) => {
-    dispatch(setMLDraftBackground(backgroundColor));
+    dispatch(setMLDraftBackground({ background: { [MLBackgroundType.INNER]: backgroundColor } }));
   };
 
   const onSnippetClick = useCallback(
     (e: MouseEvent<HTMLInputElement>) => {
-      dispatch(setMLDraftBackground(e.currentTarget.style.background));
+      dispatch(
+        setMLDraftBackground({
+          background: { [MLBackgroundType.INNER]: e.currentTarget.style.background },
+        }),
+      );
     },
     [dispatch],
   );
 
   const onImageZoneChange = useCallback(
     (imageFile: TImageFile, id?: number) => {
+      imageFile.name = 'background-9999-0';
+      dispatch(
+        saveImage({ imageData: { background: imageFile }, id: '', type: MLBackgroundType.INNER }),
+      );
       dispatch(setMLDraftBackgroundImage(imageFile));
       setImageFiles([imageFile]);
     },

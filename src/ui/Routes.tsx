@@ -19,7 +19,7 @@ export const Routes = (props: any) => {
   const dispatch = useAppDispatch();
 
   const status = useAppSelector(selectAppStatus);
-  const loadingStatus = status === AppStatus.USERDATA_LOADING || status === AppStatus.AUTH_LOADING;
+  const nonBlockingLoading = status === AppStatus.DATA_SAVING;
 
   const { isInitialized, isMultilinkMode } = useAppSelector(state => state.app);
 
@@ -33,7 +33,7 @@ export const Routes = (props: any) => {
   }, [dispatch, firstEnterUrl]);
 
   if (!isInitialized) {
-    return <Preloader />;
+    return <Preloader className="app-preloader" />;
   }
 
   if (isMultilinkMode && isInitialized) {
@@ -42,11 +42,19 @@ export const Routes = (props: any) => {
 
   return (
     <>
-      {/* {loadingStatus && (
-        <div className="loader">
-          <Preloader />
+      {nonBlockingLoading && (
+        <div className="non-blocking-loader">
+          <div className="non-blocking-loader__title">
+            Saving
+            <div className="flashingDots">
+              <span>.</span>
+            </div>
+          </div>
+          <div className="non-blocking-loader__loader">
+            <Preloader />
+          </div>
         </div>
-      )} */}
+      )}
       <Switch>
         <Route path="/login" render={() => <LoginContainer />} />
         <Route path="/signup" render={() => <SignupContainer />} />
