@@ -13,8 +13,9 @@ type TDefaultSelectProps = DetailedHTMLProps<
   SelectHTMLAttributes<HTMLSelectElement>,
   HTMLSelectElement
 >;
+
 type TSelectProps<T> = TDefaultSelectProps & {
-  options?: Array<T>;
+  options?: string[];
   titles?: Array<string>;
   onChangeOption?: (option: T) => void;
 };
@@ -34,7 +35,13 @@ export const Select = <TValue extends string>({
     onChangeOption && onChangeOption(e.currentTarget.value as TValue);
   };
 
-  const mappedOptions = options ? options.map((o, i) => <option key={ID[i]}>{o}</option>) : [];
+  const mappedOptions = options
+    ? options.map((o, i) => (
+        <option key={ID[i]} style={{ fontFamily: `${o}` }}>
+          {o}
+        </option>
+      ))
+    : [];
 
   return (
     <div>
