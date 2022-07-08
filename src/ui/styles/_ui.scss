@@ -263,11 +263,9 @@ h4 {
 
 }
 
-.loader {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 100;
+.app-preloader {
+  @include stretch-it(width, 50, 80);
+  @include stretch-it(height, 50, 80);
 }
 
 .circle {
@@ -299,4 +297,65 @@ h4 {
   margin: 10px 0 10px 0;
   justify-content: space-around;
   text-transform: capitalize;
+}
+
+.non-blocking-loader {
+  @include stretch-it(height, 30, 50);
+  position: fixed;
+  display: flex;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(to left, #00000011, #4d4d4d 90%, #4d4d4d);
+  border-radius: 10px 0 0 10px;
+  z-index: 1000;
+  &__title {
+    position: relative;
+    margin: auto 20px auto 0;
+    padding-left: 10px;
+    color: #fff;
+    .flashingDots {
+      position: absolute;
+      bottom: 0;
+      left: 100%;
+      span {
+          font-weight: bold;
+          animation: dotsFlashing 2s infinite step-end;
+      }
+      span::before,
+      span::after {
+          content: "";
+      }
+      span::before {
+          animation: dotFlashing 2s infinite step-end;
+      }
+      span::after {
+          animation: dotFlashing 2s infinite step-end;
+          animation-delay: 0.5s;
+      }
+  }
+  }
+  &__loader {
+    @include stretch-it(width, 30, 50);
+    position: relative;
+  }
+}
+
+@keyframes dotsFlashing {
+  0% {
+      visibility: hidden;
+  }
+  25%,
+  100% {
+      visibility: visible;
+  }
+}
+
+@keyframes dotFlashing {
+  0% {
+      content: "";
+  }
+  50%,
+  100% {
+      content: ".";
+  }
 }
