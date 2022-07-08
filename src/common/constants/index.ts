@@ -52,6 +52,7 @@ export enum MLContentType {
   VOTE = 'voteBlocks',
   MAP = 'mapBlocks',
   DIVIDER = 'dividerBlocks',
+  TIMER = 'timerBlocks',
 }
 
 export enum MLBackgroundType {

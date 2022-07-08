@@ -11,6 +11,7 @@ import { MLLogoEditor } from './MLLogoEditor/MLLogoEditor';
 import { MLMapEditor } from './MLMapEditor';
 import { MLShopEditor } from './MLShopEditor/MLShopEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
+import { MlTimerEditor } from './MLTimerEditor/MLTimerEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
 import { withBaseEditor } from './withBaseEditor';
 
@@ -25,6 +26,7 @@ import {
   MLDraftImageText,
   MLDraftShop,
   MLDraftSocial,
+  MLDraftTimer,
   MLDraftWidget,
   Nullable,
   TMLDraftBlocks,
@@ -81,6 +83,7 @@ const ML_CONTENT_BUTTONS: TMLContentButton[] = [
   { name: 'Add image-carousel block', type: MLContentType.CAROUSEL, isDisabled: false },
   { name: 'Add audio block', type: MLContentType.AUDIO, isDisabled: false },
   { name: 'Add video block', type: MLContentType.VIDEO, isDisabled: true },
+  { name: 'Add timer block', type: MLContentType.TIMER, isDisabled: false },
   { name: 'Add shop block', type: MLContentType.SHOP, isDisabled: false },
 ];
 
@@ -275,6 +278,15 @@ export const MLContent = (props: TMLContentProps) => {
             block: currentBlock,
             image: currentBlockImages,
           })(MLCarouselEditor);
+        }
+        break;
+      }
+      case MLContentType.TIMER: {
+        if (currentBlock instanceof MLDraftTimer) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MlTimerEditor);
         }
         break;
       }
