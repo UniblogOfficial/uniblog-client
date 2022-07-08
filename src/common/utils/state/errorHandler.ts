@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { put } from 'redux-saga/effects';
 
 import { setAppStatus, setError, TAppActions } from 'bll/reducers';
 import { AppStatus } from 'common/constants';
@@ -22,3 +23,13 @@ export const handleServerNetworkError = (
 };
 
 type ErrorUtilsDispatchType = Dispatch<TAppActions>;
+
+export function* handleServerNetworkErrorSaga(e: any, status: AppStatus) {
+  const error = e.response ? e.response.data.error : e.message;
+  yield put(setError(error));
+  yield put(setAppStatus(status));
+  console.log('Error: ', e.message);
+  if (status === AppStatus.AUTH_FAILED || status === AppStatus.USERDATA_FAILED) {
+    setTimeout(() => put(setAppStatus(AppStatus.IDLE)), ERROR_RESET_TIMEOUT);
+  }
+}

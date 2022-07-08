@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react';
+
 import { isDefined } from '../state';
 
 import { Nullable } from 'common/types/instance';
@@ -33,3 +35,21 @@ export const px = (value?: Nullable<number | number[]>, divider?: number) => {
   // if is plain number
   return value ? `${divider ? value / divider : value}px` : '0';
 };
+
+const regExp = new RegExp(/\(([^)]+)\)/);
+const getTranslateY = (transform: string | undefined) => {
+  if (transform) {
+    const coordinates = regExp.exec(transform);
+
+    if (coordinates) {
+      return coordinates[1].split(', ')[1];
+    }
+  }
+  return '0';
+};
+
+export const getStyle = (isDragging: boolean, style: CSSProperties | undefined) => ({
+  ...style,
+  boxShadow: isDragging ? '0 0 20px black' : '',
+  transform: `translate(0, ${getTranslateY(style?.transform)})`,
+});

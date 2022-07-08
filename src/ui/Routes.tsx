@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
 import { AdminContainer } from './pages/admin/AdminContainer';
@@ -9,17 +10,17 @@ import { VerificationContainer } from './pages/auth/verification/VerificationCon
 import { MainContainer } from './pages/main/MainContainer';
 import { PublicMLContainer } from './pages/public/PublicMLContainer';
 
-import { initialize } from 'bll/reducers';
+import { initializeApp } from 'bll/reducers';
 import { selectAppStatus } from 'bll/selectors';
 import { AppStatus } from 'common/constants';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { Preloader } from 'ui/components/elements';
 
 export const Routes = (props: any) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const status = useAppSelector(selectAppStatus);
-  const loadingStatus = status === AppStatus.USERDATA_LOADING || status === AppStatus.AUTH_LOADING;
+  const nonBlockingLoading = status === AppStatus.DATA_SAVING;
 
   const { isInitialized, isMultilinkMode } = useAppSelector(state => state.app);
 
@@ -28,11 +29,11 @@ export const Routes = (props: any) => {
   const firstEnterUrl = useRef(history.location.pathname);
 
   useEffect(() => {
-    dispatch(initialize(firstEnterUrl.current));
+    dispatch(initializeApp(firstEnterUrl.current));
   }, [dispatch, firstEnterUrl]);
 
   if (!isInitialized) {
-    return <Preloader />;
+    return <Preloader className="app-preloader" />;
   }
 
   if (isMultilinkMode && isInitialized) {
@@ -41,11 +42,19 @@ export const Routes = (props: any) => {
 
   return (
     <>
-      {/* {loadingStatus && (
-        <div className="loader">
-          <Preloader />
+      {nonBlockingLoading && (
+        <div className="non-blocking-loader">
+          <div className="non-blocking-loader__title">
+            Saving
+            <div className="flashingDots">
+              <span>.</span>
+            </div>
+          </div>
+          <div className="non-blocking-loader__loader">
+            <Preloader />
+          </div>
         </div>
-      )} */}
+      )}
       <Switch>
         <Route path="/login" render={() => <LoginContainer />} />
         <Route path="/signup" render={() => <SignupContainer />} />

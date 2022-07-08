@@ -1,8 +1,10 @@
-import React, { useCallback, MouseEvent, useState, useMemo } from 'react';
+import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { MLAudioEditor } from './MLAudioEditor/MLAudioEditor';
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
+import { MLCarouselEditor } from './MLCarouselEditor/MLCarouselEditor';
 import { MLImageEditor } from './MLImageEditor/MLImageEditor';
 import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor/MLLogoEditor';
@@ -12,18 +14,19 @@ import { MLTextEditor } from './MLTextEditor/MLTextEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
 import { withBaseEditor } from './withBaseEditor';
 
-import { addMLDraftBlock } from 'bll/reducers';
+import { addMLDraftBlock, deleteMLDraftBlock } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import {
+  MLDraftAudio,
   MLDraftButton,
+  MLDraftCarousel,
   MLDraftImage,
   MLDraftImageText,
   MLDraftShop,
   MLDraftSocial,
   MLDraftWidget,
   Nullable,
-  TImageFile,
   TMLDraftBlocks,
   TMLDraftImages,
 } from 'common/types/instance';
@@ -35,8 +38,17 @@ import {
   MLDraftVideo,
   TMLDraftBlocksUnion,
 } from 'common/types/instance/mlDraft';
+import {
+  MLImageContentCarousel,
+  MLImageContentImage,
+  MLImageContentLink,
+  MLImageContentLogo,
+  MLImageContentShop,
+  TMLDraftImagesBlocksUnion,
+} from 'common/types/instance/mlDraft/mlImageContent';
 import { nanoid } from 'common/utils/ui/idGeneration/nanoid';
 import { Button } from 'ui/components/elements';
+import { ModalQuestion } from 'ui/components/modules/modals/ModalQuestion/ModalQuestion';
 
 type TMLContentProps = {
   contentMap: string[];
@@ -47,25 +59,50 @@ type TMLContentProps = {
   setBlockEditor: (payload: { type: MLContentType; id: string } | null) => void;
 };
 
-const actionButtonsData = [
-  {
-    value: MLContentType.TEXT,
-    title: 't()', // translation
-  },
-  // ...
+type TMLContentButton = {
+  name: string;
+  type: MLContentType;
+  isDisabled: boolean;
+};
+
+const ML_CONTENT_BUTTONS: TMLContentButton[] = [
+  { name: 'Add text block', type: MLContentType.TEXT, isDisabled: false },
+  { name: 'Add link block', type: MLContentType.LINK, isDisabled: false },
+  { name: 'Add image block', type: MLContentType.IMAGE, isDisabled: false },
+  { name: 'Add image-text block', type: MLContentType.IMAGETEXT, isDisabled: false },
+  { name: 'Add socials block', type: MLContentType.SOCIAL, isDisabled: false },
+  { name: 'Add logo block', type: MLContentType.LOGO, isDisabled: false },
+  { name: 'Add widget block', type: MLContentType.WIDGET, isDisabled: false },
+  { name: 'Add vote block', type: MLContentType.VOTE, isDisabled: true },
+  { name: 'Add button block', type: MLContentType.BUTTON, isDisabled: false },
+  { name: 'Add map block', type: MLContentType.MAP, isDisabled: false },
+  { name: 'Add post block', type: MLContentType.POST, isDisabled: true },
+  { name: 'Add divider block', type: MLContentType.DIVIDER, isDisabled: true },
+  { name: 'Add image-carousel block', type: MLContentType.CAROUSEL, isDisabled: false },
+  { name: 'Add audio block', type: MLContentType.AUDIO, isDisabled: false },
+  { name: 'Add video block', type: MLContentType.VIDEO, isDisabled: true },
+  { name: 'Add shop block', type: MLContentType.SHOP, isDisabled: false },
 ];
 
 export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
-  const { contentMap, blocks, images, blockEditorType, blockEditorId, setBlockEditor } = props;
+
+  const { blocks, images, blockEditorType, blockEditorId, setBlockEditor } = props;
   const { t } = useTranslation(['pages', 'common']);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const onButtonEditorClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
-      if (e.currentTarget.dataset.value) {
+      if (e.currentTarget.dataset.value === 'ok') {
         setBlockEditor(null);
         return;
       }
+      if (e.currentTarget.dataset.value === 'delete') {
+        setIsOpenModal(true);
+        return;
+      }
+
       const id = nanoid();
       dispatch(addMLDraftBlock({ type: e.currentTarget.value as MLContentType, id }));
       setBlockEditor({ type: e.currentTarget.value as MLContentType, id });
@@ -73,124 +110,33 @@ export const MLContent = (props: TMLContentProps) => {
     [dispatch, setBlockEditor],
   );
 
-  const actionButtons = (
-    <>
-      <div>
-        <Button
-          value={MLContentType.TEXT}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add text block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.LINK}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add link block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.IMAGE}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add image block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.IMAGETEXT}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add image-text block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.SOCIAL}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add socials block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.LOGO}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add logo block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.WIDGET}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add widget block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add vote block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.BUTTON}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add button block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.MAP}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add map block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add post block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add divider
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add image-carousel block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add audio block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add video block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.SHOP}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add shop block
-        </Button>
-      </div>
-    </>
-  );
+  const onModalButtonNoClick = useCallback(() => {
+    setIsOpenModal(false);
+  }, [setIsOpenModal]);
+
+  const onModalButtonYesClick = useCallback(() => {
+    setIsOpenModal(false);
+    setBlockEditor(null);
+    dispatch(deleteMLDraftBlock({ id: blockEditorId, type: blockEditorType as MLContentType }));
+  }, [setIsOpenModal, setBlockEditor, dispatch]);
+
+  const actionButtons = ML_CONTENT_BUTTONS.map(({ name, type, isDisabled }) => (
+    <Button
+      key={name}
+      disabled={isDisabled}
+      value={type}
+      onClick={onButtonEditorClick}
+      className="button _full _rounded">
+      {name}
+    </Button>
+  ));
 
   const currentEditor = useMemo(() => {
     const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`] as TMLDraftBlocksUnion;
-    const order = contentMap.findIndex(el => el === `${blockEditorType}_${blockEditorId}`);
+    const currentBlockImages = images.blocks[
+      `${blockEditorType}_${blockEditorId}`
+    ] as TMLDraftImagesBlocksUnion;
+
     switch (blockEditorType) {
       case MLContentType.TEXT: {
         if (currentBlock instanceof MLDraftText) {
@@ -207,15 +153,6 @@ export const MLContent = (props: TMLContentProps) => {
             id: blockEditorId,
             block: currentBlock,
           })(null);
-        }
-        break;
-      }
-      case MLContentType.WIDGET: {
-        if (currentBlock instanceof MLDraftWidget) {
-          return withBaseEditor({
-            id: blockEditorId,
-            block: currentBlock,
-          })(MLWidgetEditor);
         }
         break;
       }
@@ -239,11 +176,14 @@ export const MLContent = (props: TMLContentProps) => {
       }
 
       case MLContentType.LOGO: {
-        if (currentBlock instanceof MLDraftLogo) {
+        if (
+          currentBlock instanceof MLDraftLogo &&
+          currentBlockImages instanceof MLImageContentLogo
+        ) {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
-            images: images.blocks[blockEditorType][order],
+            images: currentBlockImages,
           })(MLLogoEditor);
         }
         break;
@@ -258,26 +198,33 @@ export const MLContent = (props: TMLContentProps) => {
         break;
       }
       case MLContentType.IMAGE: {
-        if (currentBlock instanceof MLDraftImage) {
+        if (
+          currentBlock instanceof MLDraftImage &&
+          currentBlockImages instanceof MLImageContentImage
+        ) {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
-            image: images.blocks[blockEditorType][order],
+            image: currentBlockImages,
           })(MLImageEditor);
         }
         break;
       }
       case MLContentType.LINK: {
-        if (currentBlock instanceof MLDraftLink) {
+        if (
+          currentBlock instanceof MLDraftLink &&
+          currentBlockImages instanceof MLImageContentLink
+        ) {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
-            image: images.blocks[blockEditorType][order],
+            image: currentBlockImages,
             close: onButtonEditorClick,
           })(MLLinkEditor);
         }
         break;
       }
+
       case MLContentType.BUTTON: {
         if (currentBlock instanceof MLDraftButton) {
           return withBaseEditor({
@@ -287,17 +234,50 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
-      case MLContentType.SHOP: {
-        if (currentBlock instanceof MLDraftShop) {
+      case MLContentType.WIDGET: {
+        if (currentBlock instanceof MLDraftWidget) {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
-            images: images.blocks[blockEditorType][order],
+          })(MLWidgetEditor);
+        }
+        break;
+      }
+      case MLContentType.SHOP: {
+        if (
+          currentBlock instanceof MLDraftShop &&
+          currentBlockImages instanceof MLImageContentShop
+        ) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+            images: currentBlockImages,
           })(MLShopEditor);
         }
         break;
       }
-
+      case MLContentType.AUDIO: {
+        if (currentBlock instanceof MLDraftAudio) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+          })(MLAudioEditor);
+        }
+        break;
+      }
+      case MLContentType.CAROUSEL: {
+        if (
+          currentBlock instanceof MLDraftCarousel &&
+          currentBlockImages instanceof MLImageContentCarousel
+        ) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+            image: currentBlockImages,
+          })(MLCarouselEditor);
+        }
+        break;
+      }
       default:
         return <>Not implemented</>;
     }
@@ -307,19 +287,25 @@ export const MLContent = (props: TMLContentProps) => {
     <>
       {!blockEditorType && actionButtons}
       {blockEditorType && currentEditor}
-      {blockEditorType && blockEditorType !== MLContentType.LINK && (
+      <ModalQuestion
+        isOpen={isOpenModal}
+        setTrue={onModalButtonYesClick}
+        setFalse={onModalButtonNoClick}
+        description="Вы дествительно хотите удалить блок?"
+      />
+      {blockEditorType && (
         <div className="action-buttons">
           <Button
             value={blockEditorType}
-            data-value="-1"
+            data-value="delete"
             variant="cancel"
             onClick={onButtonEditorClick}
             className="button _rounded">
-            {t('common:buttons.cancel')}
+            Delete
           </Button>
           <Button
             value={blockEditorType}
-            data-value="-1"
+            data-value="ok"
             onClick={onButtonEditorClick}
             className="button _rounded">
             {t('common:buttons.ok')}

@@ -1,4 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { put, takeEvery } from 'redux-saga/effects';
+import { ThunkDispatch } from 'redux-thunk';
 
 import { requestMe, getMultilink } from '.';
 
@@ -51,18 +53,38 @@ export const {
 
 export const appReducer = appSlice.reducer;
 
-export const initialize = createAsyncThunk('auth/initialize', async (url: string, { dispatch }) => {
+// sagas
+export function* initializeWorkerSaga(action: ReturnType<typeof initializeApp>) {
   const isMLRequestAttempt = validateMLRoute(
     [...Object.values(PrivatePath), ...Object.values(PublicPath)],
-    url,
+    action.url,
   );
   if (isMLRequestAttempt) {
-    dispatch(getMultilink(trim(url, '/')));
+    // need fix types
+    // any из-за санки, если все перевести на saga, то такого не будет
+    yield put<any>(getMultilink(trim(action.url, '/')));
   }
   if (!isMLRequestAttempt) {
-    dispatch(requestMe());
+    yield put(requestMe());
   }
-});
+}
+export const initializeApp = (url: string) => ({ type: 'auth/initialize', url } as const);
+export function* initializeAppWatcher() {
+  yield takeEvery('auth/initialize', initializeWorkerSaga);
+}
+
+// export const initialize = createAsyncThunk('auth/initialize', async (url: string, { dispatch }) => {
+//   const isMLRequestAttempt = validateMLRoute(
+//     [...Object.values(PrivatePath), ...Object.values(PublicPath)],
+//     url,
+//   );
+//   if (isMLRequestAttempt) {
+//     dispatch(getMultilink(trim(url, '/')));
+//   }
+//   if (!isMLRequestAttempt) {
+//     dispatch(requestMe());
+//   }
+// });
 
 // types
 export type TAppState = {

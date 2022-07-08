@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 import { requestRegister } from 'bll/reducers';
 import { useAppDispatch } from 'common/hooks';
@@ -11,7 +12,7 @@ import { Button, Icon, Input } from 'ui/components/elements';
 type TSignupFormProps = {};
 
 export const SignupForm = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,

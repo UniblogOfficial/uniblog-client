@@ -21,6 +21,9 @@ export enum SocialNetwork {
 }
 
 export enum SocialService {
+  VK = 'vk',
+  INSTAGRAM = 'instagram',
+  GMAIL = 'gmail',
   BOOSTY = 'boosty',
   DISCORD = 'discord',
   PATREON = 'patreon',
@@ -29,6 +32,7 @@ export enum SocialService {
   DONATIONALERTS = 'donationalerts',
   DZEN = 'dzen',
   ARTOFDIGITAL = 'artofdigital',
+  TELEGRAM = 'telegram',
 }
 
 export enum MLContentType {
@@ -48,6 +52,11 @@ export enum MLContentType {
   VOTE = 'voteBlocks',
   MAP = 'mapBlocks',
   DIVIDER = 'dividerBlocks',
+}
+
+export enum MLBackgroundType {
+  INNER = 'background',
+  OUTER = 'outerBackground',
 }
 
 export enum MLConstructorStage {

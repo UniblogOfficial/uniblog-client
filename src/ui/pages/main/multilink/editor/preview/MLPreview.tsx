@@ -84,7 +84,7 @@ export const MLPreview: FC<TMLPreviewProps> = ({ name, username, publish }) => {
           <div className="paper" style={{ height: '200px' }}>
             {status !== AppStatus.SUCCEEDED ? (
               <>
-                <Preloader />
+                <Preloader className="app-preloader" />
                 {status === AppStatus.USERDATA_FAILED && <div>Ошибка при создании</div>}
               </>
             ) : (

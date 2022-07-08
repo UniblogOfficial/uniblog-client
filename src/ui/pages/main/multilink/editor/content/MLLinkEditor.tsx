@@ -1,11 +1,12 @@
-import React, { useState, MouseEvent, useCallback } from 'react';
+import React, { useState, MouseEvent, useCallback, ChangeEvent, useEffect } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { use } from 'i18next';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
-import { setMLDraftBlockContentImage } from 'bll/reducers';
+import { saveImage, setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
 import { MLContentType, SocialNetwork } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import {
@@ -16,7 +17,7 @@ import {
   TMLImageContentImage,
   TMLImageContentLink,
 } from 'common/types/instance';
-import { Button, Input } from 'ui/components/elements';
+import { Button, Input, Textarea } from 'ui/components/elements';
 import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TLinkFormData = {
@@ -26,8 +27,8 @@ type TLinkFormData = {
 
 type TMLLinkEditorProps = {
   id: string;
-  close: (e: MouseEvent<HTMLButtonElement>) => void;
-  block?: IMLDraftLink;
+  close?: (e: MouseEvent<HTMLButtonElement>) => void;
+  block: IMLDraftLink;
   image: Nullable<TMLImageContentLink<TImageFile>>;
 };
 
@@ -48,7 +49,7 @@ const linkSchema = yup.object().shape({
     .required('Url is required'),
 });
 
-export const MLLinkEditor = ({ id, close, image }: TMLLinkEditorProps) => {
+export const MLLinkEditor = ({ id, close, image, block }: TMLLinkEditorProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
   const {
@@ -68,50 +69,56 @@ export const MLLinkEditor = ({ id, close, image }: TMLLinkEditorProps) => {
     link: true,
   };
   const [helperState, setHelperState] = useState(initialHelperState);
+  const [titleCharacters, setTitleCharacters] = useState(block?.title ?? '');
   const onFieldFocusChange = (name: keyof TLinkFormData, focus: boolean) => {
     // for first field changing errors won't show
     !dirtyFields[name] && setHelperState(prev => ({ ...prev, [name]: !focus }));
     // since field touched after first blur, all errors will calculated onChange and always show
     dirtyFields[name] && setHelperState(initialHelperState);
   };
+  useEffect(() => {
+    if (titleCharacters.length <= 24) {
+      dispatch(
+        setMLDraftBlockContent({
+          content: { title: titleCharacters },
+          id,
+          type: MLContentType.LINK,
+        }),
+      );
+    }
+  }, [titleCharacters]);
   const onSubmit: SubmitHandler<TLinkFormData> = (data, e) => {
     console.log(e);
-    /* dispatch(
-      setMLDraftContent({
-        order,
+    dispatch(
+      setMLDraftBlockContent({
         type: MLContentType.LINK,
-        isFilled: true,
-        link: data.link,
-        linkType: 'third-party',
-        title: data.title,
-        text: null,
-        img: null,
+        id,
+        content: { title: data.title, href: data.link },
       }),
-    ); */
+    );
   };
-
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile) => {
-      dispatch(
-        setMLDraftBlockContentImage({ imageData: { image: imageFile }, id, field: 'linkBlocks' }),
-      );
+      imageFile.name = 'link-0-1';
+      dispatch(saveImage({ imageData: { image: imageFile }, id, type: MLContentType.LINK }));
     },
     [dispatch, image],
   );
-
   return (
     <form className="template__ml-form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
       <section className="field">
         <div className="field__input">
           <Input
-            {...register('title', { value: '' })}
+            {...register('title', { value: block?.title ?? '' })}
             type="text"
             name="title"
             placeholder="Enter link title"
+            onChangeText={setTitleCharacters}
             onChangeFocus={state => {
               onFieldFocusChange('title', state);
             }}
           />
+          <span style={{ marginLeft: '90px' }}>{MAX_SYMBOLS_TITLE - titleCharacters.length}</span>
         </div>
         <div className="field__error">
           {helperState.title &&
@@ -124,7 +131,7 @@ export const MLLinkEditor = ({ id, close, image }: TMLLinkEditorProps) => {
       <section className="field">
         <div className="field__input">
           <Input
-            {...register('link', { value: '' })}
+            {...register('link', { value: block.href ?? '' })}
             type="text"
             name="link"
             placeholder="Enter link url"
@@ -145,7 +152,7 @@ export const MLLinkEditor = ({ id, close, image }: TMLLinkEditorProps) => {
         <ImageField onChange={onDropZoneChange} />
       </div>
       <div>
-        <Button data-value="-1" type="submit" onClick={close} className="button _full _rounded">
+        <Button data-value="-1" type="submit" className="button _full _rounded">
           {t('common:buttons.ok')}
         </Button>
       </div>

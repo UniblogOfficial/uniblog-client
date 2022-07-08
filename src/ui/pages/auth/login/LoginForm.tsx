@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 
 import { requestLogin } from 'bll/reducers';
@@ -14,7 +15,7 @@ import { Button, ElementPreloader, Icon, Input } from 'ui/components/elements';
 type TLoginFormProps = {};
 
 export const LoginForm = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const status = useAppSelector(selectAppStatus);
   const loadingStatus = status === AppStatus.AUTH_LOADING;
   const {
@@ -43,7 +44,7 @@ export const LoginForm = () => {
       email: data.email,
       password: data.password,
     };
-    dispatch(requestLogin(loginData)); // 2
+    dispatch(requestLogin(loginData));
   };
 
   const changeFocusHandler = (name: keyof LoginFormData, focus: boolean) => {
@@ -60,7 +61,8 @@ export const LoginForm = () => {
       <section className="field field-auth">
         <div className="field__input">
           <Input
-            {...register('email', { value: 'awesome@email.yo' })}
+            {...register('email', { value: '' })}
+            /* {...register('email', { value: 'awesome@email.yo' })} */
             onChangeFocus={state => {
               changeFocusHandler('email', state);
             }}
@@ -75,7 +77,8 @@ export const LoginForm = () => {
       <section className="field field-auth">
         <div className="field__input">
           <Input
-            {...register('password', { value: 'qwerty123' })}
+            {...register('password', { value: '' })}
+            /* {...register('password', { value: 'qwerty123' })} */
             type={passwordShown ? 'text' : 'password'}
             name="password"
             placeholder="Пароль"

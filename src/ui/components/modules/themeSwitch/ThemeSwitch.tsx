@@ -5,8 +5,7 @@ export const ThemeSwitch = ({ preserveRasters = true, storeKey = 'ThemeSwitch' }
         html { filter: invert(85%); background: #fefefe; }
       `;
   const rasterButtonCss = 'Button:not([src*=".svg"]), [style*="url("] { filter: invert(100%) }';
-  const rasterDivMLCss =
-    'div.ml-template:not([src*=".svg"]), [style*="url("] { filter: invert(100%) }';
+  const rasterDivMLCss = 'div.ml-template:not(),[style*="url("] { filter: invert(100%) }';
   const rasterUlMLCss =
     'ul.ml-template:not([src*=".svg"]), [style*="url("] { filter: invert(100%) }';
   const rasterImgCss =

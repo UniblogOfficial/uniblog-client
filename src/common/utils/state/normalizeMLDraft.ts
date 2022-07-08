@@ -1,9 +1,8 @@
-import { notNull } from '.';
-
 import { MLContentType } from 'common/constants';
 import {
   MLDraftAudio,
   MLDraftButton,
+  MLDraftCarousel,
   MLDraftImage,
   MLDraftImageText,
   MLDraftLink,
@@ -19,21 +18,13 @@ import {
   TMultilinkDraft,
 } from 'common/types/instance';
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request';
-import {
-  MLText,
-  MLSocial,
-  MLVideo,
-  MLVote,
-  MLLogo,
-  MLLink,
-  MLButton,
-  MLImage,
-  MLImageText,
-} from 'ui/components/modules/mlBlocks';
 
 export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCreateMLImagesDto] => {
-  const { name, background, maxWidth, contentMap, blocks, images } = mlDraft;
-  const blocksDto: Omit<TCreateMLDto, 'name' | 'background' | 'maxWidth' | 'contentMap'> = {
+  const { name, background, outerBackground, maxWidth, contentMap, blocks, images } = mlDraft;
+  const blocksDto: Omit<
+    TCreateMLDto,
+    'name' | 'outerBackground' | 'background' | 'maxWidth' | 'contentMap'
+  > = {
     textBlocks: [],
     socialBlocks: [],
     videoBlocks: [],
@@ -42,6 +33,7 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     mapBlocks: [],
     postBlocks: [],
     voteBlocks: [],
+    feedbackBlocks: [],
     widgetBlocks: [],
 
     logoBlocks: [],
@@ -50,6 +42,7 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     imageTextBlocks: [],
     shopBlocks: [],
     carouselBlocks: [],
+    timerBlocks: [],
     buttonBlocks: [],
   };
   const splittedContentMap = contentMap.map((typeId, i) => ({
@@ -97,6 +90,9 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     if (block instanceof MLDraftImageText) {
       return blocksDto.imageTextBlocks.push({ ...block, order: i });
     }
+    if (block instanceof MLDraftCarousel) {
+      return blocksDto.carouselBlocks.push({ ...block, order: i });
+    }
     if (block instanceof MLDraftShop) {
       return blocksDto.shopBlocks.push({ ...block, order: i });
     }
@@ -104,6 +100,7 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
   const multilinkDto: TCreateMLDto = {
     name,
     background,
+    outerBackground,
     maxWidth,
     contentMap: contentMap.map(typeId => typeId.split('_')[0] as MLContentType),
     ...blocksDto,
@@ -111,13 +108,7 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
   const imagesDto: TCreateMLImagesDto = {
     background: images.background ?? undefined,
 
-    logoBlocks: images.blocks.logoBlocks.filter(notNull),
-    imageBlocks: images.blocks.imageBlocks.filter(notNull),
-    imageTextBlocks: images.blocks.imageTextBlocks.filter(notNull),
-    shopBlocks: images.blocks.shopBlocks.filter(notNull),
-    buttonBlocks: images.blocks.buttonBlocks.filter(notNull),
-    carouselBlocks: images.blocks.carouselBlocks.filter(notNull),
-    linkBlocks: images.blocks.linkBlocks.filter(notNull),
+    blocks: {},
   };
   return [multilinkDto, imagesDto];
 };
