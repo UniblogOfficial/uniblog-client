@@ -9,6 +9,7 @@ import { MLMap } from './mlMap/MLMap';
 import { MLShop } from './mlShop/MLShop';
 import { MLSocial } from './mlSocial/MLSocial';
 import { MLText } from './mlText/MLText';
+import { MLTimer } from './mlTimer/MLTimer';
 import { MLVideo } from './mlVideo/MLVideo';
 import { MLVote } from './mlVote/MLVote';
 import { MLWidget } from './mlWidget/MLWidget';
@@ -28,4 +29,5 @@ export {
   MLAudio,
   MLCarousel,
   MLWidget,
+  MLTimer,
 };

@@ -33,6 +33,7 @@ import {
   MLDraftShop,
   MLDraftSocial,
   MLDraftText,
+  MLDraftTimer,
   MLDraftVideo,
   MLDraftVote,
   MLDraftWidget,
@@ -65,6 +66,7 @@ import {
   MLMap,
   MLCarousel,
   MLWidget,
+  MLTimer,
 } from 'ui/components/modules/mlBlocks';
 
 type TMultilinkEditorContainerProps = {
@@ -271,6 +273,13 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                       </WrapperDrag>
                     );
                   }
+                  if (block instanceof MLDraftTimer) {
+                    return (
+                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                        <MLTimer id={id} block={block} callback={callback} />
+                      </WrapperDrag>
+                    );
+                  }
                   if (block instanceof MLDraftShop && image instanceof MLImageContentShop) {
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
@@ -278,6 +287,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                       </WrapperDrag>
                     );
                   }
+
                   return <li key={ID[i]} />;
                 })}
                 {provided.placeholder}

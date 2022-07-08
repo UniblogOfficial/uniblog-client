@@ -1,3 +1,5 @@
+import { MLDraftTimer } from '../../../../../../common/types/instance/mlDraft/mlTimer.class';
+
 import { SocialNetwork, SocialService } from 'common/constants';
 import {
   MLDraftAudio,
@@ -1712,6 +1714,15 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         size: 65,
         margin: [0, 0, 0],
         padding: [0, 17],
+      }),
+    ],
+    [
+      new MLDraftTimer({
+        isFilled: false,
+        image: sliderImage3,
+        title: 'хз че это и работает ли',
+        href: 'asd',
+        countdown: 12,
       }),
     ],
   ] as const;

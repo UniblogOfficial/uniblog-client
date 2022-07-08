@@ -9,6 +9,7 @@ import { TMLDraftState } from 'bll/reducers';
 import { MLConstructorStage, MLContentType } from 'common/constants';
 import { getKeys, getValues } from 'common/utils/state';
 
+
 const initialState: TMLDraftState = {
   name: '',
   background: '#fff',
