@@ -59,6 +59,31 @@ type TMLContentProps = {
   setBlockEditor: (payload: { type: MLContentType; id: string } | null) => void;
 };
 
+type TMLContentButton = {
+  name: string;
+  type: MLContentType;
+  isDisabled: boolean;
+};
+
+const ML_CONTENT_BUTTONS: TMLContentButton[] = [
+  { name: 'Add text block', type: MLContentType.TEXT, isDisabled: false },
+  { name: 'Add link block', type: MLContentType.LINK, isDisabled: false },
+  { name: 'Add image block', type: MLContentType.IMAGE, isDisabled: false },
+  { name: 'Add image-text block', type: MLContentType.IMAGETEXT, isDisabled: false },
+  { name: 'Add socials block', type: MLContentType.SOCIAL, isDisabled: false },
+  { name: 'Add logo block', type: MLContentType.LOGO, isDisabled: false },
+  { name: 'Add widget block', type: MLContentType.WIDGET, isDisabled: false },
+  { name: 'Add vote block', type: MLContentType.VOTE, isDisabled: true },
+  { name: 'Add button block', type: MLContentType.BUTTON, isDisabled: false },
+  { name: 'Add map block', type: MLContentType.MAP, isDisabled: false },
+  { name: 'Add post block', type: MLContentType.POST, isDisabled: true },
+  { name: 'Add divider block', type: MLContentType.DIVIDER, isDisabled: true },
+  { name: 'Add image-carousel block', type: MLContentType.CAROUSEL, isDisabled: false },
+  { name: 'Add audio block', type: MLContentType.AUDIO, isDisabled: false },
+  { name: 'Add video block', type: MLContentType.VIDEO, isDisabled: true },
+  { name: 'Add shop block', type: MLContentType.SHOP, isDisabled: false },
+];
+
 export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
 
@@ -95,126 +120,16 @@ export const MLContent = (props: TMLContentProps) => {
     dispatch(deleteMLDraftBlock({ id: blockEditorId, type: blockEditorType as MLContentType }));
   }, [setIsOpenModal, setBlockEditor, dispatch]);
 
-  const actionButtons = (
-    <>
-      <div>
-        <Button
-          value={MLContentType.TEXT}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add text block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.LINK}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add link block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.IMAGE}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add image block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.IMAGETEXT}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add image-text block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.SOCIAL}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add socials block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.LOGO}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add logo block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.WIDGET}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add widget block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add vote block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.BUTTON}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add button block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.MAP}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add map block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add post block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add divider
-        </Button>
-      </div>
-      <div>
-        <Button
-          className="button _full _rounded"
-          value={MLContentType.CAROUSEL}
-          onClick={onButtonEditorClick}>
-          Add image-carousel block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.AUDIO}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add audio block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add video block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.SHOP}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add shop block
-        </Button>
-      </div>
-    </>
-  );
+  const actionButtons = ML_CONTENT_BUTTONS.map(({ name, type, isDisabled }) => (
+    <Button
+      key={name}
+      disabled={isDisabled}
+      value={type}
+      onClick={onButtonEditorClick}
+      className="button _full _rounded">
+      {name}
+    </Button>
+  ));
 
   const currentEditor = useMemo(() => {
     const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`] as TMLDraftBlocksUnion;
