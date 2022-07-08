@@ -65,9 +65,7 @@ export function* initializeWorkerSaga(action: ReturnType<typeof initializeApp>) 
     yield put<any>(getMultilink(trim(action.url, '/')));
   }
   if (!isMLRequestAttempt) {
-    // need fix types
-    // any из-за санки, если все перевести на saga, то такого не будет
-    yield put<any>(requestMe());
+    yield put(requestMe());
   }
 }
 export const initializeApp = (url: string) => ({ type: 'auth/initialize', url } as const);
