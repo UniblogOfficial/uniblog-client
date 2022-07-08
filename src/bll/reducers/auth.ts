@@ -1,27 +1,14 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { batch } from 'react-redux';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
-import { trim, validateMLRoute } from '../../common/utils/state';
-import { ResponseAuthMeType, ResponseLoginDataType, ResponseLoginType } from '../../dal/auth';
+import { ResponseAuthMeType, ResponseLoginType } from '../../common/types/response/auth';
 
-import {
-  getMultilink,
-  removeUserData,
-  setAppStatus,
-  setInitialized,
-  setMLDraftName,
-  setUserData,
-} from '.';
+import { removeUserData, setAppStatus, setInitialized, setMLDraftName, setUserData } from '.';
 
-import { AppThunk, store } from 'bll/store';
-import { AppStatus, PrivatePath, PublicPath } from 'common/constants';
+import { AppStatus } from 'common/constants';
 import { Nullable, TUser } from 'common/types/instance';
 import { TLoginDto, TRegisterDto } from 'common/types/request/auth.dto';
-import {
-  handleServerNetworkError,
-  handleServerNetworkErrorSaga,
-} from 'common/utils/state/errorHandler';
+import { handleServerNetworkErrorSaga } from 'common/utils/state/errorHandler';
 import { authAPI } from 'dal';
 
 const initialState: TAuthState = {
@@ -59,9 +46,7 @@ export function* requestLoginWorkerSaga(action: ReturnType<typeof requestLogin>)
 }
 export function* logoutWorkerSaga() {
   yield call(authAPI.logout);
-  // изначально стоял ts-ignore
-  // @ts-ignore
-  yield put(removeUserData());
+  yield put(removeUserData({}));
 }
 export function* requestMeWorkerSaga() {
   try {
@@ -121,8 +106,7 @@ export function* requestLoginWatcher() {
 
 // export const logout = createAsyncThunk('auth/logout', async (_, { dispatch, rejectWithValue }) => {
 //   authAPI.logout();
-//   // @ts-ignore
-//   dispatch(removeUserData());
+//   dispatch(removeUserData({}));
 // });
 
 // export const requestMe = createAsyncThunk(

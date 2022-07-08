@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
 import { AdminContainer } from './pages/admin/AdminContainer';
@@ -16,7 +17,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { Preloader } from 'ui/components/elements';
 
 export const Routes = (props: any) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const status = useAppSelector(selectAppStatus);
   const nonBlockingLoading = status === AppStatus.DATA_SAVING;
@@ -28,7 +29,6 @@ export const Routes = (props: any) => {
   const firstEnterUrl = useRef(history.location.pathname);
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(initializeApp(firstEnterUrl.current));
   }, [dispatch, firstEnterUrl]);
 
