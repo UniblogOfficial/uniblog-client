@@ -64,7 +64,6 @@ export const pushMLDraftImageBlock = (
     case MLContentType.TIMER:
       blocks[`${type}_${id}`] = new MLImageContentTimer(defaultTimerImageBlockOptions);
       break;
-
     default:
   }
 };
