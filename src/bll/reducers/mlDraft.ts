@@ -214,7 +214,13 @@ export const saveImage = createAsyncThunk(
         }
 
         if (Object.values(MLContentType).includes(type as MLContentType)) {
-          dispatch(setMLDraftBlockContent({ content: imageData, id, type: type as MLContentType }));
+          dispatch(
+            setMLDraftBlockContent({
+              content: { [`${key}`]: url },
+              id,
+              type: type as MLContentType,
+            }),
+          );
         }
 
         dispatch(setAppStatus(AppStatus.SUCCEEDED));

@@ -89,6 +89,11 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 image = null;
                 if (!block) return null;
                 return <MLImageText key={ID[i]} id="" block={block} image={image} />;
+              case MLContentType.CAROUSEL:
+                block = multilink[type].find(el => el.order === i);
+                image = null;
+                if (!block) return null;
+                return <MLCarousel key={ID[i]} id="" block={block} image={image} />;
               case MLContentType.SHOP:
                 block = multilink[type].find(el => el.order === i);
                 image = null;
