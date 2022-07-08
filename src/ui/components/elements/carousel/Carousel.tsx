@@ -5,18 +5,21 @@ import React, { memo, FC, ReactElement, useCallback, useEffect, useMemo, useStat
 import { useAppDispatch } from '../../../../common/hooks';
 
 import styles from './Carousel.module.scss';
+import { Dot } from './Dot';
 
 type TCarouselProps = {
   items: Array<ReactElement>;
   itemsPerView: number;
   arrows?: boolean;
   dots?: boolean;
+  swipe?: boolean;
   arrowsIcons?: Array<ReactElement>;
   arrowStep?: number;
   transitionTime?: number;
   className?: string;
   callback?: (stage: number) => void;
-  currentMLTemplate?: number;
+  currentStage?: number;
+  interval?: number;
 };
 
 export const Carousel: FC<TCarouselProps> = memo(
@@ -27,10 +30,11 @@ export const Carousel: FC<TCarouselProps> = memo(
     transitionTime = itemsPerView * 100,
     className,
     callback,
-    currentMLTemplate,
+    currentStage,
     dots,
     arrows,
     arrowsIcons,
+    interval,
   }) => {
     const fullWidth = items.length / itemsPerView; // in parts exm 2.5
     const fullSlidesAmount = Math.floor(fullWidth); // exm. 2
@@ -63,84 +67,54 @@ export const Carousel: FC<TCarouselProps> = memo(
         if (i === 0) {
           // FIRST VIEW CONTROL DOT
           dotsElements.push(
-            <li key={i} value={i}>
-              <input
-                id={String(i)}
-                type="radio"
-                onChange={onStageChange}
-                value={i}
-                checked={
-                  stage === i ||
-                  (fullWidth >= 2
-                    ? stage === lastStageValue
-                    : stage === lastStageValue || stage === firstStageValue)
-                }
-                className={styles.controls__input}
-              />
-              <label htmlFor={String(i)}>
-                <div className={styles.controls__dot} />
-              </label>
-            </li>,
+            <Dot
+              key={i}
+              value={i}
+              id={i}
+              onStageChange={onStageChange}
+              checked={
+                stage === i ||
+                (fullWidth >= 2
+                  ? stage === lastStageValue
+                  : stage === lastStageValue || stage === firstStageValue)
+              }
+            />,
           );
           continue;
         }
         if (i === (isNoPartialSlide ? fullWidth - 1 : Math.floor(fullWidth)) && i !== 0) {
           // LAST VIEW CONTROL DOT IF EXISTS
           dotsElements.push(
-            <li key={Math.floor(fullWidth)} value={fullWidth - 1}>
-              <input
-                id={String(Math.floor(fullWidth))}
-                type="radio"
-                onChange={onStageChange}
-                value={fullWidth - 1}
-                checked={
-                  stage === fullWidth - 1 ||
-                  stage === (isNoPartialSlide ? firstStageValue : secondStageValue)
-                }
-                className={styles.controls__input}
-              />
-              <label htmlFor={String(Math.floor(fullWidth))}>
-                <div className={styles.controls__dot} />
-              </label>
-            </li>,
+            <Dot
+              key={Math.floor(fullWidth)}
+              value={fullWidth - 1}
+              id={fullWidth}
+              onStageChange={onStageChange}
+              checked={
+                stage === fullWidth - 1 ||
+                stage === (isNoPartialSlide ? firstStageValue : secondStageValue)
+              }
+            />,
           );
           continue;
         }
         if (i === Math.floor(fullWidth) - 1 && i !== 0 && fullWidth > 1) {
           // SECOND-TO-LAST VIEW CONTROL DOT IF EXISTS
           dotsElements.push(
-            <li key={i} value={i}>
-              <input
-                id={String(i)}
-                type="radio"
-                onChange={onStageChange}
-                value={i}
-                checked={stage === i || stage === firstStageValue}
-                className={styles.controls__input}
-              />
-              <label htmlFor={String(i)}>
-                <div className={styles.controls__dot} />
-              </label>
-            </li>,
+            <Dot
+              key={i}
+              value={i}
+              id={i}
+              onStageChange={onStageChange}
+              checked={stage === i || stage === firstStageValue}
+            />,
           );
           continue;
         }
         //
         // REST VIEW CONTROL DOTS IF EXIST
         dotsElements.push(
-          <li key={i} value={i}>
-            <input
-              id={String(i)}
-              type="radio"
-              onChange={onStageChange}
-              value={i}
-              checked={stage === i}
-              className={styles.controls__input}
-            />
-            <label htmlFor={String(i)}>
-              <div className={styles.controls__dot} />
-            </label>
-          </li>,
+          <Dot key={i} value={i} id={i} onStageChange={onStageChange} checked={stage === i} />,
         );
       }
 
@@ -188,19 +162,21 @@ export const Carousel: FC<TCarouselProps> = memo(
       (e: React.MouseEvent<HTMLDivElement>) => {
         if (controlDots && e.currentTarget.dataset.value) {
           setIsRolling(true);
+          const toNextStage = +e.currentTarget.dataset.value === 1;
+          const toPrevStage = +e.currentTarget.dataset.value === -1;
           if (controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)]) {
             setStage(+controlDots[Math.ceil(stage + +e.currentTarget.dataset.value)].props.value);
           }
-          if (+e.currentTarget.dataset.value === -1 && stage === 0) {
+          if (toPrevStage && stage === 0) {
             isNoPartialSlide ? setStage(firstStageValue) : setStage(secondStageValue);
           }
-          if (+e.currentTarget.dataset.value === -1 && stage < 0) {
+          if (toPrevStage && stage < 0) {
             setStage(firstStageValue);
           }
-          if (+e.currentTarget.dataset.value === 1 && stage === fullWidth - 1) {
+          if (toNextStage && stage === fullWidth - 1) {
             setStage(lastStageValue);
           }
-          if (+e.currentTarget.dataset.value === 1 && stage < 0) {
+          if (toNextStage && stage < 0) {
             setStage(0);
           }
         }
@@ -289,18 +265,41 @@ export const Carousel: FC<TCarouselProps> = memo(
     }, [callback, stage, isRolling]);
 
     useEffect(() => {
-      currentMLTemplate && callback && callback(currentMLTemplate);
+      currentStage && callback && callback(currentStage);
       if (
         stage === secondStageValue &&
         controlDots &&
-        currentMLTemplate === +controlDots[secondToLastDotIndex].props.value
+        currentStage === +controlDots[secondToLastDotIndex].props.value
       ) {
         setStage(firstStageValue);
       } else {
-        setStage(currentMLTemplate || 0);
+        setStage(currentStage || 0);
       }
       setIsRolling(true);
-    }, [callback, currentMLTemplate]);
+    }, [callback, currentStage]);
+
+    useEffect(() => {
+      const slider = () => {
+        if (controlDots) {
+          setIsRolling(true);
+          if (controlDots[Math.ceil(stage + 1)]) {
+            setStage(+controlDots[Math.ceil(stage + 1)].props.value);
+          }
+          if (stage === fullWidth - 1) {
+            setStage(lastStageValue);
+          }
+          if (stage < 0) {
+            setStage(0);
+          }
+        }
+      };
+      // eslint-disable-next-line no-undef
+      let timerId: NodeJS.Timeout;
+      if (interval) {
+        timerId = setTimeout(slider, interval);
+      }
+      return () => clearTimeout(timerId);
+    }, [controlDots]);
 
     return (
       <div className={className}>

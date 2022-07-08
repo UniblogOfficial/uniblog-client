@@ -1,4 +1,4 @@
-import { MLContentType, SocialNetwork } from 'common/constants';
+import { MLContentType } from 'common/constants';
 import {
   IMLDraftAudio,
   IMLDraftButton,
@@ -17,20 +17,15 @@ import {
   IMLDraftVote,
   IMLDraftWidget,
   TImageFile,
-  TMLImageContentButton,
-  TMLImageContentCarousel,
-  TMLImageContentImage,
-  TMLImageContentImageText,
-  TMLImageContentLink,
-  TMLImageContentLogo,
-  TMLImageContentShop,
 } from 'common/types/instance';
+import { TMLDraftImagesBlocks } from 'common/types/instance/mlDraft/mlImageContent';
 
 export type TCreateMLDto = {
   // exm. "VasyaRaper"
   name: string;
   // exm. "#fff"
   background: string;
+  outerBackground: string;
   maxWidth: number;
 
   contentMap: MLContentType[];
@@ -42,6 +37,7 @@ export type TCreateMLDto = {
   voteBlocks: IMLCreateVoteDto[];
   mapBlocks: IMLCreateMapDto[];
   postBlocks: IMLCreatePostDto[];
+  feedbackBlocks: [];
   dividerBlocks: IMLCreateDividerDto[];
 
   logoBlocks: IMLCreateLogoDto[];
@@ -50,19 +46,13 @@ export type TCreateMLDto = {
   imageTextBlocks: IMLCreateImageTextDto[];
   shopBlocks: IMLCreateShopDto[];
   buttonBlocks: IMLCreateButtonDto[];
+  timerBlocks: [];
   carouselBlocks: IMLCreateCarouselDto[];
 };
 
 export type TCreateMLImagesDto = {
   background?: TImageFile;
-
-  logoBlocks: TMLImageContentLogo<TImageFile>[];
-  imageBlocks: TMLImageContentImage<TImageFile>[];
-  imageTextBlocks: TMLImageContentImageText<TImageFile>[];
-  shopBlocks: TMLImageContentShop<TImageFile>[];
-  carouselBlocks: TMLImageContentCarousel<TImageFile>[];
-  buttonBlocks: TMLImageContentButton<TImageFile>[];
-  linkBlocks: TMLImageContentLink<TImageFile>[];
+  blocks: TMLDraftImagesBlocks;
 };
 
 interface IMLCreateTextDto extends IMLDraftText {

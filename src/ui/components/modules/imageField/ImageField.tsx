@@ -37,16 +37,15 @@ export const ImageField: FC<TDropZoneFieldProps> = ({
         previewUrl: URL.createObjectURL(file[0]),
         size: file[0].size,
       };
-      if (fileData.size <= 1024 * 1024) {
+      if (fileData.size <= 1024 * 1024 * 5) {
         setImage([fileData]);
-        fileData && onChange(fileData, id);
+        // fileData && onChange(fileData, id);
         setError('');
-      } else setError('Файл больше 1 мб');
+      } else setError('Файл больше 5 мб');
       setOpenedModalCropper(true);
     },
     [onChange, id],
   );
-
   const closeModalCropperContainer = () => {
     setOpenedModalCropper(false);
   };

@@ -17,10 +17,9 @@ export const Login: FC<TLoginProps> = () => (
       <LoginForm />
       <div className="login__signup">
         <p>У Вас нету аккаунта?</p>
-        {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus */}
-        <NavLink to="/signup" role="button" className="button-auth _shadowed">
+        <a href="http://uniblog.ru/zaglushka.html" role="button" className="button-auth _shadowed">
           Регистрация
-        </NavLink>
+        </a>
       </div>
     </div>
   </div>

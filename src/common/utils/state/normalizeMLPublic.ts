@@ -28,7 +28,7 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
   const imageTextBlocks: Array<MLDraftImageText & { order: number }> = [];
   const shopBlocks: Array<MLDraftShop & { order: number }> = [];
 
-  let background = parseRawImage(images.find(image => image.order === 9999));
+  /* let background = parseRawImage(images.find(image => image.order === 9999));
   if (background) {
     background = `url('${background}')`;
   }
@@ -98,15 +98,15 @@ export const normalizeMLPublic = (multilink: TMultilink): TMultilink => {
       default:
         break;
     }
-  });
+  }); */
   return {
     ...multilink,
-    background: background ?? multilink.background,
+    /* background: background ?? multilink.background,
     contentMap,
     logoBlocks,
     linkBlocks,
     imageBlocks,
     imageTextBlocks,
-    shopBlocks,
+    shopBlocks, */
   };
 };
