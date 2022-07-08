@@ -1,25 +1,28 @@
+import { TMLImageContentTimer } from '../../types/instance/mlDraft/mlDraft';
+import { MLImageContentTimer } from '../../types/instance/mlDraft/mlImageContent/mlImageTimer.class';
+
 import { MLContentType } from 'common/constants';
 import {
   TImageFile,
+  TMLImageContentAudio,
+  TMLImageContentButton,
   TMLImageContentCarousel,
   TMLImageContentImage,
   TMLImageContentImageText,
   TMLImageContentLink,
   TMLImageContentLogo,
-  TMLImageContentAudio,
-  TMLImageContentButton,
   TMLImageContentShop,
 } from 'common/types/instance';
 import {
-  TMLDraftImagesBlocks,
-  MLImageContentButton,
   MLImageContentAudio,
+  MLImageContentButton,
   MLImageContentCarousel,
   MLImageContentImage,
   MLImageContentImageText,
   MLImageContentLink,
   MLImageContentLogo,
   MLImageContentShop,
+  TMLDraftImagesBlocks,
 } from 'common/types/instance/mlDraft/mlImageContent';
 
 export const pushMLDraftImageBlock = (
@@ -58,6 +61,9 @@ export const pushMLDraftImageBlock = (
     case MLContentType.CAROUSEL:
       blocks[`${type}_${id}`] = new MLImageContentCarousel(defaultCarouselImageBlockOptions);
       break;
+    case MLContentType.TIMER:
+      blocks[`${type}_${id}`] = new MLImageContentTimer(defaultTimerImageBlockOptions);
+      break;
 
     default:
   }
@@ -67,6 +73,10 @@ const defaultLogoImageBlockOptions: TMLImageContentLogo<TImageFile> = {
   order: 0,
   logo: null,
   banner: null,
+};
+const defaultTimerImageBlockOptions: TMLImageContentTimer<TImageFile> = {
+  order: 0,
+  image: null,
 };
 
 const defaultLinkImageBlockOptions: TMLImageContentLink<TImageFile> = {

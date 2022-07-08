@@ -11,6 +11,7 @@ import {
   IMLDraftShop,
   IMLDraftSocial,
   IMLDraftText,
+  IMLDraftTimer,
   IMLDraftWidget,
   MLDraftAudio,
   MLDraftButton,
@@ -22,6 +23,7 @@ import {
   MLDraftMap,
   MLDraftShop,
   MLDraftText,
+  MLDraftTimer,
   MLDraftWidget,
   Nullable,
   TIncomingImage,
@@ -75,6 +77,9 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, id
 
     case MLContentType.LOGO:
       blocks[`${type}_${id}`] = new MLDraftLogo(defaultLogoBlockOptions);
+      break;
+    case MLContentType.TIMER:
+      blocks[`${type}_${id}`] = new MLDraftTimer(defaultTimerBlockOptions);
       break;
 
     default:
@@ -165,6 +170,14 @@ const defaultAudioBlockOptions: IMLDraftAudio = {
   isFilled: false,
   url: '',
   margin: [12, 24],
+};
+const defaultTimerBlockOptions: IMLDraftTimer = {
+  isFilled: false,
+  margin: [12, 24],
+  image: '',
+  countdown: 12,
+  title: '',
+  href: '',
 };
 
 const defaultCarouselBlockOptions: IMLDraftCarousel = {
