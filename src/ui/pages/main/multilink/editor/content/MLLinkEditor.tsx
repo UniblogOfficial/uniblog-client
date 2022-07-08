@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
-import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { saveImage, setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
 import { MLContentType, SocialNetwork } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import {
@@ -99,9 +99,8 @@ export const MLLinkEditor = ({ id, close, image, block }: TMLLinkEditorProps) =>
   };
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile) => {
-      dispatch(
-        setMLDraftBlockContentImage({ imageData: { image: imageFile }, id, field: 'linkBlocks' }),
-      );
+      imageFile.name = 'link-0-1';
+      dispatch(saveImage({ imageData: { image: imageFile }, id, type: MLContentType.LINK }));
     },
     [dispatch, image],
   );

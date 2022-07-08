@@ -2,6 +2,7 @@ import { MLContentType } from 'common/constants';
 import {
   MLDraftAudio,
   MLDraftButton,
+  MLDraftCarousel,
   MLDraftImage,
   MLDraftImageText,
   MLDraftLink,
@@ -88,6 +89,9 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     }
     if (block instanceof MLDraftImageText) {
       return blocksDto.imageTextBlocks.push({ ...block, order: i });
+    }
+    if (block instanceof MLDraftCarousel) {
+      return blocksDto.carouselBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftShop) {
       return blocksDto.shopBlocks.push({ ...block, order: i });
