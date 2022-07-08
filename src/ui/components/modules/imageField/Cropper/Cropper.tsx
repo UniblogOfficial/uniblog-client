@@ -55,10 +55,10 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
 
   return (
     <div
-      style={{ width: '80%', position: 'relative', zIndex: 10 }}
+      style={{ position: 'relative', padding: 36, zIndex: 10 }}
       className={`paper containerCropper ${avatarMode ? 'avatarMode' : ''}`}>
       <Cropper
-        style={{ minHeight: 500, width: '100%', position: 'relative', marginBottom: 50 }}
+        style={{ minHeight: 500, width: '100%', position: 'relative', marginBottom: 36 }}
         zoomTo={0.5}
         initialAspectRatio={1}
         aspectRatio={avatarMode ? 1 : NaN}
@@ -77,12 +77,14 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
         }}
         guides
       />
-      <Button value="1" className="button button__right" onClick={getCropData}>
-        {t('common:buttons.save')}
-      </Button>
-      <Button value="1" className="button button__left" onClick={onBackHandler}>
-        {t('common:buttons.back')}
-      </Button>
+      <div className="action-buttons">
+        <Button value="1" className="button _rounded _shadowed" onClick={onBackHandler}>
+          {t('common:buttons.back')}
+        </Button>
+        <Button value="1" className="button _rounded _shadowed" onClick={getCropData}>
+          {t('common:buttons.save')}
+        </Button>
+      </div>
     </div>
   );
 };

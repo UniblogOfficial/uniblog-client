@@ -1,7 +1,7 @@
 .sidebar {
+  @include stretch-it(min-width, 200, 240);
   position: relative;
-  //flex: 0 1 16.6667%;
-  min-width: 240px;
+  //min-width: 240px;
   background-color: #fff;
   &::before {
     content: '';
@@ -13,8 +13,9 @@
     background-color: #fff;
   }
   &__container {
+    @include stretch-it(width, 200, 240);
     position: fixed;
-    width: 240px;
+    //width: 240px;
     max-height: 100vh;
     display: flex;
     margin-left: auto;
@@ -40,6 +41,7 @@
     height: 100%;
   }
   &__item {
+    @include stretch-it(font-size, 10, 16);
     display: block;
     margin: 0 0 8px;
     font-weight: 500;
@@ -51,11 +53,16 @@
     }
   }
   &__link {
+    @include stretch-it(padding-top, 10, 16);
+    @include stretch-it(padding-bottom, 10, 16);
     position: relative;
     display: block;
     padding: 16px 24px;
     text-decoration: none;
     color: #4F5B67;
+    .icon-container {
+      @include stretch-it(width, 20, 24);
+    }
     .icon {
       opacity: 0.9;
       --primary: #A8B0B9;

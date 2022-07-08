@@ -1,10 +1,8 @@
-import { parseRawImage } from '../ui';
-
-import { getKeys } from '.';
-
 import { IconColor, MLContentType, SocialNetwork } from 'common/constants';
 import {
+  IMLDraftAudio,
   IMLDraftButton,
+  IMLDraftCarousel,
   IMLDraftImage,
   IMLDraftImageText,
   IMLDraftLink,
@@ -14,10 +12,13 @@ import {
   IMLDraftSocial,
   IMLDraftText,
   IMLDraftWidget,
+  MLDraftAudio,
   MLDraftButton,
+  MLDraftCarousel,
   MLDraftImage,
   MLDraftImageText,
   MLDraftLink,
+  MLDraftLogo,
   MLDraftMap,
   MLDraftShop,
   MLDraftText,
@@ -30,30 +31,22 @@ import imgPlaceholder from 'img/img-placeholder.png';
 
 // at this moment function just push block at the END!!!
 // except logo and social!
-export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, id: string) => {
-  const newBlocks: TMLDraftBlocks = {};
-
+export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, id: string): void => {
   switch (type) {
     case MLContentType.TEXT:
-      /* // for every field of blocks obj do
-      getKeys(blocks).forEach(key => {
-        // if current field is target for adding chosen block
-        if (key === 'textBlocks') {
-          // push default block at the end of array
-          newBlocks[key] = [
-            ...blocks.textBlocks,
-            new MLDraftText({ order, ...defaultTextBlockOptions }),
-          ];
-          // for other fields just push null at the end for data consistency
-        } else {
-          newBlocks[key] = [...blocks[key], null];
-        }
-      }); */
       blocks[`${type}_${id}`] = new MLDraftText(defaultTextBlockOptions);
       break;
 
     case MLContentType.LINK:
       blocks[`${type}_${id}`] = new MLDraftLink(defaultLinkBlockOptions);
+      break;
+
+    case MLContentType.AUDIO:
+      blocks[`${type}_${id}`] = new MLDraftAudio(defaultAudioBlockOptions);
+      break;
+
+    case MLContentType.CAROUSEL:
+      blocks[`${type}_${id}`] = new MLDraftCarousel(defaultCarouselBlockOptions);
       break;
 
     case MLContentType.BUTTON:
@@ -78,6 +71,10 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, id
 
     case MLContentType.MAP:
       blocks[`${type}_${id}`] = new MLDraftMap(defaultMapBlockOptions);
+      break;
+
+    case MLContentType.LOGO:
+      blocks[`${type}_${id}`] = new MLDraftLogo(defaultLogoBlockOptions);
       break;
 
     default:
@@ -164,6 +161,18 @@ const defaultButtonBlockOptions: IMLDraftButton = {
   background: IconColor.INFO,
 };
 
+const defaultAudioBlockOptions: IMLDraftAudio = {
+  isFilled: false,
+  url: '',
+  margin: [12, 24],
+};
+
+const defaultCarouselBlockOptions: IMLDraftCarousel = {
+  isFilled: false,
+  images: [],
+  margin: [12, 24],
+};
+
 const defaultImageBlockOptions: IMLDraftImage = {
   isFilled: false,
   image: imgPlaceholder,
@@ -184,10 +193,13 @@ const defaultImageTextBlockOptions: IMLDraftImageText = {
   padding: [0, 24],
 };
 
-const defaultLogoBlockOptions: Omit<IMLDraftLogo, 'isFilled' | 'logo'> = {
+const defaultLogoBlockOptions: IMLDraftLogo = {
   size: 100,
   hAlign: 'center',
   vAlign: 'center',
+  isFilled: false,
+  logo: null,
+  banner: null,
 };
 
 const defaultSocialBlockOptions: Omit<IMLDraftSocial, 'links' | 'linkTypes'> = {

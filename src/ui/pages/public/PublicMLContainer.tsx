@@ -34,7 +34,7 @@ export const PublicMLContainer = () => {
           className="outer-bg"
           style={{
             background: multilink.background,
-            backgroundPosition: '50% 0%',
+            backgroundPosition: '50% 50%',
             backgroundSize: 'cover',
           }}
         />

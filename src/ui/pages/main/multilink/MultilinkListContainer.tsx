@@ -43,7 +43,7 @@ export const MultilinkListContainer = () => {
   if (loadingStatus) {
     return (
       <div className="grid__row" style={{ height: '200px', width: '90%' }}>
-        <Preloader />
+        <Preloader className="app-preloader" />
       </div>
     );
   }

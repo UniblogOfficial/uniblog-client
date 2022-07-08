@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 
+import { MLCarousel } from '../../components/modules/mlBlocks/mlCarousel/MLCarousel';
+
 import { MLContentType, ID } from 'common/constants';
 import { TMultilink } from 'common/types/instance';
 import {
@@ -12,6 +14,7 @@ import {
   MLVideo,
   MLVote,
   MLButton,
+  MLAudio,
 } from 'ui/components/modules/mlBlocks';
 import { MLShop } from 'ui/components/modules/mlBlocks/mlShop/MLShop';
 import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
@@ -34,6 +37,7 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
           {contentMap.map((type, i) => {
             let block;
             let image;
+            let url;
             switch (type) {
               case MLContentType.TEXT:
                 block = multilink[type].find(el => el.order === i);
@@ -47,6 +51,11 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
                 return <MLVideo key={ID[i]} id="" block={block} />;
+              case MLContentType.AUDIO:
+                block = multilink[type].find(el => el.order === i);
+                url = null;
+                if (!block) return null;
+                return <MLAudio key={ID[i]} id="" block={block} image={url} />;
               case MLContentType.WIDGET:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
@@ -80,6 +89,11 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 image = null;
                 if (!block) return null;
                 return <MLImageText key={ID[i]} id="" block={block} image={image} />;
+              case MLContentType.CAROUSEL:
+                block = multilink[type].find(el => el.order === i);
+                image = null;
+                if (!block) return null;
+                return <MLCarousel key={ID[i]} id="" block={block} image={image} />;
               case MLContentType.SHOP:
                 block = multilink[type].find(el => el.order === i);
                 image = null;

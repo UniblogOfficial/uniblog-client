@@ -17,6 +17,10 @@ export type TMLImageContentCarousel<TImage> = {
   order: number;
   images: Nullable<TImage>[];
 };
+export type TMLImageContentAudio<TImage> = {
+  order: number;
+  image: Nullable<TImage>;
+};
 
 export type TMLImageContentImageText<TImage> = {
   order: number;

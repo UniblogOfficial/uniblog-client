@@ -10,6 +10,7 @@ export interface IMLDraftCarousel extends Omit<IMLDraftContent, 'borderRadius'> 
   swipe?: boolean;
   arrows?: boolean;
   interval?: number;
+  itemsPerView?: number;
 }
 
 export class MLDraftCarousel
@@ -22,6 +23,7 @@ export class MLDraftCarousel
   swipe?: boolean = true;
   arrows?: boolean = false;
   interval?: number;
+  itemsPerView?: number;
   constructor(props: IMLDraftCarousel) {
     super(props);
     this.images = props.images;
@@ -29,5 +31,6 @@ export class MLDraftCarousel
     this.swipe = props.swipe;
     this.arrows = props.arrows;
     this.interval = props.interval;
+    this.itemsPerView = props.itemsPerView;
   }
 }

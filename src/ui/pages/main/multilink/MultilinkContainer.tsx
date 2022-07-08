@@ -37,6 +37,12 @@ export const MultilinkContainer = ({ userData }: TMultilinkContainerProps) => {
                 {t('pages:multilink.buttons.published')}
               </Button>
             </NavLink>
+            <NavLink to="/multilink/drafts" className="link-nulled">
+              <Button className="button button-column _rounded" variant="regular">
+                <Icon name="draft" className="nav-icon" size="full" />
+                Черновики
+              </Button>
+            </NavLink>
           </nav>
         </div>
         <Switch>
@@ -45,6 +51,7 @@ export const MultilinkContainer = ({ userData }: TMultilinkContainerProps) => {
             render={() => <MultilinkEditorContainer userData={userData} />}
           />
           <Route path="/multilink/all" render={() => <MultilinkListContainer />} />
+          <Route path="/multilink/drafts" render={() => <>under construction</>} />
           <Redirect from="/multilink/*" to="/404" />
         </Switch>
       </main>
