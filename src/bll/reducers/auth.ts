@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { batch } from 'react-redux';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
 import { ResponseAuthMeType, ResponseLoginType } from '../../common/types/response/auth';
@@ -8,7 +9,10 @@ import { removeUserData, setAppStatus, setInitialized, setMLDraftName, setUserDa
 import { AppStatus } from 'common/constants';
 import { Nullable, TUser } from 'common/types/instance';
 import { TLoginDto, TRegisterDto } from 'common/types/request/auth.dto';
-import { handleServerNetworkErrorSaga } from 'common/utils/state/errorHandler';
+import {
+  handleServerNetworkError,
+  handleServerNetworkErrorSaga,
+} from 'common/utils/state/errorHandler';
 import { authAPI } from 'dal';
 
 const initialState: TAuthState = {
@@ -51,7 +55,8 @@ export function* logoutWorkerSaga() {
 export function* requestMeWorkerSaga() {
   try {
     yield put(setAppStatus(AppStatus.AUTH_LOADING));
-    const response: ResponseAuthMeType = yield call(authAPI.me);
+    // @ts-ignore
+    const response = yield call(authAPI.me);
     yield put(setUserData(response.data));
     yield put(setMLDraftName((response.data as TUser).name));
     // dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
@@ -78,7 +83,7 @@ export function* requestRegisterWorkerSaga(action: ReturnType<typeof requestRegi
 export const logout = () => ({ type: 'auth/logout' } as const);
 export const requestLogin = (dto: TLoginDto) => ({ type: 'auth/requestLogin', dto } as const);
 export const requestRegister = (dto: TRegisterDto) => ({ type: 'auth/requestLogin', dto } as const);
-export const requestMe = () => ({ type: 'auth/requestMe' } as const);
+// export const requestMe = () => ({ type: 'auth/requestMe' } as const);
 
 export function* requestLoginWatcher() {
   yield takeEvery('auth/requestLogin', requestLoginWorkerSaga);
@@ -109,25 +114,25 @@ export function* requestLoginWatcher() {
 //   dispatch(removeUserData({}));
 // });
 
-// export const requestMe = createAsyncThunk(
-//   'auth/requestMe',
-//   async (_, { dispatch, rejectWithValue }) => {
-//     try {
-//       dispatch(setAppStatus(AppStatus.AUTH_LOADING));
-//       const response = await authAPI.me();
-//       batch(() => {
-//         dispatch(setUserData(response.data));
-//         dispatch(setMLDraftName((response.data as TUser).name));
-//         // dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
-//         dispatch(setInitialized());
-//         dispatch(setAppStatus(AppStatus.SUCCEEDED));
-//       });
-//     } catch (e) {
-//       handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
-//       dispatch(setInitialized());
-//     }
-//   },
-// );
+export const requestMe = createAsyncThunk(
+  'auth/requestMe',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(setAppStatus(AppStatus.AUTH_LOADING));
+      const response = await authAPI.me();
+      batch(() => {
+        dispatch(setUserData(response.data));
+        dispatch(setMLDraftName((response.data as TUser).name));
+        // dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
+        dispatch(setInitialized());
+        dispatch(setAppStatus(AppStatus.SUCCEEDED));
+      });
+    } catch (e) {
+      handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
+      dispatch(setInitialized());
+    }
+  },
+);
 
 // export const requestRegister = createAsyncThunk(
 //   'auth/requestRegister',
