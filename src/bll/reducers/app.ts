@@ -65,7 +65,6 @@ export function* initializeWorkerSaga(action: ReturnType<typeof initializeApp>) 
     yield put<any>(getMultilink(trim(action.url, '/')));
   }
   if (!isMLRequestAttempt) {
-    // @ts-ignore
     yield put(requestMe());
   }
 }
