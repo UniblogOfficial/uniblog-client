@@ -1716,14 +1716,5 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         padding: [0, 17],
       }),
     ],
-    [
-      new MLDraftTimer({
-        isFilled: false,
-        image: sliderImage3,
-        title: 'хз че это и работает ли',
-        href: 'asd',
-        countdown: 12,
-      }),
-    ],
   ] as const;
 };
