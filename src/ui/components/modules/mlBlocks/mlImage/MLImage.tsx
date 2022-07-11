@@ -12,7 +12,6 @@ type TMLImageProps = {
   isPublic?: boolean;
   callback?: <T>(payload: T) => void;
 };
-
 export const MLImage = ({ id, block, image, isPublic, callback }: TMLImageProps) => {
   if (!block) return null;
 

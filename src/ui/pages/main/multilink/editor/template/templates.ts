@@ -1716,5 +1716,14 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         padding: [0, 17],
       }),
     ],
+    [
+      new MLDraftTimer({
+        isFilled: false,
+        href: 'asd',
+        image: 'https://i.ibb.co/T49BVq6/bgcImg.jpg',
+        countdown: 12,
+        title: '123',
+      }),
+    ],
   ] as const;
 };

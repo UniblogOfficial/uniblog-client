@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import 'react-h5-audio-player/lib/styles.css';
 
-import { MLDraftTimer } from '../../../../../common/types/instance';
+import {
+  MLDraftTimer,
+  Nullable,
+  TImageFile,
+} from '../../../../../common/types/instance';
+import { TMLImageContentTimer } from '../../../../../common/types/instance/mlDraft/mlDraft';
 import { px } from '../../../../../common/utils/ui';
+import imgPlaceholder from '../../../../../img/img-placeholder.png';
 
 import s from './MLTimer.module.scss';
 
@@ -11,10 +17,12 @@ type TMLTimerProps = {
   id: string;
   block: MLDraftTimer;
   callback?: <T>(payload: T) => void;
+  image?: Nullable<TMLImageContentTimer<TImageFile>>;
 };
 
-export const MLTimer = ({ id, block, callback }: TMLTimerProps) => {
+export const MLTimer = ({ id, block, callback, image }: TMLTimerProps) => {
   const className = callback ? 'interactive' : undefined;
+  const imgSrc = image?.image ? image.image.previewUrl : block.image ?? imgPlaceholder;
   const [timerValue, setTimerValue] = useState<number>(block.countdown);
   useEffect(() => {
     setTimerValue(block.countdown);
@@ -34,18 +42,18 @@ export const MLTimer = ({ id, block, callback }: TMLTimerProps) => {
   const seconds = timerValue && timerValue > 0 ? Math.floor(timerValue / 1000) % 60 : 0;
   if (!block) return null;
   return (
-    <div>
-      <section
-        className={className}
-        style={{ padding: px(block.padding) ?? '0', margin: px(block.margin) ?? '0' }}>
-        <div>{block.title}</div>
-        <div className={s.timer}>
-          <div className={s.timer__titles}>
-            {timerTitles.map((title, i) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <div key={i}>{title}</div>
-            ))}
-          </div>
+    <section
+      className={className}
+      style={{ padding: px(block.padding) ?? '0', margin: px(block.margin) ?? '0' }}>
+      {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
+      <div className={s.timer}>
+        <div className={s.timer__titles}>
+          {timerTitles.map((title, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={i}>{title}</div>
+          ))}
+        </div>
+        <div className={s.timer__container}>
           <div className={s.timer__items}>
             <div className={`${s.timer__item} ${s.timer__days}`}>
               {days < 10 ? `0${days}` : days}
@@ -61,7 +69,10 @@ export const MLTimer = ({ id, block, callback }: TMLTimerProps) => {
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+      <div className={s.img__container}>
+        <img src={imgSrc} alt="" />
+      </div>
+    </section>
   );
 };

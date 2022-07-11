@@ -120,6 +120,7 @@ const mlDraftSlice = createSlice({
           | 'buttonBlocks'
           | 'linkBlocks'
           | 'audioBlocks'
+          | 'timerBlocks'
         >;
       }>,
     ) {

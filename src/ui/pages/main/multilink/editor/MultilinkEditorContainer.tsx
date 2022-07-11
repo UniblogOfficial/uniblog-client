@@ -4,6 +4,8 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
+import { MLImageContentTimer } from '../../../../../common/types/instance/mlDraft/mlImageContent/mlImageTimer.class';
+
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
@@ -273,10 +275,10 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                       </WrapperDrag>
                     );
                   }
-                  if (block instanceof MLDraftTimer) {
+                  if (block instanceof MLDraftTimer && image instanceof MLImageContentTimer) {
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
-                        <MLTimer id={id} block={block} callback={callback} />
+                        <MLTimer id={id} block={block} callback={callback} image={image} />
                       </WrapperDrag>
                     );
                   }
