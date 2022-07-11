@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import 'react-h5-audio-player/lib/styles.css';
 
-import {
-  MLDraftTimer,
-  Nullable,
-  TImageFile,
-} from '../../../../../common/types/instance';
+import { MLDraftTimer, Nullable, TImageFile } from '../../../../../common/types/instance';
 import { TMLImageContentTimer } from '../../../../../common/types/instance/mlDraft/mlDraft';
 import { px } from '../../../../../common/utils/ui';
 import imgPlaceholder from '../../../../../img/img-placeholder.png';
