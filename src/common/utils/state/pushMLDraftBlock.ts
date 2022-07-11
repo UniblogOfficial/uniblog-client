@@ -162,7 +162,7 @@ const defaultButtonBlockOptions: IMLDraftButton = {
   padding: [12, 24, 12, 24],
   margin: [0, 24, 12, 0],
   color: 'white',
-  borderRadius: [5],
+  borderRadius: [5, 5, 5, 5],
   background: IconColor.INFO,
 };
 
