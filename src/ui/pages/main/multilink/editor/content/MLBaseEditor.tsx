@@ -68,7 +68,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
     }
 
     if (isPaddingTopBottom && isPaddingLeftRight) {
-      padding = new Array(4).fill(paddingValue);
+      padding = new Array(4).fill(paddingValue) as [number, number, number, number];
       dispatchThrottled(setMLDraftBlockContent({ content: { padding }, id, type: block.type }));
       return;
     }
@@ -102,7 +102,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
     }
 
     if (isMarginTopBottom && isMarginLeftRight) {
-      margin = new Array(4).fill(marginValue);
+      margin = new Array(4).fill(marginValue) as [number, number, number, number];
       dispatchThrottled(setMLDraftBlockContent({ content: { margin }, id, type: block.type }));
       return;
     }
