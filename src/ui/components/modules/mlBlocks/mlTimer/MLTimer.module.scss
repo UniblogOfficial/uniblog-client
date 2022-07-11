@@ -1,3 +1,17 @@
+.img__container {
+  img{
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+}
+.timer {
+  position: absolute;
+  z-index: 10;
+  color: #0ed400;
+  background-color: #0007;
+}
 .timer__items {
   display: flex;
   font-size: 24px;

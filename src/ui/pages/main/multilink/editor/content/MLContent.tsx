@@ -2,6 +2,8 @@ import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { MLImageContentTimer } from '../../../../../../common/types/instance/mlDraft/mlImageContent/mlImageTimer.class';
+
 import { MLAudioEditor } from './MLAudioEditor/MLAudioEditor';
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
 import { MLCarouselEditor } from './MLCarouselEditor/MLCarouselEditor';
@@ -282,10 +284,14 @@ export const MLContent = (props: TMLContentProps) => {
         break;
       }
       case MLContentType.TIMER: {
-        if (currentBlock instanceof MLDraftTimer) {
+        if (
+          currentBlock instanceof MLDraftTimer &&
+          currentBlockImages instanceof MLImageContentTimer
+        ) {
           return withBaseEditor({
             id: blockEditorId,
             block: currentBlock,
+            image: currentBlockImages,
           })(MlTimerEditor);
         }
         break;

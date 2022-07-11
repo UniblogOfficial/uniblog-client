@@ -174,8 +174,8 @@ const defaultAudioBlockOptions: IMLDraftAudio = {
 const defaultTimerBlockOptions: IMLDraftTimer = {
   isFilled: false,
   margin: [12, 24],
-  image: '',
-  countdown: 12,
+  image: null,
+  countdown: 0,
   title: '',
   href: '',
 };
