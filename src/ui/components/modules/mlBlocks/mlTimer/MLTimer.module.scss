@@ -1,34 +1,39 @@
+.hidden {
+  display: none;
+}
+.timer {
+  position: absolute;
+  z-index: 10;
+  color: antiquewhite;
+  background-color: #0007;
+  top: 5%;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  &__container {
+    text-align: center;
+  }
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  &__titles {
+    font-size: 20px;
+  }
+  &__values {
+    margin-top: 10px;
+    font-size: 25px;
+  }
+}
 .img__container {
-  img{
+  img {
     position: relative;
     top: 0;
     left: 0;
     transform: none;
   }
 }
-.timer {
-  position: absolute;
-  z-index: 10;
-  color: #0ed400;
-  background-color: #0007;
-}
-.timer__items {
-  display: flex;
-  font-size: 24px;
-}
-.timer__titles {
-  display: flex;
-  justify-content: space-around;
-}
-.timer__item {
-  position: relative;
-  min-width: 60px;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding-bottom: 15px;
-  text-align: center;
-}
-.timer__item::before {
+.timer__values::before {
   content: attr(data-title);
   display: block;
   position: absolute;
@@ -37,7 +42,8 @@
   transform: translateX(-50%);
   font-size: 14px;
 }
-.timer__item:not(:last-child)::after {
+
+.timer__values:not(:last-child)::after {
   content: ':';
   position: absolute;
   right: -15px;
