@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 
 import { MultilinkEditorContainer } from './editor/MultilinkEditorContainer';
+import MultilinkDraftContainer from './MultilinkDraftContainer';
 import { MultilinkListContainer } from './MultilinkListContainer';
 
 import { TUser } from 'common/types/instance';
@@ -51,7 +52,7 @@ export const MultilinkContainer = ({ userData }: TMultilinkContainerProps) => {
             render={() => <MultilinkEditorContainer userData={userData} />}
           />
           <Route path="/multilink/all" render={() => <MultilinkListContainer />} />
-          <Route path="/multilink/drafts" render={() => <>under construction</>} />
+          <Route path="/multilink/drafts" render={() => <MultilinkDraftContainer />} />
           <Redirect from="/multilink/*" to="/404" />
         </Switch>
       </main>
