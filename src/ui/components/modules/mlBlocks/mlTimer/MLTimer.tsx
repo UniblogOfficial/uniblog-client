@@ -31,43 +31,36 @@ export const MLTimer = ({ id, block, callback, image }: TMLTimerProps) => {
       clearTimeout(timeoutId);
     };
   }, [timerValue]);
-  const timerTitles = ['Дней', 'Часов', 'Минут', 'Секунд'];
   const days = timerValue && timerValue > 0 ? Math.floor(timerValue / 1000 / 60 / 60 / 24) : 0;
   const hours = timerValue && timerValue > 0 ? Math.floor(timerValue / 1000 / 60 / 60) % 24 : 0;
   const minutes = timerValue && timerValue > 0 ? Math.floor(timerValue / 1000 / 60) % 60 : 0;
   const seconds = timerValue && timerValue > 0 ? Math.floor(timerValue / 1000) % 60 : 0;
+  const timerValues = [
+    { title: 'Дней', value: days },
+    { title: 'Часов', value: hours },
+    { title: 'Минут', value: minutes },
+    { title: 'Секунд', value: seconds },
+  ];
   if (!block) return null;
   return (
     <section
-      className={className}
+      className={timerValue < 0 ? s.hidden : className}
       style={{ padding: px(block.padding) ?? '0', margin: px(block.margin) ?? '0' }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
-      <div className={s.timer}>
-        <div className={s.timer__titles}>
-          {timerTitles.map((title, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={i}>{title}</div>
+      <div className={s.timer__wrapper}>
+        <div className={s.timer}>
+          {timerValues.map((timerBlock, index) => (
+            <div key={index.toString() + timerBlock} className={s.timer__container}>
+              <div className={s.timer__titles}>{timerBlock.title}</div>
+              <div className={s.timer__values}>
+                {timerBlock.value < 10 ? `0${timerBlock.value}` : timerBlock.value}
+              </div>
+            </div>
           ))}
         </div>
-        <div className={s.timer__container}>
-          <div className={s.timer__items}>
-            <div className={`${s.timer__item} ${s.timer__days}`}>
-              {days < 10 ? `0${days}` : days}
-            </div>
-            <div className={`${s.timer__item} ${s.timer__hours}`}>
-              {hours < 10 ? `0${hours}` : hours}
-            </div>
-            <div className={`${s.timer__item} ${s.timer__minutes}`}>
-              {minutes < 10 ? `0${minutes}` : minutes}
-            </div>
-            <div className={`${s.timer__item} ${s.timer__seconds}`}>
-              {seconds < 10 ? `0${seconds}` : seconds}
-            </div>
-          </div>
+        <div className={s.img__container}>
+          <img src={imgSrc} alt="" />
         </div>
-      </div>
-      <div className={s.img__container}>
-        <img src={imgSrc} alt="" />
       </div>
     </section>
   );
