@@ -4,7 +4,7 @@ export interface IMLDraftContent {
   padding?: [number, number, number, number];
   margin?: [number, number, number, number];
   background?: string;
-  borderRadius?: number[];
+  borderRadius?: [number, number, number, number];
 }
 
 export abstract class MLDraftBlock<TBlockType> implements IMLDraftContent {
@@ -14,7 +14,7 @@ export abstract class MLDraftBlock<TBlockType> implements IMLDraftContent {
   padding?: [number, number, number, number];
   margin?: [number, number, number, number];
   background?: string;
-  borderRadius?: number[];
+  borderRadius?: [number, number, number, number];
   constructor(props: IMLDraftContent) {
     this.isFilled = props.isFilled;
     this.padding = props.padding;
