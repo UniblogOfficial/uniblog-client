@@ -105,6 +105,7 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
             onClick={changeLanguage}>
             Русский
           </Button>
+
           <Button
             value="en"
             variant={i18n.language === 'en' ? undefined : 'regular'}

@@ -31,7 +31,115 @@ export const PriceContainer = () => {
           </section>
         </div>
         <div className="grid__row">
-          <section className="r-paper price-grid">21</section>
+          <section className="paper price-grid">
+            <div className="price__header">
+              <div className="payment-period">Период оплаты</div>
+              <div className="period-switch">
+                <Button className="period-button border-left">
+                  В месяц<span>Стандартная цена</span>
+                </Button>
+                <Button variant="regular" className="period-button ">
+                  За 3 месяца<span>Экономия 5%</span>
+                </Button>
+                <Button variant="regular" className="period-button">
+                  За 6 месяцев<span>Экономия 10%</span>
+                </Button>
+                <Button variant="regular" className="period-button border-right">
+                  За год<span>Экономия 10%</span>
+                </Button>
+              </div>
+            </div>
+            <div className="price__main">
+              <div className="grid--container">
+                <div className="grid--price-columns" />
+                <div className="grid--price-columns toCenter plan-text">
+                  Vip <div className="user-tariff">Мой тариф</div>
+                </div>
+                <div className="grid--price-columns toCenter plan-text">Gold</div>
+                <div className="grid--price-columns toCenter plan-text">Platinum</div>
+                <div className="grid--price-columns">
+                  <div className="left-margin">Punkt1</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns">
+                  <div className="left-margin">Punkt1</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns ">
+                  <div className="left-margin">Punkt1</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-not-included">Нету</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns ">
+                  <div className="left-margin">Punkt1</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-not-included">Нету</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-not-included">Нету</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns ">
+                  <div className="left-margin">Punkt1</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-not-included">Нету</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-not-included">Нету</div>
+                </div>
+                <div className="grid--price-columns toCenter">
+                  <div className="price-columns-included">Есть</div>
+                </div>
+                <div className="grid--price-columns " />
+                <div className="grid--price-columns toCenter price-columns">
+                  3600 рублей <div>в месяц</div>
+                </div>
+                <div className="grid--price-columns toCenter price-columns">
+                  5900 рублей <div>в месяц</div>
+                </div>
+                <div className="grid--price-columns toCenter price-columns">
+                  6900 рублей <div>в месяц</div>
+                </div>
+                <div className="grid--price-columns noneBorder" />
+                <div className="grid--price-columns toCenter noneBorder">
+                  <Button>Оплатить</Button>
+                </div>
+                <div className="grid--price-columns toCenter noneBorder">
+                  <Button>Оплатить</Button>
+                </div>
+                <div className="grid--price-columns toCenter noneBorder">
+                  <Button>Оплатить</Button>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
     </div>
