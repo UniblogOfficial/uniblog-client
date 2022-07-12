@@ -43,6 +43,7 @@ import {
 } from 'common/types/instance';
 import {
   MLImageContentAudio,
+  MLImageContentCarousel,
   MLImageContentImage,
   MLImageContentLink,
   MLImageContentLogo,
@@ -236,10 +237,16 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                       </WrapperDrag>
                     );
                   }
-                  if (block instanceof MLDraftCarousel) {
+                  if (block instanceof MLDraftCarousel && image instanceof MLImageContentCarousel) {
                     return (
                       <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
-                        <MLCarousel key={id} id={id} callback={callback} block={block} />
+                        <MLCarousel
+                          key={id}
+                          id={id}
+                          callback={callback}
+                          block={block}
+                          image={image}
+                        />
                       </WrapperDrag>
                     );
                   }

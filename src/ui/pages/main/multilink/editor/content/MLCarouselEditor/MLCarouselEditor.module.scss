@@ -1,0 +1,35 @@
+.mlCarouselEditor {
+
+  .imageField {
+    position: relative;
+    height: 150px;
+  }
+
+  .buttonsGroup {
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+
+    .button {
+      margin: 20px;
+    }
+  }
+
+  .controls {
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+    margin-bottom: 10px;
+
+    .control {
+      display: flex;
+      padding: 5px;
+      align-items: center;
+    }
+
+    .intervalInput {
+      border: 1px solid grey;
+      width: 110px;
+    }
+  }
+}
