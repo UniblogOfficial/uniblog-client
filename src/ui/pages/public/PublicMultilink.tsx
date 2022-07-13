@@ -15,6 +15,7 @@ import {
   MLVote,
   MLButton,
   MLAudio,
+  MLTimer,
 } from 'ui/components/modules/mlBlocks';
 import { MLShop } from 'ui/components/modules/mlBlocks/mlShop/MLShop';
 import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
@@ -64,7 +65,6 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
                 return <MLVote key={ID[i]} id="" block={block} isPublic />;
-
               case MLContentType.BUTTON:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
@@ -75,6 +75,11 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 image = null;
                 if (!block) return null;
                 return <MLLogo key={ID[i]} id="" block={block} images={image} />;
+              case MLContentType.TIMER:
+                block = multilink[type].find(el => el.order === i);
+                image = null;
+                if (!block) return null;
+                return <MLTimer key={ID[i]} id="" block={block} image={image} />;
               case MLContentType.LINK:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;

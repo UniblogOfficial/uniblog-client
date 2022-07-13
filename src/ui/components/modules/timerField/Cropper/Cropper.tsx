@@ -52,30 +52,30 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
     setCropperMode(false);
     setCroppedImage([]);
   };
-  console.log(img);
+
   return (
     <div
       style={{ position: 'relative', padding: 36, zIndex: 10 }}
       className={`paper containerCropper ${avatarMode ? 'avatarMode' : ''}`}>
       <Cropper
         style={{ minHeight: 500, width: '100%', position: 'relative', marginBottom: 36 }}
-        // zoomTo={0.1}
+        zoomTo={0.5}
+        initialAspectRatio={1}
         aspectRatio={avatarMode ? 1 : NaN}
-        // initialAspectRatio={avatarMode ? 1 : 4 / 3}
         preview=".img-preview"
         src={image}
         viewMode={1}
         minCropBoxHeight={avatarMode ? 200 : 10}
         minCropBoxWidth={avatarMode ? 200 : 10}
         background={false}
-        // responsive
+        responsive
         dragMode={avatarMode ? 'move' : 'crop'}
-        autoCropArea={1}
-        // checkOrientation
+        autoCropArea={0.8}
+        checkOrientation
         onInitialized={instance => {
           setCropper(instance);
         }}
-        // guides
+        guides
       />
       <div className="action-buttons">
         <Button value="1" className="button _rounded _shadowed" onClick={onBackHandler}>

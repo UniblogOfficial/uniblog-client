@@ -25,6 +25,7 @@ import { IMLDraftPost, MLDraftPost } from './mlPost.class';
 import { IMLDraftShop, MLDraftShop } from './mlShop.class';
 import { IMLDraftSocial, MLDraftSocial } from './mlSocial.class';
 import { IMLDraftText, MLDraftText } from './mlText.class';
+import { IMLDraftTimer, MLDraftTimer } from './mlTimer.class';
 import { IMLDraftVideo, MLDraftVideo } from './mlVideo.class';
 import { IMLDraftVote, MLDraftVote } from './mlVote.class';
 import { IMLDraftWidget, MLDraftWidget } from './mlWidget.class';
@@ -60,6 +61,7 @@ export type TMLDraftBlocksUnion =
   | MLDraftImageText
   | MLDraftCarousel
   | MLDraftLogo
+  | MLDraftTimer
   | MLDraftShop;
 
 export type TMLDraftImages = {
@@ -93,6 +95,7 @@ export type {
   TMLImageContentButton,
   TMLImageContentCarousel,
   TMLImageContentAudio,
+  IMLDraftTimer,
 };
 export {
   MLDraftAudio,
@@ -112,4 +115,5 @@ export {
   MLDraftVideo,
   MLDraftVote,
   MLDraftWidget,
+  MLDraftTimer,
 };

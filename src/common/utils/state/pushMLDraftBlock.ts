@@ -11,6 +11,7 @@ import {
   IMLDraftShop,
   IMLDraftSocial,
   IMLDraftText,
+  IMLDraftTimer,
   IMLDraftWidget,
   MLDraftAudio,
   MLDraftButton,
@@ -22,6 +23,7 @@ import {
   MLDraftMap,
   MLDraftShop,
   MLDraftText,
+  MLDraftTimer,
   MLDraftWidget,
   Nullable,
   TIncomingImage,
@@ -75,6 +77,9 @@ export const pushMLDraftBlock = (type: MLContentType, blocks: TMLDraftBlocks, id
 
     case MLContentType.LOGO:
       blocks[`${type}_${id}`] = new MLDraftLogo(defaultLogoBlockOptions);
+      break;
+    case MLContentType.TIMER:
+      blocks[`${type}_${id}`] = new MLDraftTimer(defaultTimerBlockOptions);
       break;
 
     default:
@@ -133,7 +138,7 @@ const defaultTextBlockOptions: IMLDraftText = {
   isFilled: false,
   text: '',
   fontSize: 18,
-  padding: [0, 24],
+  padding: [0, 24, 0, 24],
 };
 
 const defaultLinkBlockOptions: IMLDraftLink = {
@@ -143,8 +148,8 @@ const defaultLinkBlockOptions: IMLDraftLink = {
   title: 'Ссылка',
   fontSize: 20,
   fontWeight: 500,
-  padding: [12, 24],
-  margin: [0, 24, 12],
+  padding: [12, 24, 12, 24],
+  margin: [0, 24, 12, 0],
   background: `#f${Math.random().toString(16).substr(-4)}f40`,
 };
 
@@ -154,23 +159,31 @@ const defaultButtonBlockOptions: IMLDraftButton = {
   title: 'Кнопка',
   fontSize: 20,
   fontWeight: 500,
-  padding: [12, 24],
-  margin: [0, 24, 12],
+  padding: [12, 24, 12, 24],
+  margin: [0, 24, 12, 0],
   color: 'white',
-  borderRadius: [5],
+  borderRadius: [5, 5, 5, 5],
   background: IconColor.INFO,
 };
 
 const defaultAudioBlockOptions: IMLDraftAudio = {
   isFilled: false,
   url: '',
-  margin: [12, 24],
+  margin: [12, 24, 12, 24],
+};
+const defaultTimerBlockOptions: IMLDraftTimer = {
+  isFilled: false,
+  margin: [12, 24, 12, 24],
+  image: null,
+  countdown: 0,
+  title: '',
+  href: '',
 };
 
 const defaultCarouselBlockOptions: IMLDraftCarousel = {
   isFilled: false,
   images: [],
-  margin: [12, 24],
+  margin: [12, 24, 12, 24],
 };
 
 const defaultImageBlockOptions: IMLDraftImage = {
@@ -178,7 +191,7 @@ const defaultImageBlockOptions: IMLDraftImage = {
   image: imgPlaceholder,
   imgPosition: 'bottom',
   textPosition: 'outside',
-  padding: [0, 24],
+  padding: [0, 24, 0, 24],
 };
 
 const defaultImageTextBlockOptions: IMLDraftImageText = {
@@ -190,7 +203,7 @@ const defaultImageTextBlockOptions: IMLDraftImageText = {
   vAlign: 'top',
   fontSize: 18,
   fontWeight: 400,
-  padding: [0, 24],
+  padding: [0, 24, 0, 24],
 };
 
 const defaultLogoBlockOptions: IMLDraftLogo = {
@@ -210,7 +223,7 @@ const defaultShopBlockOptions: IMLDraftShop = {
   isFilled: false,
   grid: '1fr 1fr 1fr',
   gap: 10,
-  padding: [0, 24],
+  padding: [0, 24, 0, 24],
   cells: [
     {
       order: 0,
@@ -258,6 +271,6 @@ const defaultMapBlockOptions: IMLDraftMap = {
   isFilled: false,
   url: 'url',
   latLng: null,
-  padding: [12, 24],
-  margin: [0, 24, 12],
+  padding: [12, 24, 12, 24],
+  margin: [0, 24, 12, 0],
 };

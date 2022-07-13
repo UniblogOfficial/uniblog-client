@@ -21,7 +21,6 @@ export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback })
   return (
     <div className={styles.cont}>
       <Carousel
-        /* eslint-disable-next-line react/jsx-key */
         items={audioSrc.map((m, index) => (
           <div className={styles.container} key={index.toString() + m}>
             <img src={m as string} alt="#" />

@@ -17,13 +17,30 @@ type TMLTextEditorProps = {
 type AlignTextType = 'right' | 'left' | 'center' | 'justify';
 const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
 const fontSizeTexts: string[] = ['12', '14', '16', '18', '20', '22', '24', '26', '28', '30'];
-const fontTexts = [
-  'Arial, sans-serif',
-  'Times, Times New Roman, serif',
-  'Andale Mono, monospace',
-  'Courier New, monospace',
-  'Snell Roundhand, cursive',
-  'Trattatello, fantasy',
+const fontTexts: string[] = [
+  'Alegreya',
+  'B612',
+  'Mulish',
+  'Titillium Web',
+  'Varela',
+  'Vollkorn',
+  'IBM Plex Sans',
+  'Crimson Text',
+  'Cairo',
+  'BioRhyme',
+  'Karla',
+  'Lora',
+  'Frank Ruhl Libre',
+  'Playfair Display',
+  'Archivo',
+  'Spectral',
+  'Fjalla One',
+  'Roboto',
+  'Montserrat',
+  'Rubik',
+  'Source Sans Pro',
+  'Cardo',
+  'Cormorant',
 ];
 const shadowTextDefault = ['0', '0', '0', '#000'];
 
@@ -87,9 +104,13 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
   };
 
   const onFontTextsChange = (font: string) => {
-    const copyBlock = new MLDraftText(block);
-    copyBlock.fontFamily = font;
-    dispatch(setMLDraftBlockContent({ content: copyBlock, id, type: block.type }));
+    dispatch(
+      setMLDraftBlockContent({
+        content: { fontFamily: `${font}` },
+        id,
+        type: block.type,
+      }),
+    );
   };
 
   const onLetterSpacingChange = (e: ChangeEvent<HTMLInputElement>) => {

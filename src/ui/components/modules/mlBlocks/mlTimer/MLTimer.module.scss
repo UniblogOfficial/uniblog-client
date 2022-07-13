@@ -1,0 +1,50 @@
+.hidden {
+  display: none;
+}
+.timer {
+  position: absolute;
+  z-index: 10;
+  color: antiquewhite;
+  background-color: #0007;
+  top: 5%;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  &__container {
+    text-align: center;
+  }
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  &__titles {
+    font-size: 20px;
+  }
+  &__values {
+    margin-top: 10px;
+    font-size: 25px;
+  }
+}
+.img__container {
+  img {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+}
+.timer__values::before {
+  content: attr(data-title);
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  font-size: 14px;
+}
+
+.timer__values:not(:last-child)::after {
+  content: ':';
+  position: absolute;
+  right: -15px;
+}

@@ -11,6 +11,7 @@ import {
   MLDraftShop,
   MLDraftSocial,
   MLDraftText,
+  MLDraftTimer,
   MLDraftVideo,
   MLDraftVote,
   MLDraftWidget,
@@ -80,7 +81,6 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     if (block instanceof MLDraftLink) {
       return blocksDto.linkBlocks.push({ ...block, order: i });
     }
-
     if (block instanceof MLDraftButton) {
       return blocksDto.buttonBlocks.push({ ...block, order: i });
     }
@@ -95,6 +95,9 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
     }
     if (block instanceof MLDraftShop) {
       return blocksDto.shopBlocks.push({ ...block, order: i });
+    }
+    if (block instanceof MLDraftTimer) {
+      return blocksDto.timerBlocks.push({ ...block, order: i });
     }
   });
   const multilinkDto: TCreateMLDto = {

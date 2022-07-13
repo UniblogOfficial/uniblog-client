@@ -2,22 +2,17 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
-import { trim, validateMLRoute } from '../../common/utils/state';
+import { ResponseAuthMeType, ResponseLoginType } from '../../common/types/response/auth';
 
-import {
-  getMultilink,
-  removeUserData,
-  setAppStatus,
-  setInitialized,
-  setMLDraftName,
-  setUserData,
-} from '.';
+import { removeUserData, setAppStatus, setInitialized, setMLDraftName, setUserData } from '.';
 
-import { AppThunk, store } from 'bll/store';
-import { AppStatus, PrivatePath, PublicPath } from 'common/constants';
+import { AppStatus } from 'common/constants';
 import { Nullable, TUser } from 'common/types/instance';
 import { TLoginDto, TRegisterDto } from 'common/types/request/auth.dto';
-import { handleServerNetworkError } from 'common/utils/state/errorHandler';
+import {
+  handleServerNetworkError,
+  handleServerNetworkErrorSaga,
+} from 'common/utils/state/errorHandler';
 import { authAPI } from 'dal';
 
 const initialState: TAuthState = {
@@ -45,43 +40,47 @@ export const authReducer = authSlice.reducer;
 
 export function* requestLoginWorkerSaga(action: ReturnType<typeof requestLogin>) {
   yield put(setAppStatus(AppStatus.AUTH_LOADING));
-  // @ts-ignore
-  const response = yield call(authAPI.login, action.dto);
-  yield put(setUserData(response.data));
-  yield put(setAppStatus(AppStatus.SUCCEEDED));
+  try {
+    const response: ResponseLoginType = yield call(authAPI.login, action.dto);
+    yield put(setUserData(response.data));
+    yield put(setAppStatus(AppStatus.SUCCEEDED));
+  } catch (e) {
+    return handleServerNetworkErrorSaga(e, AppStatus.AUTH_FAILED);
+  }
 }
 export function* logoutWorkerSaga() {
   yield call(authAPI.logout);
-  // @ts-ignore
-  yield put(removeUserData());
+  yield put(removeUserData({}));
 }
 export function* requestMeWorkerSaga() {
-  yield put(setAppStatus(AppStatus.AUTH_LOADING));
-  // @ts-ignore
-  const response = yield call(authAPI.me);
-  yield put(setUserData(response.data));
-  yield put(setMLDraftName((response.data as TUser).name));
-  // dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
-  yield put(setInitialized());
-  yield put(setAppStatus(AppStatus.SUCCEEDED));
-  // handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
-  yield put(setInitialized());
+  try {
+    const response: ResponseAuthMeType = yield call(authAPI.me);
+    yield put(setUserData(response.data));
+    yield put(setMLDraftName((response.data as TUser).name));
+    // dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
+    yield put(setInitialized());
+  } catch (e) {
+    handleServerNetworkErrorSaga(e, AppStatus.AUTH_FAILED);
+    yield put(setInitialized());
+  }
 }
 export function* requestRegisterWorkerSaga(action: ReturnType<typeof requestRegister>) {
-  yield put(setAppStatus(AppStatus.AUTH_LOADING));
-  // @ts-ignore
-  const response = yield call(authAPI.register, action.dto);
-  const { accessLevel } = response.data;
-  yield put(setUserData(response.data));
-  yield put(setAppStatus(AppStatus.SUCCEEDED));
-
-  // handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
+  try {
+    yield put(setAppStatus(AppStatus.AUTH_LOADING));
+    // @ts-ignore
+    const response = yield call(authAPI.register, action.dto);
+    const { accessLevel } = response.data;
+    yield put(setUserData(response.data));
+    yield put(setAppStatus(AppStatus.SUCCEEDED));
+  } catch (e) {
+    handleServerNetworkErrorSaga(e, AppStatus.AUTH_FAILED);
+  }
 }
 
 export const logout = () => ({ type: 'auth/logout' } as const);
 export const requestLogin = (dto: TLoginDto) => ({ type: 'auth/requestLogin', dto } as const);
 export const requestRegister = (dto: TRegisterDto) => ({ type: 'auth/requestLogin', dto } as const);
-// export const requestMe = () => ({ type: 'auth/requestMe' } as const);
+export const requestMe = () => ({ type: 'auth/requestMe' } as const);
 
 export function* requestLoginWatcher() {
   yield takeEvery('auth/requestLogin', requestLoginWorkerSaga);
@@ -109,29 +108,28 @@ export function* requestLoginWatcher() {
 
 // export const logout = createAsyncThunk('auth/logout', async (_, { dispatch, rejectWithValue }) => {
 //   authAPI.logout();
-//   // @ts-ignore
-//   dispatch(removeUserData());
+//   dispatch(removeUserData({}));
 // });
 
-export const requestMe = createAsyncThunk(
-  'auth/requestMe',
-  async (_, { dispatch, rejectWithValue }) => {
-    try {
-      dispatch(setAppStatus(AppStatus.AUTH_LOADING));
-      const response = await authAPI.me();
-      batch(() => {
-        dispatch(setUserData(response.data));
-        dispatch(setMLDraftName((response.data as TUser).name));
-        // dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
-        dispatch(setInitialized());
-        dispatch(setAppStatus(AppStatus.SUCCEEDED));
-      });
-    } catch (e) {
-      handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
-      dispatch(setInitialized());
-    }
-  },
-);
+// export const requestMe = createAsyncThunk(
+//   'auth/requestMe',
+//   async (_, { dispatch, rejectWithValue }) => {
+//     try {
+//       dispatch(setAppStatus(AppStatus.AUTH_LOADING));
+//       const response = await authAPI.me();
+//       batch(() => {
+//         dispatch(setUserData(response.data));
+//         dispatch(setMLDraftName((response.data as TUser).name));
+//         // dispatch(setMLDraftLogoFromUserAvatar((response.data as TUser).avatar));
+//         dispatch(setInitialized());
+//         dispatch(setAppStatus(AppStatus.SUCCEEDED));
+//       });
+//     } catch (e) {
+//       handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
+//       dispatch(setInitialized());
+//     }
+//   },
+// );
 
 // export const requestRegister = createAsyncThunk(
 //   'auth/requestRegister',
