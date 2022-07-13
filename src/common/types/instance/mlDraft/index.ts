@@ -39,7 +39,6 @@ export type TMultilinkDraft = {
   contentMap: string[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
-  imageLink?: Nullable<string>;
 };
 
 export type TMLDraftBlocks = { [key: string]: TMLDraftBlocksUnion };

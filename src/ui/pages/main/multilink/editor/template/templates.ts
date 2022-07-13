@@ -43,7 +43,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         fontWeight: 700,
         textAlign: 'center',
         margin: [0, 0, 24],
-        padding: [12, 24],
+        padding: [12, 24, 12, 24],
         background: '#0002',
       }),
       new MLDraftSocial({
@@ -182,6 +182,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
       }),
     ],
     [
+      // pifa
       new MLDraftLogo({
         isFilled: !!avatar,
         logo: '',
@@ -371,6 +372,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
       }),
     ],
     [
+      // lexus
       new MLDraftLogo({
         isFilled: !!avatar,
         logo,
@@ -444,6 +446,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
       }),
     ],
     [
+      // eugene
       /* new MLDraftLogo({
         isFilled: true,
         logo: 'https://i.ibb.co/HF1GpT7/logo-0-1.png',
@@ -541,9 +544,11 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
       }),
     ],
     [
+      // pub13
       new MLDraftLogo({
-        isFilled: !!avatar,
-        logo,
+        isFilled: true,
+        logo: 'https://i.ibb.co/1fCnWBy/logo-0-1.png',
+        banner: 'https://i.ibb.co/BgL4ScH/logo-0-2.png',
         size: 175,
         padding: [56, 0, 36],
       }),
@@ -683,6 +688,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
       }),
     ],
     [
+      // utiog
       new MLDraftLogo({
         isFilled: !!avatar,
         logo,
@@ -894,7 +900,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
       // CatsBackground
       new MLDraftLogo({
         isFilled: !!avatar,
-        logo,
+        logo: 'https://i.ibb.co/4FhCrZr/logo-0-1.png',
         size: 154,
         padding: [5, 0, 0],
         margin: [0, 0, 24],
@@ -931,8 +937,8 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         url: 'https://widget.qiwi.com/widgets/middle-widget-300x300?publicKey=48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsXMCEHsEfvcM9fWDrHZGpWKAFeZPjiJbFtPjyxAanWqYMcU9DSN7wMpc8VGAVjmd9yjdSQRA92xGdkxFbtNyRSzFPrYeoktJhC8rNxvbe',
         width: 300,
         height: 300,
-        margin: [0, 0, 12],
-        padding: [0, 12],
+        margin: [0, 0, 12, 0],
+        padding: [0, 12, 24, 12],
       }),
       new MLDraftSocial({
         isFilled: false,
@@ -1622,12 +1628,13 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         url: 'https://dl6.ru-music.cc/mp3/56188.mp3',
         margin: [0, 24, 12],
       }),
-      new MLDraftCarousel({
-        isFilled: false,
-        images: [img1, img2],
-        dots: false,
-        arrows: false,
-        interval: 2000,
+      new MLDraftWidget({
+        isFilled: true,
+        url: 'https://promoreal.ru/quizy/okna/test/index.html',
+        width: 300,
+        height: 986,
+        margin: [0, 0, 12, 0],
+        padding: [0, 12, 24, 12],
       }),
     ],
     [

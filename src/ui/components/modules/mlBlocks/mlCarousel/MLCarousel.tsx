@@ -32,6 +32,7 @@ export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback })
         arrows={block.arrows}
         arrowStep={1}
         className={styles.cont}
+        transitionTime={300}
         interval={block.interval}
       />
     </div>
