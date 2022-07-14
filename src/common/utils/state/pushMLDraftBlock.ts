@@ -149,7 +149,7 @@ const defaultLinkBlockOptions: IMLDraftLink = {
   fontSize: 20,
   fontWeight: 500,
   padding: [12, 24, 12, 24],
-  margin: [0, 24, 12, 0],
+  margin: [0, 24, 12, 24],
   background: `#f${Math.random().toString(16).substr(-4)}f40`,
 };
 
@@ -160,7 +160,7 @@ const defaultButtonBlockOptions: IMLDraftButton = {
   fontSize: 20,
   fontWeight: 500,
   padding: [12, 24, 12, 24],
-  margin: [0, 24, 12, 0],
+  margin: [0, 24, 12, 24],
   color: 'white',
   borderRadius: [5, 5, 5, 5],
   background: IconColor.INFO,
@@ -272,5 +272,5 @@ const defaultMapBlockOptions: IMLDraftMap = {
   url: 'url',
   latLng: null,
   padding: [12, 24, 12, 24],
-  margin: [0, 24, 12, 0],
+  margin: [0, 24, 12, 24],
 };

@@ -40,7 +40,13 @@ export type TMultilinkDraft = {
   contentMap: string[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
-  imageLink?: Nullable<string>;
+};
+export type TMLSavedDraft = {
+  name: string;
+  background: string;
+  outerBackground: string;
+  maxWidth: number;
+  blocks: TMLDraftBlocksUnion[];
 };
 
 export type TMLDraftBlocks = { [key: string]: TMLDraftBlocksUnion };

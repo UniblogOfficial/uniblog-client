@@ -85,9 +85,9 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
                   <ImageField
                     onChange={onImageZoneChange}
                     touched={false}
-                    avatarMode
                     initialImage={parseRawImage(avatar) ?? undefined}
                     setCroppedImage={setCroppedImage}
+                    mode="circle"
                   />
                 </div>
                 <div className="paper__button-container action-buttons">
