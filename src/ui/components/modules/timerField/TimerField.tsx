@@ -12,8 +12,8 @@ type TDropZoneFieldProps = {
   // error?: string;
   touched?: boolean;
   id?: number;
-  avatarMode?: boolean;
   setCroppedImage?: (file: TImageFile[]) => void;
+  mode?: 'circle' | 'square';
 };
 
 export const TimerField: FC<TDropZoneFieldProps> = ({
@@ -21,8 +21,8 @@ export const TimerField: FC<TDropZoneFieldProps> = ({
   onChange,
   // error,
   id,
-  avatarMode,
   setCroppedImage,
+  mode,
 }) => {
   const [image, setImage] = useState<TImageFile[]>([]);
   const [error, setError] = useState<string>('');
@@ -67,7 +67,7 @@ export const TimerField: FC<TDropZoneFieldProps> = ({
                   setCroppedImage={setImage}
                   onChangeImage={onChange}
                   id={id}
-                  avatarMode={avatarMode}
+                  mode={mode}
                 />
               </Modal>
             )}

@@ -14,7 +14,6 @@ type CropperContainerPropsType = {
   setCroppedImage: (file: TImageFile[]) => void;
   onChangeImage: (imageFile: TImageFile, id?: number) => void;
   id?: number;
-  avatarMode?: boolean;
   mode?: 'circle' | 'square';
 };
 
@@ -24,7 +23,6 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
   setCroppedImage,
   onChangeImage,
   id,
-  avatarMode,
   mode,
 }) => {
   const [image, setImage] = useState(img);
@@ -58,17 +56,17 @@ export const CropperContainer: FC<CropperContainerPropsType> = ({
   return (
     <div
       style={{ position: 'relative', padding: 36, zIndex: 10 }}
-      className={`paper containerCropper ${avatarMode ? 'avatarMode' : ''}`}>
+      className={`paper containerCropper ${mode === 'circle' ? 'avatarMode' : ''}`}>
       <Cropper
         style={{ minHeight: 500, width: '100%', position: 'relative', marginBottom: 36 }}
-        aspectRatio={mode || avatarMode ? 1 : NaN}
+        aspectRatio={mode ? 1 : NaN}
         preview=".img-preview"
         src={image}
         viewMode={1}
-        minCropBoxHeight={avatarMode ? 50 : 10}
-        minCropBoxWidth={avatarMode ? 50 : 10}
+        minCropBoxHeight={mode === 'circle' ? 50 : 10}
+        minCropBoxWidth={mode === 'circle' ? 50 : 10}
         background={false}
-        dragMode={avatarMode ? 'move' : 'crop'}
+        dragMode={mode === 'circle' ? 'move' : 'crop'}
         autoCropArea={1}
         onInitialized={instance => {
           setCropper(instance);

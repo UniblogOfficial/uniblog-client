@@ -57,12 +57,12 @@ export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
     <div className="ml-logo-editor">
       <div>
         <div style={{ position: 'relative', height: '150px' }}>
-          <ImageField id={1} onChange={onDropZoneChange} />
+          <ImageField id={1} onChange={onDropZoneChange} mode="circle" />
         </div>
       </div>
       <div>
         <div style={{ position: 'relative', height: '150px' }}>
-          <ImageField id={2} onChange={onDropZoneChange} />
+          <ImageField id={2} onChange={onDropZoneChange} mode="circle" />
         </div>
       </div>
       <Button value={1} onClick={onDeleteButtonClick}>
