@@ -40,7 +40,6 @@ export type TMultilinkDraft = {
   contentMap: string[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
-  imageLink?: Nullable<string>;
 };
 export type TMLSavedDraft = {
   name: string;

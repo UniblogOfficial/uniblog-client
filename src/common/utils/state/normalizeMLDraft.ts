@@ -76,7 +76,7 @@ export const normalizeMLDraft = (mlDraft: TMultilinkDraft): [TCreateMLDto, TCrea
       return blocksDto.voteBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftLogo) {
-      return blocksDto.logoBlocks.push({ ...block, logo: null, order: i });
+      return blocksDto.logoBlocks.push({ ...block, order: i });
     }
     if (block instanceof MLDraftLink) {
       return blocksDto.linkBlocks.push({ ...block, order: i });

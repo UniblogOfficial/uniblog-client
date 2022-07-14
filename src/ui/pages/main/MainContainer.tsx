@@ -50,7 +50,7 @@ export const MainContainer = () => {
             <Route path="/price" render={() => <PriceContainer />} />
             <Route path="/chat" render={() => <ChatContainer />} />
             <Route path="/profile" render={() => <ProfileContainer userData={userData} />} />
-            <Route path="/" exact render={() => <HomeContainer userData={userData} />} />
+            <Route path="/home" render={() => <HomeContainer userData={userData} />} />
             <Route path="/404" render={() => <NotFound />} />
             <Redirect from="*" to="/404" />
           </Switch>

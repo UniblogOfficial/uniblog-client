@@ -186,12 +186,13 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         url: 'https://dl6.ru-music.cc/mp3/56188.mp3',
         margin: [0, 24, 12, 24],
       }),
-      new MLDraftCarousel({
-        isFilled: false,
-        images: [img1, img2],
-        dots: false,
-        arrows: false,
-        interval: 2000,
+      new MLDraftWidget({
+        isFilled: true,
+        url: 'https://promoreal.ru/quizy/okna/test/index.html',
+        width: 300,
+        height: 986,
+        margin: [0, 0, 12, 0],
+        padding: [0, 12, 24, 12],
       }),
       new MLDraftTimer({
         isFilled: false,

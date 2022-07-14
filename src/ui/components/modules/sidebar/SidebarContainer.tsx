@@ -30,7 +30,7 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
     {
       id: 1,
       title: t('pages:navbar.home'),
-      href: '/',
+      href: '/home',
       icon: 'home',
     },
     {
