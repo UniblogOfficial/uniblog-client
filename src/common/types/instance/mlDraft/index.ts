@@ -41,6 +41,13 @@ export type TMultilinkDraft = {
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
 };
+export type TMLSavedDraft = {
+  name: string;
+  background: string;
+  outerBackground: string;
+  maxWidth: number;
+  blocks: TMLDraftBlocksUnion[];
+};
 
 export type TMLDraftBlocks = { [key: string]: TMLDraftBlocksUnion };
 
