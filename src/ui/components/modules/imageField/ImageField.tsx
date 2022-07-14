@@ -12,7 +12,6 @@ type TDropZoneFieldProps = {
   // error?: string;
   touched?: boolean;
   id?: number;
-  avatarMode?: boolean;
   setCroppedImage?: (file: TImageFile[]) => void;
   mode?: 'circle' | 'square';
 };
@@ -23,7 +22,6 @@ export const ImageField: FC<TDropZoneFieldProps> = ({
   // error,
   touched,
   id,
-  avatarMode,
   setCroppedImage,
   mode,
 }) => {
@@ -70,7 +68,6 @@ export const ImageField: FC<TDropZoneFieldProps> = ({
                   setCroppedImage={setImage}
                   onChangeImage={onChange}
                   id={id}
-                  avatarMode={avatarMode}
                   mode={mode}
                 />
               </Modal>
