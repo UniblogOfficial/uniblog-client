@@ -50,8 +50,8 @@ const MultilinkDraftContainer = () => {
             case MLContentType.SOCIAL:
               return <MLSocial key={ID[j]} id="" block={block} />;
 
-            // case MLContentType.WIDGET:
-            //   return block && <MLWidget key={ID[j]} id="" block={block} />;
+            case MLContentType.WIDGET:
+              return block && <MLWidget key={ID[j]} id="" block={block} />;
 
             case MLContentType.VIDEO:
               return <MLVideo key={ID[j]} id="" block={block} />;
@@ -59,8 +59,8 @@ const MultilinkDraftContainer = () => {
             /* case MLContentType.AUDIO:
               return block && <>audio block</>; */
 
-            // case MLContentType.VOTE:
-            //   return block && <MLVote key={ID[j]} id="" block={block} />;
+            case MLContentType.VOTE:
+              return block && <MLVote key={ID[j]} id="" block={block} />;
 
             case MLContentType.LOGO:
               return block && <MLLogo key={ID[j]} id="" block={block} images={null} />;
@@ -68,8 +68,8 @@ const MultilinkDraftContainer = () => {
             case MLContentType.LINK:
               return <MLLink key={ID[j]} id="" block={block} image={null} />;
 
-            // case MLContentType.BUTTON:
-            //   return <MLButton key={ID[j]} id="" block={block} />;
+            case MLContentType.BUTTON:
+              return <MLButton key={ID[j]} id="" block={block} />;
 
             case MLContentType.IMAGE:
               return <MLImage key={ID[j]} id="" block={block} image={null} />;
