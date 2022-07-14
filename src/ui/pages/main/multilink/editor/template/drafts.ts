@@ -1,5 +1,3 @@
-import { MLDraftTimer } from '../../../../../../common/types/instance/mlDraft/mlTimer.class';
-
 import { SocialNetwork, SocialService } from 'common/constants';
 import {
   MLDraftAudio,
@@ -188,7 +186,7 @@ export const drafts = [
         color: '#fff',
         background: 'rgba(47, 58, 244, 0.73)',
         borderRadius: [5, 5, 5, 5],
-        margin: [0, 12, 12, 0],
+        margin: [0, 12, 12, 12],
         padding: [12, 24, 12, 24],
       }),
       new MLDraftLink({
@@ -202,7 +200,7 @@ export const drafts = [
         color: '#fff',
         background: 'rgba(47, 58, 244, 0.73)',
         borderRadius: [5, 5, 5, 5],
-        margin: [0, 12, 12, 0],
+        margin: [0, 12, 12, 12],
         padding: [12, 24, 12, 24],
       }),
       new MLDraftLink({
@@ -216,7 +214,7 @@ export const drafts = [
         color: '#fff',
         background: 'rgba(47, 58, 244, 0.73)',
         borderRadius: [5, 5, 5, 5],
-        margin: [0, 12, 12, 0],
+        margin: [0, 12, 12, 12],
         padding: [12, 24, 12, 24],
       }),
     ],

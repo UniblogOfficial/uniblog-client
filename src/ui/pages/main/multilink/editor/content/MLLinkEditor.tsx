@@ -149,7 +149,7 @@ export const MLLinkEditor = ({ id, close, image, block }: TMLLinkEditorProps) =>
         </div>
       </section>
       <div style={{ position: 'relative', height: '150px' }}>
-        <ImageField onChange={onDropZoneChange} />
+        <ImageField onChange={onDropZoneChange} mode="square" />
       </div>
       <div>
         <Button data-value="-1" type="submit" className="button _full _rounded">
