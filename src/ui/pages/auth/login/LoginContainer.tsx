@@ -13,7 +13,7 @@ type TLoginContainerProps = {};
 export const LoginContainer: FC<TLoginContainerProps> = () => {
   const userData = useAppSelector<TUser | null>(selectUserData);
   if (userData !== null) {
-    return <Redirect to="/" />;
+    return <Redirect to="/home" />;
   }
   return <Login />;
 };

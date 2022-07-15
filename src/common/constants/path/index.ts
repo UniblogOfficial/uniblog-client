@@ -1,5 +1,5 @@
 export enum PrivatePath {
-  HOME = '/',
+  HOME = '/home',
   CROSSPOSTING = '/crossposting',
   MULTILINK = '/multilink',
   SHOP = '/shop',
@@ -16,6 +16,8 @@ export enum PublicPath {
   VERIFICATION = '/verification',
   PASS_RECOVERY = '/password-recovery',
   OAUTH_CALLBACK = '/callback',
+  PURCHASE = '/purchase',
+  LANDING = '/',
   MULTILINK = '/*',
   NOT_FOUND = '/404',
 }
