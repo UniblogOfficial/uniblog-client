@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
-import 'react-h5-audio-player/lib/styles.css';
 
 import styles from './MLCarousel.module.scss';
 
+import { ID } from 'common/constants';
 import { MLDraftCarousel, Nullable, TImageFile } from 'common/types/instance';
 import { TMLImageContentCarousel } from 'common/types/instance/mlDraft/mlDraft';
+import { px } from 'common/utils/ui';
+import imgPlaceholder from 'img/img-placeholder.png';
 import { Carousel } from 'ui/components/elements';
 
 type TMLCarouselProps = {
@@ -16,24 +18,29 @@ type TMLCarouselProps = {
 
 export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback }) => {
   const className = callback ? 'interactive' : undefined;
-  const audioSrc = image?.images ? image.images : block.images ?? '';
-  if (!block) return null;
+  const images = image?.images ? image.images.map(data => data?.previewUrl) : block.images;
+  const items = images.map((src, i) => (
+    <div className={styles.container} key={ID[i]}>
+      {src ? <img src={src} alt="item" /> : <img src={imgPlaceholder} alt="item" />}
+      {block.titles && <div className={styles.title}>{block.titles[i]}</div>}
+    </div>
+  ));
+
   return (
-    <div className={styles.cont}>
+    <section
+      className={className}
+      style={{ padding: px(block.padding) ?? '0', margin: px(block.margin) ?? '0' }}>
+      {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <Carousel
-        items={audioSrc.map((m, index) => (
-          <div className={styles.container} key={index.toString() + m}>
-            <img src={m as string} alt="#" />
-          </div>
-        ))}
-        itemsPerView={1}
+        items={items}
+        itemsPerView={block.itemsPerView ?? 1}
         dots={block.dots}
         arrows={block.arrows}
         arrowStep={1}
-        className={styles.cont}
+        className={styles.container}
         transitionTime={300}
         interval={block.interval}
       />
-    </div>
+    </section>
   );
 };
