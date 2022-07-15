@@ -18,6 +18,7 @@ type AlignTextType = 'right' | 'left' | 'center' | 'justify';
 const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
 const fontSizeTexts: string[] = ['12', '14', '16', '18', '20', '22', '24', '26', '28', '30'];
 const fontTexts: string[] = [
+  'Inter',
   'Alegreya',
   'B612',
   'Caveat',
@@ -195,7 +196,11 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
           </label>
           <label>
             Font Text:
-            <Select options={fontTexts} onChangeOption={onFontTextsChange} />
+            <Select
+              options={fontTexts}
+              onChangeOption={onFontTextsChange}
+              selectedValue={block.fontFamily ?? 'Inter'}
+            />
           </label>
         </div>
         <div style={{ marginTop: '10px' }}>

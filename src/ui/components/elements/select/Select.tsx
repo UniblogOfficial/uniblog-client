@@ -17,12 +17,14 @@ type TDefaultSelectProps = DetailedHTMLProps<
 type TSelectProps<T> = TDefaultSelectProps & {
   options?: string[];
   titles?: Array<string>;
+  selectedValue?: string;
   onChangeOption?: (option: T) => void;
 };
 export const Select = <TValue extends string>({
   name,
   titles,
   options,
+  selectedValue,
   value,
   className,
   onChange,
@@ -45,7 +47,7 @@ export const Select = <TValue extends string>({
 
   return (
     <div>
-      <select className={styles.sel} onChange={onChangeCallback}>
+      <select value={selectedValue ?? ''} className={styles.sel} onChange={onChangeCallback}>
         {mappedOptions}
       </select>
     </div>

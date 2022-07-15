@@ -3,11 +3,19 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 
+import { Icon, Input } from '../../../components/elements';
+
 import { Breadcrumbs } from 'ui/components/elements/breadcrumbs/Breadcrumbs';
 import { Button } from 'ui/components/elements/button/Button';
 import { PageHeader } from 'ui/components/modules/headers/PageHeader';
 
 type TPriceContainerProps = {};
+type priceType = {
+  vip: string;
+  gold: string;
+  platinum: string;
+  title: string;
+};
 
 export const PriceContainer = () => {
   const { t } = useTranslation(['pages', 'common']);
@@ -19,31 +27,36 @@ export const PriceContainer = () => {
       'width=777,height=666',
     );
   };
-  const priceTitle = {
-    vip: '',
-    gold: '',
-    platinum: '',
+  const price: priceType = {
+    vip: '3600',
+    gold: '5900 ',
+    platinum: '6900',
+    title: 'в месяц',
   };
   switch (periodButton) {
     case '1':
-      priceTitle.vip = '3600';
-      priceTitle.gold = '5900 ';
-      priceTitle.platinum = '6900';
+      price.vip = '3600';
+      price.gold = '5900 ';
+      price.platinum = '6900';
+      price.title = 'в месяц';
       break;
     case '2':
-      priceTitle.vip = '10260';
-      priceTitle.gold = '16815 ';
-      priceTitle.platinum = '19665';
+      price.vip = '10260';
+      price.gold = '16815 ';
+      price.platinum = '19665';
+      price.title = 'за 3 месяца';
       break;
     case '3':
-      priceTitle.vip = '20520';
-      priceTitle.gold = '33630 ';
-      priceTitle.platinum = '39330';
+      price.vip = '20520';
+      price.gold = '33630 ';
+      price.platinum = '39330';
+      price.title = 'за 6 месяцев';
       break;
     case '4':
-      priceTitle.vip = '42120';
-      priceTitle.gold = '69030 ';
-      priceTitle.platinum = '80730';
+      price.vip = '42120';
+      price.gold = '69030 ';
+      price.platinum = '80730';
+      price.title = 'за год';
       break;
   }
   return (
@@ -55,7 +68,14 @@ export const PriceContainer = () => {
         </div>
         <div className="grid__row">
           <section className="paper promo">
-            <Button onClick={onNichtKlickButtonClick}>Klick mich nicht!</Button>
+            <div className="price__title">Промокод</div>
+            <div className="price__promo-area">
+              <div className="price__input-wrapper">
+                <Input placeholder="Введите промокод" className="price__input" type="text" />
+                <Icon name="user" size="full" />
+              </div>
+              <Button>Применить промокод</Button>
+            </div>
           </section>
         </div>
         <div className="grid__row">
@@ -159,13 +179,13 @@ export const PriceContainer = () => {
                 </div>
                 <div className="grid--price-columns " />
                 <div className="grid--price-columns toCenter price-columns">
-                  {priceTitle.vip} рублей <div>в месяц</div>
+                  {price.vip} рублей <div>{price.title}</div>
                 </div>
                 <div className="grid--price-columns toCenter price-columns">
-                  {priceTitle.gold} рублей <div>в месяц</div>
+                  {price.gold} рублей <div>{price.title}</div>
                 </div>
                 <div className="grid--price-columns toCenter price-columns">
-                  {priceTitle.platinum} рублей <div>в месяц</div>
+                  {price.platinum} рублей <div>{price.title}</div>
                 </div>
                 <div className="grid--price-columns noneBorder" />
                 <div className="grid--price-columns toCenter noneBorder">
