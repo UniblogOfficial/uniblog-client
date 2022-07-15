@@ -7,7 +7,7 @@ import styles from './MLTextEditor.module.scss';
 import { setMLDraftBlockContent } from 'bll/reducers';
 import { useAppDispatch, useDebounce, useThrottle } from 'common/hooks';
 import { MLDraftText } from 'common/types/instance';
-import { Button, Icon, Select, Textarea } from 'ui/components/elements';
+import { Button, Icon, Select, Textarea, Toggle } from 'ui/components/elements';
 
 type TMLTextEditorProps = {
   id: string;
@@ -20,6 +20,7 @@ const fontSizeTexts: string[] = ['12', '14', '16', '18', '20', '22', '24', '26',
 const fontTexts: string[] = [
   'Alegreya',
   'B612',
+  'Caveat',
   'Mulish',
   'Titillium Web',
   'Varela',
@@ -162,34 +163,28 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
         />
         Align & Bold:
         <div className={styles.flex_row}>
-          <Icon
-            name="text-align-left"
-            containerClassName="draw_text"
-            onClick={() => onAlignChange('left')}
+          <Toggle
+            options={['left', 'center', 'right', 'justify']}
+            value={block.textAlign ?? 'left'}
+            className={styles['toggle']}
+            frameClassName={styles['toggle-frame__layout']}
+            onChangeOption={onAlignChange}
+            titles={[
+              <Icon key={1} name="text-align-left" containerClassName={styles['text-align']} />,
+              <Icon key={2} name="text-align-center" containerClassName={styles['text-align']} />,
+              <Icon key={3} name="text-align-right" containerClassName={styles['text-align']} />,
+              <Icon key={4} name="text-align-justify" containerClassName={styles['text-align']} />,
+            ]}
           />
-          <Icon
-            name="text-align-center"
-            containerClassName="draw_text"
-            onClick={() => onAlignChange('center')}
-          />
-          <Icon
-            name="text-align-right"
-            containerClassName="draw_text"
-            onClick={() => onAlignChange('right')}
-          />
-          <Icon
-            name="text-align-justify"
-            containerClassName="draw_text"
-            onClick={() => onAlignChange('justify')}
-          />
+
           <Icon
             name="text-bolt"
-            containerClassName="draw_text"
+            containerClassName={styles['text-draw']}
             onClick={() => onFontWeightChange(block?.fontWeight === 400 ? 700 : 400)}
           />
           <Icon
             name="text-italic"
-            containerClassName="draw_text"
+            containerClassName={styles['text-draw']}
             onClick={() => onItalicTextChange(block.fontStyle === 'italic' ? 'normal' : 'italic')}
           />
         </div>
