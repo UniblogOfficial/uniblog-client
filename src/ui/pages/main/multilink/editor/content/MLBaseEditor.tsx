@@ -7,8 +7,7 @@ import { Direction } from 'common/constants';
 import { useAppDispatch, useThrottle } from 'common/hooks';
 import { TMLDraftBlocksUnion } from 'common/types/instance/mlDraft';
 import { capitalizeFirst } from 'common/utils/ui';
-import { Button } from 'ui/components/elements';
-import { Checkbox } from 'ui/components/elements/checkbox/Checkbox';
+import { Button, Checkbox } from 'ui/components/elements';
 
 export type TMLBaseEditorProps<T> = {
   id: string;

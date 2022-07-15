@@ -46,13 +46,14 @@ import {
 import {
   MLImageContentAudio,
   MLImageContentImage,
+  MLImageContentImageText,
   MLImageContentLink,
   MLImageContentLogo,
   MLImageContentShop,
   TMLDraftImagesBlocksUnion,
 } from 'common/types/instance/mlDraft/mlImageContent';
 import { Button } from 'ui/components/elements';
-import { WrapperDrag } from 'ui/components/modules/DragWrapper';
+import { DragWrapper } from 'ui/components/modules/dragWrapper';
 import {
   MLButton,
   MLImage,
@@ -176,109 +177,112 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                     : undefined;
                   if (block instanceof MLDraftText) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLText id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftSocial) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLSocial id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftWidget) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLWidget id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftVideo) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLVideo id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftMap) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLMap id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftVote) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLVote id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftLogo && image instanceof MLImageContentLogo) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLLogo id={id} block={block} images={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftLink && image instanceof MLImageContentLink) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLLink key={id} id={id} block={block} image={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftCarousel) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLCarousel key={id} id={id} callback={callback} block={block} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
 
                   if (block instanceof MLDraftAudio && image instanceof MLImageContentAudio) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLAudio id={id} block={block} callback={callback} image={image} />;
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
 
                   if (block instanceof MLDraftButton) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLButton id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftImage && image instanceof MLImageContentImage) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLImage id={id} block={block} image={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
-                  if (block instanceof MLDraftImageText && image instanceof MLImageContentLink) {
+                  if (
+                    block instanceof MLDraftImageText &&
+                    image instanceof MLImageContentImageText
+                  ) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLImageText id={id} block={block} image={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftTimer && image instanceof MLImageContentTimer) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLTimer id={id} block={block} callback={callback} image={image} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftShop && image instanceof MLImageContentShop) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLShop id={id} block={block} images={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
 
