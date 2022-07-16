@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, PropsWithChildren, useEffect, useState } from 'react';
 
 import { RgbaStringColorPicker } from 'react-colorful';
+import { useTranslation } from 'react-i18next';
 
 import { setMLDraftBlockContent } from 'bll/reducers';
 import { Direction } from 'common/constants';
@@ -26,11 +27,19 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
   const { id, block, children } = props;
   const dispatch = useAppDispatch();
   const dispatchThrottled = useThrottle(dispatch, 50);
+  const { t } = useTranslation(['pages', 'common']);
+
   const [isBgColorPickerVisible, setIsBgColorPickerVisible] = useState(false);
   const [isPaddingLeftRight, setIsPaddingLeftRight] = useState(false);
   const [isMarginLeftRight, setIsMarginLeftRight] = useState(false);
   const [isPaddingTopBottom, setIsPaddingTopBottom] = useState(false);
   const [isMarginTopBottom, setIsMarginTopBottom] = useState(false);
+  const sideTitles = [
+    t('pages:multilink.creation.editors.base.top'),
+    t('pages:multilink.creation.editors.base.right'),
+    t('pages:multilink.creation.editors.base.bottom'),
+    t('pages:multilink.creation.editors.base.left'),
+  ];
 
   const onBackgroundColorChange = (backgroundColor: string) => {
     block.background = backgroundColor;
@@ -131,7 +140,7 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
       <div>
         {children}
         <div style={{ paddingTop: '15px' }}>
-          Background:
+          {t('pages:multilink.creation.editors.base.background')}:
           {defaultColors.map((color, index) => (
             <input
               key={color}
@@ -158,33 +167,33 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
               <Button
                 style={{ marginTop: '10px', width: '110px', height: '30px', borderRadius: '7px' }}
                 onClick={() => setIsBgColorPickerVisible(false)}>
-                Ok
+                {t('common:buttons.ok')}
               </Button>
             </>
           )}
           <div style={{ marginTop: '10px' }}>
-            Padding:
+            {t('pages:multilink.creation.editors.base.padding')}:
             <div className="padding_margin">
               <Checkbox
                 value="padding-LR"
                 name="padding-LR"
                 checked={isPaddingLeftRight}
                 onChangeChecked={onBindDirectionsCheck}>
-                Left&Right
+                {t('pages:multilink.creation.editors.base.bindLR')}
               </Checkbox>
               <Checkbox
                 value="padding-TB"
                 name="padding-TB"
                 checked={isPaddingTopBottom}
                 onChangeChecked={onBindDirectionsCheck}>
-                Top&Bottom
+                {t('pages:multilink.creation.editors.base.bindTB')}
               </Checkbox>
             </div>
           </div>
           <div className="padding_margin">
             {paddings.map((padding, i) => (
               <div key={padding[0]}>
-                <label>{capitalizeFirst(padding[0])}:</label>
+                <label>{sideTitles[i]}:</label>
                 <input
                   type="range"
                   name={padding[1]}
@@ -198,28 +207,28 @@ export const MLBaseEditor = <T extends {}>(props: PropsWithChildren<TMLBaseEdito
             ))}
           </div>
           <div>
-            Margin:
+            {t('pages:multilink.creation.editors.base.margin')}:
             <div className="padding_margin">
               <Checkbox
                 value="margin-LR"
                 name="margin-LR"
                 checked={isMarginLeftRight}
                 onChangeChecked={onBindDirectionsCheck}>
-                Left&Right
+                {t('pages:multilink.creation.editors.base.bindLR')}
               </Checkbox>
               <Checkbox
                 value="margin-TB"
                 name="margin-TB"
                 checked={isMarginTopBottom}
                 onChangeChecked={onBindDirectionsCheck}>
-                Top&Bottom
+                {t('pages:multilink.creation.editors.base.bindTB')}
               </Checkbox>
             </div>
           </div>
           <div className="padding_margin">
             {margins.map((margin, i) => (
               <div key={margin[0]}>
-                <label>{capitalizeFirst(margin[0])}:</label>
+                <label>{sideTitles[i]}:</label>
                 <input
                   type="range"
                   name={margin[1]}

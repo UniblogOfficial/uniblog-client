@@ -42,17 +42,84 @@
     }
   },
   "multilink": {
-    "buttons": {
-      "create": "Create",
-      "published": "Published"
-    },
     "creation": {
+      "backWarning": "Your current changes will be wiped! Do you really want to return to templates page?",
+      "buttons": {
+        "addAudio": "Add audio block",
+        "addButton": "Add button block",
+        "addCarousel": "Add image-carousel block",
+        "addDivider": "Add divider block",
+        "addFeedback": "Add feedback block",
+        "addImage": "Add image block",
+        "addImageText": "Add image-text block",
+        "addLink": "Add link block",
+        "addLogo": "Add logo block",
+        "addMap": "Add map block",
+        "addPost": "Add post block",
+        "addShop": "Add shop block",
+        "addSocial": "Add socials block",
+        "addText": "Add text block",
+        "addTimer": "Add timer block",
+        "addVideo": "Add video block",
+        "addVote": "Add vote block",
+        "addWidget": "Add widget block"
+      },
+      "deleteBlockConfirm": "Do you really want to delete this block?",
+      "editors": {
+        "base": {
+          "background": "Background color",
+          "bindLR": "Bind left-right",
+          "bindTB": "Bind top-bottom",
+          "bottom": "Bottom",
+          "left": "Left",
+          "margin": "Margin",
+          "padding": "Padding",
+          "right": "Right",
+          "top": "Top"
+        },
+        "logo": {
+          "deleteBanner": "Delete banner",
+          "deleteLogo": "Delete logo"
+        },
+        "shop": {
+          "enterDescription": "Enter product description",
+          "enterPrice": "Enter product price",
+          "enterSubtitle": "Enter subtitle",
+          "enterTitle": "Enter title"
+        },
+        "text": {
+          "fontFamily": "Font",
+          "fontSize": "Font size",
+          "fontVariant": "Font variant",
+          "letterSpacing": "Letter spacing",
+          "lineHeight": "Line height",
+          "shadowBlur": "Blur radius",
+          "shadowHorizontal": "Horizontal",
+          "shadowVertical": "Vertical",
+          "textColor": "Text color",
+          "textShadow": "Text shadow"
+        },
+        "timer": {
+          "enterDate": "Enter date",
+          "enterTime": "Enter time",
+          "run": "Run"
+        }
+      },
       "stages": {
         "background": "Choose a background",
         "content": "Add mediacontent",
         "preview": "Preview",
         "template": "Choose a template"
       }
+    },
+    "preview": {
+      "multilinkCreated": "Multilink has been created successfully",
+      "reviewJustCreated": "Review just created multilink"
+    },
+    "tabs": {
+      "create": "Create",
+      "drafts": "Drafts",
+      "published": "Published"
     },
     "title": "Multilink"
   },
@@ -68,6 +135,45 @@
     "shop": "Shop"
   },
   "price": {
+    "buttons": {
+      "applyPromo": "Apply promo code",
+      "onemonth": {
+        "discount": "Standart price",
+        "title": "Per month"
+      },
+      "oneyear": {
+        "discount": "Discount 10%",
+        "title": "Per year"
+      },
+      "pay": "Pay",
+      "sixmonths": {
+        "discount": "Discount 10%",
+        "title": "Per 6 months"
+      },
+      "threemonths": {
+        "discount": "Discount 5%",
+        "title": "Per 3 months"
+      }
+    },
+    "enterCode": "Enter promo code",
+    "myPlan": "My plan",
+    "subtitles": {
+      "period": "Payment period",
+      "promo": "Promo code"
+    },
+    "tableCheckbox": {
+      "false": "None",
+      "true": "Yes"
+    },
+    "tableFeatures": {
+      "feature": "Feature1"
+    },
+    "tablePeriods": {
+      "oneMonth": "per month",
+      "oneYear": "per year",
+      "sixMonths": "per 6 months",
+      "threeMonths": "per 3 months"
+    },
     "title": "Price"
   },
   "profile": {

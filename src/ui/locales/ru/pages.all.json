@@ -42,17 +42,84 @@
     }
   },
   "multilink": {
-    "buttons": {
-      "create": "Создать",
-      "published": "Опубликованные"
-    },
     "creation": {
+      "backWarning": "Ваши текущие изменения будут потеряны! Вы действительно хотите вернуться на страницу выбора шаблона?",
+      "buttons": {
+        "addAudio": "Добавить аудиоблок",
+        "addButton": "Добавить кнопку",
+        "addCarousel": "Добавить карусель картинок",
+        "addDivider": "Добавить разделитель",
+        "addFeedback": "Добавить блок обратной связи",
+        "addImage": "Добавить изображение",
+        "addImageText": "Добавить текст с иллюстрацией",
+        "addLink": "Добавить ссылку",
+        "addLogo": "Добавить логотип",
+        "addMap": "Добавить карту",
+        "addPost": "Добавить пост",
+        "addShop": "Добавить блок товаров",
+        "addSocial": "Добавить иконки соцсетей",
+        "addText": "Добавить текстовый блок",
+        "addTimer": "Добавить блок обратного отсчёта",
+        "addVideo": "Добавить видео",
+        "addVote": "Добавить блок голосования",
+        "addWidget": "Добавить виджет"
+      },
+      "deleteBlockConfirm": "Вы действительно хотите удалить блок?",
+      "editors": {
+        "base": {
+          "background": "Цвет фона",
+          "bindLR": "Связать право-лево",
+          "bindTB": "Связать верх-низ",
+          "bottom": "Низ",
+          "left": "Слева",
+          "margin": "Внешний отступ",
+          "padding": "Внутренний отступ",
+          "right": "Справа",
+          "top": "Верх"
+        },
+        "logo": {
+          "deleteBanner": "Удалить баннер",
+          "deleteLogo": "Удалить логотип"
+        },
+        "shop": {
+          "enterDescription": "Введите описание товара",
+          "enterPrice": "Введите стоимость товара",
+          "enterSubtitle": "Введите подзаголовок",
+          "enterTitle": "Введите заголовок"
+        },
+        "text": {
+          "fontFamily": "Шрифт",
+          "fontSize": "Размер шрифта",
+          "fontVariant": "Только заглавные",
+          "letterSpacing": "Расстояние между символами",
+          "lineHeight": "Высота строки",
+          "shadowBlur": "Радиус размытия",
+          "shadowHorizontal": "По горизонтали",
+          "shadowVertical": "По вертикали",
+          "textColor": "Цвет текста",
+          "textShadow": "Тень"
+        },
+        "timer": {
+          "enterDate": "Введите дату",
+          "enterTime": "Введите время",
+          "run": "Запустить"
+        }
+      },
       "stages": {
         "background": "Выберите фон",
         "content": "Добавьте медиа контент",
         "preview": "Предпросмотр",
         "template": "Выберите шаблон"
       }
+    },
+    "preview": {
+      "multilinkCreated": "Мультиссылка успешно создана",
+      "reviewJustCreated": "Просмотреть созданную мультиссылку"
+    },
+    "tabs": {
+      "create": "Создать",
+      "drafts": "Черновики",
+      "published": "Опубликованные"
     },
     "title": "Мультиссылка"
   },
@@ -68,6 +135,45 @@
     "shop": "Магазин"
   },
   "price": {
+    "buttons": {
+      "applyPromo": "Применить промокод",
+      "onemonth": {
+        "discount": "Стандартная цена",
+        "title": "В месяц"
+      },
+      "oneyear": {
+        "discount": "Экономия 10%",
+        "title": "За год"
+      },
+      "pay": "Оплатить",
+      "sixmonths": {
+        "discount": "Экономия 10%",
+        "title": "За 6 месяцев"
+      },
+      "threemonths": {
+        "discount": "Экономия 5%",
+        "title": "За 3 месяца"
+      }
+    },
+    "enterCode": "Введите промокод",
+    "myPlan": "Мой тариф",
+    "subtitles": {
+      "period": "Период оплаты",
+      "promo": "Промокод"
+    },
+    "tableCheckbox": {
+      "false": "Нет",
+      "true": "Есть"
+    },
+    "tableFeatures": {
+      "feature": "Пункт1"
+    },
+    "tablePeriods": {
+      "oneMonth": "в месяц",
+      "oneYear": "за год",
+      "sixMonths": "за 6 месяцев",
+      "threeMonths": "за 3 месяца"
+    },
     "title": "Тарифы"
   },
   "profile": {

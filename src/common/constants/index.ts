@@ -37,21 +37,23 @@ export enum SocialService {
 
 export enum MLContentType {
   TEXT = 'textBlocks',
-  LINK = 'linkBlocks',
   LOGO = 'logoBlocks',
   SOCIAL = 'socialBlocks',
-  BUTTON = 'buttonBlocks',
-  POST = 'postBlocks',
-  IMAGE = 'imageBlocks',
-  IMAGETEXT = 'imageTextBlocks',
-  CAROUSEL = 'carouselBlocks',
   VIDEO = 'videoBlocks',
   AUDIO = 'audioBlocks',
   WIDGET = 'widgetBlocks',
-  SHOP = 'shopBlocks',
+  POST = 'postBlocks',
   VOTE = 'voteBlocks',
+  FEEDBACK = 'feedbackBlocks',
   MAP = 'mapBlocks',
   DIVIDER = 'dividerBlocks',
+
+  LINK = 'linkBlocks',
+  BUTTON = 'buttonBlocks',
+  IMAGE = 'imageBlocks',
+  IMAGETEXT = 'imageTextBlocks',
+  CAROUSEL = 'carouselBlocks',
+  SHOP = 'shopBlocks',
   TIMER = 'timerBlocks',
 }
 
