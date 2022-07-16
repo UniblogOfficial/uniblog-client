@@ -2,6 +2,7 @@ import React, { MouseEvent } from 'react';
 
 import { MLDraftText } from 'common/types/instance';
 import { px } from 'common/utils/ui';
+import { getMLBlockTextProperties } from 'common/utils/ui/styleAssemblers';
 
 type TMLTextProps = {
   id: string;
@@ -15,24 +16,17 @@ export const MLText = ({ id, block, callback }: TMLTextProps) => {
   };
   const textAlign = block.textAlign ?? undefined;
   const className = callback ? 'interactive' : undefined;
-  const TextShadow = block.textShadow?.join('px ');
+
   return (
     <section
       className={className}
       style={{
+        ...getMLBlockTextProperties(block),
         padding: px(block.padding) ?? '0',
         margin: px(block.margin) ?? '0',
         background: block.background,
         justifyContent: textAlign,
-        fontSize: px(block.fontSize) ?? '18',
-        fontWeight: block.fontWeight,
-        fontStyle: block.fontStyle,
-        fontVariant: block.fontVariant,
-        lineHeight: block.lineHeight,
-        fontFamily: block.fontFamily,
-        letterSpacing: block.letterSpacing,
         borderRadius: px(block.borderRadius),
-        textShadow: TextShadow,
       }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <div className="ml-text" style={{ color: block.color }}>

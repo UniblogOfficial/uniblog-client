@@ -42,7 +42,10 @@ const MultilinkDraftContainer = () => {
         value={draft.name}
         onClick={() => onCLickHandler(draft)}
       />
-      <ul key={ID[i]} className="ml-preview" style={{ background: draft.background }}>
+      <ul
+        key={ID[i]}
+        className="ml-preview ml-preview_limited"
+        style={{ background: draft.background }}>
         {draft.blocks.map((block, j) => {
           switch (block.type) {
             case MLContentType.TEXT:

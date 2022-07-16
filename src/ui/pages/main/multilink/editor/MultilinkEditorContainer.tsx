@@ -140,7 +140,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
   const getLayout = useCallback(
     (editable: boolean, limited: boolean) => {
-      const templateClassName = limited ? 'ml-template' : 'ml-template ml-template_unlimited';
+      const templateClassName = limited ? 'ml-template ml-template_limited' : 'ml-template';
       const templateBackground = images.background
         ? `url(${images.background.previewUrl})`
         : background;

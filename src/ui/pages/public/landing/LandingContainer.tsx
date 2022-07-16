@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom';
 import images from './images/index';
 
 export const LandingContainer = () => (
-  <body className="bg-white landing-body" data-theme-style="light">
+  <div className="bg-white landing-body" data-theme-style="light">
     <div id="home" style={{ background: `url(${images.fon})` }}>
       <nav
         id="navbar"
@@ -267,7 +267,7 @@ export const LandingContainer = () => (
               src={images.CEO}
               width={600}
               height={600}
-              className="img-fluid shadow landing-img"
+              className="img-fluid shadow landing-img landing-img_avatar"
               loading="lazy"
               style={{ background: `url(${images.fon6})` }}
               alt="#"
@@ -288,7 +288,7 @@ export const LandingContainer = () => (
                 src={images.CPO}
                 width={600}
                 height={600}
-                className="img-fluid shadow landing-img"
+                className="img-fluid shadow landing-img landing-img_avatar"
                 loading="lazy"
                 style={{ background: `url(${images.fon6})` }}
                 alt="#"
@@ -308,7 +308,7 @@ export const LandingContainer = () => (
                 src={images.COO}
                 width={600}
                 height={600}
-                className="img-fluid shadow landing-img"
+                className="img-fluid shadow landing-img landing-img_avatar"
                 loading="lazy"
                 style={{ background: `url(${images.fon6})` }}
                 alt="#"
@@ -329,7 +329,7 @@ export const LandingContainer = () => (
               src={images.CTO}
               width={600}
               height={600}
-              className="img-fluid shadow landing-img"
+              className="img-fluid shadow landing-img landing-img_avatar"
               loading="lazy"
               style={{ background: `url(${images.fon6})` }}
               alt="#"
@@ -668,5 +668,5 @@ export const LandingContainer = () => (
     {/*  document.querySelector('[name="global_number_decimal_point"]').value; let thousands_separator */}
     {/*  = document.querySelector('[name="global_number_thousands_separator"]').value; */}
     {/* </script> */}
-  </body>
+  </div>
 );
