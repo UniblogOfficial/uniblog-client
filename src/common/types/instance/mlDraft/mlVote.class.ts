@@ -1,3 +1,5 @@
+import { Nullable } from '..';
+
 import { IMLTextProperties, MLDraftAnyTextBlock } from './abstract/mlAnyTextBlock.class';
 import { IMLDraftContent } from './abstract/mlBlock.class';
 
@@ -9,6 +11,7 @@ export interface IMLDraftVote extends Omit<IMLDraftContent, 'borderRadius'>, IML
     title: string;
     value: number;
   }[];
+  target: Nullable<string>;
   titleBackground?: string;
   titleBorderRadius?: number;
   buttonBackground?: string;
@@ -33,6 +36,7 @@ export class MLDraftVote extends MLDraftAnyTextBlock<MLContentType.VOTE> impleme
     title: string;
     value: number;
   }[];
+  target: Nullable<string>;
   titleBackground?: string;
   titleBorderRadius?: number;
   buttonBackground?: string;
@@ -51,6 +55,7 @@ export class MLDraftVote extends MLDraftAnyTextBlock<MLContentType.VOTE> impleme
   constructor(props: IMLDraftVote) {
     super(props);
     this.cells = props.cells;
+    this.target = props.target;
     Object.assign(this, props);
   }
 }

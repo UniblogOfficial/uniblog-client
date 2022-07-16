@@ -134,6 +134,10 @@
     "price": "Price",
     "shop": "Shop"
   },
+  "notFound": {
+    "subtitle": "We're sorry, but the page you're looking for is currently unavailable",
+    "title": "PAGE NOT FOUND"
+  },
   "price": {
     "buttons": {
       "applyPromo": "Apply promo code",

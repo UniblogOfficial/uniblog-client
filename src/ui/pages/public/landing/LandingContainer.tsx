@@ -1,31 +1,30 @@
 import React from 'react';
 
 import './css/bootstrap.min.css';
-import './css/custom.css';
+import './css/custom.scss';
 import './css/animate.min.css';
-import './css/inter.css';
 import './css/link-custom.css';
 import './css/slider-custom.css';
 import './css/scroll-custom.css';
 import './css/index.scss';
+import { NavLink } from 'react-router-dom';
+
 import images from './images/index';
 
 export const LandingContainer = () => (
-  <body className=" bg-white" data-theme-style="light">
-    <div style={{ background: `url(${images.fon})` }} id="home">
+  <body className="bg-white landing-body" data-theme-style="light">
+    <div id="home" style={{ background: `url(${images.fon})` }}>
       <nav
-        id="navbar home"
-        className="
-
-navbar
-navbar-main
-    navbar-expand-lg
-navbar-light
-"
+        id="navbar"
+        className="navbar navbar-main navbar-expand-lg navbar-light"
         style={{ background: `url(${images.fon})`, width: '100%', height: '100%' }}>
         <div className="container" style={{}}>
           <a className="navbar-brand" href="https://uniblog.ru/">
-            <img src={images.Logo} className="img-fluid navbar-logo" alt="Website Logo" />
+            <img
+              src={images.Logo}
+              className="img-fluid navbar-logo landing-img"
+              alt="Website Logo"
+            />
           </a>
         </div>
         <button
@@ -62,29 +61,31 @@ navbar-light
           </div>
           <ul className="navbar-nav">
             <li className="nav-item d-flex align-items-center">
-              <a className="btn btn-sm btn-outline-primary" href="zaglushka.html">
+              <NavLink to="/home" className="btn btn-sm btn-outline-primary">
                 <i className="fa fa-fw fa-sm fa-sign-in-alt" /> Вход
-              </a>
+              </NavLink>
               {/* https://uni-blog.ru/login */}
             </li>
             <li className="nav-item d-flex align-items-center">
-              <a className="btn btn-sm btn-primary" href="zaglushka.html">
+              <NavLink to="/coming-soon" className="btn btn-sm btn-primary">
                 <i className="fa fa-fw fa-sm fa-plus" />
                 Регистрация
-              </a>
+              </NavLink>
               {/* https://uni-blog.ru/register */}
             </li>
           </ul>
         </div>
       </nav>
       <section>
-        <main className="animate__animated animate__fadeIn">
+        <main className="animate__animated animate__fadeIn landing-main">
           {/* <section class="bg-marketing d-table w-100" style="background:url(images/fon2.png)" id="home"> */}
           <div className="container">
             <div className="row justify-content-center mt-1">
               <div className="col-lg-7 col-md-7 text-center">
                 <div className="title-heading mt-0 mt-md-0 mt-0 mt-sm-0 pt-2 pt-sm-0">
-                  <h3 className="heading mb-3">Мы пока ещё допиливаем наш сервис</h3>
+                  <h3 className="heading mb-3 landing-h3">
+                    Мы пока ещё &quot;допиливаем&quot; наш сервис
+                  </h3>
                   <p className="heading mb-3">
                     Привет, меня зовут Евгений. Я один из основателей сервиса. Связь со мной:
                   </p>
@@ -131,22 +132,20 @@ navbar-light
                       соцсети и получайте удобный инструмент, аналитику, кросспостинг
                     </p>
                     <div>
-                      <a
-                        href="zaglushka.html"
+                      <NavLink
+                        to="/coming-soon"
                         className="btn btn-primary index-button"
                         style={{ marginRight: '5px' }}>
                         Попробовать
-                      </a>
-                      {/* https://uni-blog.ru/register */}
-                      <a href="zaglushka.html" className="btn btn-primary index-button">
+                      </NavLink>
+                      <NavLink to="/home" className="btn btn-primary index-button">
                         Вход
-                      </a>
-                      {/* https://uni-blog.ru/login */}
+                      </NavLink>
                     </div>
                   </div>
                 </div>
                 <div className="d-none d-lg-block col col-index-image">
-                  <img src={images.hero1} className="index-image" alt="#" />
+                  <img src={images.hero1} className="index-image landing-img" alt="#" />
                 </div>
               </div>
             </div>
@@ -157,14 +156,19 @@ navbar-light
     <div className="container mt-10">
       <div className="row">
         <div className="col-md-6">
-          <img src={images.presentation1} className="img-fluid shadow" loading="lazy" alt="#" />
+          <img
+            src={images.presentation1}
+            className="img-fluid shadow landing-img"
+            loading="lazy"
+            alt="#"
+          />
         </div>
         <div className="col-md-6 d-flex align-items-center">
           <div>
             <span className="fa-stack fa-2x">
-              <img className="image-icon" src={images.icon1} alt="#" />
+              <img className="image-icon landing-img" src={images.icon1} alt="#" />
             </span>
-            <h2 className="mt-3">Всё в одном месте</h2>
+            <h2 className="mt-3 landing-h2">Всё в одном месте</h2>
             <p className="mt-3">
               Представьте, что: Вам больше не нужно заходить в 4-5 кабинетов, чтобы увидёт нужные
               данные. Что не нужно изворачиваться, чтобы уместить все контакты и информацию в одно
@@ -180,9 +184,9 @@ navbar-light
         <div className="col-md-6 d-flex align-items-center">
           <div>
             <span className="fa-stack fa-2x">
-              <img className="image-icon" src={images.icon2} alt="#" />
+              <img className="image-icon landing-img" src={images.icon2} alt="#" />
             </span>
-            <h2 className="mt-3">Мультиссылка Linkii</h2>
+            <h2 className="mt-3 landing-h2">Мультиссылка Linkii</h2>
             <p className="mt-3">
               Создавайте собственную страницу со всем необходимым на ней - ссылками на все соц.сети,
               текстами, видео и фото, вашими любимые треки, описанием ваших товаров и услуг.
@@ -190,21 +194,31 @@ navbar-light
           </div>
         </div>
         <div className="col-md-6">
-          <img src={images.presentation2} className="img-fluid shadow" loading="lazy" alt="#" />
+          <img
+            src={images.presentation2}
+            className="img-fluid shadow landing-img"
+            loading="lazy"
+            alt="#"
+          />
         </div>
       </div>
     </div>
     <div className="container mt-10">
       <div className="row">
         <div className="col-md-6">
-          <img src={images.presentation3} className="img-fluid shadow" loading="lazy" alt="#" />
+          <img
+            src={images.presentation3}
+            className="img-fluid shadow landing-img"
+            loading="lazy"
+            alt="#"
+          />
         </div>
         <div className="col-md-6 d-flex align-items-center">
           <div>
             <span className="fa-stack fa-2x">
-              <img className="image-icon" src={images.icon3} alt="#" />
+              <img className="image-icon landing-img" src={images.icon3} alt="#" />
             </span>
-            <h2 className="mt-3">Кросспостинг</h2>
+            <h2 className="mt-3 landing-h2">Кросспостинг</h2>
             <p className="mt-3">
               Создавайте и публикуйте свой контент СРАЗУ во всех свои сети и мессенджеры за пару
               кликов.
@@ -218,29 +232,34 @@ navbar-light
         <div className="col-md-6 d-flex align-items-center">
           <div>
             <span className="fa-stack fa-2x">
-              <img className="image-icon" src={images.icon4} alt="#" />
+              <img className="image-icon landing-img" src={images.icon4} alt="#" />
             </span>
-            <h2 className="mt-3">Аналитика всех сетей в одном месте</h2>
+            <h2 className="mt-3 landing-h2">Аналитика всех сетей в одном месте</h2>
             <p className="mt-3">
               Просто и наглядно отслеживайте успехи всех ваших соц.сетей на одном экране.
             </p>
           </div>
         </div>
         <div className="col-md-6">
-          <img src={images.presentation5} className="img-fluid shadow" loading="lazy" alt="#" />
+          <img
+            src={images.presentation5}
+            className="img-fluid shadow landing-img"
+            loading="lazy"
+            alt="#"
+          />
         </div>
       </div>
     </div>
     <div className="container mt-10">
       <div className="text-center mb-8">
-        <h2>Наша Команда</h2>
+        <h2 className="landing-h2">Наша Команда</h2>
         <p className="text-muted">
           Мы отправились в это увлекательное плаванье за новым опытом и достижениями
         </p>
       </div>
       <div className="team">
         <div className="team-item">
-          <h2 className="mt-5">
+          <h2 className="mt-5 landing-h2">
             <pre>Инвестиции</pre>
           </h2>
           <div className="col-md-3">
@@ -248,7 +267,7 @@ navbar-light
               src={images.CEO}
               width={600}
               height={600}
-              className="img-fluid shadow"
+              className="img-fluid shadow landing-img"
               loading="lazy"
               style={{ background: `url(${images.fon6})` }}
               alt="#"
@@ -260,7 +279,7 @@ navbar-light
           <div className="col-md-3" />
         </div>
         <div className="team-item">
-          <h2 className="mt-5">
+          <h2 className="mt-5 landing-h2">
             <pre>Продукт</pre>
           </h2>
           <div className="col-md-3">
@@ -269,7 +288,7 @@ navbar-light
                 src={images.CPO}
                 width={600}
                 height={600}
-                className="img-fluid shadow"
+                className="img-fluid shadow landing-img"
                 loading="lazy"
                 style={{ background: `url(${images.fon6})` }}
                 alt="#"
@@ -280,7 +299,7 @@ navbar-light
           <div className="col-md-3" />
         </div>
         <div className="team-item">
-          <h2 className="mt-5">
+          <h2 className="mt-5 landing-h2">
             <pre>Офис</pre>
           </h2>
           <div className="col-md-3">
@@ -289,7 +308,7 @@ navbar-light
                 src={images.COO}
                 width={600}
                 height={600}
-                className="img-fluid shadow"
+                className="img-fluid shadow landing-img"
                 loading="lazy"
                 style={{ background: `url(${images.fon6})` }}
                 alt="#"
@@ -302,7 +321,7 @@ navbar-light
           <div className="col-md-3" />
         </div>
         <div className="team-item">
-          <h2 className="mt-5">
+          <h2 className="mt-5 landing-h2">
             <pre>Технологии</pre>
           </h2>
           <div className="col-md-3">
@@ -310,7 +329,7 @@ navbar-light
               src={images.CTO}
               width={600}
               height={600}
-              className="img-fluid shadow"
+              className="img-fluid shadow landing-img"
               loading="lazy"
               style={{ background: `url(${images.fon6})` }}
               alt="#"
@@ -323,7 +342,7 @@ navbar-light
     </div>
     <div className="container mt-10">
       <div className="text-center mb-8">
-        <h2>Тарифный план</h2>
+        <h2 className="landing-h2">Тарифный план</h2>
         <p className="text-muted">
           Основной функционал доступен в бесплатном тарифе Basic. Чтобы сделать свою страницу более
           эффективной, используйте тарифы PRO и BUSINESS.
@@ -402,10 +421,10 @@ navbar-light
                 <br />
                 <br />
                 <br />
-                <a href="zaglushka.html" className="btn btn-lg btn-block btn-primary ">
+                <NavLink to="/coming-soon" className="btn btn-lg btn-block btn-primary">
+                  {/* https://uniblog.ru/oplata2 */}
                   Выбрать тариф
-                </a>
-                {/* https://uniblog.ru/oplata1 */}
+                </NavLink>
               </div>
             </div>
           </div>
@@ -419,11 +438,12 @@ navbar-light
                 <span className="btn btn-lg btn-block btn-primary">PRO</span>
                 <div className="pricing-price">
                   <span className="pricing-price-amount">90 ₽\м</span>
-                  <span
+                  <div
                     className="pricing-price-currency"
-                    title="По мере расширения функционала цена может расти">
-                    {/* <font color="red">скидка!</font> */}
-                  </span>
+                    title="По мере расширения функционала цена может расти"
+                    style={{ color: 'red' }}>
+                    скидка!
+                  </div>
                 </div>
                 <div className="pricing-details">Весь Функцианал Всего за 1080 ₽ в год</div>
               </div>
@@ -496,10 +516,10 @@ navbar-light
                 </ul>
                 <br />
                 <br />
-                <a href="zaglushka.html" className="btn btn-lg btn-block btn-primary">
+                <NavLink to="/coming-soon" className="btn btn-lg btn-block btn-primary">
                   {/* https://uniblog.ru/oplata2 */}
                   Выбрать тариф
-                </a>
+                </NavLink>
               </div>
             </div>
           </div>
@@ -559,10 +579,10 @@ navbar-light
                   <br />
                   <br />
                 </ul>
-                <a href="zaglushka.html" className="btn btn-lg btn-block btn-primary">
+                <NavLink to="/coming-soon" className="btn btn-lg btn-block btn-primary">
+                  {/* https://uniblog.ru/oplata2 */}
                   Выбрать тариф
-                </a>
-                {/* https://uniblog.ru/oplata3 */}
+                </NavLink>
               </div>
             </div>
           </div>

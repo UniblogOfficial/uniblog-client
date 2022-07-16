@@ -17,6 +17,7 @@ export enum PublicPath {
   PASS_RECOVERY = '/password-recovery',
   OAUTH_CALLBACK = '/callback',
   PURCHASE = '/purchase',
+  COMING_SOON = '/coming-soon',
   LANDING = '/',
   MULTILINK = '/*',
   NOT_FOUND = '/404',

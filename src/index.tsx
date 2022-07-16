@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { store } from 'bll/store';
 import { App } from 'ui/App';
 
-// import 'ui/styles/index.scss';
+import 'ui/styles/index.scss';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -18,3 +18,10 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'),
 );
+
+/* navigator.serviceWorker.getRegistrations().then(registrations => {
+  for (const registration of registrations) {
+    registration.unregister();
+  }
+});
+ */
