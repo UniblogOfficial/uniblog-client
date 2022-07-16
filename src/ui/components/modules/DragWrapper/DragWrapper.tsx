@@ -4,7 +4,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import { DragButton } from './dragButton/DragButton';
 
-import { getStyle } from 'common/utils/ui';
+import { getDraggedBlockStyle } from 'common/utils/ui/styleAssemblers';
 
 type TDragWrapperProps = {
   id: string;
@@ -23,7 +23,7 @@ export const DragWrapper: FC<TDragWrapperProps> = ({ id, index, isVisible, child
           ref={innerRef}
           {...draggableProps}
           {...dragHandleProps}
-          style={getStyle(isDragging, draggableProps.style)}>
+          style={getDraggedBlockStyle(isDragging, draggableProps.style)}>
           <div style={{ position: 'relative' }}>
             <DragButton />
             {children}

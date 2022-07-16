@@ -8,6 +8,7 @@ import { Rating } from './Rating';
 import { ID } from 'common/constants';
 import { IMLDraftVote, MLDraftVote, Nullable } from 'common/types/instance';
 import { px } from 'common/utils/ui';
+import { getMLBlockTextProperties } from 'common/utils/ui/styleAssemblers';
 import { Button } from 'ui/components/elements';
 
 type TMLVoteProps = {
@@ -48,15 +49,8 @@ export const MLVote = ({ id, block, isPublic, callback }: TMLVoteProps) => {
             <p
               className={styles['block__title']}
               style={{
-                textAlign: block.textAlign,
-                fontSize: block.fontSize,
-                fontWeight: block.fontWeight,
-                fontStyle: block.fontStyle,
-                fontVariant: block.fontVariant,
-                lineHeight: block.lineHeight,
-                fontFamily: block.fontFamily,
+                ...getMLBlockTextProperties(block),
                 backgroundColor: block.titleBackground,
-                color: block.color,
               }}>
               {cell.title}
             </p>
