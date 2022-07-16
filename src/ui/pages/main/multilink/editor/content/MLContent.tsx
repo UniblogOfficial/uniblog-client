@@ -69,24 +69,97 @@ type TMLContentButton = {
   isDisabled: boolean;
 };
 
-const ML_CONTENT_BUTTONS: TMLContentButton[] = [
-  { name: 'Add text block', type: MLContentType.TEXT, isDisabled: false },
-  { name: 'Add link block', type: MLContentType.LINK, isDisabled: false },
-  { name: 'Add image block', type: MLContentType.IMAGE, isDisabled: false },
-  { name: 'Add image-text block', type: MLContentType.IMAGETEXT, isDisabled: false },
-  { name: 'Add socials block', type: MLContentType.SOCIAL, isDisabled: false },
-  { name: 'Add logo block', type: MLContentType.LOGO, isDisabled: false },
-  { name: 'Add widget block', type: MLContentType.WIDGET, isDisabled: false },
-  { name: 'Add vote block', type: MLContentType.VOTE, isDisabled: true },
-  { name: 'Add button block', type: MLContentType.BUTTON, isDisabled: false },
-  { name: 'Add map block', type: MLContentType.MAP, isDisabled: false },
-  { name: 'Add post block', type: MLContentType.POST, isDisabled: true },
-  { name: 'Add divider block', type: MLContentType.DIVIDER, isDisabled: true },
-  { name: 'Add image-carousel block', type: MLContentType.CAROUSEL, isDisabled: false },
-  { name: 'Add audio block', type: MLContentType.AUDIO, isDisabled: false },
-  { name: 'Add video block', type: MLContentType.VIDEO, isDisabled: true },
-  { name: 'Add timer block', type: MLContentType.TIMER, isDisabled: false },
-  { name: 'Add shop block', type: MLContentType.SHOP, isDisabled: false },
+const getEditorButtons: <T extends Function>(t: T) => TMLContentButton[] = t => [
+  {
+    name: t('pages:multilink.creation.buttons.addText'),
+    type: MLContentType.TEXT,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addLink'),
+    type: MLContentType.LINK,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addImage'),
+    type: MLContentType.IMAGE,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addImageText'),
+    type: MLContentType.IMAGETEXT,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addSocial'),
+    type: MLContentType.SOCIAL,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addLogo'),
+    type: MLContentType.LOGO,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addWidget'),
+    type: MLContentType.WIDGET,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addVote'),
+    type: MLContentType.VOTE,
+    isDisabled: true,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addButton'),
+    type: MLContentType.BUTTON,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addMap'),
+    type: MLContentType.MAP,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addPost'),
+    type: MLContentType.POST,
+    isDisabled: true,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addDivider'),
+    type: MLContentType.DIVIDER,
+    isDisabled: true,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addCarousel'),
+    type: MLContentType.CAROUSEL,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addAudio'),
+    type: MLContentType.AUDIO,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addVideo'),
+    type: MLContentType.VIDEO,
+    isDisabled: true,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addTimer'),
+    type: MLContentType.TIMER,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addShop'),
+    type: MLContentType.SHOP,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addFeedback'),
+    type: MLContentType.FEEDBACK,
+    isDisabled: true,
+  },
 ];
 
 export const MLContent = (props: TMLContentProps) => {
@@ -125,7 +198,7 @@ export const MLContent = (props: TMLContentProps) => {
     dispatch(deleteMLDraftBlock({ id: blockEditorId, type: blockEditorType as MLContentType }));
   }, [setIsOpenModal, setBlockEditor, dispatch]);
 
-  const actionButtons = ML_CONTENT_BUTTONS.map(({ name, type, isDisabled }) => (
+  const actionButtons = getEditorButtons(t).map(({ name, type, isDisabled }) => (
     <Button
       key={name}
       disabled={isDisabled}
@@ -309,7 +382,7 @@ export const MLContent = (props: TMLContentProps) => {
         isOpen={isOpenModal}
         setTrue={onModalButtonYesClick}
         setFalse={onModalButtonNoClick}
-        description="Вы дествительно хотите удалить блок?"
+        description={t('pages:multilink.creation.deleteBlockConfirm')}
       />
       {blockEditorType && (
         <div className="action-buttons">
@@ -319,7 +392,7 @@ export const MLContent = (props: TMLContentProps) => {
             variant="cancel"
             onClick={onButtonEditorClick}
             className="button _rounded">
-            Delete
+            {t('common:buttons.delete')}
           </Button>
           <Button
             value={blockEditorType}

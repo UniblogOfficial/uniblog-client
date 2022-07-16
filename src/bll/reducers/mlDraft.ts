@@ -57,6 +57,9 @@ const mlDraftSlice = createSlice({
       state,
       action: PayloadAction<{ templates: ReturnType<typeof getTemplates>; index: number }>,
     ) {
+      state.background = '#fff';
+      state.outerBackground = '#0000';
+      state.maxWidth = 480;
       state.blocks = {};
       state.images.blocks = {};
       state.isTouched = false;
@@ -78,6 +81,7 @@ const mlDraftSlice = createSlice({
       state.background = background;
       state.outerBackground = outerBackground;
       state.maxWidth = maxWidth;
+      state.blocks = {};
       state.contentMap = blocks.map((block, i) => {
         const blockId = nanoid();
         state.blocks[`${block.type}_${blockId}`] = block;

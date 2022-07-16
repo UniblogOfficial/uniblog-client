@@ -3,17 +3,19 @@
 }
 .timer {
   position: absolute;
-  z-index: 10;
-  color: antiquewhite;
-  background-color: #0007;
-  top: 5%;
+  padding: 0 20px;
+  width: 100%;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  color: antiquewhite;
+  background-color: #0007;
+  z-index: 10;
   &__container {
     text-align: center;
   }
   &__wrapper {
+    position: relative;
     display: flex;
     justify-content: center;
   }

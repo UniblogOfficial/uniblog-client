@@ -46,10 +46,8 @@ export const Select = <TValue extends string>({
     : [];
 
   return (
-    <div>
-      <select value={selectedValue ?? ''} className={styles.sel} onChange={onChangeCallback}>
-        {mappedOptions}
-      </select>
-    </div>
+    <select value={selectedValue ?? ''} className={styles.sel} onChange={onChangeCallback}>
+      {mappedOptions}
+    </select>
   );
 };

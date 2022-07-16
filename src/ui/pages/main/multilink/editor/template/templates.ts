@@ -20,6 +20,8 @@ import {
   TIncomingImage,
 } from 'common/types/instance';
 import { parseRawImage } from 'common/utils/ui';
+import socials from 'img/socials';
+import socialServices from 'img/socials/additional';
 
 export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => {
   const logo = parseRawImage(avatar) ?? null;
@@ -200,6 +202,16 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         image: 'https://i.ibb.co/T49BVq6/bgcImg.jpg',
         countdown: 12,
         title: '123',
+      }),
+      new MLDraftCarousel({
+        isFilled: false,
+        images: [...socials, ...socialServices].map(data => data.src),
+        titles: [...socials, ...socialServices].map(data => data.title),
+        itemsPerView: 4,
+        dots: true,
+        arrows: false,
+        margin: [0, 0, 24, 0],
+        background: '#0002',
       }),
     ],
   ] as const;

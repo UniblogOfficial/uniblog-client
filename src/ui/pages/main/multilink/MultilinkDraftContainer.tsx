@@ -2,12 +2,15 @@ import React, { MouseEvent, useEffect, useState } from 'react';
 
 import { Redirect } from 'react-router-dom';
 
-import { getAllMultilinks, setMLDraft } from '../../../../bll/reducers';
-import { ID, MLContentType } from '../../../../common/constants';
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks';
-import { TMLSavedDraft } from '../../../../common/types/instance/mlDraft';
+import { drafts } from './editor/template/drafts';
+
+import { getAllMultilinks, setMLDraft } from 'bll/reducers';
+import { ID, MLContentType } from 'common/constants';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { TMLSavedDraft } from 'common/types/instance/mlDraft';
 import {
   MLButton,
+  MLCarousel,
   MLImage,
   MLImageText,
   MLLink,
@@ -18,9 +21,7 @@ import {
   MLVideo,
   MLVote,
   MLWidget,
-} from '../../../components/modules/mlBlocks';
-
-import { drafts } from './editor/template/drafts';
+} from 'ui/components/modules/mlBlocks';
 
 const MultilinkDraftContainer = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +42,7 @@ const MultilinkDraftContainer = () => {
         value={draft.name}
         onClick={() => onCLickHandler(draft)}
       />
-      <ul key={ID[i]} className="ml-preview">
+      <ul key={ID[i]} className="ml-preview" style={{ background: draft.background }}>
         {draft.blocks.map((block, j) => {
           switch (block.type) {
             case MLContentType.TEXT:
@@ -77,6 +78,8 @@ const MultilinkDraftContainer = () => {
             // case MLContentType.IMAGETEXT:
             //   return <MLImageText key={ID[j]} id="" block={block} image={null} />;
 
+            case MLContentType.CAROUSEL:
+              return <MLCarousel key={ID[j]} id="" block={block} image={null} />;
             case MLContentType.SHOP:
               return <MLShop key={ID[j]} id="" block={block} images={null} />;
             default:

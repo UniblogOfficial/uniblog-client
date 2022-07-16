@@ -1,5 +1,7 @@
+$btn_primary: #4040f2;
+
 .flex_row {
-  margin-top: 5px;
+  margin-bottom: 12px;
   display: flex;
   text-transform: capitalize;
 }
@@ -23,8 +25,11 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin: 30px 0 15px 0;
+  margin: 24px 0 15px 0;
   width: auto;
+  select {
+    margin-left: 5px;
+  }
 }
 
 .button{
@@ -34,3 +39,41 @@
   border-radius: 7px;
 }
 
+.toggle {
+  label {
+      cursor: pointer;
+      margin-right: 5px;
+      padding: 3px 0;
+      &:last-child {
+          margin-right: 0;
+      }
+      & > div {
+          font-size: 1.5em;
+      }
+  }
+  .toggle-frame__layout {
+          border: 2px solid $btn_primary;
+          border-radius: 2px;
+  }
+}
+
+.text-align {
+  width: 24px;
+  height: 24px;
+
+  :global(.icon) {
+    --primary: #000000;
+    --secondary: #000000;
+  }
+}
+
+.text-draw {
+  width: 24px;
+  height: 24px;
+  margin: 3px;
+  :global(.icon) {
+    --primary: #000000;
+    --secondary: #000000;
+    cursor: pointer;
+  }
+}

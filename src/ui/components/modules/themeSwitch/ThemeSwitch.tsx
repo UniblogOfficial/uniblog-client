@@ -1,6 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 export const ThemeSwitch = ({ preserveRasters = true, storeKey = 'ThemeSwitch' }) => {
+  const { t } = useTranslation(['common']);
   const cssString = `
         html { filter: invert(85%); background: #fefefe; }
       `;
@@ -65,7 +68,7 @@ export const ThemeSwitch = ({ preserveRasters = true, storeKey = 'ThemeSwitch' }
         <>
           <button type="button" aria-pressed={active} onClick={toggle}>
             <div style={style} aria-hidden="true">
-              {active ? 'Темная  тема' : 'Светлая тема'}
+              {active ? t('common:buttons.darkTheme') : t('common:buttons.lightTheme')}
             </div>
           </button>
           <style media={active ? 'screen' : 'none'}>{active ? css.trim() : css}</style>
