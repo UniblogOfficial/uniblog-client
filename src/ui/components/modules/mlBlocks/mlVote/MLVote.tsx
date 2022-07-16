@@ -1,4 +1,6 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useState } from 'react';
+
+import { Modal } from '../../modals/Modal';
 
 import styles from './MLVote.module.scss';
 import { Rating } from './Rating';
@@ -16,8 +18,13 @@ type TMLVoteProps = {
 };
 
 export const MLVote = ({ id, block, isPublic, callback }: TMLVoteProps) => {
-  if (!block) return null;
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
   const onVoteItemClick = (e: MouseEvent<HTMLButtonElement>) => {
+    isPublic && toggleModal();
     if (isPublic && e.currentTarget.dataset.value) {
       const newWindow = document.open(
         `${e.currentTarget.dataset.value}`,
@@ -44,7 +51,10 @@ export const MLVote = ({ id, block, isPublic, callback }: TMLVoteProps) => {
                 textAlign: block.textAlign,
                 fontSize: block.fontSize,
                 fontWeight: block.fontWeight,
-                font: block.font,
+                fontStyle: block.fontStyle,
+                fontVariant: block.fontVariant,
+                lineHeight: block.lineHeight,
+                fontFamily: block.fontFamily,
                 backgroundColor: block.titleBackground,
                 color: block.color,
               }}>
@@ -62,7 +72,12 @@ export const MLVote = ({ id, block, isPublic, callback }: TMLVoteProps) => {
           background: block.buttonBackground,
           borderRadius: px(block.buttonBorderRadius),
           color: block.buttonColor,
-          font: block.buttonFont,
+          fontSize: px(block.fontSize) ?? '18',
+          fontWeight: block.buttonFontWeight,
+          fontStyle: block.buttonFontStyle,
+          fontVariant: block.buttonFontVariant,
+          lineHeight: block.buttonLineHeight,
+          fontFamily: block.buttonFontFamily,
           letterSpacing: px(block.buttonLetterSpacing),
           textShadow: block.buttonTextShadow?.join('px '),
           textAlign: block.buttonTextAlign,
@@ -70,6 +85,11 @@ export const MLVote = ({ id, block, isPublic, callback }: TMLVoteProps) => {
         onClick={onVoteItemClick}>
         Отправить
       </Button>
+      {isModalVisible && (
+        <Modal close={toggleModal}>
+          <div className="paper" style={{ height: '200px' }} />
+        </Modal>
+      )}
     </section>
   );
 };

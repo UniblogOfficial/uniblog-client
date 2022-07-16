@@ -23,11 +23,12 @@ export const MLButton = ({ id, block, callback }: TMLButtonProps) => {
       <Button
         style={{
           fontSize: block.fontSize,
+          fontWeight: block.fontWeight,
+          fontFamily: block.fontFamily,
           background: block.background,
           padding: px(block.padding) ?? '0',
           borderRadius: px(block.borderRadius),
           color: block.color,
-          font: block.font,
           letterSpacing: px(block.letterSpacing),
           textShadow: block.textShadow?.join('px '),
           textAlign: block.textAlign,

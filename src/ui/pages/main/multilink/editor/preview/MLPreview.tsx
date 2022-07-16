@@ -22,7 +22,7 @@ export const MLPreview: FC<TMLPreviewProps> = ({ name, username, publish }) => {
   const status = useAppSelector(selectAppStatus);
   const [isValid, setIsValid] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation(['pages', 'common']);
   const onLinkClick = () => {
     window.open(`${process.env.REACT_APP_HOST_PRODUCTION}/${name || username}`, '_blank');
   };
@@ -89,7 +89,7 @@ export const MLPreview: FC<TMLPreviewProps> = ({ name, username, publish }) => {
               </>
             ) : (
               <a href={`${process.env.REACT_APP_HOST_PRODUCTION}/${name}`}>
-                <div>Мультиссылка создана</div>
+                <div>{t('pages:multilink.preview.multilinkCreated')}</div>
               </a>
             )}
           </div>

@@ -14,9 +14,10 @@ type TMLTimerProps = {
   block: MLDraftTimer;
   callback?: <T>(payload: T) => void;
   image?: Nullable<TMLImageContentTimer<TImageFile>>;
+  isPublic?: boolean;
 };
 
-export const MLTimer = ({ id, block, callback, image }: TMLTimerProps) => {
+export const MLTimer = ({ id, block, callback, image, isPublic }: TMLTimerProps) => {
   const className = callback ? 'interactive' : undefined;
   const imgSrc = image?.image ? image.image.previewUrl : block.image ?? imgPlaceholder;
   const [timerValue, setTimerValue] = useState<number>(block.countdown);
@@ -41,10 +42,10 @@ export const MLTimer = ({ id, block, callback, image }: TMLTimerProps) => {
     { title: 'Минут', value: minutes },
     { title: 'Секунд', value: seconds },
   ];
-  if (!block) return null;
+
   return (
     <section
-      className={timerValue < 0 ? s.hidden : className}
+      className={timerValue < 0 && isPublic ? s.hidden : className}
       style={{ padding: px(block.padding) ?? '0', margin: px(block.margin) ?? '0' }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <div className={s.timer__wrapper}>

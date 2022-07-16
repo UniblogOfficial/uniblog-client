@@ -79,7 +79,7 @@ export const PublicMultilink = ({ multilink, className }: TMultilinkProps) => {
                 block = multilink[type].find(el => el.order === i);
                 image = null;
                 if (!block) return null;
-                return <MLTimer key={ID[i]} id="" block={block} image={image} />;
+                return <MLTimer key={ID[i]} id="" block={block} image={image} isPublic />;
               case MLContentType.LINK:
                 block = multilink[type].find(el => el.order === i);
                 if (!block) return null;
