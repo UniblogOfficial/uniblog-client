@@ -20,7 +20,7 @@
 }
 
 .title {
-  flex: 1 1 100%;
+  flex: 1 0 calc(100% - 80px);
   padding: 0 16px;
   font-weight: 400;
   font-size: 14px;

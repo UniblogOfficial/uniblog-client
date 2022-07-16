@@ -65,7 +65,7 @@ export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
       </div>
       <div>
         <div style={{ position: 'relative', height: '150px' }}>
-          <ImageField id={2} onChange={onDropZoneChange} mode="circle" />
+          <ImageField id={2} onChange={onDropZoneChange} />
         </div>
       </div>
       <Button value={1} onClick={onDeleteButtonClick}>
