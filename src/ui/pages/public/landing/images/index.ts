@@ -1,8 +1,10 @@
 const importAll = (r: any) => {
   const images: any = {};
-  r.keys().map((item: string, i: number) => {
+  r.keys().map((item: string, i: number, arr: string[]) => {
     // @ts-ignore
-    images[item.replace('./', '').split('.')[0]] = r(item).default;
+    if (i < arr.length / 2) {
+      images[item.replace('./', '').split('.')[0]] = r(item);
+    }
   });
   return images;
 };
