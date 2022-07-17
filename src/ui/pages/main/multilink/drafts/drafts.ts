@@ -646,7 +646,7 @@ export const drafts = [
           SocialNetwork.TIKTOK,
           SocialService.TWITCH,
           SocialService.BOOSTY,
-          SocialNetwork.GMAIL,
+          SocialService.GMAIL,
         ],
         size: 65,
         margin: [0, 0, 0, 0],
@@ -880,7 +880,7 @@ export const drafts = [
         linkTypes: [
           SocialNetwork.VK,
           SocialNetwork.TELEGRAM,
-          SocialNetwork.WHATSAPP,
+          SocialService.WHATSAPP,
           SocialNetwork.INSTAGRAM,
         ],
         size: 65,
@@ -1228,7 +1228,7 @@ export const drafts = [
           SocialNetwork.TIKTOK,
           SocialService.TWITCH,
           SocialService.BOOSTY,
-          SocialNetwork.GMAIL,
+          SocialService.GMAIL,
         ],
         size: 65,
         margin: [0, 0, 425, 0],
@@ -1679,7 +1679,7 @@ export const drafts = [
       new MLDraftSocial({
         isFilled: false,
         links: [
-          'notofficial777@mail.ru',
+          'mailto://notofficial777@mail.ru',
           'http://www.tiktok.com/@roma_fobi',
           'https://vc.ru/u/1137112-roma-fobi',
           'https://www.instagram.com/roma_fobi',
@@ -1687,8 +1687,8 @@ export const drafts = [
         linkTypes: [
           SocialService.GMAIL,
           SocialNetwork.TIKTOK,
-          SocialService.TELEGRAM,
-          SocialService.INSTAGRAM,
+          SocialService.VC,
+          SocialNetwork.INSTAGRAM,
         ],
         size: 65,
         margin: [0, 0, 0, 0],

@@ -19,7 +19,11 @@ export const MLSocial = ({ id, block, isPublic, callback }: TMLSocialProps) => {
   return (
     <section
       className={className}
-      style={{ padding: px(block.padding) ?? '0', margin: px(block.margin) ?? '0' }}>
+      style={{
+        padding: px(block.padding),
+        margin: px(block.margin),
+        background: block.background,
+      }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <ul className="ml-social">
         {block.linkTypes.map((icon, i) => {

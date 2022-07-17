@@ -2,7 +2,7 @@ import React, { MouseEvent, useEffect, useState } from 'react';
 
 import { Redirect } from 'react-router-dom';
 
-import { drafts } from './editor/template/drafts';
+import { drafts } from './drafts';
 
 import { getAllMultilinks, setMLDraft } from 'bll/reducers';
 import { ID, MLContentType } from 'common/constants';

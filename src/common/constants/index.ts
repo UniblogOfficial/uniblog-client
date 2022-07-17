@@ -16,13 +16,10 @@ export enum SocialNetwork {
   TWITTER = 'twitter',
   FACEBOOK = 'facebook',
   PINTEREST = 'pinterest',
-  GMAIL = 'gmail',
-  WHATSAPP = 'whatsapp',
 }
 
 export enum SocialService {
-  VK = 'vk',
-  INSTAGRAM = 'instagram',
+  WHATSAPP = 'whatsapp',
   GMAIL = 'gmail',
   BOOSTY = 'boosty',
   DISCORD = 'discord',
@@ -32,7 +29,7 @@ export enum SocialService {
   DONATIONALERTS = 'donationalerts',
   DZEN = 'dzen',
   ARTOFDIGITAL = 'artofdigital',
-  TELEGRAM = 'telegram',
+  VC = 'vc',
 }
 
 export enum MLContentType {
