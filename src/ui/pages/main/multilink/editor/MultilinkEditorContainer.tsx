@@ -53,7 +53,7 @@ import {
   TMLDraftImagesBlocksUnion,
 } from 'common/types/instance/mlDraft/mlImageContent';
 import { Button } from 'ui/components/elements';
-import { DragWrapper } from 'ui/components/modules/dragWrapper';
+import { DragWrapper } from 'ui/components/modules/dragWrapper/DragWrapper';
 import {
   MLButton,
   MLImage,
