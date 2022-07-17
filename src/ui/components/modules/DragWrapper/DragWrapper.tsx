@@ -16,6 +16,7 @@ export const DragWrapper: FC<TDragWrapperProps> = ({ id, index, isVisible, child
   if (!isVisible) {
     return <>{children}</>;
   }
+
   return (
     <Draggable draggableId={id} index={index}>
       {({ draggableProps, innerRef, dragHandleProps }, { isDragging }) => (
