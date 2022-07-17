@@ -7,6 +7,7 @@ import { TIconName } from '../iconSpritesMaps/IconSpritesMap';
 import { ThemeSwitch } from '../themeSwitch/ThemeSwitch';
 
 import { TUser } from 'common/types/instance';
+import { parseRawImage } from 'common/utils/ui';
 import { Button, Icon } from 'ui/components/elements';
 
 type TNavLinksDataItem = {
@@ -76,9 +77,7 @@ export const SidebarContainer: FC<TSidebarContainerProps> = ({ userData }) => {
       icon: 'chat',
     },
   ];
-  const avatarSrc = avatar
-    ? `data:${avatar.imageType};base64, ${Buffer.from(avatar.imageData!).toString('base64')}`
-    : undefined;
+  const avatarSrc = avatar ? parseRawImage(avatar) : undefined;
   const mappedNavLinks = navLinksData.map((data, i) => (
     <li key={data.id} className="nav__item">
       <NavLink exact={i === 0 || false} to={data.href} className="nav__link iconized__L">

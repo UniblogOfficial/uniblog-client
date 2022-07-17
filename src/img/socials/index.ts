@@ -4,10 +4,24 @@ type TImage = {
   title?: string;
 };
 
-const importAll = (r: any) => {
+interface RequireContext {
+  keys(): string[];
+  (id: string): any;
+  <T>(id: string): T;
+  resolve(id: string): string;
+  id: string;
+}
+
+const importAll = (r: RequireContext) => {
   const images = [] as Array<TImage>;
-  r.keys().map((item: string, i: number) => {
-    images.push({ type: item.replace('./', '').split('.')[0], src: r(item).default });
+  r.keys().map((item, i, arr) => {
+    if (i >= arr.length / 2) {
+      const src = r(item);
+      images.push({
+        type: item.replace('./', '').split('.')[0],
+        src,
+      });
+    }
   });
   return images;
 };

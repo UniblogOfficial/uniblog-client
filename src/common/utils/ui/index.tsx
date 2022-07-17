@@ -1,3 +1,5 @@
+import { Buffer } from 'buffer';
+
 import { CSSProperties } from 'react';
 
 import { isDefined } from '../state';
