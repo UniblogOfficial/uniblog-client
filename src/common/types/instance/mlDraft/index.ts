@@ -25,6 +25,7 @@ import { IMLDraftPost, MLDraftPost } from './mlPost.class';
 import { IMLDraftShop, MLDraftShop } from './mlShop.class';
 import { IMLDraftSocial, MLDraftSocial } from './mlSocial.class';
 import { IMLDraftText, MLDraftText } from './mlText.class';
+import { IMLDraftTimer, MLDraftTimer } from './mlTimer.class';
 import { IMLDraftVideo, MLDraftVideo } from './mlVideo.class';
 import { IMLDraftVote, MLDraftVote } from './mlVote.class';
 import { IMLDraftWidget, MLDraftWidget } from './mlWidget.class';
@@ -39,29 +40,41 @@ export type TMultilinkDraft = {
   contentMap: string[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
-  imageLink?: Nullable<string>;
+};
+export type TMLSavedDraft = {
+  name: string;
+  background: string;
+  outerBackground: string;
+  maxWidth: number;
+  blocks: TMLDraftBlocksUnion[];
 };
 
 export type TMLDraftBlocks = { [key: string]: TMLDraftBlocksUnion };
 
-export type TMLDraftBlocksUnion =
+export type TMLDraftTextBlocksUnion =
   | MLDraftText
+  | MLDraftVote
+  //
+  | MLDraftLink
+  | MLDraftButton
+  | MLDraftImage
+  | MLDraftImageText
+  | MLDraftTimer
+  | MLDraftShop;
+
+type TMLDraftNonTextBlocksUnion =
   | MLDraftSocial
   | MLDraftWidget
   | MLDraftVideo
   | MLDraftAudio
   | MLDraftMap
   | MLDraftPost
-  | MLDraftVote
   | MLDraftDivider
   //
-  | MLDraftLink
-  | MLDraftButton
-  | MLDraftImage
-  | MLDraftImageText
   | MLDraftCarousel
-  | MLDraftLogo
-  | MLDraftShop;
+  | MLDraftLogo;
+
+export type TMLDraftBlocksUnion = TMLDraftTextBlocksUnion | TMLDraftNonTextBlocksUnion;
 
 export type TMLDraftImages = {
   background: Nullable<TImageFile>;
@@ -94,6 +107,7 @@ export type {
   TMLImageContentButton,
   TMLImageContentCarousel,
   TMLImageContentAudio,
+  IMLDraftTimer,
 };
 export {
   MLDraftAudio,
@@ -113,4 +127,5 @@ export {
   MLDraftVideo,
   MLDraftVote,
   MLDraftWidget,
+  MLDraftTimer,
 };

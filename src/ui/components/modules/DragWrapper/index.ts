@@ -1,1 +1,0 @@
-export { WrapperDrag } from './DragWrapper';

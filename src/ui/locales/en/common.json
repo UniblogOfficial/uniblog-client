@@ -4,13 +4,27 @@
     "back": "Back",
     "cancel": "Cancel",
     "clean": "Clean",
+    "darkTheme": "Dark theme",
+    "delete": "Delete",
     "download": "Download",
+    "lightTheme": "Light theme",
     "logout": "Log out",
     "next": "Next",
     "no": "No",
     "ok": "OK",
     "save": "Save",
     "yes": "Yes"
+  },
+  "currency": {
+    "ru": {
+      "genitivePlural2": "rubles",
+      "genitivePlural5": "rubles",
+      "nominativePlural": "rubles",
+      "nominativeSingle": "ruble"
+    }
+  },
+  "fieldErrors": {
+    "passRequired": "Password is required"
   },
   "links": {
     "add": "Add",

@@ -21,7 +21,10 @@ export type TMLImageContentAudio<TImage> = {
   order: number;
   image: Nullable<TImage>;
 };
-
+export type TMLImageContentTimer<TImage> = {
+  order: number;
+  image: Nullable<TImage>;
+};
 export type TMLImageContentImageText<TImage> = {
   order: number;
   image: Nullable<TImage>;

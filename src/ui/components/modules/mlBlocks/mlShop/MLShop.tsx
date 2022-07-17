@@ -2,6 +2,7 @@ import React, { MouseEvent } from 'react';
 
 import { MLDraftShop, Nullable, TImageFile, TMLImageContentShop } from 'common/types/instance';
 import { parseRawImage, px } from 'common/utils/ui';
+import { getMLBlockTextProperties } from 'common/utils/ui/styleAssemblers';
 import imgPlaceholder from 'img/img-placeholder.png';
 
 type TMLShopProps = {
@@ -51,16 +52,7 @@ export const MLShop = ({ id, block, images, isPublic, callback }: TMLShopProps) 
               <div style={{ position: 'relative', width: '100%' }}>
                 <img src={imgSrc} alt="" />
               </div>
-              <p
-                style={{
-                  textAlign: block.textAlign,
-                  fontSize: block.fontSize,
-                  fontWeight: block.fontWeight,
-                  font: block.font,
-                  color: block.color,
-                }}>
-                {cell.title}
-              </p>
+              <p style={getMLBlockTextProperties(block)}>{cell.title}</p>
               <p
                 style={{
                   textAlign: block.subtitleTextAlign,

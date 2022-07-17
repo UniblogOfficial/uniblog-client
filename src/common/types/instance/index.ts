@@ -20,6 +20,7 @@ export type {
   IMLDraftPost,
   IMLDraftVote,
   IMLDraftWidget,
+  IMLDraftTimer,
   //
   TMLImageContentLogo,
   TMLImageContentImage,
@@ -53,6 +54,7 @@ export {
   MLDraftVideo,
   MLDraftVote,
   MLDraftWidget,
+  MLDraftTimer,
 } from './mlDraft';
 export type { TMultilinkComplete } from './mlComplete';
 export type { TMultilink } from './mlPublic';

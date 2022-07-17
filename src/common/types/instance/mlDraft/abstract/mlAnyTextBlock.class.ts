@@ -6,7 +6,6 @@ export interface IMLTextProperties {
   // all props: font-style font-variant font-weight font-size/line-height font-family
   // exm. #1: italic small-caps bold 12px/30px Georgia, serif;
   // exm. #2: 20px Arial, sans-serif; <= required
-  font?: string;
   fontStyle?: string;
   fontVariant?: string;
   fontWeight?: number;
@@ -27,7 +26,6 @@ export abstract class MLDraftAnyTextBlock<BlockType>
 {
   abstract type: BlockType;
   color?: string;
-  font?: string;
   fontStyle?: string;
   fontVariant?: string;
   fontWeight?: number;
@@ -40,7 +38,6 @@ export abstract class MLDraftAnyTextBlock<BlockType>
   constructor(props: IMLDraftAnyTextBlock) {
     super(props);
     this.color = props.color;
-    this.font = props.font;
     this.fontStyle = props.fontStyle;
     this.fontVariant = props.fontVariant;
     this.fontWeight = props.fontWeight;

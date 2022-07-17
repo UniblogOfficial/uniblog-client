@@ -2,6 +2,8 @@ import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { MLImageContentTimer } from '../../../../../../common/types/instance/mlDraft/mlImageContent/mlImageTimer.class';
+
 import { MLAudioEditor } from './MLAudioEditor/MLAudioEditor';
 import { MLButtonEditor } from './MLButtonEditor/MLButtonEditor';
 import { MLCarouselEditor } from './MLCarouselEditor/MLCarouselEditor';
@@ -11,6 +13,7 @@ import { MLLogoEditor } from './MLLogoEditor/MLLogoEditor';
 import { MLMapEditor } from './MLMapEditor';
 import { MLShopEditor } from './MLShopEditor/MLShopEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
+import { MlTimerEditor } from './MLTimerEditor/MLTimerEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
 import { withBaseEditor } from './withBaseEditor';
 
@@ -25,6 +28,7 @@ import {
   MLDraftImageText,
   MLDraftShop,
   MLDraftSocial,
+  MLDraftTimer,
   MLDraftWidget,
   Nullable,
   TMLDraftBlocks,
@@ -58,6 +62,105 @@ type TMLContentProps = {
   blockEditorId: string;
   setBlockEditor: (payload: { type: MLContentType; id: string } | null) => void;
 };
+
+type TMLContentButton = {
+  name: string;
+  type: MLContentType;
+  isDisabled: boolean;
+};
+
+const getEditorButtons: <T extends Function>(t: T) => TMLContentButton[] = t => [
+  {
+    name: t('pages:multilink.creation.buttons.addText'),
+    type: MLContentType.TEXT,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addLink'),
+    type: MLContentType.LINK,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addImage'),
+    type: MLContentType.IMAGE,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addImageText'),
+    type: MLContentType.IMAGETEXT,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addSocial'),
+    type: MLContentType.SOCIAL,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addLogo'),
+    type: MLContentType.LOGO,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addWidget'),
+    type: MLContentType.WIDGET,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addVote'),
+    type: MLContentType.VOTE,
+    isDisabled: true,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addButton'),
+    type: MLContentType.BUTTON,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addMap'),
+    type: MLContentType.MAP,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addPost'),
+    type: MLContentType.POST,
+    isDisabled: true,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addDivider'),
+    type: MLContentType.DIVIDER,
+    isDisabled: true,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addCarousel'),
+    type: MLContentType.CAROUSEL,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addAudio'),
+    type: MLContentType.AUDIO,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addVideo'),
+    type: MLContentType.VIDEO,
+    isDisabled: true,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addTimer'),
+    type: MLContentType.TIMER,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addShop'),
+    type: MLContentType.SHOP,
+    isDisabled: false,
+  },
+  {
+    name: t('pages:multilink.creation.buttons.addFeedback'),
+    type: MLContentType.FEEDBACK,
+    isDisabled: true,
+  },
+];
 
 export const MLContent = (props: TMLContentProps) => {
   const dispatch = useAppDispatch();
@@ -95,126 +198,16 @@ export const MLContent = (props: TMLContentProps) => {
     dispatch(deleteMLDraftBlock({ id: blockEditorId, type: blockEditorType as MLContentType }));
   }, [setIsOpenModal, setBlockEditor, dispatch]);
 
-  const actionButtons = (
-    <>
-      <div>
-        <Button
-          value={MLContentType.TEXT}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add text block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.LINK}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add link block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.IMAGE}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add image block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.IMAGETEXT}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add image-text block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.SOCIAL}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add socials block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.LOGO}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add logo block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.WIDGET}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add widget block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add vote block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.BUTTON}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add button block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.MAP}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add map block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add post block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add divider
-        </Button>
-      </div>
-      <div>
-        <Button
-          className="button _full _rounded"
-          value={MLContentType.CAROUSEL}
-          onClick={onButtonEditorClick}>
-          Add image-carousel block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.AUDIO}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add audio block
-        </Button>
-      </div>
-      <div>
-        <Button disabled className="button _full _rounded">
-          Add video block
-        </Button>
-      </div>
-      <div>
-        <Button
-          value={MLContentType.SHOP}
-          onClick={onButtonEditorClick}
-          className="button _full _rounded">
-          Add shop block
-        </Button>
-      </div>
-    </>
-  );
+  const actionButtons = getEditorButtons(t).map(({ name, type, isDisabled }) => (
+    <Button
+      key={name}
+      disabled={isDisabled}
+      value={type}
+      onClick={onButtonEditorClick}
+      className="button _full _rounded">
+      {name}
+    </Button>
+  ));
 
   const currentEditor = useMemo(() => {
     const currentBlock = blocks[`${blockEditorType}_${blockEditorId}`] as TMLDraftBlocksUnion;
@@ -363,6 +356,19 @@ export const MLContent = (props: TMLContentProps) => {
         }
         break;
       }
+      case MLContentType.TIMER: {
+        if (
+          currentBlock instanceof MLDraftTimer &&
+          currentBlockImages instanceof MLImageContentTimer
+        ) {
+          return withBaseEditor({
+            id: blockEditorId,
+            block: currentBlock,
+            image: currentBlockImages,
+          })(MlTimerEditor);
+        }
+        break;
+      }
       default:
         return <>Not implemented</>;
     }
@@ -376,7 +382,7 @@ export const MLContent = (props: TMLContentProps) => {
         isOpen={isOpenModal}
         setTrue={onModalButtonYesClick}
         setFalse={onModalButtonNoClick}
-        description="Вы дествительно хотите удалить блок?"
+        description={t('pages:multilink.creation.deleteBlockConfirm')}
       />
       {blockEditorType && (
         <div className="action-buttons">
@@ -386,7 +392,7 @@ export const MLContent = (props: TMLContentProps) => {
             variant="cancel"
             onClick={onButtonEditorClick}
             className="button _rounded">
-            Delete
+            {t('common:buttons.delete')}
           </Button>
           <Button
             value={blockEditorType}

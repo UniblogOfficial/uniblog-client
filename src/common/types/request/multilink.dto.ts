@@ -12,7 +12,7 @@ import {
   IMLDraftPost,
   IMLDraftShop,
   IMLDraftSocial,
-  IMLDraftText,
+  IMLDraftText, IMLDraftTimer,
   IMLDraftVideo,
   IMLDraftVote,
   IMLDraftWidget,
@@ -46,7 +46,7 @@ export type TCreateMLDto = {
   imageTextBlocks: IMLCreateImageTextDto[];
   shopBlocks: IMLCreateShopDto[];
   buttonBlocks: IMLCreateButtonDto[];
-  timerBlocks: [];
+  timerBlocks: IMLCreateTimerDto[];
   carouselBlocks: IMLCreateCarouselDto[];
 };
 
@@ -101,5 +101,8 @@ interface IMLCreateVoteDto extends IMLDraftVote {
   order: number;
 }
 interface IMLCreateMapDto extends IMLDraftMap {
+  order: number;
+}
+interface IMLCreateTimerDto extends IMLDraftTimer {
   order: number;
 }

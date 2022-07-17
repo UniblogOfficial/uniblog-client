@@ -9,14 +9,37 @@
 
 // &display=swap&subset=cyrillic-ext
 @import url(https://fonts.googleapis.com/css?family=Inter:regular,500,600,700,900);
-
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=B612:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vollkorn:wght@400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600;700&display=swap');
 
 // <ICONS> =========================================================================================================
 //@import 'icons';
 // </ICONS> =========================================================================================================
 
 // <FONT BY DEFAULT> ===============================================================================================
-$fontFamily: "Inter";
+$fontFamily: 'Inter';
 $fontSize: 16px;
 
 // <VARIABLES> =====================================================================================================
@@ -35,12 +58,12 @@ $bg_secondary: #202020;
 $btn_primary: #4040f2;
 
 $c_primary: #242d35;
-$c_secondary: #E50010;
+$c_secondary: #e50010;
 $c_optional: #5555ff;
 // </VARIABLES> ====================================================================================================
 
 // <NULLIFICATION> =================================================================================================
-@import "null";
+@import 'null';
 body {
   @include stretch-it(font-size, 14, 16);
   font-family: $fontFamily, sans-serif;
@@ -96,9 +119,7 @@ main {
 // </MAIN GRID> =====================================================================================================
 
 // <LAYOUT-RELATED> ==================================================================================================
-@import
-  'header',
-  'footer';
+@import 'header', 'footer';
 // </LAYOUT-RELATED> =================================================================================================
 
 // <UI> ==============================================================================================================

@@ -115,7 +115,8 @@
 	margin: 0 auto;
 	padding: 24px 0;
 	width: 395px;
-	height: 780px;
+	height: auto;
+	min-height: 780px;
 	border: 10px solid #000;
 	border-radius: 25px;
 	background-position: 50% 0 !important;
@@ -176,10 +177,10 @@
 		overflow: hidden;
 	}
 
-	// .template_unlimited
-	&_unlimited {
-		height: auto;
-		min-height: 780px;
+	// .template_limited
+	&_limited {
+		height: 780px;
+		overflow: hidden;
 	}
 }
 
@@ -188,6 +189,7 @@
 }
 
 .ml-preview {
+	height: 780px;
 	overflow: hidden;
 }
 

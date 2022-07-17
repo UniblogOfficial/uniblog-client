@@ -12,23 +12,18 @@ import { getKeys, getValues } from 'common/utils/state';
 const initialState: TMLDraftState = {
   name: '',
   background: '#fff',
+  outerBackground: '#0000',
   maxWidth: 480,
   contentMap: [],
   blocks: {},
 
   images: {
     background: null,
-    blocks: {
-      logoBlocks: [],
-      imageBlocks: [],
-      imageTextBlocks: [],
-      shopBlocks: [],
-      buttonBlocks: [],
-      carouselBlocks: [],
-      linkBlocks: [],
-    },
+    outerBackground: null,
+    blocks: {},
   },
 
+  isTouched: false,
   currentStage: MLConstructorStage.TEMPLATE,
 };
 
