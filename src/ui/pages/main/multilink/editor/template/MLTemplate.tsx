@@ -16,6 +16,7 @@ import { Carousel, Icon } from 'ui/components/elements';
 import {
   MLAudio,
   MLButton,
+  MLCarousel,
   MLImage,
   MLImageText,
   MLLink,
@@ -38,8 +39,6 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
   const { t } = useTranslation(['pages', 'common']);
   const { name, avatar } = userData;
   const [templates, setTemplates] = useState(getTemplates(name, avatar));
-  const [dots, setDots] = useState(true);
-  const [arrows, setArrows] = useState(true);
 
   const setCurrentTemplate = useCallback(
     (stage: number) => {
@@ -68,33 +67,31 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
 
               case MLContentType.WIDGET:
                 return block && <MLWidget key={ID[j]} id="" block={block} />;
+              //
+              // case MLContentType.VIDEO:
+              //   return <MLVideo key={ID[j]} id="" block={block} />;
 
-              case MLContentType.VIDEO:
-                return <MLVideo key={ID[j]} id="" block={block} />;
+              case MLContentType.AUDIO:
+                return block && <>audio block</>;
 
-              /* case MLContentType.AUDIO:
-                return block && <>audio block</>; */
-
-              case MLContentType.VOTE:
-                return block && <MLVote key={ID[j]} id="" block={block} />;
+              // case MLContentType.VOTE:
+              //   return block && <MLVote key={ID[j]} id="" block={block} />;
 
               case MLContentType.LOGO:
                 return block && <MLLogo key={ID[j]} id="" block={block} images={null} />;
-
               case MLContentType.LINK:
                 return <MLLink key={ID[j]} id="" block={block} image={null} />;
-
-              case MLContentType.BUTTON:
-                return <MLButton key={ID[j]} id="" block={block} />;
-
-              case MLContentType.IMAGE:
-                return <MLImage key={ID[j]} id="" block={block} image={null} />;
-
+              // case MLContentType.BUTTON:
+              //   return <MLButton key={ID[j]} id="" block={block} />;
+              //
+              // case MLContentType.IMAGE:
+              //   return <MLImage key={ID[j]} id="" block={block} image={null} />;
               case MLContentType.IMAGETEXT:
                 return <MLImageText key={ID[j]} id="" block={block} image={null} />;
-
-              case MLContentType.SHOP:
-                return <MLShop key={ID[j]} id="" block={block} images={null} />;
+              // case MLContentType.SHOP:
+              //   return <MLShop key={ID[j]} id="" block={block} images={null} />;
+              case MLContentType.CAROUSEL:
+                return <MLCarousel key={ID[j]} id="" block={block} image={null} />;
               default:
                 return <li key={ID[j]} />;
             }
@@ -126,8 +123,8 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
       <Carousel
         items={getTemplateLayouts()}
         itemsPerView={1}
-        dots={dots}
-        arrows={arrows}
+        dots
+        arrows
         arrowsIcons={carouselArrows}
         arrowStep={1}
         className="carousel"

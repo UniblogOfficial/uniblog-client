@@ -47,12 +47,10 @@ export const getMultilink = createAsyncThunk(
         });
       }
       if (!response.data) {
-        // @ts-ignore
         dispatch(requestMe());
       }
     } catch (e) {
       handleServerNetworkError(e, AppStatus.CONTENT_FAILED, dispatch);
-      // @ts-ignore
       dispatch(requestMe());
     }
   },

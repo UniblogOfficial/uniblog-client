@@ -14,6 +14,7 @@ export const authAPI = {
         localStorage.setItem('UniblogAccessToken', accessToken);
         localStorage.setItem('UniblogRefreshToken', refreshToken);
       } */
+      console.log(response.data.data);
       return { data: response.data.data, info: response.data.info };
     });
   },

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { MLDraftButton } from 'common/types/instance';
 import { px } from 'common/utils/ui';
+import { getMLBlockTextProperties } from 'common/utils/ui/styleAssemblers';
 import { Button } from 'ui/components/elements';
 
 type TMLButtonProps = {
@@ -22,15 +23,10 @@ export const MLButton = ({ id, block, callback }: TMLButtonProps) => {
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <Button
         style={{
-          fontSize: block.fontSize,
+          ...getMLBlockTextProperties(block),
           background: block.background,
           padding: px(block.padding) ?? '0',
           borderRadius: px(block.borderRadius),
-          color: block.color,
-          font: block.font,
-          letterSpacing: px(block.letterSpacing),
-          textShadow: block.textShadow?.join('px '),
-          textAlign: block.textAlign,
         }}>
         {block.title}
       </Button>

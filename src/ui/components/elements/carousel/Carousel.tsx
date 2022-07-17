@@ -197,25 +197,20 @@ export const Carousel: FC<TCarouselProps> = memo(
       const mid = [];
       const secondtolast = [];
       const last = [];
+      const itemWidth = `0 0 ${100 / itemsPerView}%`;
       for (let i = 0; i < items.length; i++) {
         if (i < itemsPerView) {
           // FIRST VIEW SET
           first.push(
-            <li
-              key={i + Math.random()}
-              style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-              className={styles.item__container}>
-              <div className={styles.item}>{items[i]}</div>
+            <li key={i + Math.random()} style={{ flex: itemWidth }} className={styles.item}>
+              {items[i]}
             </li>,
           );
           if (i >= itemsPerView * (fullSlidesAmount - 1) && fullWidth <= 2) {
             // SECOND-TO-LAST VIEW
             secondtolast.push(
-              <li
-                key={i}
-                style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-                className={styles.item__container}>
-                <div className={styles.item}>{items[i]}</div>
+              <li key={i} style={{ flex: itemWidth }} className={styles.item}>
+                {items[i]}
               </li>,
             );
           }
@@ -227,31 +222,22 @@ export const Carousel: FC<TCarouselProps> = memo(
         ) {
           // LAST VIEW SET
           last.push(
-            <li
-              key={i}
-              style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-              className={styles.item__container}>
-              <div className={styles.item}>{items[i]}</div>
+            <li key={i} style={{ flex: itemWidth }} className={styles.item}>
+              {items[i]}
             </li>,
           );
         } else if (i >= itemsPerView * (fullSlidesAmount - 1) && !isNoPartialSlide) {
           // SECOND-TO-LAST VIEW SET
           secondtolast.push(
-            <li
-              key={i}
-              style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-              className={styles.item__container}>
-              <div className={styles.item}>{items[i]}</div>
+            <li key={i} style={{ flex: itemWidth }} className={styles.item}>
+              {items[i]}
             </li>,
           );
         } else {
           // REST VIEW SETS
           mid.push(
-            <li
-              key={i}
-              style={{ flex: `1 0 ${100 / itemsPerView}%` }}
-              className={styles.item__container}>
-              <div className={styles.item}>{items[i]}</div>
+            <li key={i} style={{ flex: itemWidth }} className={styles.item}>
+              {items[i]}
             </li>,
           );
         }
@@ -308,6 +294,7 @@ export const Carousel: FC<TCarouselProps> = memo(
           className={styles.container}>
           <ul
             style={{
+              gridTemplateColumns: `repeat(${items.length * 2}, ${100 / itemsPerView}%)`,
               transform: `translateX(${-100 * stage - -100 * firstStageValue}%)`,
               transition: `transform ${isRolling ? `${transitionTime}ms` : '0s'} ease-out`,
               filter: `blur(${isRolling ? '1px' : '0px'})`,

@@ -6,6 +6,8 @@ import { MLContentType } from 'common/constants';
 
 export interface IMLDraftCarousel extends Omit<IMLDraftContent, 'borderRadius'> {
   images: Nullable<string>[];
+  links?: string[];
+  titles?: string[];
   dots?: boolean;
   swipe?: boolean;
   arrows?: boolean;
@@ -19,6 +21,8 @@ export class MLDraftCarousel
 {
   type: MLContentType.CAROUSEL = MLContentType.CAROUSEL;
   images: Nullable<string>[];
+  links?: string[];
+  titles?: string[];
   dots?: boolean = false;
   swipe?: boolean = true;
   arrows?: boolean = false;
@@ -27,6 +31,8 @@ export class MLDraftCarousel
   constructor(props: IMLDraftCarousel) {
     super(props);
     this.images = props.images;
+    this.links = props.links;
+    this.titles = props.titles;
     this.dots = props.dots;
     this.swipe = props.swipe;
     this.arrows = props.arrows;

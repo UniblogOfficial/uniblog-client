@@ -1,20 +1,20 @@
 // primary class
 export interface IMLDraftContent {
   isFilled: boolean;
-  padding?: number[];
-  margin?: number[];
+  padding?: [number, number, number, number];
+  margin?: [number, number, number, number];
   background?: string;
-  borderRadius?: number[];
+  borderRadius?: [number, number, number, number];
 }
 
 export abstract class MLDraftBlock<TBlockType> implements IMLDraftContent {
   abstract type: TBlockType;
   isFilled: boolean;
   isTouched = false;
-  padding?: number[];
-  margin?: number[];
+  padding?: [number, number, number, number];
+  margin?: [number, number, number, number];
   background?: string;
-  borderRadius?: number[];
+  borderRadius?: [number, number, number, number];
   constructor(props: IMLDraftContent) {
     this.isFilled = props.isFilled;
     this.padding = props.padding;

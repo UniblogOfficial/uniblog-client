@@ -13,7 +13,7 @@ type TSignupContainerProps = {};
 export const SignupContainer: FC<TSignupContainerProps> = () => {
   const userData = useAppSelector<TUser | null>(selectUserData);
   if (userData !== null) {
-    return <Redirect to="/" />;
+    return <Redirect to="/home" />;
   }
   return <Signup />;
 };

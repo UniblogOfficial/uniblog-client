@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
 import { ID } from 'common/constants';
 import { useAppDispatch, useThrottle } from 'common/hooks';
@@ -16,10 +18,11 @@ type TMLShopEditorProps = {
 export const MLShopEditor = ({ id, block, images }: TMLShopEditorProps) => {
   const dispatch = useAppDispatch();
   const dispatchThrottled = useThrottle(dispatch, 200);
-  const initialTitles = block?.cells.map(cell => cell.title);
-  const initialSubTitles = block?.cells.map(cell => cell.subtitle);
-  const [titles, setTitles] = useState(initialTitles ?? []);
-  const [subtitles, setSubTitles] = useState(initialSubTitles ?? []);
+  const { t } = useTranslation(['pages', 'common']);
+
+  const [titles, setTitles] = useState(block.cells.map(cell => cell.title));
+  const [subtitles, setSubTitles] = useState(block.cells.map(cell => cell.subtitle));
+  const [descriptions, setDescriptions] = useState(block.cells.map(cell => cell.description));
 
   useEffect(() => {
     setTitles(block.cells.map(cell => cell.title) ?? []);
@@ -80,7 +83,7 @@ export const MLShopEditor = ({ id, block, images }: TMLShopEditorProps) => {
         <Input
           type="text"
           name="title"
-          placeholder="Enter title"
+          placeholder={t('pages:multilink.creation.editors.shop.enterTitle')}
           value={titles[i]}
           data-value={i}
           onChange={onInputChange}
@@ -90,8 +93,18 @@ export const MLShopEditor = ({ id, block, images }: TMLShopEditorProps) => {
         <Input
           type="text"
           name="subtitle"
-          placeholder="Enter subtitle"
+          placeholder={t('pages:multilink.creation.editors.shop.enterSubtitle')}
           value={subtitles[i]}
+          data-value={i}
+          onChange={onInputChange}
+        />
+      </div>
+      <div className="field__input">
+        <Input
+          type="text"
+          name="description"
+          placeholder={t('pages:multilink.creation.editors.shop.enterDescription')}
+          value={descriptions[i]}
           data-value={i}
           onChange={onInputChange}
         />

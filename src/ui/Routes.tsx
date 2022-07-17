@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
-import { AdminContainer } from './pages/admin/AdminContainer';
+import { AdminRoutes } from './pages/admin/AdminRoutes';
 import { LoginContainer } from './pages/auth/login/LoginContainer';
 import { SignupContainer } from './pages/auth/signup/SignupContainer';
 import { VerificationContainer } from './pages/auth/verification/VerificationContainer';
@@ -16,7 +17,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { Preloader } from 'ui/components/elements';
 
 export const Routes = (props: any) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const status = useAppSelector(selectAppStatus);
   const nonBlockingLoading = status === AppStatus.DATA_SAVING;
@@ -28,7 +29,6 @@ export const Routes = (props: any) => {
   const firstEnterUrl = useRef(history.location.pathname);
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(initializeApp(firstEnterUrl.current));
   }, [dispatch, firstEnterUrl]);
 
@@ -62,7 +62,7 @@ export const Routes = (props: any) => {
         <Route path="/callback" render={() => <div>OAuth in progress...</div>} />
         {/* <Route path="/recovery" render={() => <PassRecoveryContainer />} />
     <Route path="/new-password" render={() => <NewPassContainer />} /> */}
-        <Route path="/admin" render={() => <AdminContainer />} />
+        <Route path="/admin" render={() => <AdminRoutes />} />
         <Route path="/" render={() => <MainContainer />} />
       </Switch>
     </>

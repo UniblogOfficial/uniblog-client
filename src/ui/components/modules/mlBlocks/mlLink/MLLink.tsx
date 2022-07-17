@@ -11,6 +11,7 @@ import {
   TMLImageContentLink,
 } from 'common/types/instance';
 import { px } from 'common/utils/ui';
+import { getMLBlockTextProperties } from 'common/utils/ui/styleAssemblers';
 
 type TMLLinkProps = {
   id: string;
@@ -25,17 +26,8 @@ export const MLLink = ({ id, block, isPublic, callback, image }: TMLLinkProps) =
   const imgSrc = image?.image ? image.image.previewUrl : block.image ?? undefined;
   const style: CSSProperties = {
     position: 'relative',
-    textAlign: block.textAlign,
-    fontSize: block.fontSize,
-    fontWeight: block.fontWeight,
-    fontStyle: block.fontStyle,
-    fontVariant: block.fontVariant,
-    lineHeight: block.lineHeight,
-    fontFamily: block.fontFamily,
-    color: block.color ?? 'inherit',
+    ...getMLBlockTextProperties(block),
     background: block.background,
-    letterSpacing: block.letterSpacing,
-    textShadow: block.textShadow?.join('px '),
     borderRadius: px(block.borderRadius),
   };
 

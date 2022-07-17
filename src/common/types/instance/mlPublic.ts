@@ -12,6 +12,7 @@ import {
   MLDraftShop,
   MLDraftSocial,
   MLDraftText,
+  MLDraftTimer,
   MLDraftVideo,
   MLDraftVote,
   MLDraftWidget,
@@ -33,6 +34,7 @@ export type TMultilink = {
   socialBlocks: Array<MLDraftSocial & { order: number }>;
   videoBlocks: Array<MLDraftVideo & { order: number }>;
   audioBlocks: Array<MLDraftAudio & { order: number }>;
+  timerBlocks: Array<MLDraftTimer & { order: number }>;
   widgetBlocks: Array<MLDraftWidget & { order: number }>;
   voteBlocks: Array<MLDraftVote & { order: number }>;
   mapBlocks: MLDraftMap[];

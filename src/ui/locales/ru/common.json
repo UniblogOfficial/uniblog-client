@@ -4,13 +4,27 @@
     "back": "Назад",
     "cancel": "Отмена",
     "clean": "Очистить",
+    "darkTheme": "Тёмная тема",
+    "delete": "Удалить",
     "download": "Загрузить",
+    "lightTheme": "Светлая тема",
     "logout": "Выйти",
     "next": "Далее",
     "no": "Нет",
     "ok": "OK",
     "save": "Сохранить",
     "yes": "Да"
+  },
+  "currency": {
+    "ru": {
+      "genitivePlural2": "рубля",
+      "genitivePlural5": "рублей",
+      "nominativePlural": "рубли",
+      "nominativeSingle": "рубль"
+    }
+  },
+  "fieldErrors": {
+    "passRequired": "Обязательное поле"
   },
   "links": {
     "add": "Добавить",

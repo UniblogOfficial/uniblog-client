@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { put, takeEvery } from 'redux-saga/effects';
+import { ThunkDispatch } from 'redux-thunk';
 
 import { requestMe, getMultilink } from '.';
 
@@ -60,12 +61,10 @@ export function* initializeWorkerSaga(action: ReturnType<typeof initializeApp>) 
   );
   if (isMLRequestAttempt) {
     // need fix types
-    // @ts-ignore
-    yield put(getMultilink(trim(action.url, '/')));
+    // any из-за санки, если все перевести на saga, то такого не будет
+    yield put<any>(getMultilink(trim(action.url, '/')));
   }
   if (!isMLRequestAttempt) {
-    // need fix types
-    // @ts-ignore
     yield put(requestMe());
   }
 }

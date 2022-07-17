@@ -7,4 +7,4 @@ type TMLButtonEditorProps = {
   block: IMLDraftButton;
 };
 
-export const MLButtonEditor = ({ id, block }: TMLButtonEditorProps) => <div>wolk</div>;
+export const MLButtonEditor = ({ id, block }: TMLButtonEditorProps) => <div>Not implemented</div>;
