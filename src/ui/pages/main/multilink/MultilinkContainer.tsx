@@ -3,8 +3,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 
+import MultilinkDraftContainer from './drafts/MultilinkDraftContainer';
 import { MultilinkEditorContainer } from './editor/MultilinkEditorContainer';
-import MultilinkDraftContainer from './MultilinkDraftContainer';
 import { MultilinkListContainer } from './MultilinkListContainer';
 
 import { TUser } from 'common/types/instance';
