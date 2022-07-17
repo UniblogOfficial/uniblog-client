@@ -32,7 +32,13 @@ export const MLImageText = ({ id, block, image, callback }: TMLImageTextProps) =
   const imgSrc = image?.image ? image.image.previewUrl : block.image ?? imgPlaceholder;
   const className = callback ? 'interactive' : undefined;
   return (
-    <section className={className} style={{ padding: px(block.padding) ?? '0' }}>
+    <section
+      className={className}
+      style={{
+        padding: px(block.padding),
+        margin: px(block.margin),
+        background: block.background,
+      }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       <div className="ml-imagetext">
         <div

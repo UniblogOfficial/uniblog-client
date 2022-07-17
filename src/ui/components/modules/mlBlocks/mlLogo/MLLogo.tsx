@@ -33,8 +33,9 @@ export const MLLogo = ({ id, block, callback, images }: TMLLogoProps) => {
     <section
       className={className}
       style={{
-        padding: px(block.padding) ?? '0',
+        padding: px(block.padding),
         margin: px(block.margin),
+        background: block.background,
       }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       {banner}
