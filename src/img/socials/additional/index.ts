@@ -9,7 +9,7 @@ type TImage = {
 const importAll = (r: any) => {
   const images = [] as Array<TImage>;
   r.keys().map((item: string, i: number, arr: string[]) => {
-    if (i >= arr.length / 2) {
+    if (i < arr.length / 2) {
       const src = r(item);
       images.push({
         type: item.replace('./', '').split('.')[0],
