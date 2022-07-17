@@ -15,7 +15,7 @@ interface RequireContext {
 const importAll = (r: RequireContext) => {
   const images = [] as Array<TImage>;
   r.keys().map((item, i, arr) => {
-    if (i >= arr.length / 2) {
+    if (i < arr.length / 2) {
       const src = r(item);
       images.push({
         type: item.replace('./', '').split('.')[0],
