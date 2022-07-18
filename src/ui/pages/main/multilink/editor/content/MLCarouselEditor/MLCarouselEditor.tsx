@@ -58,11 +58,11 @@ export const MLCarouselEditor = ({ id, block, image }: TMLCarouselEditorProps) =
   return (
     <div className="ml-image-editor">
       {field}
-      <input
-        style={{ width: '100%', height: '50px', backgroundColor: 'red' }}
-        placeholder="Please, enter audio url"
-        onChange={onChangeHandler}
-      />
+      {/* <input */}
+      {/*  style={{ width: '100%', height: '50px', backgroundColor: 'red' }} */}
+      {/*  placeholder="Please, enter audio url" */}
+      {/*  onChange={onChangeHandler} */}
+      {/* /> */}
       <Button onClick={() => setUrlAudioFile(imageUrl)}>Add element</Button>
     </div>
   );
