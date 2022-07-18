@@ -14,7 +14,7 @@ import {
   TMLDraftImages,
   TMultilinkDraft,
 } from 'common/types/instance';
-import { TMLDraftBlocksUnion } from 'common/types/instance/mlDraft';
+import { TMLDraftBlocksUnion, TMLSavedDraft } from 'common/types/instance/mlDraft';
 import { TMLDraftImagesBlocksUnion } from 'common/types/instance/mlDraft/mlImageContent';
 import { handleServerNetworkError, pushMLDraftBlock, getValues } from 'common/utils/state';
 import { normalizeMLDraft } from 'common/utils/state/normalizeMLDraft';
@@ -49,11 +49,17 @@ const mlDraftSlice = createSlice({
     setMLDraftName(state, action: PayloadAction<string>) {
       state.name = action.payload;
     },
+    setMLCurrentStage(state, action: PayloadAction<number>) {
+      state.currentStage = action.payload;
+    },
 
     setMLDraftTemplate(
       state,
       action: PayloadAction<{ templates: ReturnType<typeof getTemplates>; index: number }>,
     ) {
+      state.background = '#fff';
+      state.outerBackground = '#0000';
+      state.maxWidth = 480;
       state.blocks = {};
       state.images.blocks = {};
       state.isTouched = false;
@@ -68,6 +74,24 @@ const mlDraftSlice = createSlice({
         return `${block.type}_${blockId}`;
       });
       state.images.background = null;
+    },
+    setMLDraft(state, action: PayloadAction<TMLSavedDraft>) {
+      const { name, background, blocks, outerBackground, maxWidth } = action.payload;
+      state.name = name;
+      state.background = background;
+      state.outerBackground = outerBackground;
+      state.maxWidth = maxWidth;
+      state.blocks = {};
+      state.contentMap = blocks.map((block, i) => {
+        const blockId = nanoid();
+        state.blocks[`${block.type}_${blockId}`] = block;
+
+        pushMLDraftImageBlock(block.type, state.images.blocks, blockId);
+
+        return `${block.type}_${blockId}`;
+      });
+      state.images.background = null;
+      state.currentStage = MLConstructorStage.CONTENT;
     },
 
     setMLDraftLogoFromUserAvatar(state, action: PayloadAction<Nullable<TIncomingImage>>) {},
@@ -120,6 +144,7 @@ const mlDraftSlice = createSlice({
           | 'buttonBlocks'
           | 'linkBlocks'
           | 'audioBlocks'
+          | 'timerBlocks'
         >;
       }>,
     ) {
@@ -165,6 +190,8 @@ export const {
   setMLDraftBlockContentImage,
   setDragBlock,
   deleteMLDraftBlock,
+  setMLDraft,
+  setMLCurrentStage,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 

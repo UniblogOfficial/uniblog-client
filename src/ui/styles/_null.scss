@@ -49,7 +49,7 @@ a:not([class]) {
   //text-decoration-skip-ink: auto;
 }
 
-a {
+a, a:hover {
   text-decoration: none;
 }
 

@@ -40,30 +40,41 @@ export type TMultilinkDraft = {
   contentMap: string[];
   blocks: TMLDraftBlocks;
   images: TMLDraftImages;
-  imageLink?: Nullable<string>;
+};
+export type TMLSavedDraft = {
+  name: string;
+  background: string;
+  outerBackground: string;
+  maxWidth: number;
+  blocks: TMLDraftBlocksUnion[];
 };
 
 export type TMLDraftBlocks = { [key: string]: TMLDraftBlocksUnion };
 
-export type TMLDraftBlocksUnion =
+export type TMLDraftTextBlocksUnion =
   | MLDraftText
+  | MLDraftVote
+  //
+  | MLDraftLink
+  | MLDraftButton
+  | MLDraftImage
+  | MLDraftImageText
+  | MLDraftTimer
+  | MLDraftShop;
+
+type TMLDraftNonTextBlocksUnion =
   | MLDraftSocial
   | MLDraftWidget
   | MLDraftVideo
   | MLDraftAudio
   | MLDraftMap
   | MLDraftPost
-  | MLDraftVote
   | MLDraftDivider
   //
-  | MLDraftLink
-  | MLDraftButton
-  | MLDraftImage
-  | MLDraftImageText
   | MLDraftCarousel
-  | MLDraftLogo
-  | MLDraftTimer
-  | MLDraftShop;
+  | MLDraftLogo;
+
+export type TMLDraftBlocksUnion = TMLDraftTextBlocksUnion | TMLDraftNonTextBlocksUnion;
 
 export type TMLDraftImages = {
   background: Nullable<TImageFile>;

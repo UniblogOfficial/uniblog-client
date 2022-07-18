@@ -16,13 +16,10 @@ export enum SocialNetwork {
   TWITTER = 'twitter',
   FACEBOOK = 'facebook',
   PINTEREST = 'pinterest',
-  GMAIL = 'gmail',
-  WHATSAPP = 'whatsapp',
 }
 
 export enum SocialService {
-  VK = 'vk',
-  INSTAGRAM = 'instagram',
+  WHATSAPP = 'whatsapp',
   GMAIL = 'gmail',
   BOOSTY = 'boosty',
   DISCORD = 'discord',
@@ -32,26 +29,28 @@ export enum SocialService {
   DONATIONALERTS = 'donationalerts',
   DZEN = 'dzen',
   ARTOFDIGITAL = 'artofdigital',
-  TELEGRAM = 'telegram',
+  VC = 'vc',
 }
 
 export enum MLContentType {
   TEXT = 'textBlocks',
-  LINK = 'linkBlocks',
   LOGO = 'logoBlocks',
   SOCIAL = 'socialBlocks',
-  BUTTON = 'buttonBlocks',
-  POST = 'postBlocks',
-  IMAGE = 'imageBlocks',
-  IMAGETEXT = 'imageTextBlocks',
-  CAROUSEL = 'carouselBlocks',
   VIDEO = 'videoBlocks',
   AUDIO = 'audioBlocks',
   WIDGET = 'widgetBlocks',
-  SHOP = 'shopBlocks',
+  POST = 'postBlocks',
   VOTE = 'voteBlocks',
+  FEEDBACK = 'feedbackBlocks',
   MAP = 'mapBlocks',
   DIVIDER = 'dividerBlocks',
+
+  LINK = 'linkBlocks',
+  BUTTON = 'buttonBlocks',
+  IMAGE = 'imageBlocks',
+  IMAGETEXT = 'imageTextBlocks',
+  CAROUSEL = 'carouselBlocks',
+  SHOP = 'shopBlocks',
   TIMER = 'timerBlocks',
 }
 

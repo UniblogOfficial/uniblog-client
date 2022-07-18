@@ -1,13 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { HexColorPicker, RgbaStringColorPicker } from 'react-colorful';
+import { useTranslation } from 'react-i18next';
 
 import styles from './MLTextEditor.module.scss';
 
 import { setMLDraftBlockContent } from 'bll/reducers';
 import { useAppDispatch, useDebounce, useThrottle } from 'common/hooks';
 import { MLDraftText } from 'common/types/instance';
-import { Button, Icon, Select, Textarea } from 'ui/components/elements';
+import { Button, Icon, Select, Textarea, Toggle } from 'ui/components/elements';
 
 type TMLTextEditorProps = {
   id: string;
@@ -18,8 +19,10 @@ type AlignTextType = 'right' | 'left' | 'center' | 'justify';
 const defaultColors: string[] = ['black', 'red', 'yellow', 'green', 'blue', 'pink'];
 const fontSizeTexts: string[] = ['12', '14', '16', '18', '20', '22', '24', '26', '28', '30'];
 const fontTexts: string[] = [
+  'Inter',
   'Alegreya',
   'B612',
+  'Caveat',
   'Mulish',
   'Titillium Web',
   'Varela',
@@ -47,6 +50,7 @@ const shadowTextDefault = ['0', '0', '0', '#000'];
 export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
   const dispatch = useAppDispatch();
   const dispatchThrottled = useThrottle(dispatch, 200);
+  const { t } = useTranslation(['pages', 'common']);
   const [text, setText] = useState(block.text ?? '');
   const [isTextColorPickerVisible, setIsTextColorPickerVisible] = useState<boolean>(false);
   const [isBgColorFontTextVisible, setIsBgColorFontTextVisible] = useState(false);
@@ -153,6 +157,32 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
   return (
     <>
       <div>
+        <div className={styles.flex_row}>
+          <Toggle
+            options={['left', 'center', 'right', 'justify']}
+            value={block.textAlign ?? 'left'}
+            className={styles['toggle']}
+            frameClassName={styles['toggle-frame__layout']}
+            onChangeOption={onAlignChange}
+            titles={[
+              <Icon key={1} name="text-align-left" containerClassName={styles['text-align']} />,
+              <Icon key={2} name="text-align-center" containerClassName={styles['text-align']} />,
+              <Icon key={3} name="text-align-right" containerClassName={styles['text-align']} />,
+              <Icon key={4} name="text-align-justify" containerClassName={styles['text-align']} />,
+            ]}
+          />
+
+          <Icon
+            name="text-bolt"
+            containerClassName={styles['text-draw']}
+            onClick={() => onFontWeightChange(block?.fontWeight === 400 ? 700 : 400)}
+          />
+          <Icon
+            name="text-italic"
+            containerClassName={styles['text-draw']}
+            onClick={() => onItalicTextChange(block.fontStyle === 'italic' ? 'normal' : 'italic')}
+          />
+        </div>
         <Textarea
           data-value={id}
           value={text}
@@ -160,51 +190,23 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
           maxLength={1023}
           className="textarea"
         />
-        Align & Bold:
-        <div className={styles.flex_row}>
-          <Icon
-            name="text-align-left"
-            containerClassName="draw_text"
-            onClick={() => onAlignChange('left')}
-          />
-          <Icon
-            name="text-align-center"
-            containerClassName="draw_text"
-            onClick={() => onAlignChange('center')}
-          />
-          <Icon
-            name="text-align-right"
-            containerClassName="draw_text"
-            onClick={() => onAlignChange('right')}
-          />
-          <Icon
-            name="text-align-justify"
-            containerClassName="draw_text"
-            onClick={() => onAlignChange('justify')}
-          />
-          <Icon
-            name="text-bolt"
-            containerClassName="draw_text"
-            onClick={() => onFontWeightChange(block?.fontWeight === 400 ? 700 : 400)}
-          />
-          <Icon
-            name="text-italic"
-            containerClassName="draw_text"
-            onClick={() => onItalicTextChange(block.fontStyle === 'italic' ? 'normal' : 'italic')}
-          />
-        </div>
+
         <div className={styles.select}>
           <label>
-            Size:
+            {t('pages:multilink.creation.editors.text.fontSize')}:
             <Select options={fontSizeTexts} onChangeOption={onTextSizeChange} />
           </label>
           <label>
-            Font Text:
-            <Select options={fontTexts} onChangeOption={onFontTextsChange} />
+            {t('pages:multilink.creation.editors.text.fontFamily')}:
+            <Select
+              options={fontTexts}
+              onChangeOption={onFontTextsChange}
+              selectedValue={block.fontFamily ?? 'Inter'}
+            />
           </label>
         </div>
         <div style={{ marginTop: '10px' }}>
-          Text Color:
+          {t('pages:multilink.creation.editors.text.textColor')}:
           {defaultColors.map((color, index) => (
             <input
               key={color}
@@ -223,14 +225,14 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
             <>
               <RgbaStringColorPicker color={block.color} onChange={onColorChange} />
               <Button className={styles.button} onClick={() => setIsTextColorPickerVisible(false)}>
-                Ok
+                OK
               </Button>
             </>
           )}
         </div>
         <div className={styles.flex_row2}>
           <label>
-            Line Height:
+            {t('pages:multilink.creation.editors.text.lineHeight')}:
             <input
               type="range"
               name="Line Height"
@@ -242,7 +244,7 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
             />
           </label>
           <label>
-            Letter Spacing:
+            {t('pages:multilink.creation.editors.text.letterSpacing')}:
             <input
               type="range"
               name="Letter Spacing"
@@ -254,7 +256,7 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
             />
           </label>
           <label>
-            Variant
+            {t('pages:multilink.creation.editors.text.fontVariant')}
             <input
               type="checkbox"
               onChange={() =>
@@ -265,9 +267,9 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
         </div>
       </div>
       <div className={styles.font_shadow_select}>
-        Font Shadow:
+        {t('pages:multilink.creation.editors.text.textShadow')}:
         <label style={{ marginTop: '5px' }}>
-          Left or Right
+          {t('pages:multilink.creation.editors.text.shadowHorizontal')}
           <input
             type="range"
             name="offset-x"
@@ -279,7 +281,7 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
           />
         </label>
         <label>
-          Top or Bottom
+          {t('pages:multilink.creation.editors.text.shadowVertical')}
           <input
             type="range"
             name="offset-y"
@@ -291,7 +293,7 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
           />
         </label>
         <label>
-          Blur radius
+          {t('pages:multilink.creation.editors.text.shadowBlur')}
           <input
             type="range"
             name="blur-radius"
@@ -316,7 +318,7 @@ export const MLTextEditor = ({ id, block }: TMLTextEditorProps) => {
               onChange={onBackgroundTextShadowChange}
             />
             <Button className={styles.button} onClick={() => setIsBgColorFontTextVisible(false)}>
-              Ok
+              OK
             </Button>
           </>
         )}

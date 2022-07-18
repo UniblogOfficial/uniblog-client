@@ -17,7 +17,7 @@ export const MLLogo = ({ id, block, callback, images }: TMLLogoProps) => {
     const imgSrc = images?.logo ? images?.logo.previewUrl : block.logo;
     if (!imgSrc) return null;
     return <img src={imgSrc} alt="logo" />;
-  }, [block, images?.logo]);
+  }, [block.logo, images?.logo]);
   const banner = useMemo(() => {
     const imgSrc = images?.banner ? images.banner.previewUrl : block.banner;
     if (!imgSrc) return null;
@@ -26,15 +26,16 @@ export const MLLogo = ({ id, block, callback, images }: TMLLogoProps) => {
         <img src={imgSrc} alt="banner" />
       </div>
     );
-  }, [block, images?.banner]);
-  if (!block) return null;
+  }, [block.banner, images?.banner]);
   const className = callback ? `${styles['block']} interactive` : styles['block'];
+
   return (
     <section
       className={className}
       style={{
-        padding: px(block.padding) ?? '0',
+        padding: px(block.padding),
         margin: px(block.margin),
+        background: block.background,
       }}>
       {callback && <input type="button" data-type={block.type} data-id={id} onClick={callback} />}
       {banner}

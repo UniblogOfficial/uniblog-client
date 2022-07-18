@@ -1,0 +1,1 @@
+"use strict";document.querySelectorAll('[type="submit"][name="submit"]').forEach((e=>{e.addEventListener("click",(e=>{let t=e.currentTarget;t.classList.add("disabled");let s=t.innerText;t.innerHTML='<div class="spinner-grow spinner-grow-sm" role="status"></div>',setTimeout((()=>{t.classList.remove("disabled"),t.innerText=s}),2500)}))})),$('[data-toggle="tooltip"]').tooltip();

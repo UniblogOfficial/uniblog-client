@@ -1,7 +1,7 @@
 export { Carousel } from './carousel/Carousel';
 export { Button } from './button/Button';
 export { Breadcrumbs } from './breadcrumbs/Breadcrumbs';
-// export { Checkbox } from './checkbox/Checkbox';
+export { Checkbox } from './checkbox/Checkbox';
 // export { DebugPanel } from './debugPanel/DebugPanel';
 // export { DebugContainer } from './debugPanel/DebugContainer';
 export { Icon } from './icons/Icon';
@@ -11,6 +11,7 @@ export { Textarea } from './textarea/Textarea';
 // export { Paginator } from './paginator/Paginator';
 export { Preloader } from './preloader/Preloader';
 export { ElementPreloader } from './preloader/ElementPreloader';
+export { Toggle } from './toggle/Toggle';
 export { Select } from './select/Select';
 // export { LoadingScreen } from './preloader/LoadingScreen';
 export { Radio } from './radio/Radio';

@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
-import { AdminContainer } from './pages/admin/AdminContainer';
+import { AdminRoutes } from './pages/admin/AdminRoutes';
 import { LoginContainer } from './pages/auth/login/LoginContainer';
 import { SignupContainer } from './pages/auth/signup/SignupContainer';
 import { VerificationContainer } from './pages/auth/verification/VerificationContainer';
@@ -62,7 +62,7 @@ export const Routes = (props: any) => {
         <Route path="/callback" render={() => <div>OAuth in progress...</div>} />
         {/* <Route path="/recovery" render={() => <PassRecoveryContainer />} />
     <Route path="/new-password" render={() => <NewPassContainer />} /> */}
-        <Route path="/admin" render={() => <AdminContainer />} />
+        <Route path="/admin" render={() => <AdminRoutes />} />
         <Route path="/" render={() => <MainContainer />} />
       </Switch>
     </>

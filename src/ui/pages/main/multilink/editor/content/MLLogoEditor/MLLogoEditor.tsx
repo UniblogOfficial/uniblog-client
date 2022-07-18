@@ -1,5 +1,7 @@
 import React, { useCallback, MouseEvent } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { saveImage, setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
 import { MLContentType } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
@@ -21,6 +23,7 @@ enum ImageType {
 
 export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation(['pages']);
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile, _id?: number) => {
@@ -57,7 +60,7 @@ export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
     <div className="ml-logo-editor">
       <div>
         <div style={{ position: 'relative', height: '150px' }}>
-          <ImageField id={1} onChange={onDropZoneChange} />
+          <ImageField id={1} onChange={onDropZoneChange} mode="circle" />
         </div>
       </div>
       <div>
@@ -66,10 +69,10 @@ export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
         </div>
       </div>
       <Button value={1} onClick={onDeleteButtonClick}>
-        Delete logo
+        {t('pages:multilink.creation.editors.logo.deleteLogo')}
       </Button>
       <Button value={2} onClick={onDeleteButtonClick}>
-        Delete banner
+        {t('pages:multilink.creation.editors.logo.deleteBanner')}
       </Button>
     </div>
   );

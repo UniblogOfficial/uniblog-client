@@ -4,13 +4,15 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
+import { MLImageContentTimer } from '../../../../../common/types/instance/mlDraft/mlImageContent/mlImageTimer.class';
+
 import { MLBackground } from './background/MLBackground';
 import { MLContent } from './content/MLContent';
 import { MLPreview } from './preview/MLPreview';
 import { MLTemplate } from './template/MLTemplate';
 import { MLTemplates } from './template/MLTemplates';
 
-import { publishMultilink, setDragBlock } from 'bll/reducers';
+import { publishMultilink, setDragBlock, setMLCurrentStage } from 'bll/reducers';
 import {
   selectMlDraftBackground,
   selectMlDraftBlocks,
@@ -19,7 +21,7 @@ import {
   selectMlDraftMaxWidth,
   selectMlDraftName,
 } from 'bll/selectors/selectMlDraft';
-import { ID, MLContentType } from 'common/constants';
+import { ID, MLConstructorStage, MLContentType } from 'common/constants';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import {
   MLDraftAudio,
@@ -45,13 +47,14 @@ import {
   MLImageContentAudio,
   MLImageContentCarousel,
   MLImageContentImage,
+  MLImageContentImageText,
   MLImageContentLink,
   MLImageContentLogo,
   MLImageContentShop,
   TMLDraftImagesBlocksUnion,
 } from 'common/types/instance/mlDraft/mlImageContent';
 import { Button } from 'ui/components/elements';
-import { WrapperDrag } from 'ui/components/modules/DragWrapper';
+import { DragWrapper } from 'ui/components/modules/dragWrapper/DragWrapper';
 import {
   MLButton,
   MLImage,
@@ -74,20 +77,12 @@ type TMultilinkEditorContainerProps = {
   userData: TUser;
 };
 
-enum EditorStage {
-  TEMPLATE = 0,
-  BACKGROUND = 1,
-  CONTENT = 2,
-  PREVIEW = 3,
-}
-
 const voidOrder = '-1';
 
 export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ userData }) => {
   const dispatch = useAppDispatch();
-
+  const stage = useAppSelector(state => state.mlDraft.currentStage);
   const { t } = useTranslation(['pages', 'common']);
-  const [stage, setStage] = useState<EditorStage>(0);
   const [blockEditorType, setBlockEditorType] = useState<Nullable<MLContentType>>(null);
   const [blockEditorId, setBlockEditorId] = useState(voidOrder);
   const [currentMLTemplate, setCurrentMLTemplate] = useState(0);
@@ -137,16 +132,16 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
 
   const onNextButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (Number(e.currentTarget.value) > 0) {
-      stage < 3 && setStage(stage + Number(e.currentTarget.value)); // to next stage
+      stage < 3 && dispatch(setMLCurrentStage(stage + 1)); // to next stage
     }
     if (Number(e.currentTarget.value) < 0) {
-      stage > 0 && setStage(stage + Number(e.currentTarget.value)); // to previous stage
+      stage > 0 && dispatch(setMLCurrentStage(stage - 1)); // to previous stage
     }
   };
 
   const getLayout = useCallback(
     (editable: boolean, limited: boolean) => {
-      const templateClassName = limited ? 'ml-template' : 'ml-template ml-template_unlimited';
+      const templateClassName = limited ? 'ml-template ml-template_limited' : 'ml-template';
       const templateBackground = images.background
         ? `url(${images.background.previewUrl})`
         : background;
@@ -183,63 +178,63 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                     : undefined;
                   if (block instanceof MLDraftText) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLText id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftSocial) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLSocial id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftWidget) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLWidget id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftVideo) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLVideo id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftMap) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLMap id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftVote) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLVote id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftLogo && image instanceof MLImageContentLogo) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLLogo id={id} block={block} images={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftLink && image instanceof MLImageContentLink) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLLink key={id} id={id} block={block} image={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftCarousel && image instanceof MLImageContentCarousel) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLCarousel
                           key={id}
                           id={id}
@@ -247,51 +242,54 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                           block={block}
                           image={image}
                         />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
 
                   if (block instanceof MLDraftAudio && image instanceof MLImageContentAudio) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLAudio id={id} block={block} callback={callback} image={image} />;
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
 
                   if (block instanceof MLDraftButton) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLButton id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftImage && image instanceof MLImageContentImage) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLImage id={id} block={block} image={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
-                  if (block instanceof MLDraftImageText && image instanceof MLImageContentLink) {
+                  if (
+                    block instanceof MLDraftImageText &&
+                    image instanceof MLImageContentImageText
+                  ) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLImageText id={id} block={block} image={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
-                  if (block instanceof MLDraftTimer) {
+                  if (block instanceof MLDraftTimer && image instanceof MLImageContentTimer) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
-                        <MLTimer id={id} block={block} callback={callback} />
-                      </WrapperDrag>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
+                        <MLTimer id={id} block={block} callback={callback} image={image} />
+                      </DragWrapper>
                     );
                   }
                   if (block instanceof MLDraftShop && image instanceof MLImageContentShop) {
                     return (
-                      <WrapperDrag isVisible={editable} key={id} id={id} index={i}>
+                      <DragWrapper isVisible={editable} key={id} id={id} index={i}>
                         <MLShop id={id} block={block} images={image} callback={callback} />
-                      </WrapperDrag>
+                      </DragWrapper>
                     );
                   }
 
@@ -325,29 +323,29 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
       </div>
       <div
         className="grid__row paper"
-        style={stage === EditorStage.PREVIEW ? { justifyContent: 'center' } : undefined}>
+        style={stage === MLConstructorStage.PREVIEW ? { justifyContent: 'center' } : undefined}>
         <div className="multilink-editor">
           <section className="ml-creation-area">
-            {stage === EditorStage.TEMPLATE && (
+            {stage === MLConstructorStage.TEMPLATE && (
               <MLTemplate userData={userData} currentMLTemplate={currentMLTemplate} />
             )}
-            {stage === EditorStage.BACKGROUND && (
+            {stage === MLConstructorStage.BACKGROUND && (
               <div className="multilink-editor__constructor">{getLayout(false, false)}</div>
             )}
-            {stage === EditorStage.CONTENT && (
+            {stage === MLConstructorStage.CONTENT && (
               <div className="multilink-editor__constructor">{getLayout(true, false)}</div>
             )}
-            {stage === EditorStage.PREVIEW && (
+            {stage === MLConstructorStage.PREVIEW && (
               <div className="multilink-editor__constructor">{getLayout(false, true)}</div>
             )}
           </section>
           <section className="tools-area">
             <div className="tools-area__container">
-              {stage === EditorStage.TEMPLATE && (
+              {stage === MLConstructorStage.TEMPLATE && (
                 <MLTemplates userData={userData} setCurrentMLTemplate={setCurrentMLTemplate} />
               )}
-              {stage === EditorStage.BACKGROUND && <MLBackground />}
-              {stage === EditorStage.CONTENT && (
+              {stage === MLConstructorStage.BACKGROUND && <MLBackground />}
+              {stage === MLConstructorStage.CONTENT && (
                 <MLContent
                   contentMap={contentMap}
                   blocks={blocks}
@@ -357,7 +355,7 @@ export const MultilinkEditorContainer: FC<TMultilinkEditorContainerProps> = ({ u
                   setBlockEditor={setBlockEditor}
                 />
               )}
-              {stage === EditorStage.PREVIEW && (
+              {stage === MLConstructorStage.PREVIEW && (
                 <MLPreview name={name} username={userData.name} publish={sendMultilink} />
               )}
             </div>

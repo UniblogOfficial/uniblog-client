@@ -1,27 +1,20 @@
 import React from 'react';
 
-import { Redirect, Route, Switch } from 'react-router-dom';
-
-import { TestPage } from './test/TestPage';
-
-import { TUserState } from 'bll/reducers';
-import { selectUserData } from 'bll/selectors';
-import { useAppSelector } from 'common/hooks';
-import { Role } from 'common/types/instance/user';
-
-type TAdminContainerProps = {};
+import { Button } from 'ui/components/elements';
 
 export const AdminContainer = () => {
-  const userData = useAppSelector<TUserState>(selectUserData);
-
-  // if (userData === null || userData.role !== Role.ADMIN) {
-  if (userData === null) {
-    return <Redirect to="/login" />;
-  }
+  const onButtonClick = () => {
+    const newWindow = document.open(
+      `${
+        process.env.REACT_APP_HOST_DEVELOPMENT ?? process.env.REACT_APP_HOST_PRODUCTION
+      }/purchase?t=minus200bucksfromyouraccount`,
+      '_blank',
+      'width=777,height=666',
+    );
+  };
   return (
-    <Switch>
-      <Route path="/admin/test" render={() => <TestPage />} />
-      <Redirect from="/admin/*" to="/404" />
-    </Switch>
+    <Button variant="regular" onClick={onButtonClick}>
+      Click to purchase window test
+    </Button>
   );
 };
