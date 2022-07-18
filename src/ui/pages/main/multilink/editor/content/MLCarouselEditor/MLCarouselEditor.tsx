@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import { MLContentType } from '../../../../../../../common/constants';
+import { Checkbox } from '../../../../../../components/elements/checkbox/Checkbox';
 import { ImageField } from '../../../../../../components/modules/imageField/ImageField';
 
 import styles from './MLCarouselEditor.module.scss';
@@ -13,11 +14,11 @@ import {
   TImageFile,
   TMLImageContentCarousel,
 } from 'common/types/instance';
-import { Button } from 'ui/components/elements';
+import { Button, Input } from 'ui/components/elements';
 
 type TMLCarouselEditorProps = {
   id: string;
-  block: Nullable<IMLDraftCarousel>;
+  block: IMLDraftCarousel;
   image: Nullable<TMLImageContentCarousel<TImageFile>>;
 };
 
@@ -31,27 +32,24 @@ export const MLCarouselEditor = ({ id, block, image }: TMLCarouselEditorProps) =
 
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile) => {
-      // @ts-ignore
       const copyBlock = { ...block, images: [...block.images, imageFile.previewUrl] };
       dispatch(setMLDraftBlockContent({ content: copyBlock, id, type: MLContentType.CAROUSEL }));
     },
     [dispatch, image],
   );
 
-  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (checked: boolean, value: 'dots' | 'arrows' | 'swipe') => {
     const copyBlock = { ...block };
-    if (e.currentTarget.name === 'dots') {
-      setDots(e.currentTarget.checked);
-      copyBlock.dots = e.currentTarget.checked;
+    if (value === 'dots') {
+      setDots(checked);
     }
-    if (e.currentTarget.name === 'arrows') {
-      setArrows(e.currentTarget.checked);
-      copyBlock.arrows = e.currentTarget.checked;
+    if (value === 'arrows') {
+      setArrows(checked);
     }
-    if (e.currentTarget.name === 'swipe') {
-      setSwipe(e.currentTarget.checked);
-      copyBlock.swipe = e.currentTarget.checked;
+    if (value === 'swipe') {
+      setSwipe(checked);
     }
+    copyBlock[value] = checked;
     dispatch(setMLDraftBlockContent({ content: copyBlock, id, type: MLContentType.CAROUSEL }));
   };
 
@@ -59,42 +57,62 @@ export const MLCarouselEditor = ({ id, block, image }: TMLCarouselEditorProps) =
     setInterval(+e.currentTarget.value);
   };
 
-  const onBlurHandler = () => {
+  const addInterval = () => {
     const copyBlock = { ...block, interval };
     dispatch(setMLDraftBlockContent({ content: copyBlock, id, type: MLContentType.CAROUSEL }));
   };
 
+  const onClickHandlerDelete = (index: number) => {
+    block?.images.map((el, i) => {
+      if (i === index) {
+        block?.images.splice(i, 1);
+        const { images } = block;
+        dispatch(setMLDraftBlockContent({ content: { images }, id, type: MLContentType.CAROUSEL }));
+      }
+    });
+  };
+
+  const fields = block.images.map(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    (image, index) =>
+      image && (
+        <li className={styles.imageContainer}>
+          <img className={styles.image} src={image} alt="#" />
+          <Button className={styles.buttonDelete} onClick={() => onClickHandlerDelete(index)}>
+            x
+          </Button>
+        </li>
+      ),
+  );
+
   return (
     <div className={styles.mlCarouselEditor}>
-      <div className={styles.imageField}>
-        <ImageField onChange={onDropZoneChange} />
-      </div>
-      <div className={styles.buttonsGroup}>
-        <Button className={styles.button}>Add</Button>
-        <Button className={styles.button}>Delete</Button>
-      </div>
+      <ul className={styles.images}>
+        {fields}
+        <div className={styles.buttonAdd}>
+          <ImageField onChange={onDropZoneChange} />
+        </div>
+      </ul>
 
-      <div
-        className={styles.controls}
-        style={{ display: 'flex', padding: '10px', justifyContent: 'space-around' }}>
+      <div className={styles.controls}>
         <div className={styles.control}>
-          <input type="checkbox" name="dots" checked={dots} onChange={onInputChange} />
+          <Checkbox name="dots" checked={dots} onChangeChecked={onInputChange} value="dots" />
           Dots
         </div>
         <div className={styles.control}>
-          <input type="checkbox" name="arrows" checked={arrows} onChange={onInputChange} />
+          <Checkbox name="arrows" checked={arrows} onChangeChecked={onInputChange} value="arrows" />
           Arrows
         </div>
         <div className={styles.control}>
-          <input type="checkbox" name="swipe" checked={swipe} onChange={onInputChange} />
+          <Checkbox name="swipe" checked={swipe} onChangeChecked={onInputChange} value="swipe" />
           Swipe
         </div>
-        <input
+        <Input
           className={styles.intervalInput}
           type="number"
           value={interval}
           onChange={onChangeHandlerInterval}
-          onBlur={onBlurHandler}
+          onBlur={addInterval}
           placeholder=" interval"
         />
       </div>
