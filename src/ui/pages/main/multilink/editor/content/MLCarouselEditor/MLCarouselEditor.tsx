@@ -1,9 +1,12 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import { MLContentType } from '../../../../../../../common/constants';
-import { CarouselField } from '../../../../../../components/modules/carouselField/CarouselField';
+import { Checkbox } from '../../../../../../components/elements/checkbox/Checkbox';
+import { ImageField } from '../../../../../../components/modules/imageField/ImageField';
 
-import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import styles from './MLCarouselEditor.module.scss';
+
+import { setMLDraftBlockContent } from 'bll/reducers';
 import { useAppDispatch } from 'common/hooks';
 import {
   IMLDraftCarousel,
@@ -11,59 +14,108 @@ import {
   TImageFile,
   TMLImageContentCarousel,
 } from 'common/types/instance';
-import { Button } from 'ui/components/elements';
+import { Button, Input } from 'ui/components/elements';
 
 type TMLCarouselEditorProps = {
   id: string;
-  block: Nullable<IMLDraftCarousel>;
+  block: IMLDraftCarousel;
   image: Nullable<TMLImageContentCarousel<TImageFile>>;
 };
 
 export const MLCarouselEditor = ({ id, block, image }: TMLCarouselEditorProps) => {
-  const [imageUrl, setImageUrl] = useState('');
-  const [imageUrl2, setImageUrl2] = useState<Array<string>>([]);
+  const [dots, setDots] = useState(block?.dots);
+  const [arrows, setArrows] = useState(block?.arrows);
+  const [swipe, setSwipe] = useState(block?.swipe);
+  const [interval, setInterval] = useState(block?.interval);
+
   const dispatch = useAppDispatch();
-  const copyBlock = { ...block };
-  const setUrlAudioFile = (url: string) => {
-    setImageUrl2([...imageUrl2, url]);
-    dispatch(
-      setMLDraftBlockContent({
-        content: { images: imageUrl2 },
-        id,
-        type: MLContentType.CAROUSEL,
-      }),
-    );
-  };
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setImageUrl(e.currentTarget.value);
-  };
+
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile) => {
-      dispatch(
-        setMLDraftBlockContentImage({
-          imageData: { image: imageFile },
-          id,
-          field: 'carouselBlocks',
-        }),
-      );
+      const copyBlock = { ...block, images: [...block.images, imageFile.previewUrl] };
+      dispatch(setMLDraftBlockContent({ content: copyBlock, id, type: MLContentType.CAROUSEL }));
     },
     [dispatch, image],
   );
-  if (!copyBlock) return <p>Error: Block not found</p>;
-  const field = image && (
-    <div style={{ position: 'relative', height: '150px' }}>
-      <CarouselField onChange={onDropZoneChange} />
-    </div>
+
+  const onInputChange = (checked: boolean, value: 'dots' | 'arrows' | 'swipe') => {
+    const copyBlock = { ...block };
+    if (value === 'dots') {
+      setDots(checked);
+    }
+    if (value === 'arrows') {
+      setArrows(checked);
+    }
+    if (value === 'swipe') {
+      setSwipe(checked);
+    }
+    copyBlock[value] = checked;
+    dispatch(setMLDraftBlockContent({ content: copyBlock, id, type: MLContentType.CAROUSEL }));
+  };
+
+  const onChangeHandlerInterval = (e: ChangeEvent<HTMLInputElement>) => {
+    setInterval(+e.currentTarget.value);
+  };
+
+  const addInterval = () => {
+    const copyBlock = { ...block, interval };
+    dispatch(setMLDraftBlockContent({ content: copyBlock, id, type: MLContentType.CAROUSEL }));
+  };
+
+  const onClickHandlerDelete = (index: number) => {
+    block?.images.map((el, i) => {
+      if (i === index) {
+        block?.images.splice(i, 1);
+        const { images } = block;
+        dispatch(setMLDraftBlockContent({ content: { images }, id, type: MLContentType.CAROUSEL }));
+      }
+    });
+  };
+
+  const fields = block.images.map(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    (image, index) =>
+      image && (
+        <li className={styles.imageContainer}>
+          <img className={styles.image} src={image} alt="#" />
+          <Button className={styles.buttonDelete} onClick={() => onClickHandlerDelete(index)}>
+            x
+          </Button>
+        </li>
+      ),
   );
+
   return (
-    <div className="ml-image-editor">
-      {field}
-      {/* <input */}
-      {/*  style={{ width: '100%', height: '50px', backgroundColor: 'red' }} */}
-      {/*  placeholder="Please, enter audio url" */}
-      {/*  onChange={onChangeHandler} */}
-      {/* /> */}
-      <Button onClick={() => setUrlAudioFile(imageUrl)}>Add element</Button>
+    <div className={styles.mlCarouselEditor}>
+      <ul className={styles.images}>
+        {fields}
+        <div className={styles.buttonAdd}>
+          <ImageField onChange={onDropZoneChange} />
+        </div>
+      </ul>
+
+      <div className={styles.controls}>
+        <div className={styles.control}>
+          <Checkbox name="dots" checked={dots} onChangeChecked={onInputChange} value="dots" />
+          Dots
+        </div>
+        <div className={styles.control}>
+          <Checkbox name="arrows" checked={arrows} onChangeChecked={onInputChange} value="arrows" />
+          Arrows
+        </div>
+        <div className={styles.control}>
+          <Checkbox name="swipe" checked={swipe} onChangeChecked={onInputChange} value="swipe" />
+          Swipe
+        </div>
+        <Input
+          className={styles.intervalInput}
+          type="number"
+          value={interval}
+          onChange={onChangeHandlerInterval}
+          onBlur={addInterval}
+          placeholder=" interval"
+        />
+      </div>
     </div>
   );
 };

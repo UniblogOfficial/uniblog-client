@@ -1,0 +1,72 @@
+.mlCarouselEditor {
+
+  .images {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+
+    .imageContainer {
+      width: 150px;
+      height: 150px;
+      border: 1px solid grey;
+      border-radius: 10px;
+      margin: 0 20px 20px 0;
+      position: relative;
+
+      .image {
+        position: relative;
+        border-radius: 10px;
+      }
+
+      .buttonDelete {
+        position: relative;
+        min-width: 35px;
+        padding: 0;
+        width: 35px;
+        height: 35px;
+        background-color: red;
+        border-radius: 50%;
+        color: white;
+        font-weight: bold;
+        left: 85%;
+        bottom: 110%;
+        display: block;
+      }
+
+    }
+
+    .buttonAdd {
+      width: 150px;
+      height: 150px;
+      border: 1px solid grey;
+      border-radius: 10px;
+      margin: 0 20px 20px 0;
+      position: relative;
+    }
+
+  }
+
+  .controls {
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+    margin-bottom: 10px;
+
+    .control {
+      display: flex;
+      padding: 5px;
+      align-items: center;
+
+      input {
+        width: 22px;
+        height: 22px;
+        margin-right: 7px;
+      }
+    }
+
+    .intervalInput {
+      border: 1px solid grey;
+      width: 110px;
+    }
+  }
+}

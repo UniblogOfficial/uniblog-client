@@ -1,3 +1,4 @@
+
 import React, { FC, useState } from 'react';
 
 import styles from './MLCarousel.module.scss';
@@ -5,9 +6,9 @@ import styles from './MLCarousel.module.scss';
 import { ID } from 'common/constants';
 import { MLDraftCarousel, Nullable, TImageFile } from 'common/types/instance';
 import { TMLImageContentCarousel } from 'common/types/instance/mlDraft/mlDraft';
+import { Carousel, Icon } from 'ui/components/elements';
 import { px } from 'common/utils/ui';
 import imgPlaceholder from 'img/img-placeholder.png';
-import { Carousel } from 'ui/components/elements';
 
 type TMLCarouselProps = {
   id: string;
@@ -17,6 +18,21 @@ type TMLCarouselProps = {
 };
 
 export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback }) => {
+
+  const carouselArrows = [
+    <div key="arrow1">
+      <Icon
+        name="chevron"
+        side="left"
+        size="max"
+        rotate={180}
+        containerClassName="carousel-arrow"
+      />
+    </div>,
+    <div key="arrow2">
+      <Icon name="chevron" side="right" size="max" containerClassName="carousel-arrow" />
+    </div>,
+  ];
   const className = callback ? 'interactive' : undefined;
   const images = image?.images ? image.images.map(data => data?.previewUrl) : block.images;
   const items = images.map((src, i) => (
@@ -40,6 +56,7 @@ export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback })
         className={styles.container}
         transitionTime={300}
         interval={block.interval}
+        arrowsIcons={carouselArrows}
       />
     </section>
   );
