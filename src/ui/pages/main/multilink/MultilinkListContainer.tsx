@@ -26,7 +26,7 @@ export const MultilinkListContainer = () => {
   useEffect(() => {
     !multilinks?.length && dispatch(getAllMultilinks());
   }, [dispatch, multilinks?.length]);
-  const onMLClick = (e: MouseEvent<HTMLInputElement>) => {
+  const onMLClick = (e: MouseEvent<HTMLButtonElement>) => {
     setCurrentML(e.currentTarget.value);
     setIsModalVisible(true);
   };
@@ -34,9 +34,13 @@ export const MultilinkListContainer = () => {
   const mappedMLs =
     multilinks &&
     multilinks.map((multilink, i) => (
-      <div key={ID[i]} className="grid__row row-3">
-        <input type="button" className="full-absolute" value={multilink.name} onClick={onMLClick} />
-        <PublicMultilink multilink={multilink} className="ml-preview" />
+      <div key={ID[i]} className="paper">
+        <div className="ml-preview__wrapper ">
+          <PublicMultilink multilink={multilink} className="ml-preview" />
+          <Button value={multilink.name} onClick={onMLClick}>
+            открыть
+          </Button>
+        </div>
       </div>
     ));
 
@@ -49,7 +53,7 @@ export const MultilinkListContainer = () => {
   }
   return (
     <>
-      {mappedMLs}
+      <div className="multilink-list-wrapper">{mappedMLs}</div>
       {isModalVisible && (
         <Modal close={() => setIsModalVisible(false)}>
           <div className="paper _with-button-bottom">

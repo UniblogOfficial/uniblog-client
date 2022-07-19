@@ -109,10 +109,39 @@
 		}
 	}
 }
+.multilink-list-wrapper{
+	display: flex;
+	gap: 15px;
+	flex-wrap:wrap;
 
+
+}
+.paper.ml-preview__wrapper{
+
+}
+.ml-preview__wrapper{
+	display: flex;
+	margin-left: 18px;
+	margin-right: -53px;
+	flex-direction: column;
+	align-items: center;
+	& button{
+		width: 140px;
+		border-radius: 7px;
+		margin-right: 77px;
+		margin-bottom: -5px;
+	}
+}
+
+.ml-preview{
+	margin: -120px -10px -80px -80px;
+	/*
+	отрицательные марджины для компенсации работы трансформа
+
+	*/
+}
 .ml-template, .ml-preview {
 	position: relative;
-	margin: 0 auto;
 	padding: 24px 0;
 	width: 395px;
 	height: auto;
@@ -191,6 +220,7 @@
 .ml-preview {
 	height: 780px;
 	overflow: hidden;
+	transform: scale(0.7);
 }
 
 .ml-logo-editor {
