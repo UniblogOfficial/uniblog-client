@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { MLBackgroundType } from '../../common/constants/index';
+import { AppStatus, MLBackgroundType } from '../../common/constants/index';
 import { imageAPI } from '../../dal/image';
 
 import { setAppStatus } from '.';
 
-import { AppStatus, MLConstructorStage, MLContentType } from 'common/constants';
+import { MLConstructorStage, MLContentType } from 'common/constants';
 import {
   Nullable,
   TImageFile,
@@ -16,7 +16,7 @@ import {
 } from 'common/types/instance';
 import { TMLDraftBlocksUnion, TMLSavedDraft } from 'common/types/instance/mlDraft';
 import { TMLDraftImagesBlocksUnion } from 'common/types/instance/mlDraft/mlImageContent';
-import { handleServerNetworkError, pushMLDraftBlock, getValues } from 'common/utils/state';
+import { getValues, handleServerNetworkError, pushMLDraftBlock } from 'common/utils/state';
 import { normalizeMLDraft } from 'common/utils/state/normalizeMLDraft';
 import { pushMLDraftImageBlock } from 'common/utils/state/pushMLDraftImagesBlock';
 import { nanoid } from 'common/utils/ui/idGeneration/nanoid';
@@ -29,6 +29,7 @@ const initialState: TMLDraftState = {
   outerBackground: '#0000',
   maxWidth: 480,
   contentMap: [],
+  savedImages: [],
   blocks: {},
   isTouched: false,
 
@@ -102,6 +103,9 @@ const mlDraftSlice = createSlice({
     ) {
       Object.assign(state, action.payload.background);
       state.isTouched = true;
+    },
+    setMLDraftSavedImages(state, action) {
+      state.savedImages = action.payload;
     },
 
     setMLDraftBackgroundImage(state, action: PayloadAction<TImageFile>) {
@@ -192,6 +196,7 @@ export const {
   deleteMLDraftBlock,
   setMLDraft,
   setMLCurrentStage,
+  setMLDraftSavedImages,
 } = mlDraftSlice.actions;
 export const mlDraftReducer = mlDraftSlice.reducer;
 
@@ -207,6 +212,20 @@ export const publishMultilink = createAsyncThunk(
       response && dispatch(setAppStatus(AppStatus.SUCCEEDED));
     } catch (e) {
       handleServerNetworkError(e, AppStatus.USERDATA_FAILED, dispatch);
+    }
+  },
+);
+export const getAllImages = createAsyncThunk(
+  'mlDraft/allImages',
+  async (_, { dispatch, getState }) => {
+    try {
+      dispatch(setAppStatus(AppStatus.AUTH_LOADING));
+      const res = await imageAPI.all();
+      const a: Array<SavedImage> = res.data;
+      dispatch(setMLDraftSavedImages(a));
+      dispatch(setAppStatus(AppStatus.SUCCEEDED));
+    } catch (e) {
+      handleServerNetworkError(e, AppStatus.AUTH_FAILED, dispatch);
     }
   },
 );
@@ -271,6 +290,16 @@ export type TMLDraftState = {
   // in-app values
   currentStage: MLConstructorStage;
   isTouched: boolean;
+  savedImages: SavedImage[];
+};
+type SavedImage = {
+  id: number;
+  type: string;
+  name: string;
+  filename: string;
+  mime: string;
+  url: string;
+  thumbUrl: string;
 };
 
 export type TMLDraftActions =

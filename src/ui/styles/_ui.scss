@@ -109,6 +109,11 @@ h4 {
   &__button-container {
     height: 43px;
   }
+  &__images-container {
+    width: 60%;
+    height: 80vh;
+    overflow: auto;
+  }
 }
 
 .r-paper {

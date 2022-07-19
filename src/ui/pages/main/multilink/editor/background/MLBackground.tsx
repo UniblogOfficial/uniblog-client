@@ -1,16 +1,17 @@
 /* eslint-disable dot-notation */
-import React, { CSSProperties, FC, useCallback, useMemo, MouseEvent, useState } from 'react';
+import React, { CSSProperties, MouseEvent, useCallback, useMemo, useState } from 'react';
 
 import { RgbaStringColorPicker } from 'react-colorful';
 import { useTranslation } from 'react-i18next';
 
+import AllSavedImages from '../../../../../components/modules/allSavedImages/AllSavedImages';
+
 import styles from './MLBackground.module.scss';
 
 import { saveImage, setMLDraftBackground, setMLDraftBackgroundImage } from 'bll/reducers';
-import { ID, MLBackgroundType } from 'common/constants';
+import { ID, MLAllSavedImagesType, MLBackgroundType, MLFieldSavedImages } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { TImageFile } from 'common/types/instance';
-import { Button } from 'ui/components/elements';
 import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TMLBackgroundProps = {};
@@ -65,9 +66,14 @@ export const MLBackground = () => {
         color="#ffffff"
         onChange={onBackgroundColorChange}
       />
+
       <ul className="grid bg-menu-grid">
         <li className={`${styles['dropbox']}`}>
           <ImageField onChange={onImageZoneChange} touched={false} />
+          <AllSavedImages
+            fieldName={MLFieldSavedImages.FIELD_URL}
+            imagesType={MLAllSavedImagesType.IMAGES_BACKGROUND}
+          />
         </li>
         {snippets}
       </ul>

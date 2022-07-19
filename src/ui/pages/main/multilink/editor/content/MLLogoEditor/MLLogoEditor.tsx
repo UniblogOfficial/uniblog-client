@@ -1,9 +1,11 @@
-import React, { useCallback, MouseEvent } from 'react';
+import React, { MouseEvent, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { saveImage, setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
-import { MLContentType } from 'common/constants';
+import AllSavedImages from '../../../../../../components/modules/allSavedImages/AllSavedImages';
+
+import { saveImage } from 'bll/reducers';
+import { MLAllSavedImagesType, MLContentType, MLFieldSavedImages } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftLogo, Nullable, TImageFile, TMLImageContentLogo } from 'common/types/instance';
 import { Button } from 'ui/components/elements';
@@ -55,7 +57,6 @@ export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
     },
     [block],
   );
-
   return (
     <div className="ml-logo-editor">
       <div>
@@ -74,6 +75,18 @@ export const MLLogoEditor = ({ id, block, images }: TMLLogoEditorProps) => {
       <Button value={2} onClick={onDeleteButtonClick}>
         {t('pages:multilink.creation.editors.logo.deleteBanner')}
       </Button>
+      <AllSavedImages
+        id={id}
+        imagesType={MLAllSavedImagesType.IMAGES_LOGO}
+        contentType={MLContentType.LOGO}
+        fieldName={MLFieldSavedImages.FIELD_LOGO}
+      />
+      <AllSavedImages
+        id={id}
+        imagesType={MLAllSavedImagesType.IMAGES_LOGO}
+        contentType={MLContentType.LOGO}
+        fieldName={MLFieldSavedImages.FIELD_BANNER}
+      />
     </div>
   );
 };
