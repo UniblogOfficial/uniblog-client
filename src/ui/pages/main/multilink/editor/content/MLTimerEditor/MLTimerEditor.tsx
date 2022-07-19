@@ -2,13 +2,14 @@ import React, { useCallback, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { saveImage, setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
-import { MLContentType } from 'common/constants';
+import AllSavedImages from '../../../../../../components/modules/allSavedImages/AllSavedImages';
+
+import { setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
+import { MLAllSavedImagesType, MLContentType, MLFieldSavedImages } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftTimer, Nullable, TImageFile } from 'common/types/instance';
 import { TMLImageContentTimer } from 'common/types/instance/mlDraft/mlDraft';
 import { Button, Input } from 'ui/components/elements';
-import { ImageField } from 'ui/components/modules/imageField/ImageField';
 import { TimerField } from 'ui/components/modules/timerField/TimerField';
 
 type TMLImageEditorProps = {
@@ -21,7 +22,6 @@ export const MlTimerEditor = ({ id, block, image }: TMLImageEditorProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['pages', 'common']);
 
-  const [imageUrl, setImageUrl] = useState('');
   const onDropZoneChange = useCallback(
     (imageFile: TImageFile) => {
       dispatch(
@@ -60,6 +60,12 @@ export const MlTimerEditor = ({ id, block, image }: TMLImageEditorProps) => {
         {t('pages:multilink.creation.editors.timer.enterTime')}
       </div>
       <Button onClick={setTimerHandler}>{t('pages:multilink.creation.editors.timer.run')}</Button>
+      <AllSavedImages
+        fieldName={MLFieldSavedImages.FIELD_IMAGE}
+        id={id}
+        imagesType={MLAllSavedImagesType.IMAGES_IMAGE}
+        contentType={MLContentType.TIMER}
+      />
     </div>
   );
 };

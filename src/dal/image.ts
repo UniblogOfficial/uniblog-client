@@ -20,4 +20,7 @@ export const imageAPI = {
       })
       .then(response => ({ data: response.data.data, message: response.data.message }));
   },
+  all() {
+    return api.get('image/all').then(res => ({ data: res.data.data }));
+  },
 };

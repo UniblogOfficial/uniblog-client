@@ -66,6 +66,20 @@ export enum MLConstructorStage {
   PREVIEW = 3,
 }
 
+export enum MLAllSavedImagesType {
+  IMAGES_LOGO = 'logo',
+  IMAGES_IMAGE = 'image',
+  IMAGES_BACKGROUND = 'background',
+  IMAGES_LINK = 'link',
+}
+export enum MLFieldSavedImages {
+  FIELD_LOGO = 'logo',
+  FIELD_BANNER = 'banner',
+  FIELD_IMAGE = 'image',
+  FIELD_IMAGES = 'images',
+  FIELD_URL = 'url',
+}
+
 export enum AppStatus {
   IDLE = 'IDLE',
   SUCCEEDED = 'SUCCEEDED',

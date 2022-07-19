@@ -1,7 +1,12 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
-import { MLContentType } from '../../../../../../../common/constants';
+import {
+  MLAllSavedImagesType,
+  MLContentType,
+  MLFieldSavedImages,
+} from '../../../../../../../common/constants';
 import { Checkbox } from '../../../../../../components/elements/checkbox/Checkbox';
+import AllSavedImages from '../../../../../../components/modules/allSavedImages/AllSavedImages';
 import { ImageField } from '../../../../../../components/modules/imageField/ImageField';
 
 import styles from './MLCarouselEditor.module.scss';
@@ -93,7 +98,12 @@ export const MLCarouselEditor = ({ id, block, image }: TMLCarouselEditorProps) =
           <ImageField onChange={onDropZoneChange} />
         </div>
       </ul>
-
+      <AllSavedImages
+        id={id}
+        imagesType={MLAllSavedImagesType.IMAGES_IMAGE}
+        fieldName={MLFieldSavedImages.FIELD_IMAGES}
+        contentType={MLContentType.CAROUSEL}
+      />
       <div className={styles.controls}>
         <div className={styles.control}>
           <Checkbox name="dots" checked={dots} onChangeChecked={onInputChange} value="dots" />

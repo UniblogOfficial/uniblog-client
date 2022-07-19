@@ -1,10 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 
-import { saveImage, setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
-import { ID, MLContentType } from 'common/constants';
+import AllSavedImages from '../../../../../../components/modules/allSavedImages/AllSavedImages';
+
+import { saveImage, setMLDraftBlockContentImage } from 'bll/reducers';
+import { MLAllSavedImagesType, MLContentType, MLFieldSavedImages } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftImage, Nullable, TImageFile, TMLImageContentImage } from 'common/types/instance';
-import { Button, Input } from 'ui/components/elements';
+import { Button } from 'ui/components/elements';
 import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TMLImageEditorProps = {
@@ -42,6 +44,12 @@ export const MLImageEditor = ({ id, block, image }: TMLImageEditorProps) => {
     <div className="ml-image-editor">
       {field}
       <Button>Add element</Button>
+      <AllSavedImages
+        fieldName={MLFieldSavedImages.FIELD_IMAGE}
+        id={id}
+        imagesType={MLAllSavedImagesType.IMAGES_IMAGE}
+        contentType={MLContentType.IMAGE}
+      />
     </div>
   );
 };
