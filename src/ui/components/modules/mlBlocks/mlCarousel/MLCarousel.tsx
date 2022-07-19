@@ -1,14 +1,14 @@
 import React, { FC, useState } from 'react';
 
+import { Carousel, Icon } from '../../../elements';
+
 import styles from './MLCarousel.module.scss';
 
 import { ID } from 'common/constants';
 import { MLDraftCarousel, Nullable, TImageFile } from 'common/types/instance';
 import { TMLImageContentCarousel } from 'common/types/instance/mlDraft/mlDraft';
-
 import { px } from 'common/utils/ui';
 import imgPlaceholder from 'img/img-placeholder.png';
-import { Carousel, Icon } from '../../../elements';
 
 type TMLCarouselProps = {
   id: string;
