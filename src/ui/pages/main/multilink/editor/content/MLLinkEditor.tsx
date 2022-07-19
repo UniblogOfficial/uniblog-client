@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import AllSavedImages from '../../../../../components/modules/allSavedImages/AllSavedImages';
 
 import { saveImage, setMLDraftBlockContent } from 'bll/reducers';
-import { MLAllSavedImagesType, MLContentType } from 'common/constants';
+import { MLAllSavedImagesType, MLContentType, MLFieldSavedImages } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
 import { IMLDraftLink, Nullable, TImageFile, TMLImageContentLink } from 'common/types/instance';
 import { Button, Input } from 'ui/components/elements';
@@ -153,6 +153,7 @@ export const MLLinkEditor = ({ id, close, image, block }: TMLLinkEditorProps) =>
           id={id}
           imagesType={MLAllSavedImagesType.IMAGES_LINK}
           contentType={MLContentType.LINK}
+          fieldName={MLFieldSavedImages.FIELD_IMAGE}
         />
       </div>
     </form>

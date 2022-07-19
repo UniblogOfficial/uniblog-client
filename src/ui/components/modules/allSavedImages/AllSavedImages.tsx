@@ -31,8 +31,7 @@ type SavedImagesPropsType = {
 const AllSavedImages = ({ imagesType, contentType, id, fieldName }: SavedImagesPropsType) => {
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectAppStatus);
-  // const obj = useAppSelector(state => state.mlDraft.blocks);
-  // console.log(obj);
+  const obj = useAppSelector(state => state.mlDraft.blocks[`${contentType}_${id}`]);
   const loadingStatus = status === AppStatus.AUTH_LOADING;
   const [openedModal, setOpenedModal] = useState(false);
   const showAllImage = () => {
@@ -40,22 +39,18 @@ const AllSavedImages = ({ imagesType, contentType, id, fieldName }: SavedImagesP
     dispatch(getAllImages());
   };
 
-  // { content: { [fieldName]: [url] }, id, type: contentType }
-  // { ...obj.content, [fieldName]: [...obj.content[fieldName], url] }
   const closeModalContainer = () => {
     setOpenedModal(false);
   };
   const setImageHandler = (url: string) => {
-    if (contentType && id && fieldName) {
+    if (contentType && id && fieldName && obj instanceof MLDraftCarousel) {
+      const copyImage = { ...obj, images: [...obj.images, url] };
+      dispatch(setMLDraftBlockContent({ content: copyImage, id, type: contentType }));
+    } else if (contentType && id && fieldName) {
       dispatch(setMLDraftBlockContent({ content: { [fieldName]: url }, id, type: contentType }));
-      // if (fieldName === MLFieldSavedImages.FIELD_IMAGES) {
-      //   const copyImage = { ...obj, images: [...obj.images, url] };
-      //   dispatch(setMLDraftBlockContent({ content: copyImage, id, type: contentType }));
-      // }
     } else {
       dispatch(setMLDraftBackground({ background: { [MLBackgroundType.INNER]: `url(${url})` } }));
     }
-
     setOpenedModal(false);
   };
   return (
