@@ -33,7 +33,7 @@ export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback })
     </div>,
   ];
   const className = callback ? 'interactive' : undefined;
-  const images = image?.images ? image.images.map(data => data?.previewUrl) : block.images;
+  const images = image?.images.length ? image.images.map(data => data?.previewUrl) : block.images;
   const items = images.map((src, i) => (
     <div className={styles.container} key={ID[i]}>
       {src ? <img src={src} alt="item" /> : <img src={imgPlaceholder} alt="item" />}
