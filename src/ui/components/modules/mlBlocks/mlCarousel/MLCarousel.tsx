@@ -1,14 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import { Carousel, Icon } from '../../../elements';
 
 import styles from './MLCarousel.module.scss';
 
-import { ID } from 'common/constants';
 import { MLDraftCarousel, Nullable, TImageFile } from 'common/types/instance';
 import { TMLImageContentCarousel } from 'common/types/instance/mlDraft/mlDraft';
 import { px } from 'common/utils/ui';
-import imgPlaceholder from 'img/img-placeholder.png';
 
 type TMLCarouselProps = {
   id: string;
@@ -33,11 +31,13 @@ export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback })
     </div>,
   ];
   const className = callback ? 'interactive' : undefined;
-  const images = image?.images.length ? image.images.map(data => data?.previewUrl) : block.images;
-  const items = images.map((src, i) => (
-    <div className={styles.container} key={ID[i]}>
-      {src ? <img src={src} alt="item" /> : <img src={imgPlaceholder} alt="item" />}
-      {block.titles && <div className={styles.title}>{block.titles[i]}</div>}
+
+  const images = image?.images?.length ? image.images.map(img => img?.previewUrl) : block.images;
+
+  const items = images.map((img, index) => (
+    <div className={styles.container} key={index.toString() + img}>
+      {img && <img src={img} alt="#" />}
+
     </div>
   ));
 
