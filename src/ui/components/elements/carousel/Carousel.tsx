@@ -290,7 +290,7 @@ export const Carousel: FC<TCarouselProps> = memo(
     return (
       <div className={className}>
         <div
-          style={{ padding: arrowsIcons && items.length > itemsPerView ? '0 1.5em' : '0' }}
+          style={{ padding: arrows && items.length > itemsPerView ? '0 1.5em' : '0' }}
           className={styles.container}>
           <ul
             style={{

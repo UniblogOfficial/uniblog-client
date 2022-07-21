@@ -37,6 +37,7 @@ export const MLCarousel: FC<TMLCarouselProps> = ({ id, block, image, callback })
   const items = images.map((img, index) => (
     <div className={styles.container} key={index.toString() + img}>
       {img && <img src={img} alt="#" />}
+
     </div>
   ));
 

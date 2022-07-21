@@ -35,6 +35,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         isFilled: !!avatar,
         logo,
         size: 100,
+        padding: [24, 0, 0, 0],
         margin: [0, 0, 24, 0],
       }),
       new MLDraftText({
@@ -111,6 +112,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         isFilled: !!avatar,
         logo,
         size: 100,
+        padding: [24, 0, 0, 0],
         margin: [0, 0, 24, 0],
       }),
       new MLDraftText({
@@ -187,6 +189,7 @@ export const getTemplates = (name: string, avatar: Nullable<TIncomingImage>) => 
         isFilled: false,
         url: 'https://dl6.ru-music.cc/mp3/56188.mp3',
         margin: [0, 24, 12, 24],
+        padding: [24, 0, 0, 0],
       }),
       new MLDraftWidget({
         isFilled: true,
