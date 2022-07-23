@@ -37,7 +37,7 @@ export const MultilinkListContainer = () => {
       <div key={ID[i]} className="paper">
         <div className="ml-preview__wrapper ">
           <PublicMultilink multilink={multilink} className="ml-preview" />
-          <Button value={multilink.name} onClick={onMLClick}>
+          <Button className="ml-preview__button" value={multilink.name} onClick={onMLClick}>
             открыть
           </Button>
         </div>

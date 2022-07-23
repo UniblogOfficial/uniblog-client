@@ -2,20 +2,20 @@ import React, { useCallback } from 'react';
 
 import { MLCarousel } from '../../components/modules/mlBlocks/mlCarousel/MLCarousel';
 
-import { MLContentType, ID } from 'common/constants';
+import { ID, MLContentType } from 'common/constants';
 import { TMultilink } from 'common/types/instance';
 import {
-  MLLogo,
-  MLText,
-  MLLink,
-  MLSocial,
+  MLAudio,
+  MLButton,
   MLImage,
   MLImageText,
+  MLLink,
+  MLLogo,
+  MLSocial,
+  MLText,
+  MLTimer,
   MLVideo,
   MLVote,
-  MLButton,
-  MLAudio,
-  MLTimer,
 } from 'ui/components/modules/mlBlocks';
 import { MLShop } from 'ui/components/modules/mlBlocks/mlShop/MLShop';
 import { MLWidget } from 'ui/components/modules/mlBlocks/mlWidget/MLWidget';
