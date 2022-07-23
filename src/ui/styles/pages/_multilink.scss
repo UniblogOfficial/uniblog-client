@@ -125,12 +125,13 @@
 	margin-right: -53px;
 	flex-direction: column;
 	align-items: center;
-	& button{
-		width: 140px;
-		border-radius: 7px;
-		margin-right: 77px;
-		margin-bottom: -5px;
-	}
+
+}
+.ml-preview__button{
+	width: 140px;
+	border-radius: 7px;
+	margin-right: 77px;
+	margin-bottom: -5px;
 }
 
 .ml-preview{
@@ -142,7 +143,7 @@
 }
 .ml-template, .ml-preview {
 	position: relative;
-	padding: 24px 0;
+	padding: 0 0 24px;
 	width: 395px;
 	height: auto;
 	min-height: 780px;
@@ -214,6 +215,7 @@
 }
 
 .ml-template {
+	margin: 0 auto;
 	background-color: #fff;
 }
 
@@ -221,6 +223,10 @@
 	height: 780px;
 	overflow: hidden;
 	transform: scale(0.7);
+	margin: -120px -10px -80px -80px;
+	/*
+	отрицательные марджины для компенсации работы трансформа
+	*/
 }
 
 .ml-logo-editor {
