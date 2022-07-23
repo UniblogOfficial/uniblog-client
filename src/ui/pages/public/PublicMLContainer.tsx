@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 
+import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 
 import { PublicMultilink } from './PublicMultilink';
@@ -23,6 +24,9 @@ export const PublicMLContainer = () => {
         background: isBackgroundImage ? '#0000' : multilink.background,
         overflow: 'clip',
       }}>
+      <Helmet>
+        <title>{multilink.name}</title>
+      </Helmet>
       {/* with scrollable outer bg */}
       <PublicMultilink multilink={multilink} className="ml-public" />
       {/* with static outer bg */}
