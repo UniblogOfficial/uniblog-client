@@ -72,7 +72,7 @@ export const MLTemplate = ({ userData, currentMLTemplate }: TMLTemplateProps) =>
               //   return <MLVideo key={ID[j]} id="" block={block} />;
 
               case MLContentType.AUDIO:
-                return block && <>audio block</>;
+                return block && <MLAudio key={ID[j]} id="" block={block} />;
 
               // case MLContentType.VOTE:
               //   return block && <MLVote key={ID[j]} id="" block={block} />;

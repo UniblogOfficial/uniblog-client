@@ -1,23 +1,17 @@
-import React, { useState, MouseEvent, useCallback, ChangeEvent, useEffect } from 'react';
+import React, { MouseEvent, useCallback, useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { use } from 'i18next';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
-import { saveImage, setMLDraftBlockContent, setMLDraftBlockContentImage } from 'bll/reducers';
-import { MLContentType, SocialNetwork } from 'common/constants';
+import AllSavedImages from '../../../../../components/modules/allSavedImages/AllSavedImages';
+
+import { saveImage, setMLDraftBlockContent } from 'bll/reducers';
+import { MLAllSavedImagesType, MLContentType, MLFieldSavedImages } from 'common/constants';
 import { useAppDispatch } from 'common/hooks';
-import {
-  IMLDraftLink,
-  IMLDraftText,
-  Nullable,
-  TImageFile,
-  TMLImageContentImage,
-  TMLImageContentLink,
-} from 'common/types/instance';
-import { Button, Input, Textarea } from 'ui/components/elements';
+import { IMLDraftLink, Nullable, TImageFile, TMLImageContentLink } from 'common/types/instance';
+import { Button, Input } from 'ui/components/elements';
 import { ImageField } from 'ui/components/modules/imageField/ImageField';
 
 type TLinkFormData = {
@@ -155,6 +149,12 @@ export const MLLinkEditor = ({ id, close, image, block }: TMLLinkEditorProps) =>
         <Button data-value="-1" type="submit" className="button _full _rounded">
           {t('common:buttons.ok')}
         </Button>
+        <AllSavedImages
+          id={id}
+          imagesType={MLAllSavedImagesType.IMAGES_LINK}
+          contentType={MLContentType.LINK}
+          fieldName={MLFieldSavedImages.FIELD_IMAGE}
+        />
       </div>
     </form>
   );

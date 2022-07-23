@@ -51,9 +51,7 @@ export const ProfileContainer = ({ userData }: TProfileContainerProps) => {
       setImageFiles([imageFile]);
     } else console.log('Файл больше 5 мб');
   }, []);
-  const avatarSrc = avatar
-    ? `data:${avatar.imageType};base64, ${Buffer.from(avatar.imageData!).toString('base64')}`
-    : undefined;
+  const avatarSrc = avatar ? parseRawImage(avatar) : undefined;
 
   return (
     <div className="profile">

@@ -137,13 +137,13 @@
 .ml-preview{
 	margin: -120px -10px -80px -80px;
 	/*
+	отрицательные марджины для компенсации работы трансформа
 
-	отрицательные марджины для компенсации работы трансформ(скейл)
 	*/
 }
 .ml-template, .ml-preview {
 	position: relative;
-	padding: 24px 0;
+	padding: 0 0 24px;
 	width: 395px;
 	height: auto;
 	min-height: 780px;
@@ -215,6 +215,7 @@
 }
 
 .ml-template {
+	margin: 0 auto;
 	background-color: #fff;
 }
 
@@ -222,6 +223,10 @@
 	height: 780px;
 	overflow: hidden;
 	transform: scale(0.7);
+	margin: -120px -10px -80px -80px;
+	/*
+	отрицательные марджины для компенсации работы трансформа
+	*/
 }
 
 .ml-logo-editor {

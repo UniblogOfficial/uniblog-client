@@ -38,7 +38,7 @@ export const MultilinkListContainer = () => {
         <div className="ml-preview__wrapper ">
           <PublicMultilink multilink={multilink} className="ml-preview" />
           <Button className="ml-preview__button" value={multilink.name} onClick={onMLClick}>
-            открыть
+            Открыть
           </Button>
         </div>
       </div>
@@ -57,7 +57,7 @@ export const MultilinkListContainer = () => {
       {isModalVisible && (
         <Modal close={() => setIsModalVisible(false)}>
           <div className="paper _with-button-bottom">
-            <div>
+            <div style={{ marginBottom: 24 }}>
               <a
                 href={`${
                   process.env.REACT_APP_MODE === 'development'
