@@ -20,8 +20,7 @@ export const Routes = (props: any) => {
   const dispatch = useDispatch();
 
   const status = useAppSelector(selectAppStatus);
-  const nonBlockingLoading = status === AppStatus.DATA_SAVING;
-
+  const nonBlockingLoading = status === AppStatus.DATA_SAVING || status === AppStatus.DATA_SENDING;
   const { isInitialized, isMultilinkMode } = useAppSelector(state => state.app);
 
   const history = useHistory();
@@ -37,7 +36,24 @@ export const Routes = (props: any) => {
   }
 
   if (isMultilinkMode && isInitialized) {
-    return <PublicMLContainer />;
+    return (
+      <>
+        <PublicMLContainer />
+        {nonBlockingLoading && (
+          <div className="non-blocking-loader">
+            <div className="non-blocking-loader__title">
+              Sending
+              <div className="flashingDots">
+                <span>.</span>
+              </div>
+            </div>
+            <div className="non-blocking-loader__loader">
+              <Preloader />
+            </div>
+          </div>
+        )}
+      </>
+    );
   }
 
   return (
