@@ -12,7 +12,8 @@ import {
   IMLDraftPost,
   IMLDraftShop,
   IMLDraftSocial,
-  IMLDraftText, IMLDraftTimer,
+  IMLDraftText,
+  IMLDraftTimer,
   IMLDraftVideo,
   IMLDraftVote,
   IMLDraftWidget,
@@ -48,6 +49,13 @@ export type TCreateMLDto = {
   buttonBlocks: IMLCreateButtonDto[];
   timerBlocks: IMLCreateTimerDto[];
   carouselBlocks: IMLCreateCarouselDto[];
+};
+export type TVoteDataDTO = {
+  name: string;
+  votes: {
+    title: string;
+    value: number;
+  }[];
 };
 
 export type TCreateMLImagesDto = {

@@ -1,3 +1,5 @@
+import { TVoteDataDTO } from '../common/types/request/multilink.dto';
+
 import { api } from '.';
 
 import { TCreateMLDto, TCreateMLImagesDto } from 'common/types/request';
@@ -31,5 +33,10 @@ export const multilinkAPI = {
         'Content-Type': 'multipart/form-data',
       },
     });
+  },
+  sendVoteData(data: TVoteDataDTO) {
+    return api
+      .post('multilink/vote', data)
+      .then(response => ({ data: response.data.data, message: response.data.message }));
   },
 };

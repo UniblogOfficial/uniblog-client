@@ -8,6 +8,8 @@ import { Icon } from 'ui/components/elements';
 type TRatingProps = {
   precision: number;
   totalStars: number;
+  id?: string | number;
+  setResultCallback?: (value: number, ratingId?: string | number) => void; // должен менять чисто value
   emptyIcon?: ReactElement;
   filledIcon?: ReactElement;
 };
@@ -15,6 +17,8 @@ type TRatingProps = {
 export const Rating = ({
   precision = 1,
   totalStars = 5,
+  setResultCallback,
+  id,
   emptyIcon = <Icon name="star" containerClassName={styles['icon-container']} />,
   filledIcon = <Icon name="star-solid" containerClassName={styles['icon-container']} />,
 }: TRatingProps) => {
@@ -34,10 +38,12 @@ export const Rating = ({
     }
     return -1;
   };
-
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     setIsHovered(false);
     setActiveStar(calculateRating(e));
+    if (setResultCallback) {
+      setResultCallback(calculateRating(e), id);
+    }
   };
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {

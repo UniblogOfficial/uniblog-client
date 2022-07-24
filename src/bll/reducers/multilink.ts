@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
 
+import { TVoteDataDTO } from '../../common/types/request/multilink.dto';
+
 import { setAppStatus, setInitialized, setMultilinkMode, requestMe, setUserData } from '.';
 
 import { AppThunk, store } from 'bll/store';
@@ -75,6 +77,22 @@ export const getAllMultilinks = createAsyncThunk(
       }
     } catch (e) {
       handleServerNetworkError(e, AppStatus.CONTENT_FAILED, dispatch);
+    }
+  },
+);
+
+export const sendVoteData = createAsyncThunk(
+  'multilink/sendVoteData',
+  async (data: TVoteDataDTO, { dispatch, rejectWithValue, getState }) => {
+    try {
+      dispatch(setAppStatus(AppStatus.DATA_SENDING));
+      const response = await multilinkAPI.sendVoteData(data);
+      if (response.data) {
+        console.log(response.data);
+        dispatch(setAppStatus(AppStatus.SUCCEEDED));
+      }
+    } catch (e) {
+      handleServerNetworkError(e, AppStatus.DATA_SENDING_FAILED, dispatch);
     }
   },
 );
