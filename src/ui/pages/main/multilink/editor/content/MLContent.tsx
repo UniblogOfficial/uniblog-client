@@ -12,7 +12,7 @@ import { MLLinkEditor } from './MLLinkEditor';
 import { MLLogoEditor } from './MLLogoEditor/MLLogoEditor';
 import { MLMapEditor } from './MLMapEditor';
 import { MLShopEditor } from './MLShopEditor/MLShopEditor';
-import { MLSocialEditor } from './MLSocialEditor';
+import { MLSocialEditor } from './MLSocialEditor/MLSocialEditor';
 import { MLTextEditor } from './MLTextEditor/MLTextEditor';
 import { MlTimerEditor } from './MLTimerEditor/MLTimerEditor';
 import { MLWidgetEditor } from './MLWidgetEditor/MLWidgetEditor';
