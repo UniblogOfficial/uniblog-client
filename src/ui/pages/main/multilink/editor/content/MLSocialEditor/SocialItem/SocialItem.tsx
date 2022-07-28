@@ -4,9 +4,11 @@ import styles from './SocialItem.module.scss';
 
 type SocialItemPropsType = {
   socialNetwork: string;
+  setLink: (index: number, link: string) => void;
+  index: number;
 };
 
-export const SocialItem = ({ socialNetwork }: SocialItemPropsType) => {
+export const SocialItem = ({ socialNetwork, setLink, index }: SocialItemPropsType) => {
   const [socNetwork, setSocNetwork] = useState<string>(socialNetwork);
   const [errorSocialNetwork, setSocialNetwork] = useState<string | null>('');
   const [socialNetworkTouch, setSocialNetworkTouch] = useState(false);
@@ -16,9 +18,10 @@ export const SocialItem = ({ socialNetwork }: SocialItemPropsType) => {
     const objRE =
       /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
     if (!objRE.test(String(e.currentTarget.value))) {
-      setSocialNetwork('Invalid URL');
+      setSocialNetwork('Invalid -URL');
     } else {
       setSocialNetwork('');
+      setLink(index, e.currentTarget.value);
     }
   };
 
@@ -26,7 +29,7 @@ export const SocialItem = ({ socialNetwork }: SocialItemPropsType) => {
     setSocialNetworkTouch(true);
   };
   return (
-    <>
+    <div className={styles.socialItem}>
       <input
         value={socNetwork}
         type="text"
@@ -39,6 +42,6 @@ export const SocialItem = ({ socialNetwork }: SocialItemPropsType) => {
       {socialNetworkTouch && errorSocialNetwork && (
         <div className={styles.errorSocialNetwork}>{errorSocialNetwork}</div>
       )}
-    </>
+    </div>
   );
 };

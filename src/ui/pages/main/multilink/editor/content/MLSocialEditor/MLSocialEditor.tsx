@@ -20,7 +20,20 @@ export const MLSocialEditor = ({ id, block }: MLSocialEditorProps) => {
       {m.toString()}:
     </p>
   ));
-  const socialElements = block.links.map(s => <SocialItem key={s} socialNetwork={s.toString()} />);
+
+  const setLink = (index: number, link: string) => {
+    dispatch(
+      setMLDraftBlockContent({
+        content: { links: block.links.map((s, i) => (i === index ? link : s)) },
+        id,
+        type: block.type,
+      }),
+    );
+  };
+
+  const socialElements = block.links.map((s, index) => (
+    <SocialItem key={s} socialNetwork={s} setLink={setLink} index={index} />
+  ));
 
   const onChangeSize = (e: ChangeEvent<HTMLInputElement>) => {
     const currentSize = +e.currentTarget.value;
@@ -38,13 +51,12 @@ export const MLSocialEditor = ({ id, block }: MLSocialEditorProps) => {
         step={5}
         value={block.size}
         onChange={onChangeSize}
+        className={styles.rangeSize}
       />
-      <table>
-        <tr>
-          <td>{linkTypeElements}</td>
-          <td>{socialElements}</td>
-        </tr>
-      </table>
+      <div className={styles.links}>
+        <div className={styles.linkType}>{linkTypeElements}</div>
+        <div className={styles.socialElements}>{socialElements}</div>
+      </div>
     </>
   );
 };
