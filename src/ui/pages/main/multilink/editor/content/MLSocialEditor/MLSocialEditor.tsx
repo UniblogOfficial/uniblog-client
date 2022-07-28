@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import { setMLDraftBlockContent } from '../../../../../../../bll/reducers';
+import { ID } from '../../../../../../../common/constants';
 import { useAppDispatch } from '../../../../../../../common/hooks';
 import { MLDraftSocial } from '../../../../../../../common/types/instance';
 
@@ -31,8 +32,8 @@ export const MLSocialEditor = ({ id, block }: MLSocialEditorProps) => {
     );
   };
 
-  const socialElements = block.links.map((s, index) => (
-    <SocialItem key={s} socialNetwork={s} setLink={setLink} index={index} />
+  const socialElements = block.links.map((link, index) => (
+    <SocialItem key={ID[index]} socialNetwork={link} setLink={setLink} index={index} />
   ));
 
   const onChangeSize = (e: ChangeEvent<HTMLInputElement>) => {
