@@ -75,7 +75,7 @@ export const ImageField: FC<TDropZoneFieldProps> = ({
           </>
         )}
         {image.length === 0 && initialImage && <ImagePreview imageFiles={initialImage} />}
-        <ImagePlaceholder isFilled={!!initialImage || image.length > 0} onDrop={onDrop} />
+        <ImagePlaceholder isFilled={!!initialImage} onDrop={onDrop} />
       </div>
       {error && <p className="field__error">{error}</p>}
     </>
