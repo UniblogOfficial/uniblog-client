@@ -1,26 +1,25 @@
-/* eslint-disable */
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import {
   MLAllSavedImagesType,
   MLContentType,
-  MLFieldSavedImages
-} from "../../../../../../../common/constants";
-import { Checkbox } from "../../../../../../components/elements/checkbox/Checkbox";
-import AllSavedImages from "../../../../../../components/modules/allSavedImages/AllSavedImages";
-import { ImageField } from "../../../../../../components/modules/imageField/ImageField";
+  MLFieldSavedImages,
+} from '../../../../../../../common/constants';
+import { Checkbox } from '../../../../../../components/elements';
+import AllSavedImages from '../../../../../../components/modules/allSavedImages/AllSavedImages';
+import { ImageField } from '../../../../../../components/modules/imageField/ImageField';
 
-import styles from "./MLCarouselEditor.module.scss";
+import styles from './MLCarouselEditor.module.scss';
 
-import { setMLDraftBlockContent } from "bll/reducers";
-import { useAppDispatch } from "common/hooks";
+import { setMLDraftBlockContent } from 'bll/reducers';
+import { useAppDispatch } from 'common/hooks';
 import {
   IMLDraftCarousel,
   Nullable,
   TImageFile,
-  TMLImageContentCarousel
-} from "common/types/instance";
-import { Button, Input } from "ui/components/elements";
+  TMLImageContentCarousel,
+} from 'common/types/instance';
+import { Button, Input } from 'ui/components/elements';
 
 type TMLCarouselEditorProps = {
   id: string;
@@ -41,33 +40,32 @@ export const MLCarouselEditor = ({ id, block, image }: TMLCarouselEditorProps) =
       const copyBlock = { ...block, images: [...block.images, imageFile.previewUrl] };
       dispatch(setMLDraftBlockContent({ content: copyBlock, id, type: MLContentType.CAROUSEL }));
     },
-    [dispatch, image]
+    [dispatch, image],
   );
 
-  const onDropZoneUpdate = useCallback(
+  const onDropZoneUpdateImage = useCallback(
     (imageFile: TImageFile, index: number) => {
-      const newImgs = block?.images.map((el, i) => {
-          if (i === index) {
-            return imageFile.previewUrl;
-          }
-          return el;
+      const newImages = block?.images.map((img, i) => {
+        if (i === index) {
+          return imageFile.previewUrl;
         }
-      );
-      const copyBlock = { ...block, images: newImgs };
+        return img;
+      });
+      const copyBlock = { ...block, images: newImages };
       dispatch(setMLDraftBlockContent({ content: copyBlock, id, type: MLContentType.CAROUSEL }));
     },
-    [dispatch, image]
+    [dispatch, image],
   );
 
-  const onInputChange = (checked: boolean, value: "dots" | "arrows" | "swipe") => {
+  const onInputChange = (checked: boolean, value: 'dots' | 'arrows' | 'swipe') => {
     const copyBlock = { ...block };
-    if (value === "dots") {
+    if (value === 'dots') {
       setDots(checked);
     }
-    if (value === "arrows") {
+    if (value === 'arrows') {
       setArrows(checked);
     }
-    if (value === "swipe") {
+    if (value === 'swipe') {
       setSwipe(checked);
     }
     copyBlock[value] = checked;
@@ -98,26 +96,16 @@ export const MLCarouselEditor = ({ id, block, image }: TMLCarouselEditorProps) =
     (image, index) =>
       image && (
         <li className={styles.imageContainer}>
-          <ImageField initialImage={image} onChange={(imageFile) => onDropZoneUpdate(imageFile, index)} />
+          <ImageField
+            initialImage={image}
+            onChange={imageFile => onDropZoneUpdateImage(imageFile, index)}
+          />
           <Button className={styles.buttonDelete} onClick={() => onClickHandlerDelete(index)}>
             x
           </Button>
         </li>
-      )
+      ),
   );
-
-  /*  const fields = block.images.map(
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      (image, index) =>
-        image && (
-          <li className={styles.imageContainer}>
-            <img className={styles.image} src={image} alt="#" />
-            <Button className={styles.buttonDelete} onClick={() => onClickHandlerDelete(index)}>
-              x
-            </Button>
-          </li>
-        ),
-    );*/
 
   return (
     <div className={styles.mlCarouselEditor}>
