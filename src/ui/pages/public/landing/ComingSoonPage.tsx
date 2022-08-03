@@ -8,7 +8,10 @@ export const ComingSoonPage = () => (
       id="navbar"
       className="navbar navbar-main navbar-expand-lg navbar-light
 "
-      style={{ background: `url(${images.fon2})` }}>
+      style={{
+        background:
+          'linear-gradient(to right bottom, rgb(0, 255, 255), rgb(0, 115, 255) 50%, rgb(170, 90, 255))',
+      }}>
       <div className="container">
         <a className="navbar-brand" href="https://uniblog.ru/">
           <img src={images.Logo} className="img-fluid navbar-logo landing-img" alt="Website Logo" />
