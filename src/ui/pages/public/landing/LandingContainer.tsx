@@ -13,11 +13,13 @@ import images from './images/index';
 
 export const LandingContainer = () => (
   <div className="bg-white landing-body" data-theme-style="light">
-    <div id="home" style={{ background: `url(${images.fon})` }}>
-      <nav
-        id="navbar"
-        className="navbar navbar-main navbar-expand-lg navbar-light"
-        style={{ background: `url(${images.fon})`, width: '100%', height: '100%' }}>
+    <div
+      id="home"
+      style={{
+        background:
+          'linear-gradient(to right bottom, rgb(0, 255, 255), rgb(0, 115, 255) 50%, rgb(170, 90, 255))',
+      }}>
+      <nav id="navbar" className="navbar navbar-main navbar-expand-lg navbar-light">
         <div className="container" style={{}}>
           <a className="navbar-brand" href="https://uniblog.ru/">
             <img
@@ -269,7 +271,9 @@ export const LandingContainer = () => (
               height={600}
               className="img-fluid shadow landing-img landing-img_avatar"
               loading="lazy"
-              style={{ background: `url(${images.fon6})` }}
+              style={{
+                background: `linear-gradient(to right bottom, rgb(0, 255, 255), rgb(0, 115, 255) 50%, rgb(170, 90, 255)`,
+              }}
               alt="#"
             />
           </div>
@@ -290,7 +294,9 @@ export const LandingContainer = () => (
                 height={600}
                 className="img-fluid shadow landing-img landing-img_avatar"
                 loading="lazy"
-                style={{ background: `url(${images.fon6})` }}
+                style={{
+                  background: `linear-gradient(to right bottom, rgb(0, 255, 255), rgb(0, 115, 255) 50%, rgb(170, 90, 255)`,
+                }}
                 alt="#"
               />
             </a>
@@ -310,7 +316,9 @@ export const LandingContainer = () => (
                 height={600}
                 className="img-fluid shadow landing-img landing-img_avatar"
                 loading="lazy"
-                style={{ background: `url(${images.fon6})` }}
+                style={{
+                  background: `linear-gradient(to right bottom, rgb(0, 255, 255), rgb(0, 115, 255) 50%, rgb(170, 90, 255)`,
+                }}
                 alt="#"
               />
             </a>
@@ -331,7 +339,9 @@ export const LandingContainer = () => (
               height={600}
               className="img-fluid shadow landing-img landing-img_avatar"
               loading="lazy"
-              style={{ background: `url(${images.fon6})` }}
+              style={{
+                background: `linear-gradient(to right bottom, rgb(0, 255, 255), rgb(0, 115, 255) 50%, rgb(170, 90, 255)`,
+              }}
               alt="#"
             />
           </div>
@@ -464,7 +474,7 @@ export const LandingContainer = () => (
                       <span data-toggle="tooltip" title="-----------">
                         <i className="fa fa-fw fa-sm fa-clock mr-1" />
                         Отображение блоков расписания
-                        <b>- СКОРО</b>
+                        <b style={{ fontWeight: '700' }}>- СКОРО</b>
                       </span>
                     </div>
                     <i className="fa fa-fw fa-sm fa-check-circle text-muted" />
@@ -491,7 +501,7 @@ export const LandingContainer = () => (
                     <div className="">
                       <span data-toggle="tooltip" title="-----------">
                         <i className="fa fa-fw fa-sm fa-search-plus mr-1" />
-                        Географических карт <b>- СКОРО</b>
+                        Географических карт <b style={{ fontWeight: '700' }}>- СКОРО</b>
                       </span>
                     </div>
                     <i className="fa fa-fw fa-sm fa-check-circle text-muted" />
@@ -500,7 +510,7 @@ export const LandingContainer = () => (
                     <div className="">
                       <span data-toggle="tooltip" title="-----------">
                         <i className="fa fa-fw fa-sm fa-ad mr-1" /> Блок вопросов и ответов{' '}
-                        <b>- СКОРО</b>
+                        <b style={{ fontWeight: '700' }}>- СКОРО</b>
                       </span>
                     </div>
                     <i className="fa fa-fw fa-sm fa-check-circle text-muted" />
@@ -557,7 +567,7 @@ export const LandingContainer = () => (
                     <div className="">
                       <span data-toggle="tooltip" title="-----------">
                         <i className="fa fa-fw fa-sm fa-ad mr-1" /> Блок рекламной интеграции и
-                        монетезации<b>- СКОРО</b>
+                        монетезации<b style={{ fontWeight: '700' }}>- СКОРО</b>
                       </span>
                     </div>
                     <i className="fa fa-fw fa-sm fa-check-circle text-muted" />
@@ -566,7 +576,7 @@ export const LandingContainer = () => (
                     <div className="">
                       <span data-toggle="tooltip" title="-----------">
                         <i className="fa fa-fw fa-sm fa-ad mr-1" /> Блок вашего мерча для фанатов
-                        <b>- СКОРО</b>
+                        <b style={{ fontWeight: '700' }}>- СКОРО</b>
                       </span>
                     </div>
                     <i className="fa fa-fw fa-sm fa-check-circle text-muted" />
@@ -589,7 +599,12 @@ export const LandingContainer = () => (
         </div>
       </div>
     </div>
-    <footer className="d-print-none footer" style={{ background: `url(${images.fon2})` }}>
+    <footer
+      className="d-print-none footer"
+      style={{
+        background:
+          'linear-gradient(to left bottom, rgb(0, 255, 255), rgb(0, 115, 255) 30%, rgb(170, 90, 255))',
+      }}>
       <div className="container">
         <div className="row">
           <div className="col-12 col-sm-4 mb-4 mb-sm-0">
